@@ -1,0 +1,1141 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NTA CBT Mock Test Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+body * { box-sizing: border-box; }
+#outer-wrapper, .container { padding: 0 !important; margin: 0 !important; }
+.test-body {
+  display: flex !important; flex-direction: row !important;
+  width: 100% !important; height: calc(100vh - 120px) !important;
+}
+/* ✅ FIX 1: Sidebar width increased slightly to accommodate 5-col palette */
+.palette-sidebar {
+  width: 260px !important; min-width: 260px !important;
+  display: flex !important; flex-direction: column !important;
+  position: relative !important; right: 0 !important; top: 0 !important;
+  background: #fff !important; z-index: 10;
+}
+.question-area {
+  flex: 1 !important; width: calc(100% - 260px) !important;
+}
+body, html {
+  margin: 0 !important; padding: 0 !important;
+  width: 100% !important; overflow-x: hidden !important;
+}
+#sidebar-wrapper, .sidebar, .widget-area { display: none !important; }
+#main-wrapper, .main-wrapper, .content-wrapper {
+  width: 100% !important; max-width: 100% !important;
+}
+.container, .outer-wrapper {
+  width: 100% !important; max-width: 100% !important;
+  margin: 0 !important; padding: 0 !important;
+}
+#nta-fullscreen-root {
+  position: fixed !important; top: 0; left: 0;
+  width: 100vw; height: 100vh; z-index: 999999; background: #fff;
+}
+#outer-wrapper, #page-wrapper, .container, .post-outer, .post, .section {
+  width: 100% !important; max-width: 100% !important;
+  margin: 0 !important; padding: 0 !important;
+}
+header, footer, #header, #footer, .Header, .Footer,
+.navbar, .navigation, .blog-pager { display: none !important; }
+body { display: block !important; }
+
+:root{
+  --p1:#4a2f7a; --p2:#6b46b0; --p3:#8b68cc; --p4:#b89ee0; --p5:#ede8f9; --p6:#f7f4fd;
+  --accent:#c084fc;
+  --nv:#9e9e9e; --na:#e05c5c; --ans:#3aaa6e; --mk:#d97706; --mka:#0891b2;
+  --bg:var(--p6); --card:#fff; --border:var(--p4); --text:#2d1b55; --muted:#6e5d8c;
+  --set-a:#6b46b0; --set-b:#0891b2; --set-c:#d97706; --set-d:#3aaa6e;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+#nta-fullscreen-root {
+  font-family:'Noto Sans',sans-serif; color:var(--text); font-size:14px;
+}
+.page{display:none;height:100vh;overflow:hidden;}
+.page.active{display:flex;flex-direction:column;height:100vh;}
+#start-page.active{flex-direction:column;overflow-y:auto;}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--p5);}
+::-webkit-scrollbar-thumb{background:var(--p4);border-radius:3px;}
+
+.site-header{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;box-shadow:0 3px 14px rgba(74,47,122,.35);flex-shrink:0;}
+.site-header .top-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 24px;gap:12px;}
+.logo-area{display:flex;align-items:center;gap:12px;}
+.logo-circle{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.38);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:#fff;flex-shrink:0;}
+.brand h1{font-size:16px;font-weight:700;}
+.brand p{font-size:11px;opacity:.75;margin-top:2px;}
+.sub-header{background:rgba(0,0,0,.18);text-align:center;padding:7px 24px;font-size:13px;font-weight:600;letter-spacing:.4px;border-top:1px solid rgba(255,255,255,.1);}
+
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(28px) scale(0.98);}
+  to{opacity:1;transform:translateY(0) scale(1);}
+}
+@keyframes fadeIn{
+  from{opacity:0;}to{opacity:1;}
+}
+@keyframes modalIn{
+  from{opacity:0;transform:scale(.85) translateY(10px);}
+  to{opacity:1;transform:scale(1) translateY(0);}
+}
+@keyframes shimmer{
+  0%{background-position:-200% 0;}
+  100%{background-position:200% 0;}
+}
+@keyframes popIn{
+  0%{opacity:0;transform:scale(0.7);}
+  70%{transform:scale(1.08);}
+  100%{opacity:1;transform:scale(1);}
+}
+
+#start-page{
+  background:linear-gradient(150deg,#2c1259 0%,#4a2f7a 45%,#6b46b0 100%);
+  align-items:center;justify-content:flex-start;
+  padding:12px 16px; overflow-y:auto;
+}
+.start-wrap{
+  display:flex;flex-direction:row;gap:14px;
+  width:100%;max-width:1040px;
+  min-height:calc(100vh - 24px);
+  align-items:stretch;
+}
+.start-left{width:300px;flex-shrink:0;display:flex;flex-direction:column;}
+.start-card{background:#fff;border-radius:12px;box-shadow:0 16px 48px rgba(0,0,0,.4);overflow:hidden;flex:1;display:flex;flex-direction:column;animation:slideUp .5s cubic-bezier(0.22,1,0.36,1);}
+.start-card-header{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;padding:14px 22px;text-align:center;flex-shrink:0;}
+.nta-logo{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.15);border:2.5px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;margin:0 auto 8px;}
+.start-card-header h2{font-size:15px;font-weight:800;}
+.start-card-header p{font-size:11px;opacity:.72;margin-top:2px;}
+.start-card-body{padding:14px 20px;flex:1;display:flex;flex-direction:column;overflow-y:auto;}
+.exam-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px;}
+.info-box{background:var(--p5);border:1px solid var(--p4);border-radius:7px;padding:6px 10px;}
+.info-box .label{font-size:9px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:1px;}
+.info-box .value{font-size:12px;font-weight:700;color:var(--p1);}
+.form-group{margin-bottom:10px;}
+.form-group label{display:block;font-size:10px;font-weight:700;color:var(--muted);margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px;}
+.form-group input{width:100%;padding:8px 11px;border:1.5px solid var(--p4);border-radius:6px;font-size:13px;font-family:inherit;outline:none;transition:border-color .2s;background:var(--p6);color:var(--text);}
+.form-group input:focus{border-color:var(--p2);background:#fff;}
+.btn-start{width:100%;padding:11px;background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.3px;transition:opacity .2s,transform .1s;font-family:inherit;box-shadow:0 4px 14px rgba(74,47,122,.35);margin-top:auto;}
+.btn-start:hover{opacity:.95;transform:translateY(-2px);box-shadow:0 8px 24px rgba(74,47,122,.45);}
+.btn-start:disabled{opacity:.4;transform:none;cursor:not-allowed;}
+.start-right{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px;}
+.set-selector-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:12px;overflow:hidden;flex-shrink:0;animation:slideUp .5s .08s cubic-bezier(0.22,1,0.36,1) both;}
+.set-selector-header{background:rgba(255,255,255,.1);color:#fff;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,.1);}
+.set-selector-header .ssh-title{font-size:13px;font-weight:700;}
+.set-selector-header p{font-size:10.5px;opacity:.65;margin-top:1px;}
+.set-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 12px;}
+.set-card{border:2px solid;border-radius:9px;padding:9px 10px;cursor:pointer;transition:all .25s cubic-bezier(0.22,1,0.36,1);text-align:center;position:relative;}
+.set-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.18);transition:all .25s cubic-bezier(0.22,1,0.36,1);}
+.set-card.selected::after{content:'✓';position:absolute;top:5px;right:8px;font-size:12px;font-weight:800;}
+.set-card-a{border-color:var(--set-a);background:#f5f0ff;}.set-card-a.selected{background:#ede4ff;box-shadow:0 0 0 2px var(--set-a);}.set-card-a .set-icon,.set-card-a .set-name,.set-card-a.selected::after{color:var(--set-a);}
+.set-card-b{border-color:var(--set-b);background:#f0faff;}.set-card-b.selected{background:#dcf4ff;box-shadow:0 0 0 2px var(--set-b);}.set-card-b .set-icon,.set-card-b .set-name,.set-card-b.selected::after{color:var(--set-b);}
+.set-card-c{border-color:var(--set-c);background:#fffbf0;}.set-card-c.selected{background:#fff3d4;box-shadow:0 0 0 2px var(--set-c);}.set-card-c .set-icon,.set-card-c .set-name,.set-card-c.selected::after{color:var(--set-c);}
+.set-card-d{border-color:var(--set-d);background:#f0fff6;}.set-card-d.selected{background:#d4f5e4;box-shadow:0 0 0 2px var(--set-d);}.set-card-d .set-icon,.set-card-d .set-name,.set-card-d.selected::after{color:var(--set-d);}
+.set-icon{font-size:18px;margin-bottom:3px;}
+.set-name{font-size:13px;font-weight:800;margin-bottom:1px;}
+.set-desc{font-size:10px;color:var(--muted);}
+.set-q-count{font-size:9.5px;margin-top:3px;font-weight:600;padding:1px 6px;border-radius:10px;display:inline-block;}
+.set-card-a .set-q-count{background:rgba(107,70,176,.12);color:var(--set-a);}
+.set-card-b .set-q-count{background:rgba(8,145,178,.12);color:var(--set-b);}
+.set-card-c .set-q-count{background:rgba(217,119,6,.12);color:var(--set-c);}
+.set-card-d .set-q-count{background:rgba(58,170,110,.12);color:var(--set-d);}
+.history-panel{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;overflow:hidden;flex:1;min-height:0;display:flex;flex-direction:column;animation:slideUp .5s .16s cubic-bezier(0.22,1,0.36,1) both;}
+.history-panel-header{background:rgba(255,255,255,.1);padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.1);flex-shrink:0;}
+.history-panel-header h3{color:#fff;font-size:13px;font-weight:700;}
+.history-panel-header p{color:rgba(255,255,255,.5);font-size:10px;margin-top:1px;}
+.bar-chart-wrap{padding:10px 14px 8px;border-bottom:1px solid rgba(255,255,255,.1);flex-shrink:0;}
+.bar-chart-title{color:rgba(255,255,255,.65);font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;}
+.bar-chart{display:flex;flex-direction:column;gap:5px;}
+.bar-row{display:flex;align-items:center;gap:8px;}
+.bar-set-label{color:#fff;font-size:10.5px;font-weight:700;width:44px;flex-shrink:0;}
+.bar-track{flex:1;background:rgba(255,255,255,.1);border-radius:20px;height:12px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:20px;transition:width .8s cubic-bezier(.4,0,.2,1);min-width:2px;}
+.bar-fill-a{background:linear-gradient(90deg,rgba(107,70,176,.6),rgba(107,70,176,.9));}
+.bar-fill-b{background:linear-gradient(90deg,rgba(8,145,178,.6),rgba(8,145,178,.9));}
+.bar-fill-c{background:linear-gradient(90deg,rgba(217,119,6,.6),rgba(217,119,6,.9));}
+.bar-fill-d{background:linear-gradient(90deg,rgba(58,170,110,.6),rgba(58,170,110,.9));}
+.bar-score-label{color:rgba(255,255,255,.75);font-size:9.5px;font-weight:700;width:46px;flex-shrink:0;text-align:right;}
+.bar-no-attempts{color:rgba(255,255,255,.3);font-size:10.5px;font-style:italic;}
+.history-panel-body{padding:8px 10px;overflow-y:auto;flex:1;min-height:0;}
+.history-empty{color:rgba(255,255,255,.4);font-size:12px;text-align:center;padding:18px 12px;line-height:1.7;}
+.attempt-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:8px 11px;margin-bottom:6px;transition:background .15s;}
+.attempt-card:hover{background:rgba(255,255,255,.13);}
+.attempt-card .ac-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;}
+.attempt-card .ac-name{color:#fff;font-weight:700;font-size:12px;}
+.attempt-card .ac-date{color:rgba(255,255,255,.42);font-size:9.5px;}
+.attempt-card .ac-set-badge{font-size:9.5px;font-weight:700;padding:1px 7px;border-radius:10px;margin-bottom:4px;display:inline-block;}
+.badge-a{background:rgba(107,70,176,.3);color:#c4a8ff;}
+.badge-b{background:rgba(8,145,178,.3);color:#7dd8f0;}
+.badge-c{background:rgba(217,119,6,.3);color:#fcd58a;}
+.badge-d{background:rgba(58,170,110,.3);color:#8de8b4;}
+.attempt-card .ac-score{font-size:18px;font-weight:800;color:#fff;margin-bottom:3px;}
+.ac-meta{display:flex;gap:5px;flex-wrap:wrap;}
+.ac-badge{font-size:9.5px;font-weight:700;padding:1px 7px;border-radius:20px;}
+.ac-badge.correct{background:rgba(58,170,110,.25);color:#6de992;}
+.ac-badge.wrong{background:rgba(224,92,92,.25);color:#ff9090;}
+.ac-badge.skip{background:rgba(255,255,255,.1);color:rgba(255,255,255,.5);}
+.ac-badge.acc{background:rgba(192,132,252,.2);color:#ddb6ff;}
+.history-clear-btn{width:100%;padding:6px;background:rgba(224,92,92,.18);border:1px solid rgba(224,92,92,.3);border-radius:6px;color:#ff9090;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:4px;transition:background .15s;}
+.history-clear-btn:hover{background:rgba(224,92,92,.38);}
+
+#instruction-page .instruction-body{flex:1;padding:20px;overflow-y:auto;max-width:920px;width:100%;margin:0 auto;}
+.instruction-card{background:#fff;border-radius:10px;border:1px solid var(--p4);box-shadow:0 2px 10px rgba(74,47,122,.07);margin-bottom:16px;overflow:hidden;}
+.instruction-card-title{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;padding:11px 18px;font-size:13.5px;font-weight:700;}
+.instruction-card-body{padding:16px 20px;}
+.instruction-card-body ol,.instruction-card-body ul{padding-left:20px;line-height:1.95;}
+.instruction-card-body li{margin-bottom:3px;font-size:13.5px;}
+.instruction-card-body li strong{color:var(--p1);}
+.legend-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;padding:13px 18px;}
+.legend-item{display:flex;align-items:center;gap:9px;font-size:12.5px;}
+.legend-bubble{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;color:#fff;flex-shrink:0;}
+.declaration-box{background:var(--p5);border:1.5px solid var(--p4);border-radius:8px;padding:13px 18px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px;}
+.declaration-box input[type="checkbox"]{
+  position:absolute;opacity:0;width:0;height:0;pointer-events:none;
+}
+.custom-cb-wrap{flex-shrink:0;margin-top:2px;}
+.custom-cb{
+  width:20px;height:20px;border-radius:4px;
+  border:2px solid var(--p4);background:#fff;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .2s cubic-bezier(0.22,1,0.36,1);
+  flex-shrink:0;
+}
+.custom-cb svg{width:12px;height:10px;opacity:0;transition:opacity .15s;}
+.declaration-box input[type="checkbox"]:checked ~ .custom-cb,
+.custom-cb.checked{
+  background:var(--p2);border-color:var(--p2);
+  box-shadow:0 2px 8px rgba(107,70,176,.35);
+  transform:scale(1.05);
+}
+.declaration-box input[type="checkbox"]:checked ~ .custom-cb svg,
+.custom-cb.checked svg{opacity:1;}
+.declaration-box label{font-size:13px;line-height:1.65;cursor:pointer;}
+.instruction-actions{display:flex;justify-content:flex-end;gap:10px;margin-bottom:16px;}
+.btn-secondary{padding:10px 22px;background:#fff;color:var(--p2);border:2px solid var(--p2);border-radius:7px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s;}
+.btn-secondary:hover{background:var(--p5);}
+.btn-primary{padding:10px 22px;background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;border:none;border-radius:7px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit;opacity:.4;pointer-events:none;transition:opacity .3s;}
+.btn-primary.enabled{opacity:1;pointer-events:auto;}
+
+#fs-banner{display:none;position:fixed;bottom:0;left:0;right:0;background:#c0392b;color:#fff;padding:9px 20px;z-index:2147483646;text-align:center;font-size:13px;font-weight:600;}
+.fs-banner-inner{display:flex;align-items:center;justify-content:center;gap:14px;}
+#fs-banner .btn-reenter{padding:4px 13px;background:#fff;color:#c0392b;border:none;border-radius:4px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;}
+#fs-exit-count{background:rgba(0,0,0,.2);padding:2px 9px;border-radius:12px;font-size:11.5px;}
+#time-warning{display:none;position:fixed;top:80px;left:50%;transform:translateX(-50%);background:#fdf4e0;border:2px solid #f59e0b;color:#92400e;padding:11px 22px;border-radius:9px;z-index:2147483645;font-size:13.5px;font-weight:700;box-shadow:0 4px 16px rgba(0,0,0,.12);}
+.tw-close{margin-left:12px;cursor:pointer;font-size:15px;opacity:.6;}
+
+#test-page{flex-direction:column;}
+.test-header{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;flex-shrink:0;}
+.test-header .top-bar{padding:8px 16px;}
+.test-header .brand h1{font-size:15px;}
+.set-pill{display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:700;margin-left:8px;}
+.set-pill-a{background:rgba(192,132,252,.3);color:#e0c6ff;}
+.set-pill-b{background:rgba(103,232,249,.2);color:#a5f0ff;}
+.set-pill-c{background:rgba(253,186,116,.2);color:#fde8b4;}
+.set-pill-d{background:rgba(110,231,183,.2);color:#bbf7d0;}
+.timer-box{background:rgba(255,255,255,.16);border:1.5px solid rgba(255,255,255,.3);border-radius:8px;padding:5px 13px;text-align:center;min-width:118px;}
+.timer-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;opacity:.8;}
+.timer-value{font-size:20px;font-weight:800;letter-spacing:1px;font-variant-numeric:tabular-nums;}
+.timer-box.urgent .timer-value{color:#fca5a5;animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.45;}}
+.section-tabs{background:rgba(0,0,0,.18);display:flex;padding:0 16px;border-top:1px solid rgba(255,255,255,.1);}
+.section-tab{padding:7px 16px;font-size:12px;font-weight:600;color:rgba(255,255,255,.65);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s;}
+.section-tab.active{color:#fff;border-bottom-color:var(--accent);}
+.test-body{display:flex;flex:1;overflow:hidden;}
+.question-area{flex:1;overflow-y:auto;display:flex;flex-direction:column;}
+.question-top-bar{background:var(--p5);border-bottom:1px solid var(--p4);padding:8px 20px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
+.q-info{font-size:13px;font-weight:700;color:var(--p1);}
+.marks-info{font-size:12px;color:var(--muted);}
+.marks-info .pos{color:var(--ans);font-weight:700;}
+.marks-info .neg{color:var(--na);font-weight:700;}
+.question-content{padding:20px 24px;flex:1;}
+.question-text{font-size:14.5px;line-height:1.88;color:var(--text);margin-bottom:20px;}
+.q-num{font-weight:700;color:var(--p1);}
+.sub-list{margin:8px 0 8px 22px;line-height:2.1;}
+.options-list{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.option-item{display:flex;align-items:flex-start;gap:11px;background:var(--p6);border:1.5px solid var(--p4);border-radius:9px;padding:11px 15px;cursor:pointer;transition:all .2s cubic-bezier(0.22,1,0.36,1);}
+.option-item:hover{background:var(--p5);border-color:var(--p3);transform:translateX(3px);}
+.option-item.selected{background:#ede4ff;border-color:var(--p2);box-shadow:0 2px 12px rgba(107,70,176,.2);transform:translateX(4px);}
+.option-item input{width:15px;height:15px;accent-color:var(--p2);margin-top:2px;flex-shrink:0;cursor:pointer;}
+.option-item label{font-size:14px;line-height:1.55;cursor:pointer;flex:1;}
+.opt-letter{font-weight:700;color:var(--p2);margin-right:6px;}
+.bottom-nav{border-top:1px solid var(--p4);background:#fff;padding:9px 18px;display:flex;gap:7px;flex-wrap:wrap;align-items:center;flex-shrink:0;}
+.btn-nav{padding:8px 14px;border-radius:6px;border:1.5px solid;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap;}
+.btn-nav.save-next{background:var(--p1);color:#fff;border-color:var(--p1);}
+.btn-nav.save-next:hover{background:#3a2162;}
+.btn-nav.mark-review{background:#d97706;color:#fff;border-color:#d97706;}
+.btn-nav.mark-review:hover{background:#b45309;}
+.btn-nav.clear{background:#fff;color:var(--na);border-color:var(--na);}
+.btn-nav.prev{background:#fff;color:var(--p2);border-color:var(--p2);}
+.btn-nav.prev:hover{background:var(--p5);}
+.btn-nav.nxt{background:#fff;color:var(--p2);border-color:var(--p2);}
+.btn-nav.nxt:hover{background:var(--p5);}
+.btn-nav.submit-btn{background:#dc2626;color:#fff;border-color:#dc2626;margin-left:auto;}
+.btn-nav.submit-btn:hover{background:#b91c1c;}
+
+/* ✅ FIX 2: Palette sidebar — wider, 5-column grid, proper button sizing */
+.palette-sidebar{
+  width:260px;flex-shrink:0;background:#fff;
+  border-left:1px solid var(--p4);overflow-y:auto;display:flex;flex-direction:column;
+}
+.palette-candidate{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;padding:10px 12px;display:flex;align-items:center;gap:9px;flex-shrink:0;}
+.palette-avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0;}
+.p-name{font-size:12px;font-weight:700;}
+.p-roll{font-size:9.5px;opacity:.7;margin-top:1px;}
+.palette-title{background:var(--p5);padding:7px 12px;font-size:11.5px;font-weight:700;color:var(--p1);border-bottom:1px solid var(--p4);flex-shrink:0;}
+.palette-grid-wrap{padding:10px 12px;}
+
+/* ✅ KEY FIX: 5 columns for 25 questions = perfect 5×5 grid */
+.palette-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:6px;
+  margin-bottom:10px;
+}
+.palette-btn{transition:background-color .25s ease,transform .15s cubic-bezier(0.22,1,0.36,1),box-shadow .2s ease;
+  width:100%;
+  aspect-ratio:1/1;
+  border-radius:50%;
+  border:none;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+  color:#fff;
+  transition:transform .1s,box-shadow .1s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-width:0;
+  overflow:hidden;
+  line-height:1;
+}
+.palette-btn:hover{transform:scale(1.15);box-shadow:0 3px 10px rgba(0,0,0,.25);}
+.palette-btn.active-q{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--p2);}
+.s-nv{background:var(--nv);}.s-na{background:var(--na);}.s-ans{background:var(--ans);}.s-mk{background:var(--mk);}.s-mka{background:var(--mka);}
+.palette-legend{padding:0 12px 9px;}
+.pl-title{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px;}
+.pl-item{display:flex;align-items:center;gap:6px;margin-bottom:5px;font-size:10.5px;color:var(--muted);}
+.pl-dot{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:9px;flex-shrink:0;}
+.palette-stats{background:var(--p5);border-top:1px solid var(--p4);padding:9px 12px;flex-shrink:0;}
+.stat-row{display:flex;justify-content:space-between;margin-bottom:4px;font-size:11px;}
+.s-lbl{color:var(--muted);}
+.s-v{font-weight:700;}
+.c-ans{color:var(--ans);}.c-na{color:var(--na);}.c-mk{color:var(--mk);}.c-nv{color:var(--nv);}
+
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(44,18,89,.55);z-index:2147483640;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:#fff;border-radius:12px;box-shadow:0 20px 60px rgba(74,47,122,.35);max-width:440px;width:90%;padding:24px;animation:modalIn .25s ease;}
+.modal h3{font-size:15px;font-weight:700;color:var(--p1);margin-bottom:9px;}
+.modal p{font-size:13px;line-height:1.7;color:var(--muted);}
+.modal-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:13px 0;}
+.modal-stat{background:var(--p5);border-radius:7px;padding:9px;font-size:12px;text-align:center;}
+.modal-stat strong{display:block;font-size:19px;font-weight:800;margin-bottom:2px;}
+.ms-ans strong{color:var(--ans);}.ms-unans strong{color:var(--na);}.ms-mark strong{color:var(--mk);}.ms-skip strong{color:var(--nv);}
+.modal-actions{display:flex;gap:9px;justify-content:flex-end;margin-top:16px;}
+.btn-cancel{padding:9px 17px;background:#fff;color:var(--muted);border:1.5px solid #ddd;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
+.btn-confirm{padding:9px 17px;background:#dc2626;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
+.btn-confirm:hover{background:#b91c1c;}
+
+#result-page{background:linear-gradient(150deg,#2c1259,#4a2f7a 50%,#6b46b0);align-items:center;justify-content:center;padding:30px 16px;overflow-y:auto;}
+.result-card{background:#fff;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.35);max-width:580px;width:100%;overflow:hidden;animation:slideUp .6s cubic-bezier(0.22,1,0.36,1);}
+.result-header{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;padding:20px 28px;text-align:center;}
+.result-header h2{font-size:20px;font-weight:800;}
+.result-header p{opacity:.75;font-size:12.5px;margin-top:3px;}
+.result-body{padding:22px 28px;}
+.score-circle{width:110px;height:110px;border-radius:50%;background:linear-gradient(135deg,var(--p1),var(--p2));display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;margin:0 auto 18px;box-shadow:0 8px 28px rgba(74,47,122,.4);}
+.score-num{font-size:28px;font-weight:800;line-height:1;}
+.score-total{font-size:11.5px;opacity:.8;margin-top:2px;}
+.result-stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:18px;}
+.result-stat{border-radius:9px;padding:11px;text-align:center;border:1.5px solid;}
+.result-stat .rs-val{font-size:20px;font-weight:800;}
+.result-stat .rs-lbl{font-size:10px;margin-top:2px;text-transform:uppercase;letter-spacing:.5px;}
+.rs-correct{background:#d1fae5;border-color:#10b981;}.rs-correct .rs-val{color:#065f46;}
+.rs-wrong{background:#fee2e2;border-color:#ef4444;}.rs-wrong .rs-val{color:#991b1b;}
+.rs-skip{background:#f3f4f6;border-color:#9ca3af;}.rs-skip .rs-val{color:#374151;}
+.rs-marks{background:var(--p5);border-color:var(--p3);}.rs-marks .rs-val{color:var(--p1);}
+.result-actions{display:flex;gap:9px;flex-wrap:wrap;}
+.btn-result{flex:1;min-width:110px;padding:10px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .2s;border:none;}
+.btn-result:hover{opacity:.87;}
+.btn-result.primary{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;}
+.btn-result.review-btn{background:linear-gradient(135deg,#0e7490,#0891b2);color:#fff;}
+.btn-result.pdf-btn{background:linear-gradient(135deg,#065f46,#059669);color:#fff;}
+.btn-result.outline{background:#fff;color:var(--p2);border:2px solid var(--p2);}
+
+#review-page{flex-direction:column;}
+.review-header{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;padding:13px 24px;flex-shrink:0;}
+.review-header h2{font-size:16px;font-weight:700;}
+.review-header p{font-size:11.5px;opacity:.73;margin-top:3px;}
+.review-summary-bar{background:#fff;border-bottom:1px solid var(--p4);padding:12px 24px;display:flex;gap:12px;flex-wrap:wrap;flex-shrink:0;align-items:center;}
+.rs-chip{display:flex;align-items:center;gap:5px;font-size:12.5px;padding:5px 13px;border-radius:20px;font-weight:700;}
+.rs-chip.correct{background:#d1fae5;color:#065f46;}
+.rs-chip.wrong{background:#fee2e2;color:#991b1b;}
+.rs-chip.skipped{background:#f3f4f6;color:#374151;}
+.rs-chip.score{background:var(--p5);color:var(--p1);}
+.review-filters{background:var(--p6);border-bottom:1px solid var(--p4);padding:9px 24px;display:flex;gap:7px;flex-shrink:0;overflow-x:auto;}
+.filter-btn{padding:5px 13px;border-radius:20px;border:1.5px solid var(--p4);background:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .15s;color:var(--muted);}
+.filter-btn:hover{border-color:var(--p3);color:var(--p2);}
+.filter-btn.active{background:var(--p1);color:#fff;border-color:var(--p1);}
+.review-body{flex:1;overflow-y:auto;padding:18px 24px;}
+.review-q-card{background:#fff;border:1.5px solid var(--p4);border-radius:10px;margin-bottom:14px;overflow:hidden;}
+.review-q-card.r-correct{border-color:#10b981;}.review-q-card.r-wrong{border-color:#ef4444;}.review-q-card.r-skipped{border-color:#d1d5db;}
+.rqc-header{padding:9px 15px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--p4);background:var(--p6);}
+.rq-num{font-weight:700;color:var(--p1);font-size:12.5px;}
+.rq-badge{padding:2px 9px;border-radius:20px;font-size:10.5px;font-weight:700;}
+.rq-badge.correct{background:#d1fae5;color:#065f46;}.rq-badge.wrong{background:#fee2e2;color:#991b1b;}.rq-badge.skipped{background:#f3f4f6;color:#6b7280;}
+.rqc-body{padding:13px 15px;}
+.rqc-q-text{font-size:13.5px;line-height:1.78;color:var(--text);margin-bottom:11px;}
+.rqc-options{display:flex;flex-direction:column;gap:5px;}
+.rqc-option{display:flex;align-items:flex-start;gap:8px;padding:7px 11px;border-radius:7px;font-size:13px;border:1.5px solid transparent;}
+.rqc-option.is-correct{background:#d1fae5;border-color:#10b981;}.rqc-option.is-user-wrong{background:#fee2e2;border-color:#ef4444;}.rqc-option.is-user-correct{background:#d1fae5;border-color:#10b981;}
+.opt-icon{width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:800;flex-shrink:0;margin-top:2px;}
+.correct-icon{background:#10b981;color:#fff;}.wrong-icon{background:#ef4444;color:#fff;}.plain-icon{background:#e5e7eb;color:var(--muted);}
+.next-set-section{background:var(--p5);border-top:1px solid var(--p4);padding:18px 24px;flex-shrink:0;}
+.next-set-section h4{font-size:14px;font-weight:700;color:var(--p1);margin-bottom:4px;}
+.next-set-section p{font-size:12.5px;color:var(--muted);margin-bottom:14px;}
+.next-set-grid{display:flex;gap:10px;flex-wrap:wrap;}
+.next-set-btn{padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;border:2px solid;transition:all .2s;display:flex;align-items:center;gap:6px;}
+.next-set-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.1);}
+.next-set-btn.done{border-color:var(--p3);color:var(--p2);background:#fff;opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;}
+.nsb-a{border-color:var(--set-a);color:var(--set-a);background:#f5f0ff;}
+.nsb-b{border-color:var(--set-b);color:var(--set-b);background:#f0faff;}
+.nsb-c{border-color:var(--set-c);color:var(--set-c);background:#fffbf0;}
+.nsb-d{border-color:var(--set-d);color:var(--set-d);background:#f0fff6;}
+.review-footer{background:#fff;border-top:1px solid var(--p4);padding:13px 24px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0;flex-wrap:wrap;gap:10px;}
+.btn-review-action{padding:9px 20px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;border:none;transition:opacity .2s;}
+.btn-review-action:hover{opacity:.87;}
+.btn-review-action.primary{background:linear-gradient(135deg,var(--p1),var(--p2));color:#fff;}
+.btn-review-action.outline{background:#fff;color:var(--p2);border:2px solid var(--p2);}
+
+@media print{
+  #nta-fullscreen-root{display:none!important;}
+  #print-result-page{display:block!important;}
+  body{background:#fff!important;color:#000!important;font-size:12px;overflow:visible!important;}
+  @page{margin:15mm;}
+}
+#print-result-page{display:none;}
+.print-page{max-width:700px;margin:0 auto;padding:20px;}
+.print-header{text-align:center;border-bottom:3px solid #4a2f7a;padding-bottom:14px;margin-bottom:18px;}
+.print-header h1{font-size:20px;font-weight:800;color:#4a2f7a;}
+.print-header p{font-size:12px;color:#555;margin-top:3px;}
+.print-candidate-box{background:#f7f4fd;border:1px solid #b89ee0;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.print-candidate-box .pci{font-size:12px;}.print-candidate-box .pci strong{color:#4a2f7a;}
+.print-score-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+.print-score-box{border:1.5px solid;border-radius:8px;padding:10px;text-align:center;}
+.print-score-box .psb-val{font-size:22px;font-weight:800;}
+.print-score-box .psb-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+.psb-score{border-color:#6b46b0;}.psb-score .psb-val{color:#4a2f7a;}
+.psb-correct{border-color:#10b981;}.psb-correct .psb-val{color:#065f46;}
+.psb-wrong{border-color:#ef4444;}.psb-wrong .psb-val{color:#991b1b;}
+.psb-acc{border-color:#0891b2;}.psb-acc .psb-val{color:#0e7490;}
+.print-section-title{font-size:13px;font-weight:700;color:#4a2f7a;border-bottom:1.5px solid #b89ee0;padding-bottom:5px;margin-bottom:10px;}
+.print-q-row{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid #f0e8ff;font-size:11.5px;align-items:flex-start;}
+.print-q-row .pqr-num{font-weight:700;color:#4a2f7a;min-width:28px;}
+.print-q-row .pqr-q{flex:1;color:#333;}
+.print-q-row .pqr-your{min-width:60px;text-align:center;padding:1px 6px;border-radius:4px;font-weight:700;}
+.print-q-row .pqr-correct{min-width:60px;text-align:center;padding:1px 6px;border-radius:4px;font-weight:700;background:#d1fae5;color:#065f46;}
+.pqr-your.correct{background:#d1fae5;color:#065f46;}.pqr-your.wrong{background:#fee2e2;color:#991b1b;}.pqr-your.skip{background:#f3f4f6;color:#6b7280;}
+.print-footer{text-align:center;font-size:10px;color:#888;margin-top:20px;padding-top:10px;border-top:1px solid #ddd;}
+
+/* ✅ FIX 3: Mobile responsive — keep 5 columns on mobile too */
+@media(max-width:820px){
+  .palette-sidebar{width:100%;height:210px;border-left:none;border-top:1px solid var(--p4);}
+  .test-body{flex-direction:column;height:auto;overflow:visible;}
+  .palette-grid{grid-template-columns:repeat(5,1fr);}
+}
+@media(max-width:560px){
+  .start-wrap{flex-direction:column;}
+  .start-left{width:100%;}
+}
+
+/* ── PAGE TRANSITIONS ── */
+.page{
+  animation:none;
+}
+.page.active{
+  animation:fadeIn .3s ease;
+}
+#start-page.active{
+  animation:none;/* start page has its own children animations */
+}
+
+/* ── IMPROVED BUTTON INTERACTIONS ── */
+.btn-nav{transition:all .2s cubic-bezier(0.22,1,0.36,1);}
+.btn-nav:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.15);}
+.btn-nav:active{transform:translateY(0) scale(0.97);}
+.btn-start{transition:all .25s cubic-bezier(0.22,1,0.36,1);}
+.btn-primary{transition:all .25s cubic-bezier(0.22,1,0.36,1);}
+.btn-primary.enabled:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(74,47,122,.4);}
+
+/* ── SCORE CIRCLE ENTRY ── */
+.score-circle{animation:popIn .6s .1s cubic-bezier(0.22,1,0.36,1) both;}
+
+/* ── REVIEW CARD ENTRY ── */
+.review-q-card{animation:slideUp .35s cubic-bezier(0.22,1,0.36,1) both;}
+
+/* ── PALETTE BTN ACTIVE PULSE ── */
+@keyframes activePulse{
+  0%,100%{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--p2);}
+  50%{box-shadow:0 0 0 2px #fff,0 0 0 6px var(--p2),0 0 14px rgba(107,70,176,.4);}
+}
+.palette-btn.active-q{animation:activePulse 1.8s ease-in-out infinite;}
+
+</style>
+</head>
+<body>
+
+<!-- PRINT PAGE -->
+<div id="print-result-page">
+  <div class="print-page">
+    <div class="print-header">
+      <h1>NTA CBT Mock Test — Score Card</h1>
+      <p>CUET (UG) 2024 | History | <span id="pr-set-label">Set A</span></p>
+    </div>
+    <div class="print-candidate-box">
+      <div class="pci">Candidate: <strong id="pr-name">—</strong></div>
+      <div class="pci">Roll No: <strong id="pr-roll">—</strong></div>
+      <div class="pci">Date: <strong id="pr-date">—</strong></div>
+      <div class="pci">Time Taken: <strong id="pr-time">—</strong></div>
+    </div>
+    <div class="print-score-row">
+      <div class="print-score-box psb-score"><div class="psb-val" id="pr-score">0</div><div class="psb-lbl" style="color:#4a2f7a;">Score /100</div></div>
+      <div class="print-score-box psb-correct"><div class="psb-val" id="pr-correct">0</div><div class="psb-lbl" style="color:#065f46;">Correct</div></div>
+      <div class="print-score-box psb-wrong"><div class="psb-val" id="pr-wrong">0</div><div class="psb-lbl" style="color:#991b1b;">Wrong</div></div>
+      <div class="print-score-box psb-acc"><div class="psb-val" id="pr-acc">0%</div><div class="psb-lbl" style="color:#0e7490;">Accuracy</div></div>
+    </div>
+    <div class="print-section-title">Question-wise Answer Sheet</div>
+    <div id="pr-answer-table"></div>
+    <div class="print-footer">Generated by NTA CBT Mock Test Platform &nbsp;|&nbsp; For Practice Only</div>
+  </div>
+</div>
+
+<!-- FULLSCREEN ROOT -->
+<div id="nta-fullscreen-root">
+
+<!-- START PAGE -->
+<div id="start-page" class="page active">
+  <div class="start-wrap">
+    <div class="start-left">
+      <div class="start-card">
+        <div class="start-card-header">
+          <div class="nta-logo">NTA</div>
+          <h2>National Testing Agency</h2>
+          <p>Computer Based Test — Mock / Practice</p>
+        </div>
+        <div class="start-card-body">
+          <div class="exam-info-grid">
+            <div class="info-box"><div class="label">Exam</div><div class="value">CUET (UG) – 2024</div></div>
+            <div class="info-box"><div class="label">Subject</div><div class="value">History</div></div>
+            <div class="info-box"><div class="label">Questions</div><div class="value">25 per Set</div></div>
+            <div class="info-box"><div class="label">Duration</div><div class="value">30 Minutes</div></div>
+            <div class="info-box"><div class="label">Max Marks</div><div class="value">100</div></div>
+            <div class="info-box"><div class="label">Negative</div><div class="value">–1 / Wrong</div></div>
+          </div>
+          <div class="form-group"><label>Candidate Name</label><input type="text" id="candidate-name" placeholder="Enter your full name"/></div>
+          <div class="form-group"><label>Roll Number</label><input type="text" id="roll-number" placeholder="Enter your roll number"/></div>
+          <button class="btn-start" id="btn-proceed" onclick="goToInstructions()" disabled>Select a Set to Continue →</button>
+        </div>
+      </div>
+    </div>
+    <div class="start-right">
+      <div class="set-selector-card">
+        <div class="set-selector-header">
+          <div class="ssh-title">📋 Choose Your Question Paper Set</div>
+          <p>Each set has 25 unique History questions. Try all 4 sets!</p>
+        </div>
+        <div class="set-grid">
+          <div class="set-card set-card-a" id="sc-A" onclick="selectSet('A')"><div class="set-icon">📜</div><div class="set-name">Set A</div><div class="set-desc">Ancient India</div><div class="set-q-count">25 Questions</div></div>
+          <div class="set-card set-card-b" id="sc-B" onclick="selectSet('B')"><div class="set-icon">🏰</div><div class="set-name">Set B</div><div class="set-desc">Medieval India</div><div class="set-q-count">25 Questions</div></div>
+          <div class="set-card set-card-c" id="sc-C" onclick="selectSet('C')"><div class="set-icon">🏛</div><div class="set-name">Set C</div><div class="set-desc">Modern India</div><div class="set-q-count">25 Questions</div></div>
+          <div class="set-card set-card-d" id="sc-D" onclick="selectSet('D')"><div class="set-icon">🇮🇳</div><div class="set-name">Set D</div><div class="set-desc">Freedom Movement</div><div class="set-q-count">25 Questions</div></div>
+        </div>
+      </div>
+      <div class="history-panel">
+        <div class="history-panel-header"><h3>📊 Past Attempts</h3><p>Set-wise performance overview</p></div>
+        <div class="bar-chart-wrap"><div class="bar-chart-title">Best Score Per Set (out of 100)</div><div class="bar-chart" id="bar-chart"></div></div>
+        <div class="history-panel-body" id="history-panel-body"><div class="history-empty">No attempts yet.<br/>Complete a test to see history here.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INSTRUCTION PAGE -->
+<div id="instruction-page" class="page">
+  <div class="site-header">
+    <div class="top-bar">
+      <div class="logo-area">
+        <div class="logo-circle">NTA</div>
+        <div class="brand"><h1>National Testing Agency</h1><p>Computer Based Test Platform</p></div>
+      </div>
+      <div style="text-align:right;font-size:12px;color:#fff;">
+        <div id="inst-name" style="font-weight:700;font-size:13px;"></div>
+        <div id="inst-info" style="opacity:.75;margin-top:2px;"></div>
+      </div>
+    </div>
+    <div class="sub-header">CUET (UG) – 2024 : History &nbsp;|&nbsp; <span id="inst-set-label">Set A</span> &nbsp;|&nbsp; Instructions</div>
+  </div>
+  <div class="instruction-body">
+    <div class="instruction-card">
+      <div class="instruction-card-title">📋 General Instructions</div>
+      <div class="instruction-card-body">
+        <ol>
+          <li>The countdown timer shows remaining time. When zero is reached, the test submits automatically.</li>
+          <li>The <strong>Question Palette</strong> on the right uses colour-coded circles for each question's status.</li>
+          <li>To answer, click an option. To deselect, use <strong>Clear Response</strong>.</li>
+          <li>Click <strong>Save &amp; Next</strong> to save and move forward.</li>
+          <li>Click <strong>Mark for Review &amp; Next</strong> to flag a question (still evaluated if answered).</li>
+          <li>After submission, the <strong>Answer Review Sheet</strong> shows correct vs your answers.</li>
+          <li>You can <strong>Download / Print</strong> your result as a PDF from the result screen.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="instruction-card">
+      <div class="instruction-card-title">🎨 Question Palette Legend</div>
+      <div class="legend-grid">
+        <div class="legend-item"><div class="legend-bubble" style="background:var(--nv)">1</div>Not Visited</div>
+        <div class="legend-item"><div class="legend-bubble" style="background:var(--na)">2</div>Not Answered</div>
+        <div class="legend-item"><div class="legend-bubble" style="background:var(--ans)">3</div>Answered</div>
+        <div class="legend-item"><div class="legend-bubble" style="background:var(--mk)">4</div>Marked for Review</div>
+        <div class="legend-item"><div class="legend-bubble" style="background:var(--mka)">5</div>Answered &amp; Marked</div>
+      </div>
+    </div>
+    <div class="instruction-card">
+      <div class="instruction-card-title">📝 Marking Scheme</div>
+      <div class="instruction-card-body">
+        <ul>
+          <li><strong>+4 marks</strong> for each correct answer &nbsp;|&nbsp; <strong>–1 mark</strong> for each wrong answer &nbsp;|&nbsp; <strong>0</strong> for unattempted.</li>
+          <li>Total: <strong>25 questions</strong> &nbsp;|&nbsp; Max: <strong>100 marks</strong> &nbsp;|&nbsp; Duration: <strong>30 minutes</strong>.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="declaration-box">
+      <div class="custom-cb-wrap">
+        <input type="checkbox" id="declaration-check" onchange="toggleProceed()"/>
+        <div class="custom-cb" id="custom-cb-visual" onclick="document.getElementById('declaration-check').click()">
+          <svg viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 5L4.5 8.5L11 1.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <label for="declaration-check">I have read and understood all instructions. I agree to abide by the examination rules and confirm I will not use any unfair means.</label>
+    </div>
+    <div class="instruction-actions">
+      <button class="btn-secondary" onclick="goToStart()">← Back</button>
+      <button class="btn-primary" id="proceed-btn" onclick="startTest()">Start Test →</button>
+    </div>
+  </div>
+</div>
+
+<!-- TEST PAGE -->
+<div id="test-page" class="page">
+  <div class="test-header">
+    <div class="top-bar">
+      <div class="logo-area">
+        <div class="logo-circle" style="width:36px;height:36px;font-size:10px;">NTA</div>
+        <div class="brand"><h1>NTA CBT — CUET (UG) 2024 <span class="set-pill" id="test-set-pill">Set A</span></h1></div>
+      </div>
+      <div style="flex:1;padding:0 14px;font-size:11.5px;color:#fff;">
+        <div>Candidate: <strong id="test-name"></strong></div>
+        <div style="margin-top:2px;">Roll: <strong id="test-roll"></strong></div>
+      </div>
+      <div class="timer-box" id="timer-box">
+        <div class="timer-label">Time Remaining</div>
+        <div class="timer-value" id="timer-display">30:00</div>
+      </div>
+    </div>
+    <div class="section-tabs"><div class="section-tab active" id="section-tab-label">Section A — History</div></div>
+  </div>
+  <div class="test-body">
+    <div class="question-area">
+      <div class="question-top-bar">
+        <div class="q-info" id="q-info-label">Question No. 1 of 25</div>
+        <div class="marks-info">Marks: <span class="pos">+4</span> &nbsp;|&nbsp; Negative: <span class="neg">–1</span></div>
+      </div>
+      <div class="question-content" id="question-content"></div>
+      <div class="bottom-nav">
+        <button class="btn-nav save-next"   onclick="saveAndNext()">Save &amp; Next</button>
+        <button class="btn-nav mark-review" onclick="markForReview()">Mark for Review &amp; Next</button>
+        <button class="btn-nav clear"       onclick="clearResponse()">Clear Response</button>
+        <button class="btn-nav prev"        onclick="prevQuestion()">← Prev</button>
+        <button class="btn-nav nxt"         onclick="nextQuestion()">Next →</button>
+        <button class="btn-nav submit-btn"  onclick="openSubmitModal()">Submit Test</button>
+      </div>
+    </div>
+    <div class="palette-sidebar">
+      <div class="palette-candidate">
+        <div class="palette-avatar" id="palette-avatar">?</div>
+        <div><div class="p-name" id="palette-name">—</div><div class="p-roll" id="palette-roll">Roll: —</div></div>
+      </div>
+      <div class="palette-title">Question Palette</div>
+      <div class="palette-grid-wrap"><div class="palette-grid" id="palette-grid"></div></div>
+      <div class="palette-legend">
+        <div class="pl-title">Legend</div>
+        <div class="pl-item"><div class="pl-dot" style="background:var(--nv)">—</div>Not Visited</div>
+        <div class="pl-item"><div class="pl-dot" style="background:var(--na)">—</div>Not Answered</div>
+        <div class="pl-item"><div class="pl-dot" style="background:var(--ans)">—</div>Answered</div>
+        <div class="pl-item"><div class="pl-dot" style="background:var(--mk)">—</div>Marked for Review</div>
+        <div class="pl-item"><div class="pl-dot" style="background:var(--mka)">—</div>Answered &amp; Marked</div>
+      </div>
+      <div class="palette-stats">
+        <div class="stat-row"><span class="s-lbl">Answered</span><span class="s-v c-ans" id="stat-ans">0</span></div>
+        <div class="stat-row"><span class="s-lbl">Not Answered</span><span class="s-v c-na"  id="stat-na">0</span></div>
+        <div class="stat-row"><span class="s-lbl">Marked</span><span class="s-v c-mk"  id="stat-mk">0</span></div>
+        <div class="stat-row"><span class="s-lbl">Not Visited</span><span class="s-v c-nv"  id="stat-nv">25</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SUBMIT MODAL -->
+<div class="modal-overlay" id="submit-modal">
+  <div class="modal">
+    <h3>⚠️ Submit Test?</h3>
+    <p>Once submitted you cannot change answers. Check the summary below.</p>
+    <div class="modal-stats">
+      <div class="modal-stat ms-ans"><strong id="m-ans">0</strong>Answered</div>
+      <div class="modal-stat ms-unans"><strong id="m-una">0</strong>Not Answered</div>
+      <div class="modal-stat ms-mark"><strong id="m-mk">0</strong>Marked</div>
+      <div class="modal-stat ms-skip"><strong id="m-nv">0</strong>Not Visited</div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeSubmitModal()">No, Continue</button>
+      <button class="btn-confirm" onclick="submitTest()">Yes, Submit</button>
+    </div>
+  </div>
+</div>
+
+<!-- FS BANNER + TIME WARNING -->
+<div id="fs-banner">
+  <div class="fs-banner-inner">
+    ⚠️ Full-Screen exited! Auto-submits in
+    <strong id="fs-countdown-text" style="font-size:17px;background:rgba(255,255,255,.25);padding:1px 8px;border-radius:6px;min-width:20px;display:inline-block;text-align:center;">5</strong>s
+    <span id="fs-exit-count">Exits: 0</span>
+    <button class="btn-reenter" onclick="enterFullscreen()">↩ Return to Full-Screen</button>
+  </div>
+</div>
+<div id="time-warning">⏰ Only <strong>5 minutes</strong> remaining! <span class="tw-close" onclick="this.parentElement.style.display='none'">✕</span></div>
+
+<!-- RESULT PAGE -->
+<div id="result-page" class="page">
+  <div class="result-card">
+    <div class="result-header"><h2>🎉 Test Submitted!</h2><p>CUET (UG) 2024 — History &nbsp;|&nbsp; <span id="res-set-label">Set A</span></p></div>
+    <div class="result-body">
+      <div class="score-circle"><div class="score-num" id="res-score">0</div><div class="score-total">out of 100</div></div>
+      <div class="result-stats-grid">
+        <div class="result-stat rs-correct"><div class="rs-val" id="res-correct">0</div><div class="rs-lbl" style="color:#065f46;">✓ Correct</div></div>
+        <div class="result-stat rs-wrong">  <div class="rs-val" id="res-wrong">0</div>  <div class="rs-lbl" style="color:#991b1b;">✗ Wrong</div></div>
+        <div class="result-stat rs-skip">   <div class="rs-val" id="res-skip">0</div>   <div class="rs-lbl" style="color:#374151;">— Skipped</div></div>
+        <div class="result-stat rs-marks">  <div class="rs-val" id="res-acc">0%</div>  <div class="rs-lbl" style="color:var(--p1);">Accuracy</div></div>
+      </div>
+      <div class="result-actions">
+        <button class="btn-result review-btn" onclick="showReview()">📋 Review Answers</button>
+        <button class="btn-result pdf-btn"    onclick="downloadPDF()">📥 Download PDF</button>
+        <button class="btn-result outline"    onclick="goToStart()">🏠 Home</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEW PAGE -->
+<div id="review-page" class="page">
+  <div class="review-header"><h2>📋 Answer Review Sheet</h2><p id="review-subtitle">CUET (UG) 2024 — History | Set A</p></div>
+  <div class="review-summary-bar">
+    <div class="rs-chip correct">✓ Correct: <span id="rv-correct">0</span></div>
+    <div class="rs-chip wrong">✗ Wrong: <span id="rv-wrong">0</span></div>
+    <div class="rs-chip skipped">— Skipped: <span id="rv-skip">0</span></div>
+    <div class="rs-chip score">🎯 Score: <span id="rv-score">0</span>/100</div>
+  </div>
+  <div class="review-filters">
+    <button class="filter-btn active" onclick="setFilter('all',this)">All (25)</button>
+    <button class="filter-btn" id="fb-correct" onclick="setFilter('correct',this)">✓ Correct</button>
+    <button class="filter-btn" id="fb-wrong"   onclick="setFilter('wrong',this)">✗ Wrong</button>
+    <button class="filter-btn" id="fb-skip"    onclick="setFilter('skip',this)">— Skipped</button>
+  </div>
+  <div class="review-body" id="review-body"></div>
+  <div class="next-set-section">
+    <h4>🚀 Ready for Another Set?</h4>
+    <p>You've completed <strong id="nss-set-done">Set A</strong>. Try a different set!</p>
+    <div class="next-set-grid" id="next-set-grid"></div>
+  </div>
+  <div class="review-footer">
+    <div style="font-size:12px;color:var(--muted);">🟢 Green = Correct &nbsp;|&nbsp; 🔴 Red = Your wrong answer</div>
+    <div style="display:flex;gap:9px;">
+      <button class="btn-review-action outline" onclick="downloadPDF()">📥 PDF</button>
+      <button class="btn-review-action outline" onclick="goToStart()">🏠 Home</button>
+      <button class="btn-review-action primary" onclick="goToStart()">🔄 Try Again</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- end #nta-fullscreen-root -->
+
+<script>
+// ══ QUESTION BANK ══
+const QUESTION_SETS = {
+  A:[
+    {q:"Which of the following is the oldest Veda?",opts:["Rigveda","Samaveda","Yajurveda","Atharvaveda"],ans:0},
+    {q:"The Indus Valley Civilization was discovered in the year:",opts:["1901","1921","1935","1947"],ans:1},
+    {q:"Who was the founder of the Maurya Empire?",opts:["Ashoka","Chandragupta Maurya","Bindusara","Bimbisara"],ans:1},
+    {q:"The rock edicts of Ashoka are written in which script?",opts:["Sanskrit","Devanagari","Brahmi","Kharosthi"],ans:2},
+    {q:"Fa Hien visited India during the reign of:",opts:["Chandragupta Maurya","Ashoka","Chandragupta II","Harsha"],ans:2},
+    {q:"Who wrote the Arthashastra?",opts:["Ashoka","Kautilya (Chanakya)","Banabhatta","Kalidasa"],ans:1},
+    {q:"The Harappan civilization was a/an _____ age civilization.",opts:["Iron","Bronze","Copper","Stone"],ans:1},
+    {q:"Which Gupta ruler is known as 'Vikramaditya'?",opts:["Chandragupta I","Samudragupta","Chandragupta II","Kumaragupta I"],ans:2},
+    {q:"The Sarnath Pillar Edict belongs to the reign of:",opts:["Chandragupta Maurya","Ashoka","Samudragupta","Chandragupta II"],ans:1},
+    {q:"Which is the oldest surviving rock-cut temple in India?",opts:["Elephanta Caves","Ajanta Caves","Lomas Rishi Cave","Kailasa Temple"],ans:2},
+    {q:"The famous Gayatri Mantra is addressed to:",opts:["Indra","Varuna","Savitri (the Sun God)","Agni"],ans:2},
+    {q:"Mahabalipuram was built during the reign of:",opts:["Chola dynasty","Pallava dynasty","Chalukya dynasty","Rashtrakuta dynasty"],ans:1},
+    {q:"The Kailasa Temple at Ellora was built by:",opts:["Dantidurga","Rashtrakuta King Krishna I","Pallava Mahendravarman","Pulakesi II"],ans:1},
+    {q:"Hiuen Tsang visited India during the reign of:",opts:["Chandragupta II","Ashoka","Harshavardhana","Pulakesi II"],ans:2},
+    {q:"The capital of the Vijayanagara Empire was:",opts:["Mysore","Hampi","Belur","Halebidu"],ans:1},
+    {q:"Who founded the Vijayanagara Empire?",opts:["Harihara and Bukka","Krishnadevaraya","Deva Raya I","Prataparudra"],ans:0},
+    {q:"The main script of Harappan seals is:",opts:["Devanagari","Brahmi","Pictographic (undeciphered)","Kharosthi"],ans:2},
+    {q:"The Rigveda contains hymns addressed mainly to:",opts:["Nature deities","Ancestors","Demons","Mortals only"],ans:0},
+    {q:"The doctrine of Ahimsa was most prominently propagated by:",opts:["Buddhism only","Jainism and Buddhism","Hinduism only","Ajivika sect"],ans:1},
+    {q:"Who was the last ruler of the Maurya Empire?",opts:["Ashoka","Bindusara","Brihadratha","Kunala"],ans:2},
+    {q:"The Gandhara school of art is associated with which religion?",opts:["Jainism","Buddhism","Hinduism","Zoroastrianism"],ans:1},
+    {q:"The Ajanta caves were primarily built during the:",opts:["Maurya period","Gupta period","Pallava period","Chola period"],ans:1},
+    {q:"The Battle of Kalinga was fought in approximately:",opts:["321 BCE","265 BCE","232 BCE","185 BCE"],ans:1},
+    {q:"Which among the following is a Dravidian language?",opts:["Sanskrit","Pali","Tamil","Prakrit"],ans:2},
+    {q:"The Arthashastra is primarily a treatise on:",opts:["Religion and philosophy","Statecraft and economic policy","Military tactics","Astronomy"],ans:1},
+  ],
+  B:[
+    {q:"The Battle of Panipat (First) was fought between:",opts:["Babur and Ibrahim Lodi","Akbar and Hemu","Humayun and Sher Shah","Aurangzeb and Dara Shikoh"],ans:0},
+    {q:"Who was the last Mughal Emperor?",opts:["Aurangzeb","Muhammad Shah","Bahadur Shah II (Zafar)","Shah Alam II"],ans:2},
+    {q:"Ain-i-Akbari was written by:",opts:["Abul Fazl","Faizi","Birbal","Todar Mal"],ans:0},
+    {q:"Akbar's policy of Sulh-i-kul refers to:",opts:["Absolute peace with all religions","Military supremacy","Revenue reform","Administrative centralization"],ans:0},
+    {q:"The Second Battle of Panipat was fought in:",opts:["1526","1556","1576","1600"],ans:1},
+    {q:"Babur wrote his memoirs in which language?",opts:["Persian","Urdu","Chagatai Turkic","Arabic"],ans:2},
+    {q:"Who was the architect of the Red Fort in Delhi?",opts:["Ustad Ahmad Lahori","Ustad Isa Khan","Mir Miran","Makramat Khan"],ans:0},
+    {q:"The term 'Sultanate' in Indian history refers to:",opts:["The Mughal Empire","The Delhi Sultans (1206–1526)","The Maratha Empire","The Vijayanagara Empire"],ans:1},
+    {q:"The founder of the Delhi Sultanate was:",opts:["Qutb-ud-din Aibak","Iltutmish","Balban","Razia Sultana"],ans:0},
+    {q:"Which Mughal emperor introduced the Din-i-Ilahi?",opts:["Babur","Humayun","Akbar","Jahangir"],ans:2},
+    {q:"The Fatehpur Sikri was built by:",opts:["Babur","Humayun","Akbar","Shah Jahan"],ans:2},
+    {q:"The Battle of Haldighati (1576) was fought between:",opts:["Akbar and Maharana Pratap","Akbar and Rana Sanga","Humayun and Sher Shah","Aurangzeb and Shivaji"],ans:0},
+    {q:"Sher Shah Suri is best known for:",opts:["Building Agra Fort","Introducing the Rupiya coin and postal system","Writing Baburnama","Founding the Mughal dynasty"],ans:1},
+    {q:"Alberuni came to India with:",opts:["Muhammad bin Qasim","Mahmud of Ghazni","Muhammad Ghori","Timur"],ans:1},
+    {q:"The Qutb Minar in Delhi was commissioned by:",opts:["Iltutmish","Qutb-ud-din Aibak","Alauddin Khalji","Balban"],ans:1},
+    {q:"Vijayanagara means:",opts:["City of Victory","City of God","Golden City","Sacred City"],ans:0},
+    {q:"Which Mughal emperor is buried at Agra?",opts:["Babur","Humayun","Akbar","Jahangir"],ans:2},
+    {q:"The Maratha kingdom was founded by:",opts:["Baji Rao I","Shivaji","Sambhaji","Balaji Vishwanath"],ans:1},
+    {q:"The Third Battle of Panipat (1761) was fought between:",opts:["Marathas and Mughals","Marathas and Ahmad Shah Abdali","Sikhs and Mughals","Rajputs and Mughals"],ans:1},
+    {q:"Ibn Battuta visited India during the reign of:",opts:["Alauddin Khalji","Muhammad bin Tughluq","Firuz Shah Tughluq","Balban"],ans:1},
+    {q:"Razia Sultana was the daughter of:",opts:["Qutb-ud-din Aibak","Iltutmish","Balban","Alauddin Khalji"],ans:1},
+    {q:"Which Mughal emperor wrote the Tuzuk-i-Jahangiri?",opts:["Akbar","Jahangir","Shah Jahan","Aurangzeb"],ans:1},
+    {q:"The Chola dynasty was primarily based in:",opts:["Western Deccan","Eastern Deccan and Tamil Nadu","Bengal","Punjab"],ans:1},
+    {q:"The Mughal empire reached its greatest territorial extent under:",opts:["Akbar","Shah Jahan","Aurangzeb","Jahangir"],ans:2},
+    {q:"The famous Kohinoor diamond was taken by Nadir Shah from India during whose reign?",opts:["Aurangzeb","Farrukhsiyar","Muhammad Shah","Ahmad Shah"],ans:2},
+  ],
+  C:[
+    {q:"The Battle of Plassey (1757) was fought between:",opts:["Siraj-ud-Daula and the East India Company","Mir Qasim and the British","Hyder Ali and the British","Tipu Sultan and the British"],ans:0},
+    {q:"The Regulating Act was passed in the year:",opts:["1757","1765","1773","1784"],ans:2},
+    {q:"Who was the first Viceroy of India?",opts:["Lord Dalhousie","Lord Canning","Lord Mayo","Lord Ripon"],ans:1},
+    {q:"The Subsidiary Alliance system was introduced by:",opts:["Lord Cornwallis","Lord Wellesley","Lord Dalhousie","Lord Hastings"],ans:1},
+    {q:"The Permanent Settlement was introduced in 1793 by:",opts:["Lord Wellesley","Lord Cornwallis","Lord Bentinck","Warren Hastings"],ans:1},
+    {q:"The doctrine of 'Lapse' was introduced by:",opts:["Lord Wellesley","Lord Dalhousie","Lord Bentinck","Lord Cornwallis"],ans:1},
+    {q:"The Treaty of Srirangapatna was signed in which year?",opts:["1789","1792","1799","1800"],ans:1},
+    {q:"The Ryotwari settlement was introduced by:",opts:["Thomas Munro","Lord Cornwallis","Lord Wellesley","John Lawrence"],ans:0},
+    {q:"The Vernacular Press Act of 1878 was introduced by:",opts:["Lord Lytton","Lord Ripon","Lord Curzon","Lord Dufferin"],ans:0},
+    {q:"The Indian National Congress was founded in the year:",opts:["1875","1880","1885","1890"],ans:2},
+    {q:"Who was the first President of the Indian National Congress?",opts:["Dadabhai Naoroji","W. C. Bonnerjee","Bal Gangadhar Tilak","Surendranath Banerjea"],ans:1},
+    {q:"Who introduced the Vernacular Press Act of 1878?",opts:["Lord Lytton","Lord Ripon","Lord Curzon","Lord Dufferin"],ans:0},
+    {q:"The Partition of Bengal was annulled in:",opts:["1905","1906","1911","1919"],ans:2},
+    {q:"The Jallianwala Bagh massacre occurred on:",opts:["13 April 1919","19 April 1919","13 March 1919","10 April 1920"],ans:0},
+    {q:"The Rowlatt Act (1919) aimed to:",opts:["Grant women voting rights","Suppress revolutionary activities","Establish provincial autonomy","Introduce dyarchy"],ans:1},
+    {q:"The Champaran Satyagraha (1917) was related to:",opts:["Salt tax","Indigo cultivation","Land revenue","Textile workers"],ans:1},
+    {q:"The Simon Commission visited India in:",opts:["1926","1927","1928","1929"],ans:2},
+    {q:"Who founded the Brahmo Samaj?",opts:["Swami Vivekananda","Dayananda Saraswati","Raja Ram Mohan Roy","Keshub Chunder Sen"],ans:2},
+    {q:"The Arya Samaj was founded by:",opts:["Raja Ram Mohan Roy","Dayananda Saraswati","Swami Vivekananda","Annie Besant"],ans:1},
+    {q:"The Ilbert Bill controversy (1883) was related to:",opts:["Press freedom","Indian judges trying European criminals","Land revenue","Army recruitment"],ans:1},
+    {q:"The Indian Councils Act of 1909 is also known as the:",opts:["Morley-Minto Reforms","Montagu-Chelmsford Reforms","Simon Commission Report","Government of India Act"],ans:0},
+    {q:"Who was known as 'Frontier Gandhi'?",opts:["Khan Abdul Ghaffar Khan","Lala Lajpat Rai","Bal Gangadhar Tilak","Bipin Chandra Pal"],ans:0},
+    {q:"The first session of the Indian National Congress was held in:",opts:["Calcutta","Bombay","Madras","Allahabad"],ans:1},
+    {q:"The Poona Pact (1932) was signed between:",opts:["Gandhi and Jinnah","Gandhi and Ambedkar","Nehru and Ambedkar","Congress and Muslim League"],ans:1},
+    {q:"Lord Curzon's partition of Bengal was primarily aimed at:",opts:["Administrative efficiency","Dividing Hindus and Muslims","Creating a new province","Reducing terrorism"],ans:1},
+  ],
+  D:[
+    {q:"The Non-Cooperation Movement was launched in:",opts:["1919","1920","1921","1922"],ans:1},
+    {q:"The Non-Cooperation Movement was suspended after the:",opts:["Chauri Chaura incident","Jallianwala Bagh massacre","Simon Commission protest","Dandi March"],ans:0},
+    {q:"The Chauri Chaura incident took place in:",opts:["1919","1920","1921","1922"],ans:3},
+    {q:"The Dandi March was launched to protest against:",opts:["The Rowlatt Act","The salt tax","British land policies","The partition of Bengal"],ans:1},
+    {q:"The Quit India Movement was launched in the year:",opts:["1940","1941","1942","1945"],ans:2},
+    {q:"Who authored the book 'Discovery of India'?",opts:["Mahatma Gandhi","B. R. Ambedkar","Jawaharlal Nehru","Subhas Chandra Bose"],ans:2},
+    {q:"Who was known as 'Punjab Kesari'?",opts:["Bhagat Singh","Bal Gangadhar Tilak","Lala Lajpat Rai","Ranjit Singh"],ans:2},
+    {q:"Consider the following events:\n1. Soldiers revolted at Meerut.\n2. Bahadur Shah Zafar was declared the leader.\n3. Awadh was captured by the British.\n4. Relief of Lucknow was painted by Thomas Jones Barker.\nWrite these events in correct chronological order:",opts:["1, 2, 3, 4","2, 1, 3, 4","3, 1, 2, 4","4, 3, 2, 1"],ans:2},
+    {q:"Which leader of the Revolt of 1857 was based in Lucknow?",opts:["Nana Sahib","Begum Hazrat Mahal","Rani Lakshmibai","Tantia Tope"],ans:1},
+    {q:"The Indian Independence Act was passed in:",opts:["June 1947","July 1947","August 1947","September 1947"],ans:1},
+    {q:"The Cabinet Mission came to India in:",opts:["1944","1945","1946","1947"],ans:2},
+    {q:"Bhagat Singh was hanged in:",opts:["1929","1930","1931","1932"],ans:2},
+    {q:"The Indian National Army (INA) was founded by:",opts:["Subhas Chandra Bose","Mohan Singh","Rash Behari Bose","Jawaharlal Nehru"],ans:2},
+    {q:"The demand for Pakistan was first formally made in:",opts:["1930","1935","1940","1942"],ans:2},
+    {q:"Who gave the slogan 'Do or Die' during the Quit India Movement?",opts:["Nehru","Patel","Gandhi","Subhas Chandra Bose"],ans:2},
+    {q:"The Lucknow Pact (1916) was between:",opts:["Congress and Muslim League","Congress and Hindu Mahasabha","Muslim League and the British","Congress and the British"],ans:0},
+    {q:"The 'Swadeshi Movement' was launched in response to:",opts:["The Rowlatt Act","The partition of Bengal 1905","The Jallianwala Bagh massacre","The Simon Commission"],ans:1},
+    {q:"Who said 'Swaraj is my birthright and I shall have it'?",opts:["Mahatma Gandhi","Jawaharlal Nehru","Bal Gangadhar Tilak","Subhas Chandra Bose"],ans:2},
+    {q:"The Khilafat Movement was in support of:",opts:["Ottoman Caliph","Indian Muslims' rights","Pan-Islamic unity in India","Partition of India"],ans:0},
+    {q:"Mahatma Gandhi returned to India from South Africa in:",opts:["1912","1913","1915","1917"],ans:2},
+    {q:"The Nehru Report (1928) was drafted to propose:",opts:["Dominion status for India","Complete independence","Separate electorates","Federal structure"],ans:0},
+    {q:"Who presided over the Karachi Session of Congress (1931)?",opts:["Gandhi","Nehru","Sardar Patel","Subhas Chandra Bose"],ans:2},
+    {q:"The 'August Offer' of 1940 was made by:",opts:["Lord Mountbatten","Lord Wavell","Lord Linlithgow","Lord Curzon"],ans:2},
+    {q:"Subhas Chandra Bose escaped from India in:",opts:["1939","1940","1941","1942"],ans:2},
+    {q:"India became a republic on:",opts:["15 August 1947","26 November 1949","26 January 1950","2 October 1950"],ans:2},
+  ]
+};
+
+const SET_INFO={
+  A:{label:'Set A',desc:'Ancient India',icon:'📜',pill:'set-pill-a',color:'var(--set-a)'},
+  B:{label:'Set B',desc:'Medieval India',icon:'🏰',pill:'set-pill-b',color:'var(--set-b)'},
+  C:{label:'Set C',desc:'Modern India',icon:'🏛',pill:'set-pill-c',color:'var(--set-c)'},
+  D:{label:'Set D',desc:'Freedom Movement',icon:'🇮🇳',pill:'set-pill-d',color:'var(--set-d)'},
+};
+
+// STATE
+let selectedSet=null,QUESTIONS=[],qState=new Array(25).fill(0),qAnswers=new Array(25).fill(-1);
+let currentQ=0,timerInterval=null,timeLeft=30*60,tenMinWarned=false;
+let candidateName='',rollNumber='',lastResults=null,currentFilter='all',testStartTime=null;
+let fsExitCount=0,fsAutoSubmitTimer=null,fsCountdown=5;
+const TOTAL=25;
+
+// ── LOCAL STORAGE ──
+const LS_KEY='nta_mock_attempts_v4';
+function loadAttempts(){try{return JSON.parse(localStorage.getItem(LS_KEY))||[];}catch{return[];}}
+function saveAttempt(a){const arr=loadAttempts();arr.unshift(a);if(arr.length>20)arr.pop();localStorage.setItem(LS_KEY,JSON.stringify(arr));}
+function clearAttempts(){if(confirm('Delete all past attempts?')){localStorage.removeItem(LS_KEY);renderHistory();}}
+
+function renderHistory(){
+  const body=document.getElementById('history-panel-body');
+  const chart=document.getElementById('bar-chart');
+  const attempts=loadAttempts();
+  const bestScore={A:null,B:null,C:null,D:null};
+  attempts.forEach(a=>{if(bestScore[a.set]===null||a.score>bestScore[a.set])bestScore[a.set]=a.score;});
+  chart.innerHTML=['A','B','C','D'].map(s=>{
+    const si=SET_INFO[s];const best=bestScore[s];const pct=best!==null?Math.max(2,Math.round(best/100*100)):0;const label=best!==null?best+'/100':'\u2014';
+    return`<div class="bar-row"><div class="bar-set-label">${si.icon} ${s}</div><div class="bar-track">${best!==null?`<div class="bar-fill bar-fill-${s.toLowerCase()}" style="width:${pct}%"></div>`:''}</div><div class="bar-score-label">${label}</div></div>`;
+  }).join('');
+  if(!['A','B','C','D'].some(s=>bestScore[s]!==null))chart.innerHTML='<div class="bar-no-attempts">No scores yet \u2014 complete a test!</div>';
+  if(!attempts.length){body.innerHTML='<div class="history-empty">No attempts yet.<br/>Complete a test to see history here.</div>';return;}
+  body.innerHTML=attempts.map(a=>`<div class="attempt-card"><div class="ac-top"><div class="ac-name">${a.name}</div><div class="ac-date">${a.date}</div></div><div><span class="ac-set-badge badge-${a.set.toLowerCase()}">${SET_INFO[a.set].icon} ${SET_INFO[a.set].label} \u2014 ${SET_INFO[a.set].desc}</span></div><div class="ac-score">${a.score} <span style="font-size:12px;opacity:.55">/ 100</span></div><div class="ac-meta"><span class="ac-badge correct">\u2713 ${a.correct}</span><span class="ac-badge wrong">\u2717 ${a.wrong}</span><span class="ac-badge skip">\u2014 ${a.skip}</span><span class="ac-badge acc">\u26a1 ${a.accuracy}%</span></div></div>`).join('')+`<button class="history-clear-btn" onclick="clearAttempts()">\uD83D\uDDD1 Clear All History</button>`;
+}
+
+function selectSet(s){
+  selectedSet=s;
+  document.querySelectorAll('.set-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById(`sc-${s}`).classList.add('selected');
+  const btn=document.getElementById('btn-proceed');btn.disabled=false;btn.textContent=`Start with ${SET_INFO[s].label} (${SET_INFO[s].desc}) \u2192`;
+}
+
+// ── PAGE NAVIGATION ──
+function showPage(id){
+  const root=document.getElementById('nta-fullscreen-root');
+  root.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function goToStart(){exitFullscreen();clearInterval(timerInterval);clearFsAutoSubmit();document.getElementById('fs-banner').style.display='none';document.getElementById('time-warning').style.display='none';renderHistory();showPage('start-page');}
+function goToInstructions(){
+  if(!selectedSet){alert('Please select a question paper set first.');return;}
+  candidateName=document.getElementById('candidate-name').value.trim()||'Candidate';
+  rollNumber=document.getElementById('roll-number').value.trim()||'MOCK000001';
+  document.getElementById('inst-name').textContent=candidateName;
+  document.getElementById('inst-info').textContent='Roll No: '+rollNumber+' | '+SET_INFO[selectedSet].label;
+  document.getElementById('inst-set-label').textContent=SET_INFO[selectedSet].icon+' '+SET_INFO[selectedSet].label+' \u2014 '+SET_INFO[selectedSet].desc;
+  document.getElementById('declaration-check').checked=false;
+  document.getElementById('proceed-btn').classList.remove('enabled');
+  showPage('instruction-page');
+}
+function toggleProceed(){
+  const cb=document.getElementById('declaration-check');
+  const vis=document.getElementById('custom-cb-visual');
+  if(vis)vis.classList.toggle('checked',cb.checked);
+  document.getElementById('proceed-btn').classList.toggle('enabled',cb.checked);
+}
+
+// ── FULLSCREEN ──
+function enterFullscreen(){const e=document.documentElement;(e.requestFullscreen||e.webkitRequestFullscreen||e.mozRequestFullScreen||function(){}).call(e);}
+function exitFullscreen(){try{if(document.fullscreenElement||document.webkitFullscreenElement)(document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);}catch(e){}}
+function setupFsWatcher(){['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange'].forEach(ev=>document.addEventListener(ev,onFsChange));}
+function onFsChange(){
+  const isFs=!!(document.fullscreenElement||document.webkitFullscreenElement||document.mozFullScreenElement||document.msFullscreenElement);
+  const testOn=document.getElementById('test-page').classList.contains('active');
+  if(!testOn){clearFsAutoSubmit();return;}
+  if(!isFs){fsExitCount++;fsCountdown=5;document.getElementById('fs-exit-count').textContent='Exits: '+fsExitCount;showFsBanner();startFsCountdown();}
+  else{clearFsAutoSubmit();document.getElementById('fs-banner').style.display='none';}
+}
+function showFsBanner(){document.getElementById('fs-banner').style.display='block';document.getElementById('fs-countdown-text').textContent=fsCountdown;}
+function startFsCountdown(){clearFsAutoSubmit();fsAutoSubmitTimer=setInterval(()=>{fsCountdown--;const el=document.getElementById('fs-countdown-text');if(el)el.textContent=fsCountdown;if(fsCountdown<=0){clearFsAutoSubmit();submitTest();}},1000);}
+function clearFsAutoSubmit(){if(fsAutoSubmitTimer){clearInterval(fsAutoSubmitTimer);fsAutoSubmitTimer=null;}fsCountdown=5;}
+
+// ── START TEST ──
+function startTest(){
+  QUESTIONS=QUESTION_SETS[selectedSet];
+  qState=new Array(TOTAL).fill(0);qAnswers=new Array(TOTAL).fill(-1);currentQ=0;timeLeft=30*60;tenMinWarned=false;fsExitCount=0;testStartTime=new Date();
+  const si=SET_INFO[selectedSet];
+  document.getElementById('test-name').textContent=candidateName;document.getElementById('test-roll').textContent=rollNumber;
+  document.getElementById('palette-name').textContent=candidateName;document.getElementById('palette-roll').textContent='Roll: '+rollNumber;
+  document.getElementById('palette-avatar').textContent=candidateName.charAt(0).toUpperCase()||'?';
+  const pill=document.getElementById('test-set-pill');pill.textContent=si.icon+' '+si.label;pill.className='set-pill '+si.pill;
+  document.getElementById('section-tab-label').textContent='Section A \u2014 History | '+si.label;
+  buildPalette();markVisited(0);renderQuestion();startTimer();showPage('test-page');setTimeout(enterFullscreen,300);
+}
+
+// ── TIMER ──
+function startTimer(){
+  clearInterval(timerInterval);
+  timerInterval=setInterval(()=>{
+    timeLeft--;
+    const m=String(Math.floor(timeLeft/60)).padStart(2,'0'),s=String(timeLeft%60).padStart(2,'0');
+    document.getElementById('timer-display').textContent=m+':'+s;
+    document.getElementById('timer-box').classList.toggle('urgent',timeLeft<=120);
+    if(timeLeft===300&&!tenMinWarned){tenMinWarned=true;document.getElementById('time-warning').style.display='block';setTimeout(()=>document.getElementById('time-warning').style.display='none',6000);}
+    if(timeLeft<=0){clearInterval(timerInterval);submitTest();}
+  },1000);
+}
+
+// ── RENDER QUESTION ──
+function renderQuestion(){
+  const q=QUESTIONS[currentQ];
+  document.getElementById('q-info-label').textContent=`Question No. ${currentQ+1} of ${TOTAL}`;
+  const lines=q.q.split('\n');
+  let qHtml=`<span class="q-num">${currentQ+1}.</span> ${lines[0]}`;
+  if(lines.length>1){qHtml+='<ol class="sub-list">';for(let i=1;i<lines.length;i++)qHtml+=`<li>${lines[i]}</li>`;qHtml+='</ol>';}
+  const L=['A','B','C','D'];
+  const opts=q.opts.map((o,i)=>`<li class="option-item ${qAnswers[currentQ]===i?'selected':''}" onclick="selectOption(${i})"><input type="radio" name="opt" ${qAnswers[currentQ]===i?'checked':''}/><label><span class="opt-letter">${L[i]})</span>${o}</label></li>`).join('');
+  document.getElementById('question-content').innerHTML=`<div class="question-text">${qHtml}</div><ul class="options-list">${opts}</ul>`;
+  updatePalette();
+}
+function selectOption(idx){qAnswers[currentQ]=idx;document.querySelectorAll('.option-item').forEach((el,i)=>{el.classList.toggle('selected',i===idx);el.querySelector('input').checked=(i===idx);});}
+
+// ── NAVIGATION ──
+function markVisited(i){if(qState[i]===0)qState[i]=1;}
+function saveAndNext(){qState[currentQ]=qAnswers[currentQ]!==-1?((qState[currentQ]===3||qState[currentQ]===4)?4:2):1;updatePalette();goNextQ();}
+function markForReview(){qState[currentQ]=qAnswers[currentQ]!==-1?4:3;updatePalette();goNextQ();}
+function clearResponse(){qAnswers[currentQ]=-1;qState[currentQ]=1;renderQuestion();updatePalette();}
+function prevQuestion(){if(qState[currentQ]===0)qState[currentQ]=1;updatePalette();if(currentQ>0){currentQ--;markVisited(currentQ);renderQuestion();}}
+function nextQuestion(){if(qState[currentQ]===0)qState[currentQ]=1;updatePalette();goNextQ();}
+function goNextQ(){if(currentQ<TOTAL-1){currentQ++;markVisited(currentQ);renderQuestion();}}
+function jumpToQuestion(i){if(qState[currentQ]===0)qState[currentQ]=1;updatePalette();currentQ=i;markVisited(i);renderQuestion();}
+
+// ── PALETTE ──
+const SC=['s-nv','s-na','s-ans','s-mk','s-mka'];
+function buildPalette(){
+  const g=document.getElementById('palette-grid');g.innerHTML='';
+  for(let i=0;i<TOTAL;i++){const b=document.createElement('button');b.className=`palette-btn ${SC[qState[i]]}`;b.id=`pb-${i}`;b.textContent=i+1;b.onclick=()=>jumpToQuestion(i);g.appendChild(b);}
+}
+function updatePalette(){
+  let ans=0,na=0,mk=0,nv=0;
+  for(let i=0;i<TOTAL;i++){
+    const b=document.getElementById(`pb-${i}`);
+    if(b){b.className=`palette-btn ${SC[qState[i]]}`;b.classList.toggle('active-q',i===currentQ);}
+    if(qState[i]===0)nv++;else if(qState[i]===1)na++;else if(qState[i]===2)ans++;else if(qState[i]===3)mk++;else if(qState[i]===4){ans++;mk++;}
+  }
+  document.getElementById('stat-ans').textContent=ans;document.getElementById('stat-na').textContent=na;
+  document.getElementById('stat-mk').textContent=mk;document.getElementById('stat-nv').textContent=nv;
+}
+
+// ── SUBMIT MODAL ──
+function openSubmitModal(){
+  let ans=0,na=0,mk=0,nv=0;
+  qState.forEach(s=>{if(s===0)nv++;else if(s===1)na++;else if(s===2)ans++;else if(s===3)mk++;else if(s===4)ans++;});
+  document.getElementById('m-ans').textContent=ans;document.getElementById('m-una').textContent=na;
+  document.getElementById('m-mk').textContent=mk;document.getElementById('m-nv').textContent=nv;
+  document.getElementById('submit-modal').classList.add('open');
+}
+function closeSubmitModal(){document.getElementById('submit-modal').classList.remove('open');}
+document.getElementById('submit-modal').addEventListener('click',e=>{if(e.target===document.getElementById('submit-modal'))closeSubmitModal();});
+
+// ── SUBMIT TEST ──
+function submitTest(){
+  clearInterval(timerInterval);clearFsAutoSubmit();closeSubmitModal();exitFullscreen();
+  document.getElementById('fs-banner').style.display='none';document.getElementById('time-warning').style.display='none';
+  let correct=0,wrong=0,skip=0;
+  QUESTIONS.forEach((q,i)=>{const a=qAnswers[i];if(a===-1)skip++;else if(a===q.ans)correct++;else wrong++;});
+  const score=correct*4-wrong;const accuracy=correct+wrong>0?Math.round(correct/(correct+wrong)*100):0;
+  const endTime=new Date();const timeTakenSec=Math.round((endTime-testStartTime)/1000);const timeTakenStr=Math.floor(timeTakenSec/60)+'m '+(timeTakenSec%60)+'s';
+  lastResults={correct,wrong,skip,score,accuracy,set:selectedSet,timeTaken:timeTakenStr};
+  const now=new Date();const dateStr=now.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})+' '+now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+  saveAttempt({name:candidateName,roll:rollNumber,set:selectedSet,score,correct,wrong,skip,accuracy,date:dateStr,answers:[...qAnswers]});
+  populatePrintPage(correct,wrong,skip,score,accuracy,dateStr,timeTakenStr);
+  const si=SET_INFO[selectedSet];
+  document.getElementById('res-set-label').textContent=si.icon+' '+si.label+' \u2014 '+si.desc;
+  document.getElementById('res-score').textContent=score;document.getElementById('res-correct').textContent=correct;
+  document.getElementById('res-wrong').textContent=wrong;document.getElementById('res-skip').textContent=skip;
+  document.getElementById('res-acc').textContent=accuracy+'%';
+  showPage('result-page');
+}
+
+// ── PRINT / PDF ──
+function populatePrintPage(correct,wrong,skip,score,accuracy,dateStr,timeTaken){
+  const si=SET_INFO[selectedSet];
+  document.getElementById('pr-set-label').textContent=si.icon+' '+si.label+' \u2014 '+si.desc;
+  document.getElementById('pr-name').textContent=candidateName;document.getElementById('pr-roll').textContent=rollNumber;
+  document.getElementById('pr-date').textContent=dateStr;document.getElementById('pr-time').textContent=timeTaken;
+  document.getElementById('pr-score').textContent=score;document.getElementById('pr-correct').textContent=correct;
+  document.getElementById('pr-wrong').textContent=wrong;document.getElementById('pr-acc').textContent=accuracy+'%';
+  const L=['A','B','C','D'];let tableHtml='';
+  QUESTIONS.forEach((q,i)=>{
+    const ua=qAnswers[i],ca=q.ans;const youAns=ua===-1?'\u2014':L[ua]+') '+q.opts[ua].substring(0,22)+(q.opts[ua].length>22?'\u2026':'');
+    const corrAns=L[ca]+') '+q.opts[ca].substring(0,22)+(q.opts[ca].length>22?'\u2026':'');const cls=ua===-1?'skip':ua===ca?'correct':'wrong';
+    const shortQ=q.q.split('\n')[0].substring(0,60)+(q.q.split('\n')[0].length>60?'\u2026':'');
+    tableHtml+=`<div class="print-q-row"><div class="pqr-num">Q${i+1}</div><div class="pqr-q">${shortQ}</div><div class="pqr-your ${cls}">${youAns}</div><div class="pqr-correct">${corrAns}</div></div>`;
+  });
+  document.getElementById('pr-answer-table').innerHTML=tableHtml;
+}
+function downloadPDF(){window.print();}
+
+// ── REVIEW ──
+function showReview(){
+  const{correct,wrong,skip,score,set}=lastResults;const si=SET_INFO[set];
+  document.getElementById('review-subtitle').textContent=`CUET (UG) 2024 \u2014 History | ${si.icon} ${si.label} \u2014 ${si.desc} | ${candidateName}`;
+  document.getElementById('rv-correct').textContent=correct;document.getElementById('rv-wrong').textContent=wrong;
+  document.getElementById('rv-skip').textContent=skip;document.getElementById('rv-score').textContent=score;
+  document.getElementById('fb-correct').textContent='\u2713 Correct ('+correct+')';
+  document.getElementById('fb-wrong').textContent='\u2717 Wrong ('+wrong+')';
+  document.getElementById('fb-skip').textContent='\u2014 Skipped ('+skip+')';
+  currentFilter='all';document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.filter-btn')[0].classList.add('active');
+  renderReviewCards('all');renderNextSetSuggestion();showPage('review-page');
+}
+function renderNextSetSuggestion(){
+  const done=selectedSet;const si=SET_INFO[done];
+  document.getElementById('nss-set-done').textContent=si.icon+' '+si.label;
+  const attempts=loadAttempts();const attemptedSets=new Set(attempts.map(a=>a.set));const grid=document.getElementById('next-set-grid');
+  grid.innerHTML=['A','B','C','D'].map(s=>{
+    const info=SET_INFO[s];const isDone=s===done;const wasAttempted=attemptedSets.has(s)&&s!==done;
+    const cls=isDone?'next-set-btn done':`next-set-btn nsb-${s.toLowerCase()}`;
+    const label=isDone?info.icon+' '+info.label+' (Current)':wasAttempted?info.icon+' '+info.label+' \u21a9 Retry':info.icon+' '+info.label+' \u2014 '+info.desc;
+    if(isDone)return`<button class="${cls}" disabled>${label}</button>`;
+    return`<button class="${cls}" onclick="switchToSet('${s}')">${label}</button>`;
+  }).join('');
+}
+function switchToSet(s){selectedSet=s;document.querySelectorAll('.set-card').forEach(c=>c.classList.remove('selected'));const sc=document.getElementById(`sc-${s}`);if(sc)sc.classList.add('selected');goToInstructions();}
+function setFilter(f,el){currentFilter=f;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');renderReviewCards(f);}
+function renderReviewCards(filter){
+  const L=['A','B','C','D'];let html='';
+  QUESTIONS.forEach((q,i)=>{
+    const ua=qAnswers[i],ca=q.ans;let rc,badge;
+    if(ua===-1){rc='r-skipped';badge='<span class="rq-badge skipped">\u2014 Skipped</span>';}
+    else if(ua===ca){rc='r-correct';badge='<span class="rq-badge correct">\u2713 Correct (+4)</span>';}
+    else{rc='r-wrong';badge='<span class="rq-badge wrong">\u2717 Wrong (\u20131)</span>';}
+    if(filter==='correct'&&rc!=='r-correct')return;
+    if(filter==='wrong'&&rc!=='r-wrong')return;
+    if(filter==='skip'&&rc!=='r-skipped')return;
+    const lines=q.q.split('\n');let qh=`<strong>Q${i+1}.</strong> ${lines[0]}`;
+    if(lines.length>1){qh+='<ol style="margin:5px 0 5px 18px;line-height:1.85;">';for(let k=1;k<lines.length;k++)qh+=`<li>${lines[k]}</li>`;qh+='</ol>';}
+    const opts=q.opts.map((o,j)=>{
+      let cls='',ic='plain-icon',it='';
+      if(j===ca&&ua===ca){cls='is-user-correct';ic='correct-icon';it='\u2713';}else if(j===ca){cls='is-correct';ic='correct-icon';it='\u2713';}else if(j===ua){cls='is-user-wrong';ic='wrong-icon';it='\u2717';}
+      return`<div class="rqc-option ${cls}"><div class="opt-icon ${ic}">${it||L[j]}</div><span><strong>${L[j]})</strong> ${o}</span></div>`;
+    }).join('');
+    html+=`<div class="review-q-card ${rc}"><div class="rqc-header"><span class="rq-num">Question ${i+1}</span>${badge}</div><div class="rqc-body"><div class="rqc-q-text">${qh}</div><div class="rqc-options">${opts}</div>${ua!==-1?`<div style="font-size:11px;color:var(--muted);margin-top:7px;">Your: <strong>${L[ua]}) ${q.opts[ua]}</strong> &nbsp;|&nbsp; Correct: <strong>${L[ca]}) ${q.opts[ca]}</strong></div>`:''}</div></div>`;
+  });
+  document.getElementById('review-body').innerHTML=html||'<div style="text-align:center;padding:36px;color:var(--muted);">No questions match this filter.</div>';
+}
+
+// ── INIT ──
+setupFsWatcher();
+renderHistory();
+</script>
+</body>
+</html>
