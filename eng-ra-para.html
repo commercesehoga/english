@@ -1417,7 +1417,7 @@ function renderQuestion() {
     const q = mockTest.questions[currentQuestionIndex];
     document.getElementById('current-section').textContent = q.section;
     document.getElementById('section-badge').textContent = '📘 ' + q.section;
-    questionTextEl.textContent = q.text;
+    questionTextEl.innerHTML = q.text;
     qNumEl.textContent = q.id;
     curQNumEl.textContent = q.id;
     optionsEl.innerHTML = '';
