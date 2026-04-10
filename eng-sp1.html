@@ -1,0 +1,63 @@
+
+
+<style>
+  .cs-wrap { min-height: 520px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem 1.5rem; text-align: center; }
+  .cs-badge { display: inline-block; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; background: #E6F1FB; color: #185FA5; border: 0.5px solid #B5D4F4; margin-bottom: 2rem; }
+  .cs-title { font-size: 48px; font-weight: 500; color: #185FA5; margin: 0 0 0.5rem; line-height: 1.1; }
+  .cs-sub { font-size: 15px; color: var(--color-text-secondary); margin: 0 0 2.5rem; max-width: 360px; line-height: 1.6; }
+  .cs-sub span { color: #185FA5; font-weight: 500; }
+  .timer { display: flex; gap: 12px; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; }
+  .t-box { background: var(--color-background-primary); border: 0.5px solid #B5D4F4; border-radius: 12px; padding: 16px 20px; min-width: 72px; }
+  .t-num { font-size: 32px; font-weight: 500; color: #185FA5; line-height: 1; display: block; }
+  .t-label { font-size: 11px; color: #378ADD; text-transform: uppercase; letter-spacing: 0.07em; margin-top: 6px; display: block; }
+  .cs-divider { width: 48px; height: 1.5px; background: #B5D4F4; margin: 0 auto 2rem; border-radius: 2px; }
+  .subjects { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 480px; margin: 0 auto; }
+  .sub-pill { font-size: 12px; padding: 5px 12px; border-radius: 20px; background: #E6F1FB; color: #185FA5; border: 0.5px solid #B5D4F4; }
+</style>
+<div class="cs-wrap">
+  <div class="cs-badge">Launching 1 May 2026</div>
+  <div class="cs-title">Coming soon</div>
+  <p class="cs-sub">Special mock tests for <span>all subjects</span> will be available from 1st May 2026. Get ready to practise and excel.</p>
+  <div class="timer">
+    <div class="t-box"><span class="t-num" id="t-d">--</span><span class="t-label">Days</span></div>
+    <div class="t-box"><span class="t-num" id="t-h">--</span><span class="t-label">Hours</span></div>
+    <div class="t-box"><span class="t-num" id="t-m">--</span><span class="t-label">Minutes</span></div>
+    <div class="t-box"><span class="t-num" id="t-s">--</span><span class="t-label">Seconds</span></div>
+  </div>
+  <div class="cs-divider"></div>
+  <div class="subjects">
+    <span class="sub-pill">Business Studies</span>
+    <span class="sub-pill">Accountancy</span>
+    <span class="sub-pill">Economics</span>
+    <span class="sub-pill">Mathematics</span>
+    <span class="sub-pill">English</span>
+    <span class="sub-pill">Physics</span>
+    <span class="sub-pill">Chemistry</span>
+    <span class="sub-pill">Biology</span>
+    <span class="sub-pill">& more</span>
+  </div>
+</div>
+<script>
+  function tick() {
+    var target = new Date('2026-05-01T00:00:00');
+    var now = new Date();
+    var diff = target - now;
+    if (diff <= 0) {
+      document.getElementById('t-d').textContent = '0';
+      document.getElementById('t-h').textContent = '0';
+      document.getElementById('t-m').textContent = '0';
+      document.getElementById('t-s').textContent = '0';
+      return;
+    }
+    var d = Math.floor(diff / 86400000);
+    var h = Math.floor((diff % 86400000) / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('t-d').textContent = d;
+    document.getElementById('t-h').textContent = String(h).padStart(2,'0');
+    document.getElementById('t-m').textContent = String(m).padStart(2,'0');
+    document.getElementById('t-s').textContent = String(s).padStart(2,'0');
+  }
+  tick();
+  setInterval(tick, 1000);
+</script>
