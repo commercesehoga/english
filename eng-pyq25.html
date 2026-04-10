@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thunderstudy CBT — English 2025 PYQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+const SUBJECT_ID  = "eng";
+const CHAPTER_ID  = "eng-pyq25";
+</script>
+
+<style>
+:root {
+    --primary: #1a6fc4;
+    --primary-dark: #0d4f96;
+    --primary-light: #4a9de8;
+    --accent: #0ea5e9;
+    --accent2: #38bdf8;
+    --white: #ffffff;
+    --off-white: #f0f6ff;
+    --light-blue: #dbeafe;
+    --mid-blue: #bfdbfe;
+    --border: #bfdbfe;
+    --text-dark: #0f1e3d;
+    --text-mid: #2d4a7a;
+    --text-muted: #6b8ab5;
+    --correct: #059669;
+    --correct-bg: #ecfdf5;
+    --incorrect: #dc2626;
+    --incorrect-bg: #fef2f2;
+    --answered: #22c55e;
+    --marked: #0ea5e9;
+    --unanswered: #f97316;
+    --shadow: 0 4px 24px rgba(26,111,196,0.10);
+    --shadow-lg: 0 8px 40px rgba(26,111,196,0.16);
+
+    /* Dark mode vars */
+    --dm-bg: #0b1526;
+    --dm-surface: #111e35;
+    --dm-surface2: #172340;
+    --dm-border: #1e3460;
+    --dm-text: #e2eeff;
+    --dm-muted: #7ba4d4;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text-dark);
+    min-height: 100vh;
+    display: flex;
+    transition: background 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+    background: var(--dm-bg);
+    color: var(--dm-text);
+}
+
+/* ===== START SCREEN ===== */
+#start-screen {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--white);
+    display: flex; flex-direction: column; align-items: center;
+    overflow-y: auto; padding: 0 20px 50px;
+    transition: background 0.3s;
+}
+
+body.dark-mode #start-screen { background: var(--dm-bg); }
+
+.start-hero {
+    width: 100%; max-width: 600px;
+    padding: 48px 0 0;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+}
+
+.start-logo {
+    width: 68px; height: 68px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 8px 28px rgba(26,111,196,0.35);
+    margin-bottom: 20px;
+    animation: floatLogo 3s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.start-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 6px;
+}
+body.dark-mode .start-brand { color: var(--accent2); }
+
+.start-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px; font-weight: 800;
+    color: var(--text-dark);
+    line-height: 1.15;
+    margin-bottom: 10px;
+}
+body.dark-mode .start-title { color: var(--dm-text); }
+
+.start-sub {
+    font-size: 16px; color: var(--text-muted);
+    margin-bottom: 8px;
+}
+body.dark-mode .start-sub { color: var(--dm-muted); }
+
+.tg-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, #0088cc, #006fa8);
+    color: white; text-decoration: none;
+    padding: 10px 24px; border-radius: 40px;
+    font-size: 14px; font-weight: 700;
+    box-shadow: 0 4px 16px rgba(0,136,204,0.4);
+    transition: transform 0.18s, box-shadow 0.18s;
+    margin: 16px 0 28px;
+}
+.tg-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,136,204,0.55); color: white; }
+
+.info-card {
+    width: 100%; max-width: 500px;
+    background: var(--light-blue);
+    border: 1.5px solid var(--mid-blue);
+    border-radius: 16px;
+    padding: 22px 24px;
+    text-align: left;
+    margin-bottom: 24px;
+}
+body.dark-mode .info-card { background: var(--dm-surface); border-color: var(--dm-border); }
+
+.info-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--primary); margin-bottom: 14px;
+}
+body.dark-mode .info-card h3 { color: var(--accent2); }
+
+.info-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+
+.info-pill {
+    background: white;
+    border-radius: 10px; padding: 10px 14px;
+    font-size: 13px; color: var(--text-mid);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+}
+body.dark-mode .info-pill { background: var(--dm-surface2); border-color: var(--dm-border); color: var(--dm-text); }
+
+.info-pill strong { color: var(--primary-dark); font-weight: 700; }
+body.dark-mode .info-pill strong { color: var(--accent2); }
+
+.name-input {
+    width: 100%; max-width: 380px;
+    padding: 14px 20px;
+    border: 2px solid var(--mid-blue);
+    border-radius: 50px;
+    font-size: 16px; font-family: 'DM Sans', sans-serif;
+    text-align: center;
+    background: white; color: var(--text-dark);
+    outline: none; transition: border 0.2s, box-shadow 0.2s;
+    margin-bottom: 18px;
+}
+.name-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(26,111,196,0.12); }
+body.dark-mode .name-input { background: var(--dm-surface); color: var(--dm-text); border-color: var(--dm-border); }
+
+.start-btns { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; max-width: 340px; }
+
+.s-btn {
+    width: 100%; padding: 14px 0;
+    border: none; border-radius: 50px; cursor: pointer;
+    font-size: 16px; font-weight: 700; font-family: 'DM Sans', sans-serif;
+    transition: transform 0.18s, box-shadow 0.18s;
+    letter-spacing: 0.3px;
+}
+.s-btn:hover { transform: translateY(-3px); }
+
+.s-btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; box-shadow: 0 6px 20px rgba(26,111,196,0.4);
+}
+.s-btn-primary:hover { box-shadow: 0 10px 28px rgba(26,111,196,0.55); }
+
+.s-btn-green {
+    background: linear-gradient(135deg, #22c55e, #15803d);
+    color: white; box-shadow: 0 6px 20px rgba(34,197,94,0.35);
+}
+.s-btn-green:hover { box-shadow: 0 10px 28px rgba(34,197,94,0.5); }
+
+.s-btn-purple {
+    background: linear-gradient(135deg, #7c3aed, #4c1d95);
+    color: white; box-shadow: 0 6px 20px rgba(124,58,237,0.35);
+}
+.s-btn-purple:hover { box-shadow: 0 10px 28px rgba(124,58,237,0.5); }
+
+.dark-toggle {
+    position: absolute; top: 16px; right: 16px; z-index: 10000;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; border: none; border-radius: 40px;
+    padding: 8px 18px; font-size: 14px; font-weight: 600;
+    cursor: pointer; display: flex; align-items: center; gap: 7px;
+    box-shadow: 0 4px 14px rgba(26,111,196,0.4);
+    transition: background 0.3s, transform 0.2s;
+    font-family: 'DM Sans', sans-serif;
+}
+.dark-toggle:hover { transform: scale(1.05); }
+body.dark-mode .dark-toggle { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 4px 14px rgba(245,158,11,0.4); }
+
+/* ===== INSTRUCTION SCREEN ===== */
+#instruction-screen {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--white); display: none; overflow-y: auto; padding: 40px 20px;
+}
+body.dark-mode #instruction-screen { background: var(--dm-bg); }
+
+.instr-wrap { max-width: 700px; margin: 0 auto; }
+
+.instr-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 800; color: var(--primary);
+    margin-bottom: 24px; text-align: center;
+}
+body.dark-mode .instr-title { color: var(--accent2); }
+
+.instr-box {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 1.5px solid var(--mid-blue); border-radius: 16px; padding: 28px;
+}
+body.dark-mode .instr-box { background: linear-gradient(135deg, var(--dm-surface), var(--dm-surface2)); border-color: var(--dm-border); }
+
+.instr-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; color: var(--primary);
+    border-left: 4px solid var(--primary); padding-left: 12px; margin-bottom: 16px;
+}
+body.dark-mode .instr-box h3 { color: var(--accent2); border-left-color: var(--accent2); }
+
+.instr-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.instr-list li {
+    background: white; border-radius: 10px; padding: 12px 16px;
+    font-size: 15px; color: var(--text-mid);
+    border: 1px solid var(--border);
+    transition: transform 0.15s;
+}
+body.dark-mode .instr-list li { background: var(--dm-surface2); border-color: var(--dm-border); color: var(--dm-text); }
+.instr-list li:hover { transform: translateX(5px); }
+
+.instr-legend {
+    display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;
+}
+
+.leg-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--text-mid); }
+body.dark-mode .leg-item { color: var(--dm-text); }
+.leg-dot { width: 14px; height: 14px; border-radius: 50%; }
+
+.agree-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 20px; font-size: 15px; font-weight: 600; cursor: pointer;
+    color: var(--text-mid);
+}
+body.dark-mode .agree-row { color: var(--dm-text); }
+
+.agree-row input { display: none; }
+
+.chk-box {
+    width: 22px; height: 22px; border-radius: 6px;
+    border: 2px solid var(--primary);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; color: transparent; transition: 0.15s;
+    background: white;
+}
+body.dark-mode .chk-box { background: var(--dm-surface); border-color: var(--accent2); }
+
+.agree-row input:checked + .chk-box { background: var(--primary); color: white; }
+body.dark-mode .agree-row input:checked + .chk-box { background: var(--accent2); }
+
+#start-test-btn {
+    margin-top: 22px; width: 100%;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; border: none; border-radius: 50px; padding: 14px;
+    font-size: 17px; font-weight: 700; cursor: not-allowed; opacity: 0.55;
+    font-family: 'DM Sans', sans-serif;
+    transition: opacity 0.2s, transform 0.18s, box-shadow 0.18s;
+    box-shadow: 0 6px 20px rgba(26,111,196,0.35);
+}
+#start-test-btn:not(:disabled) { cursor: pointer; opacity: 1; }
+#start-test-btn:not(:disabled):hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(26,111,196,0.5); }
+
+/* ===== TEST SCREEN ===== */
+#test-screen {
+    position: fixed; inset: 0; z-index: 9998;
+    background: var(--off-white); display: none; overflow: auto;
+}
+body.dark-mode #test-screen { background: var(--dm-bg); }
+
+/* SIDEBAR */
+.sidebar {
+    width: 280px; background: white;
+    height: 100vh; position: fixed; right: 0; top: 0;
+    padding: 20px; overflow-y: auto;
+    border-left: 2px solid var(--light-blue);
+    box-shadow: -4px 0 20px rgba(26,111,196,0.08);
+}
+body.dark-mode .sidebar { background: var(--dm-surface); border-left-color: var(--dm-border); }
+
+.timer {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; padding: 10px 0; border-radius: 40px;
+    font-weight: 700; font-size: 19px; text-align: center;
+    letter-spacing: 1px; margin-bottom: 18px;
+    box-shadow: 0 4px 14px rgba(26,111,196,0.35);
+}
+
+.sidebar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700; color: var(--primary);
+    margin-bottom: 14px; padding-bottom: 12px; border-bottom: 2px solid var(--light-blue);
+}
+body.dark-mode .sidebar-brand { color: var(--accent2); border-bottom-color: var(--dm-border); }
+
+.test-info-row { font-size: 13px; color: var(--text-muted); margin: 5px 0; display: flex; gap: 6px; }
+.test-info-row strong { color: var(--text-dark); font-weight: 600; }
+body.dark-mode .test-info-row { color: var(--dm-muted); }
+body.dark-mode .test-info-row strong { color: var(--dm-text); }
+
+.palette-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin: 18px 0 10px; font-size: 13px; font-weight: 600; color: var(--text-mid);
+}
+body.dark-mode .palette-header { color: var(--dm-text); }
+
+.palette-count { color: var(--primary); font-weight: 700; }
+body.dark-mode .palette-count { color: var(--accent2); }
+
+.palette-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px;
+}
+
+.palette-btn {
+    aspect-ratio: 1; border-radius: 50%; border: 2px solid #e5e7eb;
+    background: #fee2e2; /* unanswered = orange-ish red */
+    color: var(--text-dark); font-size: 11px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+}
+.palette-btn:hover { transform: scale(1.1); }
+.palette-btn.answered { background: #bbf7d0; border-color: #22c55e; color: #14532d; }
+.palette-btn.marked { background: #bae6fd; border-color: #0ea5e9; color: #0c4a6e; }
+.palette-btn.current { background: white; border: 2.5px solid var(--primary); color: var(--primary); box-shadow: 0 0 0 3px rgba(26,111,196,0.2); }
+.palette-btn.review-correct { background: #22c55e; border-color: #16a34a; color: white; }
+.palette-btn.review-wrong { background: #ef4444; border-color: #dc2626; color: white; }
+.palette-btn.review-unanswered { background: #60a5fa; border-color: #3b82f6; color: white; }
+
+body.dark-mode .palette-btn { background: #7f1d1d; border-color: #991b1b; color: #fecaca; }
+body.dark-mode .palette-btn.answered { background: #14532d; border-color: #22c55e; color: #bbf7d0; }
+body.dark-mode .palette-btn.marked { background: #0c4a6e; border-color: #0ea5e9; color: #bae6fd; }
+body.dark-mode .palette-btn.current { background: var(--dm-surface2); border-color: var(--accent); color: var(--accent); }
+
+#palette-legend { margin-top: 14px; font-size: 12px; color: var(--text-muted); }
+body.dark-mode #palette-legend { color: var(--dm-muted); }
+#palette-legend .leg-label { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; }
+
+/* MAIN CONTENT */
+.main-content {
+    margin-right: 280px; padding: 20px 24px;
+    min-height: 100vh;
+}
+
+.test-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px; padding-bottom: 14px;
+    border-bottom: 2px solid var(--light-blue);
+}
+body.dark-mode .test-header { border-bottom-color: var(--dm-border); }
+
+.user-badge {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white; padding: 7px 16px; border-radius: 30px;
+    font-size: 13px; font-weight: 700;
+}
+
+.q-counter {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700; color: var(--text-dark);
+}
+body.dark-mode .q-counter { color: var(--dm-text); }
+.q-counter span { color: var(--primary); }
+body.dark-mode .q-counter span { color: var(--accent2); }
+
+.progress-wrap { flex: 1; max-width: 200px; margin: 0 16px; }
+.progress-bar-bg { height: 8px; background: var(--light-blue); border-radius: 10px; overflow: hidden; }
+body.dark-mode .progress-bar-bg { background: var(--dm-surface2); }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 10px; transition: width 0.4s; width: 0; }
+.progress-label { font-size: 12px; color: var(--text-muted); text-align: right; margin-top: 4px; }
+body.dark-mode .progress-label { color: var(--dm-muted); }
+
+/* QUESTION CARD */
+.question-card {
+    background: white; border-radius: 16px; padding: 28px;
+    box-shadow: var(--shadow); border: 1.5px solid var(--light-blue);
+    margin-bottom: 20px;
+}
+body.dark-mode .question-card { background: var(--dm-surface); border-color: var(--dm-border); box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+
+.q-num-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--light-blue); color: var(--primary);
+    padding: 5px 14px; border-radius: 20px; font-size: 13px; font-weight: 700;
+    margin-bottom: 14px;
+}
+body.dark-mode .q-num-tag { background: var(--dm-surface2); color: var(--accent2); }
+
+.section-badge {
+    display: inline-flex; align-items: center;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white; padding: 3px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 600; margin-bottom: 12px;
+}
+
+.q-text {
+    font-size: 18px; font-weight: 500; color: var(--text-dark);
+    line-height: 1.6; margin-bottom: 22px;
+}
+body.dark-mode .q-text { color: var(--dm-text); }
+
+/* OPTIONS */
+.option {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px; border: 2px solid var(--border);
+    border-radius: 12px; margin-bottom: 10px; cursor: pointer;
+    background: white; transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    user-select: none;
+}
+body.dark-mode .option { background: var(--dm-surface2); border-color: var(--dm-border); }
+.option:hover { border-color: var(--primary); background: var(--off-white); transform: translateX(4px); }
+body.dark-mode .option:hover { background: #1e3460; border-color: var(--accent); }
+
+.option.selected { border-color: var(--primary-dark); background: #dbeafe; }
+body.dark-mode .option.selected { background: #0d2a56; border-color: var(--accent); }
+
+.option.correct { border-color: var(--correct) !important; background: var(--correct-bg) !important; }
+.option.incorrect { border-color: var(--incorrect) !important; background: var(--incorrect-bg) !important; }
+
+.opt-letter {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid var(--border); background: var(--off-white);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: var(--text-muted);
+    flex-shrink: 0; transition: all 0.15s;
+}
+.option.selected .opt-letter { background: var(--primary); border-color: var(--primary); color: white; }
+.option.correct .opt-letter { background: var(--correct); border-color: var(--correct); color: white; }
+.option.incorrect .opt-letter { background: var(--incorrect); border-color: var(--incorrect); color: white; }
+
+.opt-text { font-size: 15px; color: var(--text-dark); line-height: 1.5; flex: 1; }
+body.dark-mode .opt-text { color: var(--dm-text); }
+.option.selected .opt-text { color: var(--primary-dark); font-weight: 600; }
+body.dark-mode .option.selected .opt-text { color: var(--accent2); }
+.option.correct .opt-text { color: var(--correct); font-weight: 600; }
+.option.incorrect .opt-text { color: var(--incorrect); font-weight: 600; }
+
+.opt-indicator { font-size: 12px; font-weight: 700; margin-left: 4px; }
+.correct-indicator { color: var(--correct); }
+.incorrect-indicator { color: var(--incorrect); }
+
+.explanation-box {
+    margin-top: 18px; padding: 14px 18px;
+    border-radius: 12px; border-left: 4px solid var(--primary);
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    font-size: 14px; color: var(--text-mid); line-height: 1.7;
+}
+body.dark-mode .explanation-box { background: linear-gradient(135deg, var(--dm-surface), var(--dm-surface2)); border-left-color: var(--accent); color: var(--dm-text); }
+
+/* NAV BUTTONS */
+.nav-row {
+    display: flex; justify-content: space-between; align-items: center; margin-top: 24px;
+}
+
+.nav-btn {
+    padding: 10px 24px; border-radius: 10px; border: 2px solid var(--primary);
+    background: transparent; color: var(--primary); font-size: 14px; font-weight: 700;
+    cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.18s;
+}
+.nav-btn:hover { background: var(--light-blue); }
+body.dark-mode .nav-btn { border-color: var(--accent2); color: var(--accent2); }
+body.dark-mode .nav-btn:hover { background: var(--dm-surface2); }
+
+.next-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; border: none;
+    padding: 12px 30px; border-radius: 10px; font-size: 15px; font-weight: 700;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    box-shadow: 0 4px 14px rgba(26,111,196,0.35); transition: all 0.18s;
+}
+.next-btn:hover { transform: translateY(-2px); box-shadow: 0 7px 20px rgba(26,111,196,0.5); }
+body.dark-mode .next-btn { background: linear-gradient(135deg, var(--accent), var(--primary)); }
+
+.mark-btn-q {
+    padding: 9px 18px; border-radius: 10px;
+    border: 2px solid var(--accent); background: transparent; color: var(--accent);
+    font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+}
+.mark-btn-q.marked { background: var(--accent); color: white; }
+.mark-btn-q:hover { background: var(--light-blue); }
+
+/* SUBMIT SECTION */
+.submit-row {
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 600px; margin: 20px auto; gap: 14px; flex-wrap: wrap;
+}
+
+.fancy-btn {
+    flex: 1; min-width: 140px; padding: 14px; border: none; border-radius: 50px;
+    font-size: 15px; font-weight: 700; cursor: pointer; text-align: center;
+    text-decoration: none; display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif; transition: transform 0.18s, box-shadow 0.18s;
+}
+.fancy-btn:hover { transform: translateY(-3px); }
+
+.fancy-submit { background: linear-gradient(135deg, #22c55e, #15803d); color: white; box-shadow: 0 6px 20px rgba(34,197,94,0.4); max-width: 260px; }
+.fancy-submit:hover { box-shadow: 0 10px 28px rgba(34,197,94,0.55); }
+.fancy-tg { background: linear-gradient(135deg, #0088cc, #005a99); color: white; box-shadow: 0 6px 20px rgba(0,136,204,0.4); max-width: 200px; }
+.fancy-tg:hover { box-shadow: 0 10px 28px rgba(0,136,204,0.55); color: white; }
+
+.fancy-pdf { background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 6px 20px rgba(249,115,22,0.4); }
+.fancy-pdf:hover { box-shadow: 0 10px 28px rgba(249,115,22,0.55); }
+.fancy-result { background: linear-gradient(135deg, #7c3aed, #4c1d95); color: white; box-shadow: 0 6px 20px rgba(124,58,237,0.4); }
+.fancy-result:hover { box-shadow: 0 10px 28px rgba(124,58,237,0.55); }
+
+.stream-btn {
+    display: block; width: 100%; padding: 14px;
+    border-radius: 14px; color: white; font-weight: 700; font-size: 16px;
+    text-decoration: none; font-family: 'DM Sans', sans-serif;
+    transition: transform 0.18s, box-shadow 0.18s;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+.stream-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,0,0.3); color: white; }
+
+body.dark-mode #stream-picker-box { background: var(--dm-surface); }
+body.dark-mode #stream-picker-box h3 { color: var(--accent2); }
+body.dark-mode #stream-picker-box p { color: var(--dm-muted); }
+body.dark-mode #stream-picker-box button { color: var(--dm-muted); }
+
+/* FOOTER */
+.test-footer {
+    background: linear-gradient(135deg, #0f1e3d, #1a3066);
+    color: #94b8e8; text-align: center; padding: 22px 16px;
+    margin-top: 10px;
+}
+.test-footer p { font-size: 12px; margin-bottom: 12px; }
+.footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.footer-link {
+    padding: 8px 18px; border-radius: 30px; font-size: 13px; font-weight: 600;
+    text-decoration: none; color: white; transition: transform 0.18s, box-shadow 0.18s;
+}
+.footer-link:hover { transform: translateY(-2px); color: white; }
+.fl-purple { background: linear-gradient(135deg, #7c3aed, #4c1d95); box-shadow: 0 3px 10px rgba(124,58,237,0.35); }
+.fl-green { background: linear-gradient(135deg, #059669, #065f46); box-shadow: 0 3px 10px rgba(5,150,105,0.35); }
+.fl-red { background: linear-gradient(135deg, #dc2626, #991b1b); box-shadow: 0 3px 10px rgba(220,38,38,0.35); }
+
+/* MODAL */
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99999; justify-content: center; align-items: center; }
+.modal.show { display: flex; }
+
+.modal-content {
+    background: white; border-radius: 20px; padding: 32px;
+    width: 90%; max-width: 580px; max-height: 90vh; overflow-y: auto;
+    animation: modalIn 0.3s ease;
+}
+body.dark-mode .modal-content { background: var(--dm-surface); border: 1.5px solid var(--dm-border); }
+
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.92) translateY(-20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--light-blue);
+}
+body.dark-mode .modal-head { border-bottom-color: var(--dm-border); }
+
+.modal-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; color: var(--primary);
+}
+body.dark-mode .modal-head h2 { color: var(--accent2); }
+
+.close-x { background: none; border: none; font-size: 26px; cursor: pointer; color: var(--text-muted); }
+
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+
+.stat-tile {
+    background: var(--off-white); border-radius: 14px; padding: 18px;
+    text-align: center; border: 1.5px solid var(--border);
+}
+body.dark-mode .stat-tile { background: var(--dm-surface2); border-color: var(--dm-border); }
+
+.stat-tile h4 { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+body.dark-mode .stat-tile h4 { color: var(--dm-muted); }
+
+.stat-tile p { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 800; }
+.stat-correct { color: var(--correct); }
+.stat-wrong { color: var(--incorrect); }
+.stat-neutral { color: var(--text-muted); }
+.stat-score { color: var(--primary); }
+body.dark-mode .stat-score { color: var(--accent2); }
+
+.analysis { font-size: 14px; color: var(--text-mid); margin-bottom: 18px; line-height: 1.8; }
+body.dark-mode .analysis { color: var(--dm-text); }
+
+.modal-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.modal-btn {
+    flex: 1; padding: 12px; border-radius: 12px; border: none; cursor: pointer;
+    font-size: 14px; font-weight: 700; font-family: 'DM Sans', sans-serif; transition: all 0.18s;
+}
+.modal-btn:hover { transform: translateY(-2px); }
+.mb-review { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; box-shadow: 0 4px 14px rgba(26,111,196,0.4); }
+.mb-pdf { background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 4px 14px rgba(249,115,22,0.4); }
+
+/* MOBILE */
+.mobile-bar { display: none; }
+
+@media (max-width: 768px) {
+    .mobile-bar {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 8px 12px; background: white; border-bottom: 2px solid var(--light-blue);
+        margin-bottom: 8px; border-radius: 10px; box-shadow: var(--shadow);
+    }
+    body.dark-mode .mobile-bar { background: var(--dm-surface); border-color: var(--dm-border); }
+    .mob-timer {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white; padding: 6px 14px; border-radius: 30px; font-weight: 700; font-size: 14px;
+    }
+    #user-name-display { display: none !important; }
+    .sidebar .timer, .sidebar .sidebar-brand { display: none !important; }
+    .sidebar { position: relative; width: 100%; height: auto; right: 0; left: 0; border-left: none; border-top: 2px solid var(--light-blue); box-shadow: none; }
+    body { flex-direction: column; }
+    .main-content { margin-right: 0; width: 100%; padding: 12px; }
+    .question-card { padding: 18px; }
+    .q-text { font-size: 16px; }
+    .nav-row { flex-direction: row; gap: 8px; }
+    .palette-grid { max-height: 200px; overflow-y: auto; }
+}
+
+@media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .modal-btns { flex-direction: column; }
+}
+
+/* option radio hide */
+.option input[type="radio"] { display: none; }
+
+#pdf-print-area { display: none; }
+@media print {
+    body > * { display: none !important; }
+    #pdf-print-area { display: block !important; font-family: Arial, sans-serif; color: #111; padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="start-screen">
+
+<button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode" style="position:absolute;top:16px;right:16px;">
+    <span id="toggle-icon">🌙</span>
+    <span id="toggle-label">Dark</span>
+</button>
+
+<div class="start-hero">
+    <div class="start-logo">📝</div>
+    <div class="start-brand">Thunderstudy CBT</div>
+    <h1 class="start-title">English 2025 PYQ</h1>
+    <p class="start-sub">English Vocabulary | Provided by <strong>Thunderstudy</strong></p>
+
+    <a href="https://t.me/thunderstudy_official" target="_blank" class="tg-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-2.04 9.607c-.148.666-.543.828-1.098.516l-3.04-2.24-1.467 1.413c-.162.162-.298.298-.611.298l.217-3.083 5.613-5.067c.244-.217-.054-.337-.378-.12L7.08 14.807 4.09 13.89c-.657-.205-.67-.657.137-.973l10.88-4.196c.548-.198 1.027.133.855.973z"/></svg>
+        @thunderstudy_official
+    </a>
+
+    <div class="info-card">
+        <h3>📋 Quick Overview</h3>
+        <div class="info-grid">
+            <div class="info-pill">📝 <div><strong>50 Questions</strong></div></div>
+            <div class="info-pill">⏱️ <div><strong>60 Minutes</strong></div></div>
+            <div class="info-pill">✅ <div><strong>+5 Correct</strong></div></div>
+            <div class="info-pill">❌ <div><strong>−1 Wrong</strong></div></div>
+            <div class="info-pill">🚫 <div><strong>No tab switching</strong></div></div>
+            <div class="info-pill">🔁 <div><strong>Auto-submits</strong></div></div>
+        </div>
+    </div>
+
+<input type="text" id="username-input" class="name-input" placeholder="Enter your name to begin">
+    <div id="sid-display-area" style="font-size: 13px; font-weight: 700; color: #4f6ef7; background: rgba(79,110,247,0.1); padding: 5px 15px; border-radius: 20px; display: none; margin-top: 8px;">
+        🪪 ID: <span id="sid-value">---</span>
+    </div>
+    <div class="start-btns">
+        <button class="s-btn s-btn-primary" onclick="startMock()">🚀 Start Mock Test</button>
+        <button class="s-btn s-btn-green" onclick="window.location.href='https://commercesehoga.github.io/commerce/bst/result.html'">📊 Previous Results</button>
+        <button class="s-btn s-btn-purple" onclick="window.open('https://commercesehoga.blogspot.com/2026/03/business-studies-cuet-cbt-mock-test-free.html','_blank')">📚 More Mock Tests</button>
+    </div>
+</div>
+</div>
+
+<!-- INSTRUCTION SCREEN -->
+<div id="instruction-screen">
+<div class="instr-wrap">
+    <h2 class="instr-title">📜 Instructions</h2>
+    <div class="instr-box">
+        <h3>General Guidelines</h3>
+        <ol class="instr-list">
+            <li>Total duration is <strong>60 minutes</strong>. Timer is shown in the sidebar.</li>
+            <li>The test <strong>auto-submits</strong> when time runs out.</li>
+            <li>Test runs in <strong>fullscreen</strong>. Exiting starts a <strong>5-second</strong> countdown to auto-submit.</li>
+            <li><strong>Do not switch tabs.</strong> Switching tabs starts a <strong>2-second</strong> countdown.</li>
+            <li>Return before the countdown ends to cancel auto-submission.</li>
+            <li>Right panel shows palette with question status (answered, marked, etc.)</li>
+            <li>Marking: <strong>+5 correct</strong> / <strong>−1 wrong</strong> / <strong>0 unanswered</strong>.</li>
+        </ol>
+
+        <div class="instr-legend" style="margin-top: 20px;">
+            <strong style="font-size:13px; display:block; margin-bottom:8px;">Status Legend:</strong>
+            <div class="leg-item"><div class="leg-dot" style="background:#22c55e;border:1px solid #16a34a;"></div>Answered</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#bae6fd;border:1px solid #0ea5e9;"></div>Marked</div>
+            <div class="leg-item"><div class="leg-dot" style="background:white;border:2px solid #1a6fc4;"></div>Current</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#fee2e2;border:1px solid #fca5a5;"></div>Unanswered</div>
+        </div>
+
+        <label class="agree-row">
+            <input type="checkbox" id="agree-checkbox">
+            <span class="chk-box">✓</span>
+            I have read and understood all instructions
+        </label>
+
+        <button id="start-test-btn" disabled>▶ Start Test</button>
+    </div>
+</div>
+</div>
+
+<!-- TEST SCREEN -->
+<div id="test-screen">
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="timer">01:00:00</div>
+    <div class="sidebar-brand">⚡ Thunderstudy CBT</div>
+
+          <div class="test-info-row"><strong>Name:</strong> <span id="display-user-name">Student</span></div>
+    <div class="test-info-row"><strong>ID:</strong> <span id="display-user-sid" style="font-family:monospace;">---</span></div>
+    <div class="test-info-row"><strong>Subject:</strong> English — Syn/Ant</div>
+    <div class="test-info-row"><strong>Questions:</strong> 50</div>
+    <div class="test-info-row"><strong>Duration:</strong> 60 min</div>
+    <div class="test-info-row"><strong>Marking:</strong> +5 / −1</div>
+    <div class="test-info-row"><strong>Section:</strong> <span id="current-section">—</span></div>
+
+    <div class="palette-header">
+        <span>Questions</span>
+        <span class="palette-count" id="answered-count">0/50</span>
+    </div>
+    <div class="palette-grid" id="question-palette-grid"></div>
+    <div id="palette-legend" style="margin-top:14px; font-size:12px;"></div>
+</div>
+
+<!-- Main -->
+<div class="main-content">
+
+    <div class="mobile-bar">
+        <div class="mob-timer">01:00:00</div>
+        <div id="mobile-name-display" style="background:linear-gradient(135deg,var(--primary),var(--accent));color:white;padding:6px 14px;border-radius:20px;font-weight:700;font-size:13px;">👤 Student</div>
+    </div>
+
+    <div class="test-header">
+        <div id="user-name-display" class="user-badge">👤 Student</div>
+        <div class="q-counter">Q <span id="current-q-number">1</span>/50</div>
+        <div class="progress-wrap">
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="test-progress"></div></div>
+            <div class="progress-label" id="progress-percent">0%</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="q-num-tag">Question <span id="q-number">1</span></div>
+        <div class="section-badge" id="section-badge">Reading Comprehension</div>
+        <div class="q-text" id="question-text"></div>
+        <div id="options-container"></div>
+
+        <div class="nav-row">
+            <button class="nav-btn" id="prev-btn">← Previous</button>
+            <div style="display:flex;gap:10px;align-items:center;">
+                <button class="mark-btn-q" id="mark-btn">🔖 Mark</button>
+                <button class="next-btn" id="next-btn">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="submit-row" id="submit-row-before">
+        <a href="https://t.me/thunderstudy_official" target="_blank" class="fancy-btn fancy-tg">⚡ Join Thunder</a>
+        <button class="fancy-btn fancy-submit" id="submit-test-btn">✅ Submit Test</button>
+    </div>
+
+    <!-- Post-submit action row (hidden until submitted) -->
+    <div class="submit-row" id="submit-row-after" style="display:none;">
+        <a href="https://t.me/thunderstudy_official" target="_blank" class="fancy-btn fancy-tg" style="flex:1;max-width:180px;">⚡ Join Thunder</a>
+        <button class="fancy-btn fancy-pdf" id="pdf-action-btn" style="flex:1;max-width:180px;">📄 Download PDF</button>
+        <button class="fancy-btn fancy-result" id="result-action-btn" style="flex:1;max-width:180px;">📊 Result</button>
+    </div>
+
+    <!-- Stream Picker Popup -->
+    <div id="stream-picker-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:999998;justify-content:center;align-items:center;">
+        <div id="stream-picker-box" style="background:white;border-radius:20px;padding:32px 28px;width:90%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.25);animation:modalIn 0.3s ease;text-align:center;position:relative;">
+            <button onclick="document.getElementById('stream-picker-overlay').style.display='none'" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:#6b8ab5;">×</button>
+            <div style="font-size:36px;margin-bottom:10px;">📊</div>
+            <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:#1a6fc4;margin-bottom:6px;">View Previous Results</h3>
+            <p style="font-size:13px;color:#6b8ab5;margin-bottom:22px;">Select your stream to view results</p>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+                <a href="https://commercesehoga.github.io/commerce/bst/result.html" target="_blank" class="stream-btn" style="background:linear-gradient(135deg,#1a6fc4,#0ea5e9);">
+                    🏪 Commerce
+                </a>
+                <a href="https://commercesehoga.github.io/science/result.html" target="_blank" class="stream-btn" style="background:linear-gradient(135deg,#059669,#0d9488);">
+                    🔬 Science
+                </a>
+                <a href="https://commercesehoga.github.io/humanities/result.html" target="_blank" class="stream-btn" style="background:linear-gradient(135deg,#7c3aed,#a855f7);">
+                    📚 Humanities
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="test-footer">
+        <p>© 2025 Thunderstudy. All Rights Reserved.</p>
+        <div class="footer-links">
+            <a href="https://commercesehoga.blogspot.com/2026/03/business-studies-cuet-cbt-mock-test-free.html" target="_blank" class="footer-link fl-purple">📚 More Mocks</a>
+            <a href="https://commercesehoga.blogspot.com/" target="_blank" class="footer-link fl-green">🌐 Website</a>
+            <a href="https://t.me/mindmaster_robot" target="_blank" class="footer-link fl-red">🚨 Report Error</a>
+        </div>
+    </footer>
+</div>
+
+<!-- Results Modal -->
+<div class="modal" id="results-modal">
+<div class="modal-content">
+    <div class="modal-head">
+        <h2>🏆 Test Results</h2>
+        <button class="close-x" id="close-modal">×</button>
+    </div>
+    <div class="stats-grid">
+        <div class="stat-tile"><h4>Correct</h4><p class="stat-correct" id="correct-answers">0</p></div>
+        <div class="stat-tile"><h4>Wrong</h4><p class="stat-wrong" id="incorrect-answers">0</p></div>
+        <div class="stat-tile"><h4>Unanswered</h4><p class="stat-neutral" id="unanswered">50</p></div>
+        <div class="stat-tile"><h4>Score</h4><p class="stat-score" id="total-score">0</p></div>
+    </div>
+    <div class="analysis">
+        Percentage: <strong><span id="percentage">0</span>%</strong> &nbsp;|&nbsp;
+        Accuracy: <strong><span id="accuracy">0</span>%</strong>
+    </div>
+    <div class="modal-btns">
+        <button class="modal-btn mb-review" id="review-btn">👁 Review Answers</button>
+        <button class="modal-btn mb-pdf" id="download-pdf-btn">📄 Download PDF</button>
+        <button class="modal-btn mb-result" id="modal-result-btn" style="background:linear-gradient(135deg,#7c3aed,#a855f7);color:white;box-shadow:0 4px 14px rgba(124,58,237,0.4);">📊 Result</button>
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="pdf-print-area"></div>
+
+<script>
+/* ============================================================
+   MOCK TEST DATA — English Chapter 1
+   ============================================================ */
+const mockTest = {
+    title: "English — One Word",
+    questions: [
+  {
+    "id": 1,
+    "section": "Case Study 1",
+    "text": "<strong>Case Study 1: Miss Stubbs and Her Pets</strong><br><br>The next stage of the visit began as Mrs. Broadwith brought in a cup of tea and the rest of the animals were let out of the kitchen. It was the usual scenario for the many cups of tea I had drunk with Miss Stubbs under the little card which dangled above her bed. \"How are you today?\" I asked. \"Oh! much better,\" she replied and immediately changed the subject. Mostly she liked to talk about her pets and the ones she had known right back to her girlhood. She spoke a lot too, about the days her family was alive. She loved to describe the escapades of her three brothers and today she showed me a photograph which Mrs. Broadwith had found. \"Oh, they were young rips!\" she exclaimed. She laughed and for a moment her face was radiant, by her memories. The things I had heard in the village came back to me; about the prosperous father and his family who lived in the big house once. Then the foreign investments crashed and the sudden change in circumstances. \"When the old father died, he was almost penniless,\" one old man said. \"There is not much brass there now.\" Probably just enough brass to keep Miss Stubbs and her animals alive and pay Mrs. Broadwith. And, sitting there, I felt as I had often — a bit afraid of the responsibility I had. The one thing which brought some light into the life of the brave old woman was the devotion of this shaggy bunch whose eyes were never far from her face.<br><br><strong>Q1. Miss Stubbs led a very simple life because ______________ .</strong>",
+    "options": { "a": "she didn't believe in leading a luxurious life", "b": "she was too sad a person to enjoy simple pleasures of life", "c": "she couldn't afford even the normal little luxuries", "d": "she was bed-ridden and bitter about it" },
+    "correctAnswer": "c",
+    "explanation": "The passage mentions 'there is not much brass there now' and 'probably just enough brass to keep Miss Stubbs and her animals alive', indicating she couldn't afford luxuries.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 2,
+    "section": "Case Study 1",
+    "text": "<strong>Case Study 1: Miss Stubbs and Her Pets</strong><br><br>(Read the passage above to answer Q1 to Q4)<br><br><strong>Q2. Which among the following was not a topic of Miss Stubb's conversation?</strong>",
+    "options": { "a": "her brothers", "b": "her pets", "c": "her past with her family", "d": "her classmates" },
+    "correctAnswer": "d",
+    "explanation": "The passage mentions her talking about her pets, her brothers, and her family, but not about classmates.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 3,
+    "section": "Case Study 1",
+    "text": "<strong>Case Study 1: Miss Stubbs and Her Pets</strong><br><br>(Read the passage above to answer Q1 to Q4)<br><br><strong>Q3. 'There's not much brass there now' the underlined word refers to:</strong>",
+    "options": { "a": "brass ware", "b": "musical instruments", "c": "money", "d": "metal" },
+    "correctAnswer": "c",
+    "explanation": "'Brass' is used as a slang term for money.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 4,
+    "section": "Case Study 1",
+    "text": "<strong>Case Study 1: Miss Stubbs and Her Pets</strong><br><br>(Read the passage above to answer Q1 to Q4)<br><br><strong>Q4. Identify the meaning of the underlined word in the following sentence by selecting the best option: - \"She loved to describe the escapades of her three brothers....\"</strong>",
+    "options": { "a": "grave acts", "b": "funny acts", "c": "serious sober acts", "d": "mischievous acts" },
+    "correctAnswer": "d",
+    "explanation": "'Escapades' refers to exciting, mischievous, or adventurous acts.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 5,
+    "section": "Case Study 2",
+    "text": "<strong>Case Study 2: The Reluctant Dancer</strong><br><br>If my younger self could see me now, she would be incredulous. That I work in the field of dance or decipher and translate dance for my own comprehension, call it choreography if you wish, would have been unbelievable. In this respect, I am particularly envious of dancers who claim that they are 'born to dance', implying that it was clearly laid out for them from the beginning. I must say, I find this assertion dubious; it is rarely that easy. 'To dance' means 'to struggle'. In all truth, as a child, I never did want to dance; it was forced upon me by a doting mother and a silent father. My father probably kept his peace to avoid argument. From the beginning, my lessons took place under trying conditions, though I believe that the conditions were more trying for my mother than for me. She travelled in local, over-crowded trains to the dance class with an unwilling child, tired from a whole day at school. Interestingly, when I was seven, we went to see a movie starring Mumtaz Ali, who did a dance number in the film. When we arrived home, I began prancing around the house imitating the film actor and my mother, who was quietly watching, was the one who said, 'Kumudini, you are born to dance.'. Ironically, I have no recollection of this story; it was my mother who saw this innate ability in me.<br><br><strong>Q5. The narrator's younger self would be incredulous if she saw the narrator now, as:</strong>",
+    "options": { "a": "she had become a choreographer.", "b": "she couldn't decipher the nuances of dance.", "c": "she was too curious to learn dance since her early childhood.", "d": "her reality and her dreams were not bridged." },
+    "correctAnswer": "a",
+    "explanation": "The narrator states that she now works in the field of dance/choreography, which her younger self would find unbelievable.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 6,
+    "section": "Case Study 2",
+    "text": "<strong>Case Study 2: The Reluctant Dancer</strong><br><br>(Read the passage above to answer Q5 to Q8)<br><br><strong>Q6. The narrator says, 'to dance means to struggle' as she _______ .</strong>",
+    "options": { "a": "was envious of the other dancers' talent", "b": "had tough time convincing her parents about her passion", "c": "doesn't have good memories of her childhood", "d": "had to work hard to perfect the art, though unwillingly" },
+    "correctAnswer": "d",
+    "explanation": "The narrator says dance was forced upon her and she had to struggle, practicing unwillingly.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 7,
+    "section": "Case Study 2",
+    "text": "<strong>Case Study 2: The Reluctant Dancer</strong><br><br>(Read the passage above to answer Q5 to Q8)<br><br><strong>Q7. What role did her father play in her becoming a dancer?</strong>",
+    "options": { "a": "He gave his passive disapproval", "b": "He was indifferent", "c": "He was actively involved.", "d": "He tried maintaining a harmonious atmosphere." },
+    "correctAnswer": "d",
+    "explanation": "The passage states: 'My father probably kept his peace to avoid argument' — he maintained harmony.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 8,
+    "section": "Case Study 2",
+    "text": "<strong>Case Study 2: The Reluctant Dancer</strong><br><br>(Read the passage above to answer Q5 to Q8)<br><br><strong>Q8. The seeds of the narrator's future vocation were sown when she _______ .</strong>",
+    "options": { "a": "went willingly to the dance class", "b": "pranced around the house imitating the dance steps from a movie", "c": "was born with an innate ability to dance", "d": "was encouraged by her father to take up dancing" },
+    "correctAnswer": "b",
+    "explanation": "The passage describes her prancing around imitating a film actor, after which her mother said she was born to dance.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 9,
+    "section": "Case Study 3",
+    "text": "<strong>Case Study 3: Hidden Hunger and Food Security</strong><br><br>The State of Food Security and Nutrition in the World report (2024) revealed that 733 million people faced malnutrition in 2023 — an increase of 152 million since 2019. This trend is linked to food price dynamics. In 2022, the World Bank estimated that a 1% rise in global food prices could push 10 million people into extreme poverty. Rising food costs and inequality have intensified 'hidden hunger,' affecting at least 2.8 billion people in 2022 alone. Hidden hunger is a deficiency of essential micronutrients like zinc, iodine, and iron. The signs of this form of malnutrition are 'hidden' as individuals may appear healthy while suffering severe health impacts. Clinical signs emerge only in extreme cases. Traditionally linked to caloric deficiency, hunger is now recognized to include micronutrient inadequacy, which can harm health even without overt signs of disease. The Food Security and Nutrition report highlights that while it may seem intuitive that food-insecure individuals are less likely to maintain a healthy diet, the relationship is complex, shaped by factors like food environments, consumer behavior, and the affordability of nutritious foods. In some cases, food insecurity is linked to lower consumption of all food types and a higher reliance on staple foods for dietary energy. In others, it can be associated with reduced intake of nutritious foods and increased consumption of energy-dense foods high in unhealthy fats, sugars, and salt. As a result, food insecurity and 'hidden hunger' can result not only in undernutrition but can also lead to overweight and obesity.<br><br><strong>Q9. What is the primary distinction between 'hidden hunger' and traditional caloric deficiency?</strong>",
+    "options": { "a": "Hidden hunger refers to a lack of protein, whereas caloric deficiency refers to a lack of fats.", "b": "Hidden hunger is caused by excessive food intake, whereas caloric deficiency is caused by food scarcity.", "c": "Hidden hunger involves not so obvious micronutrient deficiencies, while caloric deficiency has visible symptoms.", "d": "Hidden hunger is a short-term condition, whereas caloric deficiency affects only long-term health." },
+    "correctAnswer": "c",
+    "explanation": "The passage states that hidden hunger involves micronutrient deficiencies with 'hidden' signs, while caloric deficiency has more visible symptoms.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 10,
+    "section": "Case Study 3",
+    "text": "<strong>Case Study 3: Hidden Hunger and Food Security</strong><br><br>(Read the passage above to answer Q9 to Q12)<br><br><strong>Q10. Which factor complicates the relationship between food insecurity and diet quality?</strong>",
+    "options": { "a": "The absence of global food production data.", "b": "The overreliance on scientific studies rather than real-world evidence.", "c": "Variations in food environments, consumer behaviour, and affordability.", "d": "The assumption that food insecurity always results in undernutrition." },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'shaped by factors like food environments, consumer behavior, and the affordability of nutritious foods'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 11,
+    "section": "Case Study 3",
+    "text": "<strong>Case Study 3: Hidden Hunger and Food Security</strong><br><br>(Read the passage above to answer Q9 to Q12)<br><br><strong>Q11. How can food insecurity paradoxically contribute to obesity?</strong>",
+    "options": { "a": "by causing people to eat excessive amounts of protein", "b": "by encouraging over consumption of cheap, unhealthy energy-dense foods", "c": "by limiting access to all food types, reducing overall consumption", "d": "by increasing the availability of nutrient-rich food in low-income areas" },
+    "correctAnswer": "b",
+    "explanation": "The passage states food insecurity can lead to 'increased consumption of energy-dense foods high in unhealthy fats, sugars, and salt'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 12,
+    "section": "Case Study 3",
+    "text": "<strong>Case Study 3: Hidden Hunger and Food Security</strong><br><br>(Read the passage above to answer Q9 to Q12)<br><br><strong>Q12. What consequence does the World Bank estimate of a 1% rise in global food prices?</strong>",
+    "options": { "a": "A decline in global malnutrition rates.", "b": "A reduction in food insecurity through economic growth.", "c": "An increase of 10 million people towards extreme poverty.", "d": "No significant impact on food security." },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'a 1% rise in global food prices could push 10 million people into extreme poverty'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 13,
+    "section": "Rearrangement",
+    "text": "<strong>Q13. Rearrange the following phrases into a meaningful sentence. The beginning of the sentence has been given below. Read the options and find out which of the four combinations is correct:-</strong><br>The need for a scientific understanding…………………. .<br>(A) the Rio Earth Summit, the first of its kind<br>(B) involving world leaders on environment and development<br>(C) of natural ecosystems including forests was the main objective of<br>(D) of phenomena like climate change, biodiversity, and conservation",
+    "options": { "a": "(C), (D), (A), (B)", "b": "(B), (C), (D), (A)", "c": "(D), (C), (A), (B)", "d": "(D), (B), (A), (C)" },
+    "correctAnswer": "c",
+    "explanation": "Correct sequence: 'The need for a scientific understanding of phenomena like climate change, biodiversity, and conservation of natural ecosystems including forests was the main objective of the Rio Earth Summit, the first of its kind involving world leaders on environment and development.'",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 14,
+    "section": "Rearrangement",
+    "text": "<strong>Q14. Rearrange the following phrases into a meaningful sentence. The beginning of the sentence has been given below. Read the options and find out which of the four combinations is correct:-</strong><br>The point is that both ecology and resource management science……………. .<br>(A) and mechanistic worldview, shaped by the utilitarian premise<br>(B) of the industrial age, had more to say<br>(C) about the human mission to extract rather than to conserve<br>(D) that developed under the conventional",
+    "options": { "a": "(B), (A), (D), (C)", "b": "(D), (A), (C), (B)", "c": "(D), (A), (B), (C)", "d": "(C), (D), (B), (A)" },
+    "correctAnswer": "c",
+    "explanation": "Correct sequence: 'The point is that both ecology and resource management science that developed under the conventional and mechanistic worldview, shaped by the utilitarian premise of the industrial age, had more to say about the human mission to extract rather than to conserve.'",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 15,
+    "section": "Rearrangement",
+    "text": "<strong>Q15. Rearrange the following phrases into a meaningful sentence. The beginning of the sentence has been given below. Read the options and find out which of the four combinations is correct:-</strong><br>Apart from many external factors like…………………. .<br>(A) their responsibility for the endangerment of the local languages<br>(B) the language communities cannot shirk<br>(C) globalization, and the<br>(D) hegemony of English",
+    "options": { "a": "(C), (D), (A), (B)", "b": "(A), (C), (B), (D)", "c": "(C), (D), (B), (A)", "d": "(A), (B), (D), (C)" },
+    "correctAnswer": "a",
+    "explanation": "Correct sequence: 'Apart from many external factors like globalization, and the hegemony of English, their responsibility for the endangerment of the local languages the language communities cannot shirk.'",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 16,
+    "section": "Rearrangement",
+    "text": "<strong>Q16. Rearrange the phrases to form a meaningful sentence:-</strong><br>(A) in the region<br>(B) had percolated into the underground water<br>(C) thus, causing a water crisis<br>(D) the pollutants from the factory",
+    "options": { "a": "(A), (D), (C), (B)", "b": "(B), (C), (A), (D)", "c": "(C), (B), (A), (D)", "d": "(D), (B), (C), (A)" },
+    "correctAnswer": "d",
+    "explanation": "Correct sequence: 'The pollutants from the factory had percolated into the underground water thus, causing a water crisis in the region.'",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 17,
+    "section": "Rearrangement",
+    "text": "<strong>Q17. Rearrange the following phrases into a meaningful sentence. The beginning of the sentence has been given below. Read the options and find out which of the four combinations is correct:-</strong><br>One common mistake that _________________ .<br>(A) thinking that it<br>(B) would be a waste of time<br>(C) to work together<br>(D) many people have made is",
+    "options": { "a": "(D), (A), (B), (C)", "b": "(B), (C), (A), (D)", "c": "(C), (A), (B), (D)", "d": "(C), (B), (D), (A)" },
+    "correctAnswer": "a",
+    "explanation": "Correct sequence: 'One common mistake that many people have made is thinking that it would be a waste of time to work together.'",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 18,
+    "section": "Rearrangement",
+    "text": "<strong>Q18. Rearrange the following phrases into a meaningful sentence. The beginning of the sentence has been given below. Read the options and find out which of the four combinations is correct:-</strong><br>Stimulants such as caffeine _________________ .<br>(A) activate adrenal glands,<br>(B) deplete valuable minerals<br>(C) worsening fatigue and sleep issues<br>(D) needed for energy and",
+    "options": { "a": "(A), (D), (B), (C)", "b": "(B), (C), (D), (B)", "c": "(D), (A), (B), (C)", "d": "(A), (B), (D), (C)" },
+    "correctAnswer": "a",
+    "explanation": "Correct sequence: 'Stimulants such as caffeine activate adrenal glands, deplete valuable minerals needed for energy and worsening fatigue and sleep issues.'",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 19,
+    "section": "Rearrangement",
+    "text": "<strong>Q19. Rearrange the following phrases into a meaningful sentence. The beginning of the sentence has been given below. Read the options and find out which of the four combinations is correct:-</strong><br>Premature greying of the workforce _________________ .<br>(A) on productivity and<br>(B) long term economic growth<br>(C) has a negative effect<br>(D) required for large economies",
+    "options": { "a": "(A), (B), (C), (D)", "b": "(C), (A), (B), (D)", "c": "(C), (B), (D), (A)", "d": "(D), (B), (C), (A)" },
+    "correctAnswer": "b",
+    "explanation": "Correct sequence: 'Premature greying of the workforce has a negative effect on productivity and long term economic growth required for large economies.'",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 20,
+    "section": "Rearrangement",
+    "text": "<strong>Q20. Rearrange the parts in the correct sequence to form a meaningful sentence:-</strong><br>(A) in the minds of people<br>(B) the ancient myths of India<br>(C) by priests-the guardians of learning<br>(D) have been preserved with great care",
+    "options": { "a": "(D), (C), (B), (A)", "b": "(C), (A), (D), (B)", "c": "(B), (D), (A), (C)", "d": "(C), (B), (D), (A)" },
+    "correctAnswer": "c",
+    "explanation": "Correct sequence: 'The ancient myths of India have been preserved with great care in the minds of people by priests-the guardians of learning.'",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 21,
+    "section": "Idioms",
+    "text": "<strong>Q21. Match the idioms in List-I with their meanings in List-II</strong><br><br>List–I: (A) Put one's shoulder to the wheel, (B) Throw down the gauntlet, (C) Get too big for one's boots, (D) Cut one's coat according to one's cloth<br><br>List–II: (I) Work hard at a task, (II) Take up a challenge, (III) Spend within the limits of what one can afford, (IV) Become very conceited",
+    "options": { "a": "(A) – (I), (B) – (II), (C) – (III), (D) – (IV)", "b": "(A) – (I), (B) – (IV), (C) – (II), (D) – (III)", "c": "(A) – (I), (B) – (II), (C) – (IV), (D) – (III)", "d": "(A) – (III), (B) – (IV), (C) – (I), (D) – (II)" },
+    "correctAnswer": "b",
+    "explanation": "Put shoulder to wheel = work hard; Throw down gauntlet = take up a challenge; Get too big for boots = become conceited; Cut coat according to cloth = spend within limits.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 22,
+    "section": "Vocabulary",
+    "text": "<strong>Q22. Match the words in List–I with their definitions in List–II:</strong><br><br>List–I: (A) Abdicate, (B) Expurgate, (C) Plagiarism, (D) Besiege<br><br>List–II: (I) To remove offensive portion of a book, (II) Literary theft, (III) To surround a place with the intention of capturing, (IV) To give up a throne or other office of dignity.",
+    "options": { "a": "(A) – (IV), (B) – (I), (C) – (II), (D) – (III)", "b": "(A) – (III), (B) – (II), (C) – (I), (D) – (IV)", "c": "(A) – (I), (B) – (IV), (C) – (III), (D) – (II)", "d": "(A) – (III), (B) – (II), (C) – (IV), (D) – (I)" },
+    "correctAnswer": "a",
+    "explanation": "Abdicate = give up throne; Expurgate = remove offensive portions; Plagiarism = literary theft; Besiege = surround to capture.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 23,
+    "section": "Phrasal Verbs",
+    "text": "<strong>Q23. Match the phrasal verbs in List–I with their meanings in List–II:</strong><br><br>List–I: (A) to jazz up, (B) scale back, (C) allude to, (D) call upon<br><br>List–II: (I) something you mention in an indirect way, (II) to make production or spending smaller in size, extent or amount, (III) to be asked to do something, (IV) to make something more interesting or exciting",
+    "options": { "a": "(A) – (II), (B) – (III), (C) – (IV), (D) – (I)", "b": "(A) – (IV), (B) – (II), (C) – (I), (D) – (III)", "c": "(A) – (IV), (B) – (II), (C) – (I), (D) – (III)", "d": "(A) – (I), (B) – (III), (C) – (II), (D) – (IV)" },
+    "correctAnswer": "b",
+    "explanation": "Jazz up = make more exciting; Scale back = reduce; Allude to = mention indirectly; Call upon = be asked to do something.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 24,
+    "section": "Phrasal Verbs",
+    "text": "<strong>Q24. Fill in the blanks in the sentences given in List - I with the appropriate phrasal verbs given in List - II:-</strong><br><br>List–I: (A) Despite searching for hours, she couldn't find her keys, but they eventually ___ in her jacket. (B) The old factory was eventually ___ a vibrant art gallery, preserving its historical significance. (C) Before leaving the room, she remembered to ___ the air conditioner to keep it cool. (D) She had to ___ the volume of the music to avoid disturbing her neighbours late at night.<br><br>List–II: (I) turn down, (II) turn on, (III) turned up, (IV) turned into",
+    "options": { "a": "(A) – (I), (B) – (II), (C) – (III), (D) – (IV)", "b": "(A) – (II), (B) – (IV), (C) – (I), (D) – (III)", "c": "(A) – (I), (B) – (II), (C) – (IV), (D) – (III)", "d": "(A) – (III), (B) – (IV), (C) – (II), (D) – (I)" },
+    "correctAnswer": "d",
+    "explanation": "Turned up = appeared; Turned into = transformed; Turn on = switch on; Turn down = reduce volume.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 25,
+    "section": "Fill in the Blanks",
+    "text": "<strong>Q25. Fill in the blanks in List-I with the appropriate verbs from List-II.</strong><br><br>List–I: (A) They ______ that I go with them. (B) The doctor ______ that I rest for two days. (C) The chairperson ______ that plans be changed. (D) The landlord ______ that I pay the rent by Tuesday latest.<br><br>List–II: (I) recommended, (II) demanded, (III) insisted, (IV) proposed",
+    "options": { "a": "(A) – (I), (B) – (II), (C) – (III), (D) – (IV)", "b": "(A) – (I), (B) – (III), (C) – (IV), (D) – (II)", "c": "(A) – (I), (B) – (II), (C) – (IV), (D) – (III)", "d": "(A) – (III), (B) – (I), (C) – (IV), (D) – (II)" },
+    "correctAnswer": "a",
+    "explanation": "Recommended, demanded, insisted, proposed are used with 'that' clauses in subjunctive mood.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 26,
+    "section": "Idioms",
+    "text": "<strong>Q26. Match the idioms given in List–I with the appropriate meanings given in List–II</strong><br><br>List–I: (A) Break the ice, (B) Hit the nail on the head, (C) Cost an arm and a leg, (D) Bite the bullet<br><br>List–II: (I) to describe precisely the main point or issue, addressing it directly. (II) to endure a painful or difficult situation with courage and resilience. (III) to initiate conversation in a social setting, especially in a formal or awkward situation. (IV) something very expensive or costly.",
+    "options": { "a": "(A) – (I), (B) – (II), (C) – (III), (D) – (IV)", "b": "(A) – (III), (B) – (I), (C) – (IV), (D) – (II)", "c": "(A) – (I), (B) – (III), (C) – (IV), (D) – (II)", "d": "(A) – (III), (B) – (IV), (C) – (I), (D) – (II)" },
+    "correctAnswer": "b",
+    "explanation": "Break ice = initiate conversation; Hit nail on head = describe precisely; Cost an arm and leg = very expensive; Bite bullet = endure difficult situation.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 27,
+    "section": "Idioms",
+    "text": "<strong>Q27. Fill in the blanks in the sentences given in List–I with the appropriate idioms given in List–II.</strong><br><br>List–I: (A) With the project deadline approaching, the team had to ______ to meet the submission date. (B) As soon as the fitness trend started, many people decided to ______ and join the new workout class. (C) Despite the promise of secrecy, Mark couldn't resist the temptation to ______ about the surprise party. (D) After a long day at work, I am ready to ______ and get a good night's sleep.<br><br>List–II: (I) hit the hay, (II) burn the midnight oil, (III) jump on the bandwagon, (IV) spill the beans",
+    "options": { "a": "(A) – (I), (B) – (II), (C) – (III), (D) – (IV)", "b": "(A) – (I), (B) – (III), (C) – (IV), (D) – (II)", "c": "(A) – (II), (B) – (III), (C) – (IV), (D) – (I)", "d": "(A) – (III), (B) – (IV), (C) – (I), (D) – (II)" },
+    "correctAnswer": "b",
+    "explanation": "Burn midnight oil = work late; Jump on bandwagon = follow a trend; Spill beans = reveal secret; Hit the hay = go to sleep.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 28,
+    "section": "Fill in the Blanks",
+    "text": "<strong>Q28. Fill in the blanks in the sentences given in List–I with the appropriate words given in List–II:</strong><br><br>List–I: (A) Ika Jena is an Odia food ________ who documents and showcases Odia cuisine on her blog Culinary Xpress. (B) Gitika Saikia identifies herself as an Assamese food ________ who specialises in tribal and mainland Assamese cuisines. (C) Himachal Pradesh has a rich ________ of traditional breads such as siddu (stuffed bread), bhatturru (local sourdough flatbread) and pakain (deep-fried festive flatbread). (D) Deepa Chauhan is a Bengaluru based culinary ________ and Sindhi cuisine specialist.<br><br>List–II: (I) chef, (II) entrepreneur, (III) chronicler, (IV) repertoire",
+    "options": { "a": "(A) – (III), (B) – (I), (C) – (III), (D) – (IV)", "b": "(A) – (III), (B) – (II), (C) – (IV), (D) – (II)", "c": "(A) – (I), (B) – (II), (C) – (IV), (D) – (III)", "d": "(A) – (III), (B) – (I), (C) – (IV), (D) – (II)" },
+    "correctAnswer": "a",
+    "explanation": "Chronicler = one who documents; Chef = professional cook; Repertoire = collection; Entrepreneur = businessperson.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 29,
+    "section": "Fill in the Blanks",
+    "text": "<strong>Q29. Fill in the blanks in the given sentences of List–I with the appropriate words given in List–II:</strong><br><br>List–I: (A) I read the mystery novels ________ they captivate my imagination. (B) This is the place ________ he was born. (C) Many things have happened ________ we met last time. (D) ________ you tell me the truth, I will not allow you to go.<br><br>List–II: (I) Unless, (II) because, (III) Where, (IV) Since",
+    "options": { "a": "(A) – (I), (B) – (II), (C) – (IV), (D) – (III)", "b": "(A) – (II), (B) – (III), (C) – (IV), (D) – (I)", "c": "(A) – (III), (B) – (I), (C) – (II), (D) – (IV)", "d": "(A) – (IV), (B) – (III), (C) – (II), (D) – (I)" },
+    "correctAnswer": "b",
+    "explanation": "Because = reason; Where = place; Since = time; Unless = condition.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 30,
+    "section": "Vocabulary",
+    "text": "<strong>Q30. Match the words in List–I with the meanings in List–II</strong><br><br>List–I: (A) Denizen, (B) Depravity, (C) Deprecate, (D) Deride<br><br>List–II: (I) Express disapproval of, (II) Ridicule, (III) Inhabitant, (IV) Extreme wickedness",
+    "options": { "a": "(A) – (I), (B) – (II), (C) – (III), (D) – (IV)", "b": "(A) – (I), (B) – (III), (C) – (II), (D) – (IV)", "c": "(A) – (III), (B) – (IV), (C) – (I), (D) – (II)", "d": "(A) – (III), (B) – (IV), (C) – (II), (D) – (III)" },
+    "correctAnswer": "c",
+    "explanation": "Denizen = inhabitant; Depravity = extreme wickedness; Deprecate = express disapproval; Deride = ridicule.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 31,
+    "section": "Fill in the Blanks",
+    "text": "<strong>Q31. Use the correct form of the word 'RESOLVE' to fill in the blank:-</strong><br>Did you make any New Year's _______________ this year?",
+    "options": { "a": "resolve", "b": "resolving", "c": "resolvation", "d": "resolution" },
+    "correctAnswer": "d",
+    "explanation": "'Resolution' is the noun form meaning a firm decision to do or not do something.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 32,
+    "section": "Vocabulary",
+    "text": "<strong>Q32. Choose the appropriate word for the meaning of the underlined word</strong><br>Ravi came up on the stage and started speaking impromptu.",
+    "options": { "a": "Quickly", "b": "Unrehearsed", "c": "Incoherently", "d": "Impressively" },
+    "correctAnswer": "b",
+    "explanation": "'Impromptu' means done without preparation or rehearsal.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 33,
+    "section": "Fill in the Blanks",
+    "text": "<strong>Q33. Fill in the blank with the correct word from the options given below to make a meaningful sentence:-</strong><br>Ten tourists we ______________ injured in the accident and a few of them succumbed to their injuries on the way to the hospital.",
+    "options": { "a": "spuriously", "b": "gravely", "c": "fatefully", "d": "vitally" },
+    "correctAnswer": "b",
+    "explanation": "'Gravely' means seriously — matches the severity of the accident.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 34,
+    "section": "Fill in the Blanks",
+    "text": "<strong>Q34. Fill in the blank with the correct word from the options given below to make a meaningful sentence:-</strong><br>In my haste to stop the boiling milk from overflowing, I accidentally ______________ my fingers.",
+    "options": { "a": "sizzled", "b": "scorched", "c": "scalded", "d": "sunburnt" },
+    "correctAnswer": "c",
+    "explanation": "'Scalded' means burned with hot liquid or steam.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 35,
+    "section": "Fill in the Blanks",
+    "text": "<strong>Q35. Fill in the blank with the correct word from the options given below to make a meaningful sentence:-</strong><br>His salary is in ______________ with the amount of work he does.",
+    "options": { "a": "accord", "b": "coordination", "c": "balance", "d": "keeping" },
+    "correctAnswer": "d",
+    "explanation": "The idiom is 'in keeping with' meaning consistent with.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 36,
+    "section": "Fill in the Blanks",
+    "text": "<strong>Q36. Fill in the blank with the correct word from the options given below:-</strong><br>Sara was so ______________ that she did not take much time to make up her mind.",
+    "options": { "a": "impervious", "b": "impetuous", "c": "inarticulate", "d": "inerrant" },
+    "correctAnswer": "b",
+    "explanation": "'Impetuous' means acting quickly without thought — matches 'did not take much time to make up her mind'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 37,
+    "section": "Prepositions",
+    "text": "<strong>Q37. Fill in the blank with the correct word from the options given below:-</strong><br>She is standing ______________ her husband in this crisis.",
+    "options": { "a": "with", "b": "in", "c": "for", "d": "by" },
+    "correctAnswer": "d",
+    "explanation": "'Stand by' means to support someone in a difficult situation.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 38,
+    "section": "Phrasal Verbs",
+    "text": "<strong>Q38. Fill in the blank with the correct option:-</strong><br>The two friends appear to have fallen ______________ over a minor issue.",
+    "options": { "a": "down", "b": "out", "c": "into", "d": "by" },
+    "correctAnswer": "b",
+    "explanation": "'Fallen out' means to have a disagreement and stop being friends.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 39,
+    "section": "Fill in the Blanks",
+    "text": "<strong>Q39. Fill in the blank with the correct option:-</strong><br>The committee's appeal to the people for money ______________ little response.",
+    "options": { "a": "evoked", "b": "provided", "c": "provoked", "d": "prevented" },
+    "correctAnswer": "a",
+    "explanation": "'Evoked' means to bring out or elicit a response.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 40,
+    "section": "Vocabulary",
+    "text": "<strong>Q40. Which of the following best explains the meaning of the word METAMORPHOSIS?</strong>",
+    "options": { "a": "A man flaunts his new car to impress his neighbours", "b": "A woman throws out old clothes from her wardrobe", "c": "A garden full of weeds is converted into a lovely green lawn", "d": "A man paints his new home in bright colours" },
+    "correctAnswer": "c",
+    "explanation": "'Metamorphosis' means a complete transformation from one form to another.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 41,
+    "section": "Antonyms",
+    "text": "<strong>Q41. The patient will certainly recuperate under medical care.</strong><br>The ANTONYM of the word RECUPERATE is:",
+    "options": { "a": "Resuscitate", "b": "Reimburse", "c": "Degenerate", "d": "Convalesce" },
+    "correctAnswer": "c",
+    "explanation": "'Recuperate' means to recover; 'degenerate' means to worsen — the opposite.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 42,
+    "section": "Antonyms",
+    "text": "<strong>Q42. The speech given by him seemed to be INNOCUOUS but there were undercurrents that implied the contrary:-</strong><br>The ANTONYM of the word INNOCUOUS is:",
+    "options": { "a": "Inoffensive", "b": "Harmful", "c": "Gentle", "d": "Insightful" },
+    "correctAnswer": "b",
+    "explanation": "'Innocuous' means harmless; 'harmful' is the opposite.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 43,
+    "section": "Antonyms",
+    "text": "<strong>Q43. Select the word that is the exact opposite of the word MELLIFLUOUS in meaning from the given options:-</strong>",
+    "options": { "a": "Resonant", "b": "Cacophonous", "c": "Harmonious", "d": "Acrimonious" },
+    "correctAnswer": "b",
+    "explanation": "'Mellifluous' means sweet-sounding; 'cacophonous' means harsh-sounding — opposite.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 44,
+    "section": "Synonyms",
+    "text": "<strong>Q44. Select the word from the given options that is most similar in meaning to the word- JUXTAPOSE</strong>",
+    "options": { "a": "Collective", "b": "Adjacent", "c": "Aligned", "d": "Distant" },
+    "correctAnswer": "b",
+    "explanation": "'Juxtapose' means to place side by side — 'adjacent' means next to each other.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 45,
+    "section": "Synonyms",
+    "text": "<strong>Q45. Select the word from the given options that is most similar in meaning to the word - EMULATE</strong>",
+    "options": { "a": "Echo", "b": "Reiterate", "c": "Envy", "d": "Mimic" },
+    "correctAnswer": "d",
+    "explanation": "'Emulate' means to imitate or copy — 'mimic' is the closest synonym.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 46,
+    "section": "Synonyms",
+    "text": "<strong>Q46. Select the word from the given options that is most similar in meaning to the word- ALLEVIATE</strong>",
+    "options": { "a": "Swell", "b": "Aggravate", "c": "Repel", "d": "Assuage" },
+    "correctAnswer": "d",
+    "explanation": "'Alleviate' means to reduce pain or suffering — 'assuage' has the same meaning.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 47,
+    "section": "Antonyms",
+    "text": "<strong>Q47. Choose the word from the given options which is opposite in meaning to the given word: Insipid</strong>",
+    "options": { "a": "Uninteresting", "b": "Savory", "c": "Spiritless", "d": "Bland" },
+    "correctAnswer": "b",
+    "explanation": "'Insipid' means dull or flavorless; 'savory' means tasty or flavorful — opposite.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 48,
+    "section": "Antonyms",
+    "text": "<strong>Q48. Choose the word from the given options which is opposite in meaning to the given word: Pragmatic</strong>",
+    "options": { "a": "Practical", "b": "Sensible", "c": "Proficient", "d": "Utopian" },
+    "correctAnswer": "d",
+    "explanation": "'Pragmatic' means practical and realistic; 'utopian' means idealistic and impractical — opposite.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 49,
+    "section": "Synonyms",
+    "text": "<strong>Q49. Choose the word from the given options which is similar in meaning to the given word: Anticipate</strong>",
+    "options": { "a": "Contemplate", "b": "Assert", "c": "Neglect", "d": "Predict" },
+    "correctAnswer": "d",
+    "explanation": "'Anticipate' means to expect or predict something.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 50,
+    "section": "Antonyms",
+    "text": "<strong>Q50. Choose the correct antonym for the word 'Flagrant' from the options given below:-</strong>",
+    "options": { "a": "Notorious", "b": "Blatant", "c": "Unobtrusive", "d": "Adjacent" },
+    "correctAnswer": "c",
+    "explanation": "'Flagrant' means obvious and offensive; 'unobtrusive' means not noticeable — opposite.",
+    "marked": false,
+    "userAnswer": ""
+  }
+],
+    duration: 60 * 60,
+    markingScheme: { correct: 5, incorrect: -1 }
+};
+
+/* ============================================================
+   TEST ENGINE
+   ============================================================ */
+let currentQuestionIndex = 0;
+let timeLeft = mockTest.duration;
+let timer;
+let testSubmitted = false;
+let testStarted = false;
+
+const timerEl = document.querySelector('.timer');
+const questionTextEl = document.getElementById('question-text');
+const optionsEl = document.getElementById('options-container');
+const qNumEl = document.getElementById('q-number');
+const curQNumEl = document.getElementById('current-q-number');
+const progressFill = document.getElementById('test-progress');
+const progressPct = document.getElementById('progress-percent');
+const paletteGrid = document.getElementById('question-palette-grid');
+const answeredCountEl = document.getElementById('answered-count');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const markBtn = document.getElementById('mark-btn');
+const submitBtn = document.getElementById('submit-test-btn');
+const modal = document.getElementById('results-modal');
+const closeModal = document.getElementById('close-modal');
+const reviewBtn = document.getElementById('review-btn');
+
+function initTest() {
+    renderPalette();
+    renderQuestion();
+    startTimer();
+    updateProgress();
+    renderLegend(false);
+    prevBtn.addEventListener('click', () => { if (currentQuestionIndex > 0) { currentQuestionIndex--; renderQuestion(); } });
+    nextBtn.addEventListener('click', () => { if (currentQuestionIndex < mockTest.questions.length - 1) { currentQuestionIndex++; renderQuestion(); } });
+    markBtn.addEventListener('click', toggleMark);
+    submitBtn.addEventListener('click', () => { if (confirm('Submit the test?')) submitTest(); });
+    closeModal.addEventListener('click', () => modal.classList.remove('show'));
+    reviewBtn.addEventListener('click', () => { modal.classList.remove('show'); currentQuestionIndex = 0; renderQuestion(); });
+    document.getElementById('download-pdf-btn').addEventListener('click', generatePDF);
+    document.getElementById('modal-result-btn').addEventListener('click', () => { modal.classList.remove('show'); document.getElementById('stream-picker-overlay').style.display = 'flex'; });
+    document.getElementById('pdf-action-btn').addEventListener('click', generatePDF);
+    document.getElementById('result-action-btn').addEventListener('click', () => { document.getElementById('stream-picker-overlay').style.display = 'flex'; });
+}
+
+function startTimer() {
+    updateTimerDisplay();
+    timer = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) { clearInterval(timer); submitTest(); }
+        if (timeLeft === 300) alert('⚠️ Only 5 minutes remaining!');
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const h = Math.floor(timeLeft / 3600);
+    const m = Math.floor((timeLeft % 3600) / 60);
+    const s = timeLeft % 60;
+    const str = `${pad(h)}:${pad(m)}:${pad(s)}`;
+    timerEl.textContent = str;
+    const mob = document.querySelector('.mob-timer');
+    if (mob) mob.textContent = str;
+}
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function renderQuestion() {
+    const q = mockTest.questions[currentQuestionIndex];
+    document.getElementById('current-section').textContent = q.section;
+    document.getElementById('section-badge').textContent = '📘 ' + q.section;
+    questionTextEl.innerHTML = q.text;
+    qNumEl.textContent = q.id;
+    curQNumEl.textContent = q.id;
+    optionsEl.innerHTML = '';
+
+    for (const [key, val] of Object.entries(q.options)) {
+        const div = document.createElement('div');
+        div.className = 'option';
+        if (testSubmitted) {
+            if (key === q.correctAnswer) div.classList.add('correct');
+            else if (key === q.userAnswer) div.classList.add('incorrect');
+        } else {
+            if (key === q.userAnswer) div.classList.add('selected');
+        }
+        if (!testSubmitted) {
+            div.addEventListener('click', () => {
+                optionsEl.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+                div.classList.add('selected');
+                q.userAnswer = key;
+                updatePalette();
+                updateProgress();
+            });
+        }
+        const letter = document.createElement('div');
+        letter.className = 'opt-letter';
+        letter.textContent = key.toUpperCase();
+        const text = document.createElement('span');
+        text.className = 'opt-text';
+        text.textContent = val;
+        if (testSubmitted) {
+            if (key === q.correctAnswer) {
+                const ind = document.createElement('span');
+                ind.className = 'opt-indicator correct-indicator';
+                ind.textContent = ' ✓ Correct';
+                text.appendChild(ind);
+            } else if (key === q.userAnswer) {
+                const ind = document.createElement('span');
+                ind.className = 'opt-indicator incorrect-indicator';
+                ind.textContent = ' ✗ Your Answer';
+                text.appendChild(ind);
+            }
+        }
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'q-opt';
+        radio.value = key;
+        radio.checked = q.userAnswer === key;
+        div.appendChild(radio);
+        div.appendChild(letter);
+        div.appendChild(text);
+        optionsEl.appendChild(div);
+    }
+
+    if (testSubmitted && q.explanation) {
+        const exp = document.createElement('div');
+        exp.className = 'explanation-box';
+        exp.innerHTML = `<strong>Explanation:</strong> ${q.explanation}`;
+        optionsEl.appendChild(exp);
+    }
+
+    markBtn.classList.toggle('marked', q.marked);
+    markBtn.textContent = q.marked ? '🔖 Marked' : '🔖 Mark';
+    prevBtn.style.visibility = currentQuestionIndex === 0 ? 'hidden' : 'visible';
+    nextBtn.style.visibility = currentQuestionIndex === mockTest.questions.length - 1 ? 'hidden' : 'visible';
+    updatePalette();
+}
+
+function toggleMark() {
+    const q = mockTest.questions[currentQuestionIndex];
+    q.marked = !q.marked;
+    markBtn.classList.toggle('marked', q.marked);
+    markBtn.textContent = q.marked ? '🔖 Marked' : '🔖 Mark';
+    updatePalette();
+}
+
+function renderPalette() {
+    paletteGrid.innerHTML = '';
+    mockTest.questions.forEach((q, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'palette-btn';
+        btn.textContent = q.id;
+        btn.addEventListener('click', () => { currentQuestionIndex = i; renderQuestion(); });
+        paletteGrid.appendChild(btn);
+    });
+    updatePalette();
+}
+
+function updatePalette() {
+    const btns = paletteGrid.querySelectorAll('.palette-btn');
+    mockTest.questions.forEach((q, i) => {
+        const btn = btns[i];
+        btn.className = 'palette-btn';
+        if (testSubmitted) {
+            if (!q.userAnswer) btn.classList.add('review-unanswered');
+            else if (q.userAnswer === q.correctAnswer) btn.classList.add('review-correct');
+            else btn.classList.add('review-wrong');
+        } else {
+            if (q.userAnswer) btn.classList.add('answered');
+            if (q.marked) btn.classList.add('marked');
+        }
+        if (i === currentQuestionIndex) btn.classList.add('current');
+    });
+    const ans = mockTest.questions.filter(q => q.userAnswer).length;
+    answeredCountEl.textContent = `${ans}/${mockTest.questions.length}`;
+}
+
+function updateProgress() {
+    const ans = mockTest.questions.filter(q => q.userAnswer).length;
+    const pct = Math.round((ans / mockTest.questions.length) * 100);
+    progressFill.style.width = pct + '%';
+    progressPct.textContent = pct + '%';
+}
+
+function renderLegend(reviewMode) {
+    const leg = document.getElementById('palette-legend');
+    if (!leg) return;
+    if (reviewMode) {
+        leg.innerHTML = `
+        <div class="leg-label"><div class="leg-dot" style="background:#22c55e;"></div>Correct</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#ef4444;"></div>Wrong</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#60a5fa;"></div>Unanswered</div>`;
+    } else {
+        leg.innerHTML = `
+        <div class="leg-label"><div class="leg-dot" style="background:#bbf7d0;border:1px solid #22c55e;"></div>Answered</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#bae6fd;border:1px solid #0ea5e9;"></div>Marked</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#fee2e2;border:1px solid #fca5a5;"></div>Unanswered</div>
+        <div class="leg-label"><div class="leg-dot" style="background:white;border:2px solid #1a6fc4;"></div>Current</div>`;
+    }
+}
+
+function submitTest() {
+    if (testSubmitted) return;
+    testSubmitted = true;
+    clearInterval(timer);
+
+    let correct = 0, incorrect = 0, unanswered = 0;
+    mockTest.questions.forEach(q => {
+        if (!q.userAnswer) unanswered++;
+        else if (q.userAnswer === q.correctAnswer) correct++;
+        else incorrect++;
+    });
+
+    const total = mockTest.questions.length;
+    const maxScore = total * mockTest.markingScheme.correct;
+    const score = (correct * mockTest.markingScheme.correct) + (incorrect * mockTest.markingScheme.incorrect);
+    const pct = ((score / maxScore) * 100).toFixed(2);
+    const acc = correct + incorrect > 0 ? ((correct / (correct + incorrect)) * 100).toFixed(2) : '0';
+
+const resultData = {
+        studentId: localStorage.getItem('ts_student_id') || '',
+        name: localStorage.getItem('cbtUserName') || 'Unknown',
+        subject: SUBJECT_ID,
+        chapter: CHAPTER_ID,
+        date: new Date().toISOString(),
+        score, maxScore, correct,
+        wrong: incorrect,
+        skipped: unanswered,
+        totalQ: total,
+        percentage: parseFloat(pct),
+        accuracy: parseFloat(acc),
+        timeTaken: mockTest.duration - timeLeft
+    };
+
+    const key = `thunderstudy_result_${SUBJECT_ID}_${CHAPTER_ID}`;
+    localStorage.setItem(key, JSON.stringify(resultData));
+
+    const GS_URL = "https://script.google.com/macros/s/AKfycbyEsrvdSuRh06TIKPK0ozP-jQNjqHO8PaIeBcW5r45aGdr4H3ZVFHpKMm3xaDHrYmqX/exec";
+    fetch(GS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(resultData)
+    }).then(() => {
+        localStorage.setItem(`synced_${SUBJECT_ID}_${CHAPTER_ID}`, "true");
+    }).catch(err => console.error("Sync failed", err));
+
+    const idxKey = `thunderstudy_index_${SUBJECT_ID}`;
+    let idx = [];
+    try { idx = JSON.parse(localStorage.getItem(idxKey) || '[]'); } catch(e) {}
+    if (!idx.includes(CHAPTER_ID)) idx.push(CHAPTER_ID);
+    localStorage.setItem(idxKey, JSON.stringify(idx));
+
+    document.getElementById('correct-answers').textContent = correct;
+    document.getElementById('incorrect-answers').textContent = incorrect;
+    document.getElementById('unanswered').textContent = unanswered;
+    document.getElementById('total-score').textContent = score;
+    document.getElementById('percentage').textContent = pct;
+    document.getElementById('accuracy').textContent = acc;
+    modal.classList.add('show');
+
+    renderQuestion();
+    renderLegend(true);
+
+    // Swap submit rows
+    document.getElementById('submit-row-before').style.display = 'none';
+    document.getElementById('submit-row-after').style.display = 'flex';
+}
+
+/* Visibility change guard */
+document.addEventListener("visibilitychange", () => {
+    if (!testStarted || testSubmitted) return;
+    if (document.hidden) startCountdown('tab');
+    else cancelCountdown();
+});
+
+/* Arrow key nav */
+document.addEventListener('keydown', e => {
+    if (document.getElementById('test-screen').style.display === 'none') return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { if (currentQuestionIndex < mockTest.questions.length - 1) { currentQuestionIndex++; renderQuestion(); } }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { if (currentQuestionIndex > 0) { currentQuestionIndex--; renderQuestion(); } }
+});
+</script>
+
+<script>
+function startMock() {
+    const savedName = localStorage.getItem('cbtUserName') || '';
+    const savedSID = localStorage.getItem('ts_student_id') || '';
+    const inputName = document.getElementById('username-input').value.trim();
+
+    if (!savedName && !inputName) {
+        alert("⚠️ Please enter your name to continue!");
+        document.getElementById('username-input').focus();
+        return;
+    }
+
+    if (!savedName && inputName) {
+        localStorage.setItem("cbtUserName", inputName);
+    }
+
+    if (!savedSID) {
+        const goToDash = confirm("⚠️ Student ID not found!\n\nYou must have a Student ID to start the mock.\n\nClick OK to open Dashboard to generate one, or Cancel to stay here.");
+        if (goToDash) {
+            window.open('https://commercesehoga.github.io/dashboard/', '_blank');
+        }
+        return;
+    }
+
+    enterFullscreen();
+    document.getElementById('start-screen').style.display = 'none';
+    document.getElementById('instruction-screen').style.display = 'block';
+}
+
+    window.addEventListener('DOMContentLoaded', () => {
+    const savedName = localStorage.getItem('cbtUserName') || '';
+    const savedSID = localStorage.getItem('ts_student_id') || '';
+
+    if (savedName) {
+        const inp = document.getElementById('username-input');
+        if (inp) {
+            inp.value = savedName;
+            inp.style.background = 'rgba(79,110,247,.07)';
+            inp.style.borderColor = '#4f6ef7';
+            inp.style.color = '#4f6ef7';
+            inp.style.fontWeight = 'bold';
+            inp.setAttribute('readonly', true);
+            inp.insertAdjacentHTML('afterend',
+                `<div style="font-size:11px; color:#4f6ef7; font-weight:700; margin-top:5px;">
+                    ✅ Verified Dashboard Profile
+                </div>`
+            );
+        }
+    }
+
+    if (savedSID) {
+        const sidArea = document.getElementById('sid-display-area');
+        const sidVal = document.getElementById('sid-value');
+        if (sidArea && sidVal) {
+            sidArea.style.display = 'block';
+            sidVal.textContent = savedSID;
+        }
+    }
+});
+
+document.getElementById('dark-toggle').addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const dark = document.body.classList.contains('dark-mode');
+    document.getElementById('toggle-icon').textContent = dark ? '☀️' : '🌙';
+    document.getElementById('toggle-label').textContent = dark ? 'Light' : 'Dark';
+});
+
+const checkbox = document.getElementById('agree-checkbox');
+const startTestBtn = document.getElementById('start-test-btn');
+checkbox.addEventListener('change', () => {
+    startTestBtn.disabled = !checkbox.checked;
+});
+startTestBtn.addEventListener('click', () => {
+    if (!checkbox.checked) { alert('Please agree to instructions!'); return; }
+    document.getElementById('instruction-screen').style.display = 'none';
+    document.getElementById('test-screen').style.display = 'block';
+    const name = localStorage.getItem('cbtUserName') || 'Student';
+    const sid = localStorage.getItem('ts_student_id') || 'N/A';
+    document.getElementById('user-name-display').textContent = '👤 ' + name;
+    if (document.getElementById('display-user-name')) document.getElementById('display-user-name').textContent = name;
+    if (document.getElementById('display-user-sid')) document.getElementById('display-user-sid').textContent = sid;
+    const mob = document.getElementById('mobile-name-display');
+    if (mob) mob.textContent = '👤 ' + name + ' | ' + sid;
+    testStarted = true;
+    enterFullscreen();
+    initTest();
+});
+
+function enterFullscreen() {
+    const el = document.documentElement;
+    try {
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+    } catch(e) {}
+}
+
+['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange'].forEach(evt => document.addEventListener(evt, onFSChange));
+
+function isFullscreen() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement);
+}
+function onFSChange() {
+    if (!testStarted || testSubmitted) return;
+    if (document.getElementById('test-screen').style.display === 'none') return;
+    if (!isFullscreen()) startCountdown('fullscreen');
+    else cancelCountdown();
+}
+
+let cdTimer = null, cdSecs = 0;
+function startCountdown(reason) {
+    if (!testStarted || testSubmitted || cdTimer) return;
+    cdSecs = reason === 'tab' ? 2 : 5;
+    const msg = reason === 'tab' ? '⚠️ Tab switched!' : '⚠️ Exited fullscreen!';
+    const hint = reason === 'tab' ? 'Return to this tab to cancel.' : 'Click below to return to fullscreen.';
+    showOverlay(msg, hint, cdSecs, reason === 'fullscreen');
+    cdTimer = setInterval(() => { cdSecs--; updateOverlay(cdSecs); if (cdSecs <= 0) { cancelCountdown(); submitTest(); } }, 1000);
+}
+function cancelCountdown() {
+    if (cdTimer) { clearInterval(cdTimer); cdTimer = null; }
+    hideOverlay();
+}
+function showOverlay(msg, hint, secs, btn) {
+    let ov = document.getElementById('sec-overlay');
+    if (!ov) { ov = document.createElement('div'); ov.id = 'sec-overlay'; ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:999999;display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:DM Sans,sans-serif;color:#fff;text-align:center;padding:24px;'; document.body.appendChild(ov); }
+    ov.innerHTML = `<div style="font-size:56px;margin-bottom:12px;">🚨</div><div style="font-size:22px;font-weight:800;margin-bottom:8px;">${msg}</div><div style="font-size:15px;color:#fbbf24;margin-bottom:18px;">${hint}</div><div style="font-size:14px;color:#e0e0e0;margin-bottom:4px;">Auto-submitting in</div><div id="ov-count" style="font-size:72px;font-weight:900;color:#f87171;line-height:1;">${secs}</div><div style="font-size:13px;color:#9ca3af;margin-top:4px;">seconds</div>${btn?`<button onclick="enterFullscreen()" style="margin-top:22px;padding:12px 32px;border-radius:30px;border:none;background:linear-gradient(135deg,#22c55e,#15803d);color:#fff;font-size:16px;font-weight:700;cursor:pointer;">🔲 Return to Fullscreen</button>`:''}`;
+    ov.style.display = 'flex';
+}
+function updateOverlay(n) { const el = document.getElementById('ov-count'); if (el) el.textContent = n; }
+function hideOverlay() { const ov = document.getElementById('sec-overlay'); if (ov) ov.style.display = 'none'; }
+</script>
+
+<script>
+function generatePDF() {
+    const name = localStorage.getItem('cbtUserName') || 'Student';
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'});
+    const timeStr = now.toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'});
+
+    let correct=0,incorrect=0,unanswered=0;
+    mockTest.questions.forEach(q => {
+        if (!q.userAnswer) unanswered++;
+        else if (q.userAnswer === q.correctAnswer) correct++;
+        else incorrect++;
+    });
+    const score = (correct*5)+(incorrect*-1);
+    const maxScore = mockTest.questions.length*5;
+    const pct = ((score/maxScore)*100).toFixed(1);
+    const lbl = {a:'A',b:'B',c:'C',d:'D'};
+
+    let qHTML = '';
+    mockTest.questions.forEach((q,i) => {
+        const ok = q.userAnswer === q.correctAnswer;
+        const wrong = q.userAnswer && !ok;
+        const skip = !q.userAnswer;
+        const statusColor = ok?'#059669':wrong?'#dc2626':'#9ca3af';
+        const statusLabel = ok?'✓ Correct':wrong?'✗ Wrong':'— Skipped';
+        const rowBg = ok?'#f0fdf4':wrong?'#fef2f2':'#fafafa';
+        let optsHTML='';
+        for (const [k,v] of Object.entries(q.options)) {
+            const isRight=k===q.correctAnswer, isUser=k===q.userAnswer;
+            let bg='transparent',fw='normal',pre='';
+            if(isRight){bg='#dcfce7';fw='bold';pre='✓ ';}
+            if(isUser&&!isRight){bg='#fee2e2';fw='bold';pre='✗ ';}
+            optsHTML+=`<div style="display:flex;gap:8px;padding:4px 8px;border-radius:4px;background:${bg};font-weight:${fw};font-size:12px;margin:2px 0;"><span style="min-width:18px;font-weight:700;">${lbl[k]}.</span><span>${pre}${v}</span></div>`;
+        }
+        const yourAns = skip?'<span style="color:#9ca3af;">Not Attempted</span>':`<span style="color:${ok?'#059669':'#dc2626'};font-weight:bold;">${lbl[q.userAnswer]}. ${q.options[q.userAnswer]}</span>`;
+        qHTML+=`<div style="margin-bottom:16px;padding:14px;border-radius:8px;background:${rowBg};border:1px solid #e5e7eb;page-break-inside:avoid;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                <div style="font-weight:700;font-size:13px;color:#1e293b;">Q${i+1}. ${q.text}</div>
+                <div style="font-weight:700;font-size:12px;color:${statusColor};white-space:nowrap;margin-left:12px;">${statusLabel}</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:8px;">${optsHTML}</div>
+            <div style="font-size:12px;border-top:1px solid #e5e7eb;padding-top:6px;">
+                Your answer: ${yourAns}&nbsp;&nbsp;
+                Correct: <span style="color:#059669;font-weight:bold;">${lbl[q.correctAnswer]}. ${q.options[q.correctAnswer]}</span>
+            </div>
+        </div>`;
+    });
+
+    const scoreColor = pct>=60?'#059669':pct>=35?'#d97706':'#dc2626';
+    const html=`<div style="max-width:780px;margin:0 auto;font-family:Arial,sans-serif;color:#111;">
+        <div style="background:linear-gradient(135deg,#1a6fc4,#0ea5e9);color:white;padding:20px 24px;border-radius:10px 10px 0 0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                <div><div style="font-size:22px;font-weight:800;">⚡ Thunderstudy CBT</div><div style="font-size:13px;opacity:0.85;margin-top:3px;">English Result Report</div></div>
+                <div style="text-align:right;font-size:12px;opacity:0.85;"><div>📅 ${dateStr} 🕐 ${timeStr}</div><div>👤 ${name}</div></div>
+            </div>
+        </div>
+        <div style="background:#f0f6ff;border:1px solid #bfdbfe;border-top:none;padding:16px 24px;margin-bottom:20px;border-radius:0 0 10px 10px;">
+            <div style="display:flex;flex-wrap:wrap;gap:12px;">
+                <div style="background:white;border:1px solid #dbeafe;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">SCORE</div><div style="font-size:24px;font-weight:800;color:${scoreColor};">${score}<span style="font-size:14px;color:#6b7280;">/${maxScore}</span></div></div>
+                <div style="background:white;border:1px solid #dbeafe;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">PERCENTAGE</div><div style="font-size:24px;font-weight:800;color:${scoreColor};">${pct}%</div></div>
+                <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#059669;">CORRECT</div><div style="font-size:24px;font-weight:800;color:#059669;">${correct}</div></div>
+                <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#dc2626;">WRONG</div><div style="font-size:24px;font-weight:800;color:#dc2626;">${incorrect}</div></div>
+                <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">SKIPPED</div><div style="font-size:24px;font-weight:800;color:#6b7280;">${unanswered}</div></div>
+            </div>
+        </div>
+        <div style="font-size:15px;font-weight:700;color:#1a6fc4;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #1a6fc4;">📋 Answer Key</div>
+        ${qHTML}
+        <div style="text-align:center;margin-top:20px;padding:12px;background:#f0f6ff;border-radius:8px;font-size:12px;color:#6b7280;">Generated by <b>Thunderstudy CBT</b> | t.me/thunderstudy_official | ${dateStr}</div>
+    </div>`;
+
+    const w = window.open('','_blank','width=950,height=700,scrollbars=yes');
+    if (!w) { alert('Popup blocked! Allow popups and retry.'); return; }
+    w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"/><title>Thunderstudy_English_${name}</title><style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Arial,sans-serif;background:#fff;padding:20px;}@media print{.no-print{display:none!important;}}.print-btn{display:block;margin:0 auto 20px;padding:12px 36px;background:linear-gradient(135deg,#1a6fc4,#0ea5e9);color:white;font-size:16px;font-weight:700;border:none;border-radius:30px;cursor:pointer;}</style></head><body><button class="print-btn no-print" onclick="window.print()">🖨️ Print / Save PDF</button>${html}</body></html>`);
+    w.document.close(); w.focus();
+}
+</script>
+
+</body>
+</html>
