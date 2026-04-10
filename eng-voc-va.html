@@ -711,8 +711,10 @@ body.dark-mode .analysis { color: var(--dm-text); }
         </div>
     </div>
 
-    <input type="text" id="username-input" class="name-input" placeholder="Enter your name to begin">
-
+<input type="text" id="username-input" class="name-input" placeholder="Enter your name to begin">
+    <div id="sid-display-area" style="font-size: 13px; font-weight: 700; color: #4f6ef7; background: rgba(79,110,247,0.1); padding: 5px 15px; border-radius: 20px; display: none; margin-top: 8px;">
+        🪪 ID: <span id="sid-value">---</span>
+    </div>
     <div class="start-btns">
         <button class="s-btn s-btn-primary" onclick="startMock()">🚀 Start Mock Test</button>
         <button class="s-btn s-btn-green" onclick="window.location.href='https://commercesehoga.github.io/commerce/bst/result.html'">📊 Previous Results</button>
@@ -763,7 +765,9 @@ body.dark-mode .analysis { color: var(--dm-text); }
 <div class="sidebar">
     <div class="timer">01:00:00</div>
     <div class="sidebar-brand">⚡ Thunderstudy CBT</div>
-
+    
+      <div class="test-info-row"><strong>Name:</strong> <span id="display-user-name">Student</span></div>
+    <div class="test-info-row"><strong>ID:</strong> <span id="display-user-sid" style="font-family:monospace;">---</span></div>
     <div class="test-info-row"><strong>Subject:</strong> English — Syn/Ant</div>
     <div class="test-info-row"><strong>Questions:</strong> 50</div>
     <div class="test-info-row"><strong>Duration:</strong> 60 min</div>
@@ -1162,17 +1166,34 @@ function submitTest() {
     const pct = ((score / maxScore) * 100).toFixed(2);
     const acc = correct + incorrect > 0 ? ((correct / (correct + incorrect)) * 100).toFixed(2) : '0';
 
-    const resultData = {
-        chapterId: CHAPTER_ID, subjectId: SUBJECT_ID,
-        userName: localStorage.getItem('cbtUserName') || 'Unknown',
-        date: new Date().toISOString(), score, maxScore, correct, incorrect, unanswered,
-        totalQ: total, percentage: parseFloat(pct), accuracy: parseFloat(acc),
-        timeTaken: mockTest.duration - timeLeft,
-        questions: mockTest.questions.map(q => ({ id: q.id, correct: q.userAnswer === q.correctAnswer, answered: !!q.userAnswer, userAnswer: q.userAnswer, correctAnswer: q.correctAnswer }))
+const resultData = {
+        studentId: localStorage.getItem('ts_student_id') || '',
+        name: localStorage.getItem('cbtUserName') || 'Unknown',
+        subject: SUBJECT_ID,
+        chapter: CHAPTER_ID,
+        date: new Date().toISOString(),
+        score, maxScore, correct,
+        wrong: incorrect,
+        skipped: unanswered,
+        totalQ: total,
+        percentage: parseFloat(pct),
+        accuracy: parseFloat(acc),
+        timeTaken: mockTest.duration - timeLeft
     };
 
     const key = `thunderstudy_result_${SUBJECT_ID}_${CHAPTER_ID}`;
     localStorage.setItem(key, JSON.stringify(resultData));
+
+    const GS_URL = "https://script.google.com/macros/s/AKfycbyEsrvdSuRh06TIKPK0ozP-jQNjqHO8PaIeBcW5r45aGdr4H3ZVFHpKMm3xaDHrYmqX/exec";
+    fetch(GS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(resultData)
+    }).then(() => {
+        localStorage.setItem(`synced_${SUBJECT_ID}_${CHAPTER_ID}`, "true");
+    }).catch(err => console.error("Sync failed", err));
+
     const idxKey = `thunderstudy_index_${SUBJECT_ID}`;
     let idx = [];
     try { idx = JSON.parse(localStorage.getItem(idxKey) || '[]'); } catch(e) {}
@@ -1212,13 +1233,63 @@ document.addEventListener('keydown', e => {
 
 <script>
 function startMock() {
-    const name = document.getElementById('username-input').value.trim();
-    if (!name) { alert('⚠️ Please enter your name!'); document.getElementById('username-input').focus(); return; }
-    localStorage.setItem('cbtUserName', name);
+    const savedName = localStorage.getItem('cbtUserName') || '';
+    const savedSID = localStorage.getItem('ts_student_id') || '';
+    const inputName = document.getElementById('username-input').value.trim();
+
+    if (!savedName && !inputName) {
+        alert("⚠️ Please enter your name to continue!");
+        document.getElementById('username-input').focus();
+        return;
+    }
+
+    if (!savedName && inputName) {
+        localStorage.setItem("cbtUserName", inputName);
+    }
+
+    if (!savedSID) {
+        const goToDash = confirm("⚠️ Student ID not found!\n\nYou must have a Student ID to start the mock.\n\nClick OK to open Dashboard to generate one, or Cancel to stay here.");
+        if (goToDash) {
+            window.open('https://commercesehoga.github.io/dashboard/', '_blank');
+        }
+        return;
+    }
+
     enterFullscreen();
     document.getElementById('start-screen').style.display = 'none';
     document.getElementById('instruction-screen').style.display = 'block';
 }
+
+    window.addEventListener('DOMContentLoaded', () => {
+    const savedName = localStorage.getItem('cbtUserName') || '';
+    const savedSID = localStorage.getItem('ts_student_id') || '';
+
+    if (savedName) {
+        const inp = document.getElementById('username-input');
+        if (inp) {
+            inp.value = savedName;
+            inp.style.background = 'rgba(79,110,247,.07)';
+            inp.style.borderColor = '#4f6ef7';
+            inp.style.color = '#4f6ef7';
+            inp.style.fontWeight = 'bold';
+            inp.setAttribute('readonly', true);
+            inp.insertAdjacentHTML('afterend',
+                `<div style="font-size:11px; color:#4f6ef7; font-weight:700; margin-top:5px;">
+                    ✅ Verified Dashboard Profile
+                </div>`
+            );
+        }
+    }
+
+    if (savedSID) {
+        const sidArea = document.getElementById('sid-display-area');
+        const sidVal = document.getElementById('sid-value');
+        if (sidArea && sidVal) {
+            sidArea.style.display = 'block';
+            sidVal.textContent = savedSID;
+        }
+    }
+});
 
 document.getElementById('dark-toggle').addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
@@ -1237,9 +1308,12 @@ startTestBtn.addEventListener('click', () => {
     document.getElementById('instruction-screen').style.display = 'none';
     document.getElementById('test-screen').style.display = 'block';
     const name = localStorage.getItem('cbtUserName') || 'Student';
+    const sid = localStorage.getItem('ts_student_id') || 'N/A';
     document.getElementById('user-name-display').textContent = '👤 ' + name;
+    if (document.getElementById('display-user-name')) document.getElementById('display-user-name').textContent = name;
+    if (document.getElementById('display-user-sid')) document.getElementById('display-user-sid').textContent = sid;
     const mob = document.getElementById('mobile-name-display');
-    if (mob) mob.textContent = '👤 ' + name;
+    if (mob) mob.textContent = '👤 ' + name + ' | ' + sid;
     testStarted = true;
     enterFullscreen();
     initTest();
