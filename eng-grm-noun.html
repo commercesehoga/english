@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thunderstudy CBT — Nouns</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+const SUBJECT_ID  = "eng";
+const CHAPTER_ID  = "eng-grm-noun";
+</script>
+
+<style>
+:root {
+    --primary: #1a6fc4;
+    --primary-dark: #0d4f96;
+    --primary-light: #4a9de8;
+    --accent: #0ea5e9;
+    --accent2: #38bdf8;
+    --white: #ffffff;
+    --off-white: #f0f6ff;
+    --light-blue: #dbeafe;
+    --mid-blue: #bfdbfe;
+    --border: #bfdbfe;
+    --text-dark: #0f1e3d;
+    --text-mid: #2d4a7a;
+    --text-muted: #6b8ab5;
+    --correct: #059669;
+    --correct-bg: #ecfdf5;
+    --incorrect: #dc2626;
+    --incorrect-bg: #fef2f2;
+    --answered: #22c55e;
+    --marked: #0ea5e9;
+    --unanswered: #f97316;
+    --shadow: 0 4px 24px rgba(26,111,196,0.10);
+    --shadow-lg: 0 8px 40px rgba(26,111,196,0.16);
+
+    /* Dark mode vars */
+    --dm-bg: #0b1526;
+    --dm-surface: #111e35;
+    --dm-surface2: #172340;
+    --dm-border: #1e3460;
+    --dm-text: #e2eeff;
+    --dm-muted: #7ba4d4;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text-dark);
+    min-height: 100vh;
+    display: flex;
+    transition: background 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+    background: var(--dm-bg);
+    color: var(--dm-text);
+}
+
+/* ===== START SCREEN ===== */
+#start-screen {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--white);
+    display: flex; flex-direction: column; align-items: center;
+    overflow-y: auto; padding: 0 20px 50px;
+    transition: background 0.3s;
+}
+
+body.dark-mode #start-screen { background: var(--dm-bg); }
+
+.start-hero {
+    width: 100%; max-width: 600px;
+    padding: 48px 0 0;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+}
+
+.start-logo {
+    width: 68px; height: 68px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 8px 28px rgba(26,111,196,0.35);
+    margin-bottom: 20px;
+    animation: floatLogo 3s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.start-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 6px;
+}
+body.dark-mode .start-brand { color: var(--accent2); }
+
+.start-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px; font-weight: 800;
+    color: var(--text-dark);
+    line-height: 1.15;
+    margin-bottom: 10px;
+}
+body.dark-mode .start-title { color: var(--dm-text); }
+
+.start-sub {
+    font-size: 16px; color: var(--text-muted);
+    margin-bottom: 8px;
+}
+body.dark-mode .start-sub { color: var(--dm-muted); }
+
+.tg-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, #0088cc, #006fa8);
+    color: white; text-decoration: none;
+    padding: 10px 24px; border-radius: 40px;
+    font-size: 14px; font-weight: 700;
+    box-shadow: 0 4px 16px rgba(0,136,204,0.4);
+    transition: transform 0.18s, box-shadow 0.18s;
+    margin: 16px 0 28px;
+}
+.tg-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,136,204,0.55); color: white; }
+
+.info-card {
+    width: 100%; max-width: 500px;
+    background: var(--light-blue);
+    border: 1.5px solid var(--mid-blue);
+    border-radius: 16px;
+    padding: 22px 24px;
+    text-align: left;
+    margin-bottom: 24px;
+}
+body.dark-mode .info-card { background: var(--dm-surface); border-color: var(--dm-border); }
+
+.info-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--primary); margin-bottom: 14px;
+}
+body.dark-mode .info-card h3 { color: var(--accent2); }
+
+.info-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+
+.info-pill {
+    background: white;
+    border-radius: 10px; padding: 10px 14px;
+    font-size: 13px; color: var(--text-mid);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+}
+body.dark-mode .info-pill { background: var(--dm-surface2); border-color: var(--dm-border); color: var(--dm-text); }
+
+.info-pill strong { color: var(--primary-dark); font-weight: 700; }
+body.dark-mode .info-pill strong { color: var(--accent2); }
+
+.name-input {
+    width: 100%; max-width: 380px;
+    padding: 14px 20px;
+    border: 2px solid var(--mid-blue);
+    border-radius: 50px;
+    font-size: 16px; font-family: 'DM Sans', sans-serif;
+    text-align: center;
+    background: white; color: var(--text-dark);
+    outline: none; transition: border 0.2s, box-shadow 0.2s;
+    margin-bottom: 18px;
+}
+.name-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(26,111,196,0.12); }
+body.dark-mode .name-input { background: var(--dm-surface); color: var(--dm-text); border-color: var(--dm-border); }
+
+.start-btns { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; max-width: 340px; }
+
+.s-btn {
+    width: 100%; padding: 14px 0;
+    border: none; border-radius: 50px; cursor: pointer;
+    font-size: 16px; font-weight: 700; font-family: 'DM Sans', sans-serif;
+    transition: transform 0.18s, box-shadow 0.18s;
+    letter-spacing: 0.3px;
+}
+.s-btn:hover { transform: translateY(-3px); }
+
+.s-btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; box-shadow: 0 6px 20px rgba(26,111,196,0.4);
+}
+.s-btn-primary:hover { box-shadow: 0 10px 28px rgba(26,111,196,0.55); }
+
+.s-btn-green {
+    background: linear-gradient(135deg, #22c55e, #15803d);
+    color: white; box-shadow: 0 6px 20px rgba(34,197,94,0.35);
+}
+.s-btn-green:hover { box-shadow: 0 10px 28px rgba(34,197,94,0.5); }
+
+.s-btn-purple {
+    background: linear-gradient(135deg, #7c3aed, #4c1d95);
+    color: white; box-shadow: 0 6px 20px rgba(124,58,237,0.35);
+}
+.s-btn-purple:hover { box-shadow: 0 10px 28px rgba(124,58,237,0.5); }
+
+.dark-toggle {
+    position: absolute; top: 16px; right: 16px; z-index: 10000;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; border: none; border-radius: 40px;
+    padding: 8px 18px; font-size: 14px; font-weight: 600;
+    cursor: pointer; display: flex; align-items: center; gap: 7px;
+    box-shadow: 0 4px 14px rgba(26,111,196,0.4);
+    transition: background 0.3s, transform 0.2s;
+    font-family: 'DM Sans', sans-serif;
+}
+.dark-toggle:hover { transform: scale(1.05); }
+body.dark-mode .dark-toggle { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 4px 14px rgba(245,158,11,0.4); }
+
+/* ===== INSTRUCTION SCREEN ===== */
+#instruction-screen {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--white); display: none; overflow-y: auto; padding: 40px 20px;
+}
+body.dark-mode #instruction-screen { background: var(--dm-bg); }
+
+.instr-wrap { max-width: 700px; margin: 0 auto; }
+
+.instr-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 800; color: var(--primary);
+    margin-bottom: 24px; text-align: center;
+}
+body.dark-mode .instr-title { color: var(--accent2); }
+
+.instr-box {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 1.5px solid var(--mid-blue); border-radius: 16px; padding: 28px;
+}
+body.dark-mode .instr-box { background: linear-gradient(135deg, var(--dm-surface), var(--dm-surface2)); border-color: var(--dm-border); }
+
+.instr-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; color: var(--primary);
+    border-left: 4px solid var(--primary); padding-left: 12px; margin-bottom: 16px;
+}
+body.dark-mode .instr-box h3 { color: var(--accent2); border-left-color: var(--accent2); }
+
+.instr-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.instr-list li {
+    background: white; border-radius: 10px; padding: 12px 16px;
+    font-size: 15px; color: var(--text-mid);
+    border: 1px solid var(--border);
+    transition: transform 0.15s;
+}
+body.dark-mode .instr-list li { background: var(--dm-surface2); border-color: var(--dm-border); color: var(--dm-text); }
+.instr-list li:hover { transform: translateX(5px); }
+
+.instr-legend {
+    display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;
+}
+
+.leg-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--text-mid); }
+body.dark-mode .leg-item { color: var(--dm-text); }
+.leg-dot { width: 14px; height: 14px; border-radius: 50%; }
+
+.agree-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 20px; font-size: 15px; font-weight: 600; cursor: pointer;
+    color: var(--text-mid);
+}
+body.dark-mode .agree-row { color: var(--dm-text); }
+
+.agree-row input { display: none; }
+
+.chk-box {
+    width: 22px; height: 22px; border-radius: 6px;
+    border: 2px solid var(--primary);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; color: transparent; transition: 0.15s;
+    background: white;
+}
+body.dark-mode .chk-box { background: var(--dm-surface); border-color: var(--accent2); }
+
+.agree-row input:checked + .chk-box { background: var(--primary); color: white; }
+body.dark-mode .agree-row input:checked + .chk-box { background: var(--accent2); }
+
+#start-test-btn {
+    margin-top: 22px; width: 100%;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; border: none; border-radius: 50px; padding: 14px;
+    font-size: 17px; font-weight: 700; cursor: not-allowed; opacity: 0.55;
+    font-family: 'DM Sans', sans-serif;
+    transition: opacity 0.2s, transform 0.18s, box-shadow 0.18s;
+    box-shadow: 0 6px 20px rgba(26,111,196,0.35);
+}
+#start-test-btn:not(:disabled) { cursor: pointer; opacity: 1; }
+#start-test-btn:not(:disabled):hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(26,111,196,0.5); }
+
+/* ===== TEST SCREEN ===== */
+#test-screen {
+    position: fixed; inset: 0; z-index: 9998;
+    background: var(--off-white); display: none; overflow: auto;
+}
+body.dark-mode #test-screen { background: var(--dm-bg); }
+
+/* SIDEBAR */
+.sidebar {
+    width: 280px; background: white;
+    height: 100vh; position: fixed; right: 0; top: 0;
+    padding: 20px; overflow-y: auto;
+    border-left: 2px solid var(--light-blue);
+    box-shadow: -4px 0 20px rgba(26,111,196,0.08);
+}
+body.dark-mode .sidebar { background: var(--dm-surface); border-left-color: var(--dm-border); }
+
+.timer {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; padding: 10px 0; border-radius: 40px;
+    font-weight: 700; font-size: 19px; text-align: center;
+    letter-spacing: 1px; margin-bottom: 18px;
+    box-shadow: 0 4px 14px rgba(26,111,196,0.35);
+}
+
+.sidebar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700; color: var(--primary);
+    margin-bottom: 14px; padding-bottom: 12px; border-bottom: 2px solid var(--light-blue);
+}
+body.dark-mode .sidebar-brand { color: var(--accent2); border-bottom-color: var(--dm-border); }
+
+.test-info-row { font-size: 13px; color: var(--text-muted); margin: 5px 0; display: flex; gap: 6px; }
+.test-info-row strong { color: var(--text-dark); font-weight: 600; }
+body.dark-mode .test-info-row { color: var(--dm-muted); }
+body.dark-mode .test-info-row strong { color: var(--dm-text); }
+
+.palette-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin: 18px 0 10px; font-size: 13px; font-weight: 600; color: var(--text-mid);
+}
+body.dark-mode .palette-header { color: var(--dm-text); }
+
+.palette-count { color: var(--primary); font-weight: 700; }
+body.dark-mode .palette-count { color: var(--accent2); }
+
+.palette-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px;
+}
+
+.palette-btn {
+    aspect-ratio: 1; border-radius: 50%; border: 2px solid #e5e7eb;
+    background: #fee2e2; /* unanswered = orange-ish red */
+    color: var(--text-dark); font-size: 11px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+}
+.palette-btn:hover { transform: scale(1.1); }
+.palette-btn.answered { background: #bbf7d0; border-color: #22c55e; color: #14532d; }
+.palette-btn.marked { background: #bae6fd; border-color: #0ea5e9; color: #0c4a6e; }
+.palette-btn.current { background: white; border: 2.5px solid var(--primary); color: var(--primary); box-shadow: 0 0 0 3px rgba(26,111,196,0.2); }
+.palette-btn.review-correct { background: #22c55e; border-color: #16a34a; color: white; }
+.palette-btn.review-wrong { background: #ef4444; border-color: #dc2626; color: white; }
+.palette-btn.review-unanswered { background: #60a5fa; border-color: #3b82f6; color: white; }
+
+body.dark-mode .palette-btn { background: #7f1d1d; border-color: #991b1b; color: #fecaca; }
+body.dark-mode .palette-btn.answered { background: #14532d; border-color: #22c55e; color: #bbf7d0; }
+body.dark-mode .palette-btn.marked { background: #0c4a6e; border-color: #0ea5e9; color: #bae6fd; }
+body.dark-mode .palette-btn.current { background: var(--dm-surface2); border-color: var(--accent); color: var(--accent); }
+
+#palette-legend { margin-top: 14px; font-size: 12px; color: var(--text-muted); }
+body.dark-mode #palette-legend { color: var(--dm-muted); }
+#palette-legend .leg-label { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; }
+
+/* MAIN CONTENT */
+.main-content {
+    margin-right: 280px; padding: 20px 24px;
+    min-height: 100vh;
+}
+
+.test-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px; padding-bottom: 14px;
+    border-bottom: 2px solid var(--light-blue);
+}
+body.dark-mode .test-header { border-bottom-color: var(--dm-border); }
+
+.user-badge {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white; padding: 7px 16px; border-radius: 30px;
+    font-size: 13px; font-weight: 700;
+}
+
+.q-counter {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700; color: var(--text-dark);
+}
+body.dark-mode .q-counter { color: var(--dm-text); }
+.q-counter span { color: var(--primary); }
+body.dark-mode .q-counter span { color: var(--accent2); }
+
+.progress-wrap { flex: 1; max-width: 200px; margin: 0 16px; }
+.progress-bar-bg { height: 8px; background: var(--light-blue); border-radius: 10px; overflow: hidden; }
+body.dark-mode .progress-bar-bg { background: var(--dm-surface2); }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 10px; transition: width 0.4s; width: 0; }
+.progress-label { font-size: 12px; color: var(--text-muted); text-align: right; margin-top: 4px; }
+body.dark-mode .progress-label { color: var(--dm-muted); }
+
+/* QUESTION CARD */
+.question-card {
+    background: white; border-radius: 16px; padding: 28px;
+    box-shadow: var(--shadow); border: 1.5px solid var(--light-blue);
+    margin-bottom: 20px;
+}
+body.dark-mode .question-card { background: var(--dm-surface); border-color: var(--dm-border); box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+
+.q-num-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--light-blue); color: var(--primary);
+    padding: 5px 14px; border-radius: 20px; font-size: 13px; font-weight: 700;
+    margin-bottom: 14px;
+}
+body.dark-mode .q-num-tag { background: var(--dm-surface2); color: var(--accent2); }
+
+.section-badge {
+    display: inline-flex; align-items: center;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white; padding: 3px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 600; margin-bottom: 12px;
+}
+
+.q-text {
+    font-size: 18px; font-weight: 500; color: var(--text-dark);
+    line-height: 1.6; margin-bottom: 22px;
+}
+body.dark-mode .q-text { color: var(--dm-text); }
+
+/* OPTIONS */
+.option {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px; border: 2px solid var(--border);
+    border-radius: 12px; margin-bottom: 10px; cursor: pointer;
+    background: white; transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    user-select: none;
+}
+body.dark-mode .option { background: var(--dm-surface2); border-color: var(--dm-border); }
+.option:hover { border-color: var(--primary); background: var(--off-white); transform: translateX(4px); }
+body.dark-mode .option:hover { background: #1e3460; border-color: var(--accent); }
+
+.option.selected { border-color: var(--primary-dark); background: #dbeafe; }
+body.dark-mode .option.selected { background: #0d2a56; border-color: var(--accent); }
+
+.option.correct { border-color: var(--correct) !important; background: var(--correct-bg) !important; }
+.option.incorrect { border-color: var(--incorrect) !important; background: var(--incorrect-bg) !important; }
+
+.opt-letter {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid var(--border); background: var(--off-white);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: var(--text-muted);
+    flex-shrink: 0; transition: all 0.15s;
+}
+.option.selected .opt-letter { background: var(--primary); border-color: var(--primary); color: white; }
+.option.correct .opt-letter { background: var(--correct); border-color: var(--correct); color: white; }
+.option.incorrect .opt-letter { background: var(--incorrect); border-color: var(--incorrect); color: white; }
+
+.opt-text { font-size: 15px; color: var(--text-dark); line-height: 1.5; flex: 1; }
+body.dark-mode .opt-text { color: var(--dm-text); }
+.option.selected .opt-text { color: var(--primary-dark); font-weight: 600; }
+body.dark-mode .option.selected .opt-text { color: var(--accent2); }
+.option.correct .opt-text { color: var(--correct); font-weight: 600; }
+.option.incorrect .opt-text { color: var(--incorrect); font-weight: 600; }
+
+.opt-indicator { font-size: 12px; font-weight: 700; margin-left: 4px; }
+.correct-indicator { color: var(--correct); }
+.incorrect-indicator { color: var(--incorrect); }
+
+.explanation-box {
+    margin-top: 18px; padding: 14px 18px;
+    border-radius: 12px; border-left: 4px solid var(--primary);
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    font-size: 14px; color: var(--text-mid); line-height: 1.7;
+}
+body.dark-mode .explanation-box { background: linear-gradient(135deg, var(--dm-surface), var(--dm-surface2)); border-left-color: var(--accent); color: var(--dm-text); }
+
+/* NAV BUTTONS */
+.nav-row {
+    display: flex; justify-content: space-between; align-items: center; margin-top: 24px;
+}
+
+.nav-btn {
+    padding: 10px 24px; border-radius: 10px; border: 2px solid var(--primary);
+    background: transparent; color: var(--primary); font-size: 14px; font-weight: 700;
+    cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.18s;
+}
+.nav-btn:hover { background: var(--light-blue); }
+body.dark-mode .nav-btn { border-color: var(--accent2); color: var(--accent2); }
+body.dark-mode .nav-btn:hover { background: var(--dm-surface2); }
+
+.next-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; border: none;
+    padding: 12px 30px; border-radius: 10px; font-size: 15px; font-weight: 700;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    box-shadow: 0 4px 14px rgba(26,111,196,0.35); transition: all 0.18s;
+}
+.next-btn:hover { transform: translateY(-2px); box-shadow: 0 7px 20px rgba(26,111,196,0.5); }
+body.dark-mode .next-btn { background: linear-gradient(135deg, var(--accent), var(--primary)); }
+
+.mark-btn-q {
+    padding: 9px 18px; border-radius: 10px;
+    border: 2px solid var(--accent); background: transparent; color: var(--accent);
+    font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+}
+.mark-btn-q.marked { background: var(--accent); color: white; }
+.mark-btn-q:hover { background: var(--light-blue); }
+
+/* SUBMIT SECTION */
+.submit-row {
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 600px; margin: 20px auto; gap: 14px; flex-wrap: wrap;
+}
+
+.fancy-btn {
+    flex: 1; min-width: 140px; padding: 14px; border: none; border-radius: 50px;
+    font-size: 15px; font-weight: 700; cursor: pointer; text-align: center;
+    text-decoration: none; display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif; transition: transform 0.18s, box-shadow 0.18s;
+}
+.fancy-btn:hover { transform: translateY(-3px); }
+
+.fancy-submit { background: linear-gradient(135deg, #22c55e, #15803d); color: white; box-shadow: 0 6px 20px rgba(34,197,94,0.4); max-width: 260px; }
+.fancy-submit:hover { box-shadow: 0 10px 28px rgba(34,197,94,0.55); }
+.fancy-tg { background: linear-gradient(135deg, #0088cc, #005a99); color: white; box-shadow: 0 6px 20px rgba(0,136,204,0.4); max-width: 200px; }
+.fancy-tg:hover { box-shadow: 0 10px 28px rgba(0,136,204,0.55); color: white; }
+
+.fancy-pdf { background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 6px 20px rgba(249,115,22,0.4); }
+.fancy-pdf:hover { box-shadow: 0 10px 28px rgba(249,115,22,0.55); }
+.fancy-result { background: linear-gradient(135deg, #7c3aed, #4c1d95); color: white; box-shadow: 0 6px 20px rgba(124,58,237,0.4); }
+.fancy-result:hover { box-shadow: 0 10px 28px rgba(124,58,237,0.55); }
+
+.stream-btn {
+    display: block; width: 100%; padding: 14px;
+    border-radius: 14px; color: white; font-weight: 700; font-size: 16px;
+    text-decoration: none; font-family: 'DM Sans', sans-serif;
+    transition: transform 0.18s, box-shadow 0.18s;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+.stream-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,0,0.3); color: white; }
+
+body.dark-mode #stream-picker-box { background: var(--dm-surface); }
+body.dark-mode #stream-picker-box h3 { color: var(--accent2); }
+body.dark-mode #stream-picker-box p { color: var(--dm-muted); }
+body.dark-mode #stream-picker-box button { color: var(--dm-muted); }
+
+/* FOOTER */
+.test-footer {
+    background: linear-gradient(135deg, #0f1e3d, #1a3066);
+    color: #94b8e8; text-align: center; padding: 22px 16px;
+    margin-top: 10px;
+}
+.test-footer p { font-size: 12px; margin-bottom: 12px; }
+.footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.footer-link {
+    padding: 8px 18px; border-radius: 30px; font-size: 13px; font-weight: 600;
+    text-decoration: none; color: white; transition: transform 0.18s, box-shadow 0.18s;
+}
+.footer-link:hover { transform: translateY(-2px); color: white; }
+.fl-purple { background: linear-gradient(135deg, #7c3aed, #4c1d95); box-shadow: 0 3px 10px rgba(124,58,237,0.35); }
+.fl-green { background: linear-gradient(135deg, #059669, #065f46); box-shadow: 0 3px 10px rgba(5,150,105,0.35); }
+.fl-red { background: linear-gradient(135deg, #dc2626, #991b1b); box-shadow: 0 3px 10px rgba(220,38,38,0.35); }
+
+/* MODAL */
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99999; justify-content: center; align-items: center; }
+.modal.show { display: flex; }
+
+.modal-content {
+    background: white; border-radius: 20px; padding: 32px;
+    width: 90%; max-width: 580px; max-height: 90vh; overflow-y: auto;
+    animation: modalIn 0.3s ease;
+}
+body.dark-mode .modal-content { background: var(--dm-surface); border: 1.5px solid var(--dm-border); }
+
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.92) translateY(-20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--light-blue);
+}
+body.dark-mode .modal-head { border-bottom-color: var(--dm-border); }
+
+.modal-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; color: var(--primary);
+}
+body.dark-mode .modal-head h2 { color: var(--accent2); }
+
+.close-x { background: none; border: none; font-size: 26px; cursor: pointer; color: var(--text-muted); }
+
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+
+.stat-tile {
+    background: var(--off-white); border-radius: 14px; padding: 18px;
+    text-align: center; border: 1.5px solid var(--border);
+}
+body.dark-mode .stat-tile { background: var(--dm-surface2); border-color: var(--dm-border); }
+
+.stat-tile h4 { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+body.dark-mode .stat-tile h4 { color: var(--dm-muted); }
+
+.stat-tile p { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 800; }
+.stat-correct { color: var(--correct); }
+.stat-wrong { color: var(--incorrect); }
+.stat-neutral { color: var(--text-muted); }
+.stat-score { color: var(--primary); }
+body.dark-mode .stat-score { color: var(--accent2); }
+
+.analysis { font-size: 14px; color: var(--text-mid); margin-bottom: 18px; line-height: 1.8; }
+body.dark-mode .analysis { color: var(--dm-text); }
+
+.modal-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.modal-btn {
+    flex: 1; padding: 12px; border-radius: 12px; border: none; cursor: pointer;
+    font-size: 14px; font-weight: 700; font-family: 'DM Sans', sans-serif; transition: all 0.18s;
+}
+.modal-btn:hover { transform: translateY(-2px); }
+.mb-review { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; box-shadow: 0 4px 14px rgba(26,111,196,0.4); }
+.mb-pdf { background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 4px 14px rgba(249,115,22,0.4); }
+
+/* MOBILE */
+.mobile-bar { display: none; }
+
+@media (max-width: 768px) {
+    .mobile-bar {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 8px 12px; background: white; border-bottom: 2px solid var(--light-blue);
+        margin-bottom: 8px; border-radius: 10px; box-shadow: var(--shadow);
+    }
+    body.dark-mode .mobile-bar { background: var(--dm-surface); border-color: var(--dm-border); }
+    .mob-timer {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white; padding: 6px 14px; border-radius: 30px; font-weight: 700; font-size: 14px;
+    }
+    #user-name-display { display: none !important; }
+    .sidebar .timer, .sidebar .sidebar-brand { display: none !important; }
+    .sidebar { position: relative; width: 100%; height: auto; right: 0; left: 0; border-left: none; border-top: 2px solid var(--light-blue); box-shadow: none; }
+    body { flex-direction: column; }
+    .main-content { margin-right: 0; width: 100%; padding: 12px; }
+    .question-card { padding: 18px; }
+    .q-text { font-size: 16px; }
+    .nav-row { flex-direction: row; gap: 8px; }
+    .palette-grid { max-height: 200px; overflow-y: auto; }
+}
+
+@media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .modal-btns { flex-direction: column; }
+}
+
+/* option radio hide */
+.option input[type="radio"] { display: none; }
+
+#pdf-print-area { display: none; }
+@media print {
+    body > * { display: none !important; }
+    #pdf-print-area { display: block !important; font-family: Arial, sans-serif; color: #111; padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="start-screen">
+
+<button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode" style="position:absolute;top:16px;right:16px;">
+    <span id="toggle-icon">🌙</span>
+    <span id="toggle-label">Dark</span>
+</button>
+
+<div class="start-hero">
+    <div class="start-logo">📝</div>
+    <div class="start-brand">Thunderstudy CBT</div>
+    <h1 class="start-title">Nouns</h1>
+    <p class="start-sub">English Vocabulary | Provided by <strong>Thunderstudy</strong></p>
+
+    <a href="https://t.me/thunderstudy_official" target="_blank" class="tg-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-2.04 9.607c-.148.666-.543.828-1.098.516l-3.04-2.24-1.467 1.413c-.162.162-.298.298-.611.298l.217-3.083 5.613-5.067c.244-.217-.054-.337-.378-.12L7.08 14.807 4.09 13.89c-.657-.205-.67-.657.137-.973l10.88-4.196c.548-.198 1.027.133.855.973z"/></svg>
+        @thunderstudy_official
+    </a>
+
+    <div class="info-card">
+        <h3>📋 Quick Overview</h3>
+        <div class="info-grid">
+            <div class="info-pill">📝 <div><strong>50 Questions</strong></div></div>
+            <div class="info-pill">⏱️ <div><strong>60 Minutes</strong></div></div>
+            <div class="info-pill">✅ <div><strong>+5 Correct</strong></div></div>
+            <div class="info-pill">❌ <div><strong>−1 Wrong</strong></div></div>
+            <div class="info-pill">🚫 <div><strong>No tab switching</strong></div></div>
+            <div class="info-pill">🔁 <div><strong>Auto-submits</strong></div></div>
+        </div>
+    </div>
+
+<input type="text" id="username-input" class="name-input" placeholder="Enter your name to begin">
+    <div id="sid-display-area" style="font-size: 13px; font-weight: 700; color: #4f6ef7; background: rgba(79,110,247,0.1); padding: 5px 15px; border-radius: 20px; display: none; margin-top: 8px;">
+        🪪 ID: <span id="sid-value">---</span>
+    </div>
+    <div class="start-btns">
+        <button class="s-btn s-btn-primary" onclick="startMock()">🚀 Start Mock Test</button>
+        <button class="s-btn s-btn-green" onclick="window.location.href='https://commercesehoga.github.io/commerce/bst/result.html'">📊 Previous Results</button>
+        <button class="s-btn s-btn-purple" onclick="window.open('https://commercesehoga.blogspot.com/2026/03/business-studies-cuet-cbt-mock-test-free.html','_blank')">📚 More Mock Tests</button>
+    </div>
+</div>
+</div>
+
+<!-- INSTRUCTION SCREEN -->
+<div id="instruction-screen">
+<div class="instr-wrap">
+    <h2 class="instr-title">📜 Instructions</h2>
+    <div class="instr-box">
+        <h3>General Guidelines</h3>
+        <ol class="instr-list">
+            <li>Total duration is <strong>60 minutes</strong>. Timer is shown in the sidebar.</li>
+            <li>The test <strong>auto-submits</strong> when time runs out.</li>
+            <li>Test runs in <strong>fullscreen</strong>. Exiting starts a <strong>5-second</strong> countdown to auto-submit.</li>
+            <li><strong>Do not switch tabs.</strong> Switching tabs starts a <strong>2-second</strong> countdown.</li>
+            <li>Return before the countdown ends to cancel auto-submission.</li>
+            <li>Right panel shows palette with question status (answered, marked, etc.)</li>
+            <li>Marking: <strong>+5 correct</strong> / <strong>−1 wrong</strong> / <strong>0 unanswered</strong>.</li>
+        </ol>
+
+        <div class="instr-legend" style="margin-top: 20px;">
+            <strong style="font-size:13px; display:block; margin-bottom:8px;">Status Legend:</strong>
+            <div class="leg-item"><div class="leg-dot" style="background:#22c55e;border:1px solid #16a34a;"></div>Answered</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#bae6fd;border:1px solid #0ea5e9;"></div>Marked</div>
+            <div class="leg-item"><div class="leg-dot" style="background:white;border:2px solid #1a6fc4;"></div>Current</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#fee2e2;border:1px solid #fca5a5;"></div>Unanswered</div>
+        </div>
+
+        <label class="agree-row">
+            <input type="checkbox" id="agree-checkbox">
+            <span class="chk-box">✓</span>
+            I have read and understood all instructions
+        </label>
+
+        <button id="start-test-btn" disabled>▶ Start Test</button>
+    </div>
+</div>
+</div>
+
+<!-- TEST SCREEN -->
+<div id="test-screen">
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="timer">01:00:00</div>
+    <div class="sidebar-brand">⚡ Thunderstudy CBT</div>
+
+          <div class="test-info-row"><strong>Name:</strong> <span id="display-user-name">Student</span></div>
+    <div class="test-info-row"><strong>ID:</strong> <span id="display-user-sid" style="font-family:monospace;">---</span></div>
+    <div class="test-info-row"><strong>Subject:</strong> English — Syn/Ant</div>
+    <div class="test-info-row"><strong>Questions:</strong> 50</div>
+    <div class="test-info-row"><strong>Duration:</strong> 60 min</div>
+    <div class="test-info-row"><strong>Marking:</strong> +5 / −1</div>
+    <div class="test-info-row"><strong>Section:</strong> <span id="current-section">—</span></div>
+
+    <div class="palette-header">
+        <span>Questions</span>
+        <span class="palette-count" id="answered-count">0/50</span>
+    </div>
+    <div class="palette-grid" id="question-palette-grid"></div>
+    <div id="palette-legend" style="margin-top:14px; font-size:12px;"></div>
+</div>
+
+<!-- Main -->
+<div class="main-content">
+
+    <div class="mobile-bar">
+        <div class="mob-timer">01:00:00</div>
+        <div id="mobile-name-display" style="background:linear-gradient(135deg,var(--primary),var(--accent));color:white;padding:6px 14px;border-radius:20px;font-weight:700;font-size:13px;">👤 Student</div>
+    </div>
+
+    <div class="test-header">
+        <div id="user-name-display" class="user-badge">👤 Student</div>
+        <div class="q-counter">Q <span id="current-q-number">1</span>/50</div>
+        <div class="progress-wrap">
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="test-progress"></div></div>
+            <div class="progress-label" id="progress-percent">0%</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="q-num-tag">Question <span id="q-number">1</span></div>
+        <div class="section-badge" id="section-badge">Reading Comprehension</div>
+        <div class="q-text" id="question-text"></div>
+        <div id="options-container"></div>
+
+        <div class="nav-row">
+            <button class="nav-btn" id="prev-btn">← Previous</button>
+            <div style="display:flex;gap:10px;align-items:center;">
+                <button class="mark-btn-q" id="mark-btn">🔖 Mark</button>
+                <button class="next-btn" id="next-btn">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="submit-row" id="submit-row-before">
+        <a href="https://t.me/thunderstudy_official" target="_blank" class="fancy-btn fancy-tg">⚡ Join Thunder</a>
+        <button class="fancy-btn fancy-submit" id="submit-test-btn">✅ Submit Test</button>
+    </div>
+
+    <!-- Post-submit action row (hidden until submitted) -->
+    <div class="submit-row" id="submit-row-after" style="display:none;">
+        <a href="https://t.me/thunderstudy_official" target="_blank" class="fancy-btn fancy-tg" style="flex:1;max-width:180px;">⚡ Join Thunder</a>
+        <button class="fancy-btn fancy-pdf" id="pdf-action-btn" style="flex:1;max-width:180px;">📄 Download PDF</button>
+        <button class="fancy-btn fancy-result" id="result-action-btn" style="flex:1;max-width:180px;">📊 Result</button>
+    </div>
+
+    <!-- Stream Picker Popup -->
+    <div id="stream-picker-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:999998;justify-content:center;align-items:center;">
+        <div id="stream-picker-box" style="background:white;border-radius:20px;padding:32px 28px;width:90%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.25);animation:modalIn 0.3s ease;text-align:center;position:relative;">
+            <button onclick="document.getElementById('stream-picker-overlay').style.display='none'" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:#6b8ab5;">×</button>
+            <div style="font-size:36px;margin-bottom:10px;">📊</div>
+            <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:#1a6fc4;margin-bottom:6px;">View Previous Results</h3>
+            <p style="font-size:13px;color:#6b8ab5;margin-bottom:22px;">Select your stream to view results</p>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+                <a href="https://commercesehoga.github.io/commerce/bst/result.html" target="_blank" class="stream-btn" style="background:linear-gradient(135deg,#1a6fc4,#0ea5e9);">
+                    🏪 Commerce
+                </a>
+                <a href="https://commercesehoga.github.io/science/result.html" target="_blank" class="stream-btn" style="background:linear-gradient(135deg,#059669,#0d9488);">
+                    🔬 Science
+                </a>
+                <a href="https://commercesehoga.github.io/humanities/result.html" target="_blank" class="stream-btn" style="background:linear-gradient(135deg,#7c3aed,#a855f7);">
+                    📚 Humanities
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="test-footer">
+        <p>© 2025 Thunderstudy. All Rights Reserved.</p>
+        <div class="footer-links">
+            <a href="https://commercesehoga.blogspot.com/2026/03/business-studies-cuet-cbt-mock-test-free.html" target="_blank" class="footer-link fl-purple">📚 More Mocks</a>
+            <a href="https://commercesehoga.blogspot.com/" target="_blank" class="footer-link fl-green">🌐 Website</a>
+            <a href="https://t.me/mindmaster_robot" target="_blank" class="footer-link fl-red">🚨 Report Error</a>
+        </div>
+    </footer>
+</div>
+
+<!-- Results Modal -->
+<div class="modal" id="results-modal">
+<div class="modal-content">
+    <div class="modal-head">
+        <h2>🏆 Test Results</h2>
+        <button class="close-x" id="close-modal">×</button>
+    </div>
+    <div class="stats-grid">
+        <div class="stat-tile"><h4>Correct</h4><p class="stat-correct" id="correct-answers">0</p></div>
+        <div class="stat-tile"><h4>Wrong</h4><p class="stat-wrong" id="incorrect-answers">0</p></div>
+        <div class="stat-tile"><h4>Unanswered</h4><p class="stat-neutral" id="unanswered">50</p></div>
+        <div class="stat-tile"><h4>Score</h4><p class="stat-score" id="total-score">0</p></div>
+    </div>
+    <div class="analysis">
+        Percentage: <strong><span id="percentage">0</span>%</strong> &nbsp;|&nbsp;
+        Accuracy: <strong><span id="accuracy">0</span>%</strong>
+    </div>
+    <div class="modal-btns">
+        <button class="modal-btn mb-review" id="review-btn">👁 Review Answers</button>
+        <button class="modal-btn mb-pdf" id="download-pdf-btn">📄 Download PDF</button>
+        <button class="modal-btn mb-result" id="modal-result-btn" style="background:linear-gradient(135deg,#7c3aed,#a855f7);color:white;box-shadow:0 4px 14px rgba(124,58,237,0.4);">📊 Result</button>
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="pdf-print-area"></div>
+
+<script>
+/* ============================================================
+   MOCK TEST DATA — English Chapter 1
+   ============================================================ */
+const mockTest = {
+    title: "English — One Word",
+    questions: [
+  { "id": 1, "section": "Nouns", "text": "Which of the following is an abstract noun?", "options": { "a": "Table", "b": "Honesty", "c": "River", "d": "Mumbai" }, "correctAnswer": "b", "explanation": "'Honesty' is an abstract noun because it names a quality or concept that cannot be perceived by the senses.", "marked": false, "userAnswer": "" },
+  { "id": 2, "section": "Nouns", "text": "Identify the collective noun in the sentence: 'The jury has given its verdict.'", "options": { "a": "jury", "b": "verdict", "c": "given", "d": "its" }, "correctAnswer": "a", "explanation": "'Jury' is a collective noun — a word that refers to a group of people as a single unit.", "marked": false, "userAnswer": "" },
+  { "id": 3, "section": "Nouns", "text": "Which of the following nouns is always plural in form?", "options": { "a": "Sheep", "b": "Scissors", "c": "Child", "d": "Ox" }, "correctAnswer": "b", "explanation": "'Scissors' is a pluralia tantum noun — it has no singular form and takes a plural verb.", "marked": false, "userAnswer": "" },
+  { "id": 4, "section": "Nouns", "text": "Choose the correct plural form of 'criterion':", "options": { "a": "criterions", "b": "criterias", "c": "criteria", "d": "criteriones" }, "correctAnswer": "c", "explanation": "'Criterion' is a Greek-derived noun; its plural is 'criteria' (not 'criterions').", "marked": false, "userAnswer": "" },
+  { "id": 5, "section": "Nouns", "text": "Identify the noun that is always uncountable:", "options": { "a": "Advice", "b": "Idea", "c": "Suggestion", "d": "Fact" }, "correctAnswer": "a", "explanation": "'Advice' is uncountable in English; we say 'a piece of advice', not 'an advice'.", "marked": false, "userAnswer": "" },
+  { "id": 6, "section": "Nouns", "text": "What is the feminine gender of 'testator'?", "options": { "a": "Testatrix", "b": "Testatress", "c": "Testatoress", "d": "Testatorine" }, "correctAnswer": "a", "explanation": "'Testatrix' is the feminine form of 'testator' (a person who makes a will).", "marked": false, "userAnswer": "" },
+  { "id": 7, "section": "Nouns", "text": "Which of the following nouns has the same form in both singular and plural?", "options": { "a": "Deer", "b": "Goose", "c": "Tooth", "d": "Man" }, "correctAnswer": "a", "explanation": "'Deer' is an invariant noun — same spelling and pronunciation in singular and plural.", "marked": false, "userAnswer": "" },
+  { "id": 8, "section": "Nouns", "text": "Choose the correct possessive form: 'The car of my mother-in-law'", "options": { "a": "My mother-in-law's car", "b": "My mother's-in-law car", "c": "My mother-in-laws' car", "d": "My mother-in-law car's" }, "correctAnswer": "a", "explanation": "In compound nouns, add apostrophe-s to the last word: 'mother-in-law's'.", "marked": false, "userAnswer": "" },
+  { "id": 9, "section": "Nouns", "text": "Identify the type of noun: 'The Ganges'", "options": { "a": "Common noun", "b": "Proper noun", "c": "Abstract noun", "d": "Collective noun" }, "correctAnswer": "b", "explanation": "'The Ganges' is a proper noun — it names a specific river.", "marked": false, "userAnswer": "" },
+  { "id": 10, "section": "Nouns", "text": "Which of the following is a material noun?", "options": { "a": "Gold", "b": "Honesty", "c": "Childhood", "d": "Furniture" }, "correctAnswer": "a", "explanation": "'Gold' is a material noun — it names a substance from which things are made.", "marked": false, "userAnswer": "" },
+  { "id": 11, "section": "Nouns", "text": "Choose the correct plural: 'The ______ are grazing in the field.'", "options": { "a": "oxen", "b": "oxes", "c": "ox", "d": "oxens" }, "correctAnswer": "a", "explanation": "The plural of 'ox' is 'oxen' — an irregular plural form.", "marked": false, "userAnswer": "" },
+  { "id": 12, "section": "Nouns", "text": "Identify the noun that is always singular (uncountable) in English:", "options": { "a": "Furniture", "b": "Table", "c": "Chair", "d": "Book" }, "correctAnswer": "a", "explanation": "'Furniture' is an uncountable noun — we say 'a piece of furniture', not 'furnitures'.", "marked": false, "userAnswer": "" },
+  { "id": 13, "section": "Nouns", "text": "What is the plural of 'alumnus'?", "options": { "a": "Alumnuses", "b": "Alumni", "c": "Alumnae", "d": "Alumnus" }, "correctAnswer": "b", "explanation": "'Alumnus' (masculine singular) becomes 'alumni' (masculine plural) — Latin origin.", "marked": false, "userAnswer": "" },
+  { "id": 14, "section": "Nouns", "text": "Which of the following sentences contains an error in noun usage?", "options": { "a": "She gave me an advice.", "b": "He bought some furniture.", "c": "The information is correct.", "d": "I need a piece of paper." }, "correctAnswer": "a", "explanation": "'Advice' is uncountable; correct form is 'a piece of advice' or 'some advice'.", "marked": false, "userAnswer": "" },
+  { "id": 15, "section": "Nouns", "text": "Identify the common noun in: 'Mumbai is a big city.'", "options": { "a": "Mumbai", "b": "big", "c": "city", "d": "is" }, "correctAnswer": "c", "explanation": "'City' is a common noun — a general name for a place, not a specific one.", "marked": false, "userAnswer": "" },
+  { "id": 16, "section": "Nouns", "text": "Choose the correct possessive: 'The house of my friend'", "options": { "a": "My friends' house", "b": "My friend's house", "c": "My friends house", "d": "My friend house's" }, "correctAnswer": "b", "explanation": "Singular noun 'friend' takes apostrophe-s to show possession.", "marked": false, "userAnswer": "" },
+  { "id": 17, "section": "Nouns", "text": "Which of the following is a proper noun?", "options": { "a": "Mountain", "b": "River", "c": "Mount Everest", "d": "Ocean" }, "correctAnswer": "c", "explanation": "'Mount Everest' names a specific mountain, hence a proper noun.", "marked": false, "userAnswer": "" },
+  { "id": 18, "section": "Nouns", "text": "What is the plural of 'phenomenon'?", "options": { "a": "Phenomenons", "b": "Phenomena", "c": "Phenomenae", "d": "Phenomenas" }, "correctAnswer": "b", "explanation": "'Phenomenon' is Greek-derived; its plural is 'phenomena'.", "marked": false, "userAnswer": "" },
+  { "id": 19, "section": "Nouns", "text": "Identify the abstract noun: 'Childhood'", "options": { "a": "Concrete noun", "b": "Abstract noun", "c": "Proper noun", "d": "Collective noun" }, "correctAnswer": "b", "explanation": "'Childhood' is an abstract noun — it names a state or period of life, not a physical object.", "marked": false, "userAnswer": "" },
+  { "id": 20, "section": "Nouns", "text": "Which noun is always used with a singular verb?", "options": { "a": "Scissors", "b": "Trousers", "c": "News", "d": "Spectacles" }, "correctAnswer": "c", "explanation": "'News' looks plural but is singular: 'The news is good' (not 'are').", "marked": false, "userAnswer": "" },
+  { "id": 21, "section": "Nouns", "text": "Choose the correct plural: 'The ______ were playing in the park.'", "options": { "a": "childs", "b": "children", "c": "childes", "d": "childrens" }, "correctAnswer": "b", "explanation": "The plural of 'child' is 'children' — an irregular plural.", "marked": false, "userAnswer": "" },
+  { "id": 22, "section": "Nouns", "text": "What is the feminine gender of 'host'?", "options": { "a": "Hostress", "b": "Hostess", "c": "Hostine", "d": "Hostette" }, "correctAnswer": "b", "explanation": "The feminine of 'host' is 'hostess'.", "marked": false, "userAnswer": "" },
+  { "id": 23, "section": "Nouns", "text": "Identify the error: 'The sceneries of Kashmir are beautiful.'", "options": { "a": "No error", "b": "Use 'scenery' instead of 'sceneries'", "c": "Use 'is' instead of 'are'", "d": "Both b and c" }, "correctAnswer": "d", "explanation": "'Scenery' is uncountable — no plural form, and takes singular verb: 'The scenery is beautiful'.", "marked": false, "userAnswer": "" },
+  { "id": 24, "section": "Nouns", "text": "Which of the following is a common noun?", "options": { "a": "India", "b": "Delhi", "c": "Country", "d": "Ganga" }, "correctAnswer": "c", "explanation": "'Country' is a common noun — a general name for any nation.", "marked": false, "userAnswer": "" },
+  { "id": 25, "section": "Nouns", "text": "What is the plural of 'basis'?", "options": { "a": "Basises", "b": "Bases", "c": "Baseis", "d": "Basii" }, "correctAnswer": "b", "explanation": "'Basis' (singular) becomes 'bases' (plural) — Latin origin (-is to -es).", "marked": false, "userAnswer": "" },
+  { "id": 26, "section": "Nouns", "text": "Identify the collective noun: 'A ______ of ships.'", "options": { "a": "Fleet", "b": "Crowd", "c": "Herd", "d": "Swarm" }, "correctAnswer": "a", "explanation": "'Fleet' is the collective noun for ships or vehicles.", "marked": false, "userAnswer": "" },
+  { "id": 27, "section": "Nouns", "text": "Which noun is uncountable in English but countable in some other languages?", "options": { "a": "Fruit", "b": "Apple", "c": "Chair", "d": "Table" }, "correctAnswer": "a", "explanation": "'Fruit' is generally uncountable (some fruit), though 'fruits' is used for varieties.", "marked": false, "userAnswer": "" },
+  { "id": 28, "section": "Nouns", "text": "Choose the correct possessive: 'The books belonging to the children'", "options": { "a": "The childrens' books", "b": "The children's books", "c": "The childrens books", "d": "The children' books" }, "correctAnswer": "b", "explanation": "Irregular plural 'children' takes apostrophe-s to form possessive.", "marked": false, "userAnswer": "" },
+  { "id": 29, "section": "Nouns", "text": "What is the plural of 'radius'?", "options": { "a": "Radiuses", "b": "Radii", "c": "Radia", "d": "Radius" }, "correctAnswer": "b", "explanation": "'Radius' (Latin origin) becomes 'radii' in the plural.", "marked": false, "userAnswer": "" },
+  { "id": 30, "section": "Nouns", "text": "Identify the error: 'He gave me a five-rupees note.'", "options": { "a": "No error", "b": "Use 'five-rupee' instead of 'five-rupees'", "c": "Use 'rupee' instead of 'rupees'", "d": "Use 'five rupee' instead of 'five-rupees'" }, "correctAnswer": "b", "explanation": "In compound adjectives, the noun is singular: 'a five-rupee note'.", "marked": false, "userAnswer": "" },
+  { "id": 31, "section": "Nouns", "text": "Which of the following is a verbal noun (gerund)?", "options": { "a": "Running", "b": "Runner", "c": "Run", "d": "Runnable" }, "correctAnswer": "a", "explanation": "'Running' is a gerund — a verb form ending in -ing that functions as a noun.", "marked": false, "userAnswer": "" },
+  { "id": 32, "section": "Nouns", "text": "What is the plural of 'analysis'?", "options": { "a": "Analyses", "b": "Analysises", "c": "Analysi", "d": "Analysiss" }, "correctAnswer": "a", "explanation": "'Analysis' becomes 'analyses' (pronounced an-al-uh-seez).", "marked": false, "userAnswer": "" },
+  { "id": 33, "section": "Nouns", "text": "Identify the type of noun: 'Team'", "options": { "a": "Abstract noun", "b": "Proper noun", "c": "Collective noun", "d": "Material noun" }, "correctAnswer": "c", "explanation": "'Team' is a collective noun — it names a group of people working together.", "marked": false, "userAnswer": "" },
+  { "id": 34, "section": "Nouns", "text": "Choose the correct sentence:", "options": { "a": "The police is coming.", "b": "The police are coming.", "c": "The polices are coming.", "d": "Police is coming." }, "correctAnswer": "b", "explanation": "'Police' is a plural noun in English and takes a plural verb: 'are coming'.", "marked": false, "userAnswer": "" },
+  { "id": 35, "section": "Nouns", "text": "What is the plural of 'mouse' (computer device)?", "options": { "a": "Mice", "b": "Mouses", "c": "Mice or mouses", "d": "Mouse" }, "correctAnswer": "c", "explanation": "For computer devices, both 'mice' and 'mouses' are accepted plurals.", "marked": false, "userAnswer": "" },
+  { "id": 36, "section": "Nouns", "text": "Identify the error: 'The evidences were presented in court.'", "options": { "a": "No error", "b": "Use 'evidence' instead of 'evidences'", "c": "Use 'was' instead of 'were'", "d": "Both b and c" }, "correctAnswer": "d", "explanation": "'Evidence' is uncountable — no plural 'evidences', and takes singular verb.", "marked": false, "userAnswer": "" },
+  { "id": 37, "section": "Nouns", "text": "Which of the following nouns has an irregular plural?", "options": { "a": "Cat", "b": "Dog", "c": "Foot", "d": "Car" }, "correctAnswer": "c", "explanation": "'Foot' becomes 'feet' — an irregular vowel change plural.", "marked": false, "userAnswer": "" },
+  { "id": 38, "section": "Nouns", "text": "What is the masculine gender of 'bride'?", "options": { "a": "Bridegroom", "b": "Groom", "c": "Both a and b", "d": "Brideman" }, "correctAnswer": "c", "explanation": "Both 'bridegroom' and 'groom' are masculine counterparts of 'bride'.", "marked": false, "userAnswer": "" },
+  { "id": 39, "section": "Nouns", "text": "Choose the correct possessive: 'The leaves of the tree'", "options": { "a": "The tree's leaves", "b": "The trees' leaves", "c": "The tree leaves", "d": "The leaves' tree" }, "correctAnswer": "a", "explanation": "Singular noun 'tree' takes apostrophe-s: 'tree's leaves'.", "marked": false, "userAnswer": "" },
+  { "id": 40, "section": "Nouns", "text": "Identify the concrete noun:", "options": { "a": "Bravery", "b": "Beauty", "c": "Table", "d": "Wisdom" }, "correctAnswer": "c", "explanation": "'Table' is a concrete noun — it can be perceived by the senses (seen, touched).", "marked": false, "userAnswer": "" },
+  { "id": 41, "section": "Nouns", "text": "What is the plural of 'curriculum'?", "options": { "a": "Curriculums", "b": "Curricula", "c": "Curriculumes", "d": "Both a and b" }, "correctAnswer": "d", "explanation": "'Curriculum' has two accepted plurals: 'curriculums' (English) and 'curricula' (Latin).", "marked": false, "userAnswer": "" },
+  { "id": 42, "section": "Nouns", "text": "Which of the following is always plural?", "options": { "a": "Athletics", "b": "Physics", "c": "Mathematics", "d": "All of these" }, "correctAnswer": "d", "explanation": "Subject names ending in -ics (athletics, physics, mathematics) are plural in form but take singular verbs.", "marked": false, "userAnswer": "" },
+  { "id": 43, "section": "Nouns", "text": "Identify the error: 'The cattles are grazing.'", "options": { "a": "Use 'cattle' instead of 'cattles'", "b": "Use 'is' instead of 'are'", "c": "No error", "d": "Use 'cattle's' instead" }, "correctAnswer": "a", "explanation": "'Cattle' is a plural noun already — 'cattles' does not exist.", "marked": false, "userAnswer": "" },
+  { "id": 44, "section": "Nouns", "text": "What is the plural of 'tooth'?", "options": { "a": "Tooths", "b": "Teeth", "c": "Tooth", "d": "Teethes" }, "correctAnswer": "b", "explanation": "'Tooth' becomes 'teeth' — irregular plural (vowel change).", "marked": false, "userAnswer": "" },
+  { "id": 45, "section": "Nouns", "text": "Choose the correct sentence:", "options": { "a": "The staff is united.", "b": "The staff are divided.", "c": "Both a and b are correct", "d": "Neither a nor b" }, "correctAnswer": "c", "explanation": "Collective nouns can take singular (unit) or plural (individuals) verbs depending on meaning.", "marked": false, "userAnswer": "" },
+  { "id": 46, "section": "Nouns", "text": "Identify the noun that is only singular:", "options": { "a": "Water", "b": "Bottle", "c": "Pen", "d": "Book" }, "correctAnswer": "a", "explanation": "'Water' is an uncountable noun — it has no plural form in standard usage.", "marked": false, "userAnswer": "" },
+  { "id": 47, "section": "Nouns", "text": "What is the feminine of 'widower'?", "options": { "a": "Widow", "b": "Widoweress", "c": "Widowress", "d": "Widowine" }, "correctAnswer": "a", "explanation": "The feminine of 'widower' is 'widow'.", "marked": false, "userAnswer": "" },
+  { "id": 48, "section": "Nouns", "text": "Choose the correct possessive: 'The car belonging to James'", "options": { "a": "James' car", "b": "James's car", "c": "Both a and b are acceptable", "d": "James car" }, "correctAnswer": "c", "explanation": "For names ending in 's', both James' and James's are accepted in modern English.", "marked": false, "userAnswer": "" },
+  { "id": 49, "section": "Nouns", "text": "Which of the following is a common gender noun?", "options": { "a": "Doctor", "b": "Actress", "c": "Lioness", "d": "Priestess" }, "correctAnswer": "a", "explanation": "'Doctor' can refer to both male and female — a common gender noun.", "marked": false, "userAnswer": "" },
+  { "id": 50, "section": "Nouns", "text": "Identify the error: 'She bought two dozens eggs.'", "options": { "a": "Use 'dozen' instead of 'dozens'", "b": "Use 'egg' instead of 'eggs'", "c": "Use 'dozen of' instead", "d": "No error" }, "correctAnswer": "a", "explanation": "After a number, 'dozen' remains singular: 'two dozen eggs' (not 'dozens').", "marked": false, "userAnswer": "" }
+]
+    duration: 60 * 60,
+    markingScheme: { correct: 5, incorrect: -1 }
+};
+
+/* ============================================================
+   TEST ENGINE
+   ============================================================ */
+let currentQuestionIndex = 0;
+let timeLeft = mockTest.duration;
+let timer;
+let testSubmitted = false;
+let testStarted = false;
+
+const timerEl = document.querySelector('.timer');
+const questionTextEl = document.getElementById('question-text');
+const optionsEl = document.getElementById('options-container');
+const qNumEl = document.getElementById('q-number');
+const curQNumEl = document.getElementById('current-q-number');
+const progressFill = document.getElementById('test-progress');
+const progressPct = document.getElementById('progress-percent');
+const paletteGrid = document.getElementById('question-palette-grid');
+const answeredCountEl = document.getElementById('answered-count');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const markBtn = document.getElementById('mark-btn');
+const submitBtn = document.getElementById('submit-test-btn');
+const modal = document.getElementById('results-modal');
+const closeModal = document.getElementById('close-modal');
+const reviewBtn = document.getElementById('review-btn');
+
+function initTest() {
+    renderPalette();
+    renderQuestion();
+    startTimer();
+    updateProgress();
+    renderLegend(false);
+    prevBtn.addEventListener('click', () => { if (currentQuestionIndex > 0) { currentQuestionIndex--; renderQuestion(); } });
+    nextBtn.addEventListener('click', () => { if (currentQuestionIndex < mockTest.questions.length - 1) { currentQuestionIndex++; renderQuestion(); } });
+    markBtn.addEventListener('click', toggleMark);
+    submitBtn.addEventListener('click', () => { if (confirm('Submit the test?')) submitTest(); });
+    closeModal.addEventListener('click', () => modal.classList.remove('show'));
+    reviewBtn.addEventListener('click', () => { modal.classList.remove('show'); currentQuestionIndex = 0; renderQuestion(); });
+    document.getElementById('download-pdf-btn').addEventListener('click', generatePDF);
+    document.getElementById('modal-result-btn').addEventListener('click', () => { modal.classList.remove('show'); document.getElementById('stream-picker-overlay').style.display = 'flex'; });
+    document.getElementById('pdf-action-btn').addEventListener('click', generatePDF);
+    document.getElementById('result-action-btn').addEventListener('click', () => { document.getElementById('stream-picker-overlay').style.display = 'flex'; });
+}
+
+function startTimer() {
+    updateTimerDisplay();
+    timer = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) { clearInterval(timer); submitTest(); }
+        if (timeLeft === 300) alert('⚠️ Only 5 minutes remaining!');
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const h = Math.floor(timeLeft / 3600);
+    const m = Math.floor((timeLeft % 3600) / 60);
+    const s = timeLeft % 60;
+    const str = `${pad(h)}:${pad(m)}:${pad(s)}`;
+    timerEl.textContent = str;
+    const mob = document.querySelector('.mob-timer');
+    if (mob) mob.textContent = str;
+}
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function renderQuestion() {
+    const q = mockTest.questions[currentQuestionIndex];
+    document.getElementById('current-section').textContent = q.section;
+    document.getElementById('section-badge').textContent = '📘 ' + q.section;
+    questionTextEl.textContent = q.text;
+    qNumEl.textContent = q.id;
+    curQNumEl.textContent = q.id;
+    optionsEl.innerHTML = '';
+
+    for (const [key, val] of Object.entries(q.options)) {
+        const div = document.createElement('div');
+        div.className = 'option';
+        if (testSubmitted) {
+            if (key === q.correctAnswer) div.classList.add('correct');
+            else if (key === q.userAnswer) div.classList.add('incorrect');
+        } else {
+            if (key === q.userAnswer) div.classList.add('selected');
+        }
+        if (!testSubmitted) {
+            div.addEventListener('click', () => {
+                optionsEl.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+                div.classList.add('selected');
+                q.userAnswer = key;
+                updatePalette();
+                updateProgress();
+            });
+        }
+        const letter = document.createElement('div');
+        letter.className = 'opt-letter';
+        letter.textContent = key.toUpperCase();
+        const text = document.createElement('span');
+        text.className = 'opt-text';
+        text.textContent = val;
+        if (testSubmitted) {
+            if (key === q.correctAnswer) {
+                const ind = document.createElement('span');
+                ind.className = 'opt-indicator correct-indicator';
+                ind.textContent = ' ✓ Correct';
+                text.appendChild(ind);
+            } else if (key === q.userAnswer) {
+                const ind = document.createElement('span');
+                ind.className = 'opt-indicator incorrect-indicator';
+                ind.textContent = ' ✗ Your Answer';
+                text.appendChild(ind);
+            }
+        }
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'q-opt';
+        radio.value = key;
+        radio.checked = q.userAnswer === key;
+        div.appendChild(radio);
+        div.appendChild(letter);
+        div.appendChild(text);
+        optionsEl.appendChild(div);
+    }
+
+    if (testSubmitted && q.explanation) {
+        const exp = document.createElement('div');
+        exp.className = 'explanation-box';
+        exp.innerHTML = `<strong>Explanation:</strong> ${q.explanation}`;
+        optionsEl.appendChild(exp);
+    }
+
+    markBtn.classList.toggle('marked', q.marked);
+    markBtn.textContent = q.marked ? '🔖 Marked' : '🔖 Mark';
+    prevBtn.style.visibility = currentQuestionIndex === 0 ? 'hidden' : 'visible';
+    nextBtn.style.visibility = currentQuestionIndex === mockTest.questions.length - 1 ? 'hidden' : 'visible';
+    updatePalette();
+}
+
+function toggleMark() {
+    const q = mockTest.questions[currentQuestionIndex];
+    q.marked = !q.marked;
+    markBtn.classList.toggle('marked', q.marked);
+    markBtn.textContent = q.marked ? '🔖 Marked' : '🔖 Mark';
+    updatePalette();
+}
+
+function renderPalette() {
+    paletteGrid.innerHTML = '';
+    mockTest.questions.forEach((q, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'palette-btn';
+        btn.textContent = q.id;
+        btn.addEventListener('click', () => { currentQuestionIndex = i; renderQuestion(); });
+        paletteGrid.appendChild(btn);
+    });
+    updatePalette();
+}
+
+function updatePalette() {
+    const btns = paletteGrid.querySelectorAll('.palette-btn');
+    mockTest.questions.forEach((q, i) => {
+        const btn = btns[i];
+        btn.className = 'palette-btn';
+        if (testSubmitted) {
+            if (!q.userAnswer) btn.classList.add('review-unanswered');
+            else if (q.userAnswer === q.correctAnswer) btn.classList.add('review-correct');
+            else btn.classList.add('review-wrong');
+        } else {
+            if (q.userAnswer) btn.classList.add('answered');
+            if (q.marked) btn.classList.add('marked');
+        }
+        if (i === currentQuestionIndex) btn.classList.add('current');
+    });
+    const ans = mockTest.questions.filter(q => q.userAnswer).length;
+    answeredCountEl.textContent = `${ans}/${mockTest.questions.length}`;
+}
+
+function updateProgress() {
+    const ans = mockTest.questions.filter(q => q.userAnswer).length;
+    const pct = Math.round((ans / mockTest.questions.length) * 100);
+    progressFill.style.width = pct + '%';
+    progressPct.textContent = pct + '%';
+}
+
+function renderLegend(reviewMode) {
+    const leg = document.getElementById('palette-legend');
+    if (!leg) return;
+    if (reviewMode) {
+        leg.innerHTML = `
+        <div class="leg-label"><div class="leg-dot" style="background:#22c55e;"></div>Correct</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#ef4444;"></div>Wrong</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#60a5fa;"></div>Unanswered</div>`;
+    } else {
+        leg.innerHTML = `
+        <div class="leg-label"><div class="leg-dot" style="background:#bbf7d0;border:1px solid #22c55e;"></div>Answered</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#bae6fd;border:1px solid #0ea5e9;"></div>Marked</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#fee2e2;border:1px solid #fca5a5;"></div>Unanswered</div>
+        <div class="leg-label"><div class="leg-dot" style="background:white;border:2px solid #1a6fc4;"></div>Current</div>`;
+    }
+}
+
+function submitTest() {
+    if (testSubmitted) return;
+    testSubmitted = true;
+    clearInterval(timer);
+
+    let correct = 0, incorrect = 0, unanswered = 0;
+    mockTest.questions.forEach(q => {
+        if (!q.userAnswer) unanswered++;
+        else if (q.userAnswer === q.correctAnswer) correct++;
+        else incorrect++;
+    });
+
+    const total = mockTest.questions.length;
+    const maxScore = total * mockTest.markingScheme.correct;
+    const score = (correct * mockTest.markingScheme.correct) + (incorrect * mockTest.markingScheme.incorrect);
+    const pct = ((score / maxScore) * 100).toFixed(2);
+    const acc = correct + incorrect > 0 ? ((correct / (correct + incorrect)) * 100).toFixed(2) : '0';
+
+const resultData = {
+        studentId: localStorage.getItem('ts_student_id') || '',
+        name: localStorage.getItem('cbtUserName') || 'Unknown',
+        subject: SUBJECT_ID,
+        chapter: CHAPTER_ID,
+        date: new Date().toISOString(),
+        score, maxScore, correct,
+        wrong: incorrect,
+        skipped: unanswered,
+        totalQ: total,
+        percentage: parseFloat(pct),
+        accuracy: parseFloat(acc),
+        timeTaken: mockTest.duration - timeLeft
+    };
+
+    const key = `thunderstudy_result_${SUBJECT_ID}_${CHAPTER_ID}`;
+    localStorage.setItem(key, JSON.stringify(resultData));
+
+    const GS_URL = "https://script.google.com/macros/s/AKfycbyEsrvdSuRh06TIKPK0ozP-jQNjqHO8PaIeBcW5r45aGdr4H3ZVFHpKMm3xaDHrYmqX/exec";
+    fetch(GS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(resultData)
+    }).then(() => {
+        localStorage.setItem(`synced_${SUBJECT_ID}_${CHAPTER_ID}`, "true");
+    }).catch(err => console.error("Sync failed", err));
+
+    const idxKey = `thunderstudy_index_${SUBJECT_ID}`;
+    let idx = [];
+    try { idx = JSON.parse(localStorage.getItem(idxKey) || '[]'); } catch(e) {}
+    if (!idx.includes(CHAPTER_ID)) idx.push(CHAPTER_ID);
+    localStorage.setItem(idxKey, JSON.stringify(idx));
+
+    document.getElementById('correct-answers').textContent = correct;
+    document.getElementById('incorrect-answers').textContent = incorrect;
+    document.getElementById('unanswered').textContent = unanswered;
+    document.getElementById('total-score').textContent = score;
+    document.getElementById('percentage').textContent = pct;
+    document.getElementById('accuracy').textContent = acc;
+    modal.classList.add('show');
+
+    renderQuestion();
+    renderLegend(true);
+
+    // Swap submit rows
+    document.getElementById('submit-row-before').style.display = 'none';
+    document.getElementById('submit-row-after').style.display = 'flex';
+}
+
+/* Visibility change guard */
+document.addEventListener("visibilitychange", () => {
+    if (!testStarted || testSubmitted) return;
+    if (document.hidden) startCountdown('tab');
+    else cancelCountdown();
+});
+
+/* Arrow key nav */
+document.addEventListener('keydown', e => {
+    if (document.getElementById('test-screen').style.display === 'none') return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { if (currentQuestionIndex < mockTest.questions.length - 1) { currentQuestionIndex++; renderQuestion(); } }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { if (currentQuestionIndex > 0) { currentQuestionIndex--; renderQuestion(); } }
+});
+</script>
+
+<script>
+function startMock() {
+    const savedName = localStorage.getItem('cbtUserName') || '';
+    const savedSID = localStorage.getItem('ts_student_id') || '';
+    const inputName = document.getElementById('username-input').value.trim();
+
+    if (!savedName && !inputName) {
+        alert("⚠️ Please enter your name to continue!");
+        document.getElementById('username-input').focus();
+        return;
+    }
+
+    if (!savedName && inputName) {
+        localStorage.setItem("cbtUserName", inputName);
+    }
+
+    if (!savedSID) {
+        const goToDash = confirm("⚠️ Student ID not found!\n\nYou must have a Student ID to start the mock.\n\nClick OK to open Dashboard to generate one, or Cancel to stay here.");
+        if (goToDash) {
+            window.open('https://commercesehoga.github.io/dashboard/', '_blank');
+        }
+        return;
+    }
+
+    enterFullscreen();
+    document.getElementById('start-screen').style.display = 'none';
+    document.getElementById('instruction-screen').style.display = 'block';
+}
+
+    window.addEventListener('DOMContentLoaded', () => {
+    const savedName = localStorage.getItem('cbtUserName') || '';
+    const savedSID = localStorage.getItem('ts_student_id') || '';
+
+    if (savedName) {
+        const inp = document.getElementById('username-input');
+        if (inp) {
+            inp.value = savedName;
+            inp.style.background = 'rgba(79,110,247,.07)';
+            inp.style.borderColor = '#4f6ef7';
+            inp.style.color = '#4f6ef7';
+            inp.style.fontWeight = 'bold';
+            inp.setAttribute('readonly', true);
+            inp.insertAdjacentHTML('afterend',
+                `<div style="font-size:11px; color:#4f6ef7; font-weight:700; margin-top:5px;">
+                    ✅ Verified Dashboard Profile
+                </div>`
+            );
+        }
+    }
+
+    if (savedSID) {
+        const sidArea = document.getElementById('sid-display-area');
+        const sidVal = document.getElementById('sid-value');
+        if (sidArea && sidVal) {
+            sidArea.style.display = 'block';
+            sidVal.textContent = savedSID;
+        }
+    }
+});
+
+document.getElementById('dark-toggle').addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const dark = document.body.classList.contains('dark-mode');
+    document.getElementById('toggle-icon').textContent = dark ? '☀️' : '🌙';
+    document.getElementById('toggle-label').textContent = dark ? 'Light' : 'Dark';
+});
+
+const checkbox = document.getElementById('agree-checkbox');
+const startTestBtn = document.getElementById('start-test-btn');
+checkbox.addEventListener('change', () => {
+    startTestBtn.disabled = !checkbox.checked;
+});
+startTestBtn.addEventListener('click', () => {
+    if (!checkbox.checked) { alert('Please agree to instructions!'); return; }
+    document.getElementById('instruction-screen').style.display = 'none';
+    document.getElementById('test-screen').style.display = 'block';
+    const name = localStorage.getItem('cbtUserName') || 'Student';
+    const sid = localStorage.getItem('ts_student_id') || 'N/A';
+    document.getElementById('user-name-display').textContent = '👤 ' + name;
+    if (document.getElementById('display-user-name')) document.getElementById('display-user-name').textContent = name;
+    if (document.getElementById('display-user-sid')) document.getElementById('display-user-sid').textContent = sid;
+    const mob = document.getElementById('mobile-name-display');
+    if (mob) mob.textContent = '👤 ' + name + ' | ' + sid;
+    testStarted = true;
+    enterFullscreen();
+    initTest();
+});
+
+function enterFullscreen() {
+    const el = document.documentElement;
+    try {
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+    } catch(e) {}
+}
+
+['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange'].forEach(evt => document.addEventListener(evt, onFSChange));
+
+function isFullscreen() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement);
+}
+function onFSChange() {
+    if (!testStarted || testSubmitted) return;
+    if (document.getElementById('test-screen').style.display === 'none') return;
+    if (!isFullscreen()) startCountdown('fullscreen');
+    else cancelCountdown();
+}
+
+let cdTimer = null, cdSecs = 0;
+function startCountdown(reason) {
+    if (!testStarted || testSubmitted || cdTimer) return;
+    cdSecs = reason === 'tab' ? 2 : 5;
+    const msg = reason === 'tab' ? '⚠️ Tab switched!' : '⚠️ Exited fullscreen!';
+    const hint = reason === 'tab' ? 'Return to this tab to cancel.' : 'Click below to return to fullscreen.';
+    showOverlay(msg, hint, cdSecs, reason === 'fullscreen');
+    cdTimer = setInterval(() => { cdSecs--; updateOverlay(cdSecs); if (cdSecs <= 0) { cancelCountdown(); submitTest(); } }, 1000);
+}
+function cancelCountdown() {
+    if (cdTimer) { clearInterval(cdTimer); cdTimer = null; }
+    hideOverlay();
+}
+function showOverlay(msg, hint, secs, btn) {
+    let ov = document.getElementById('sec-overlay');
+    if (!ov) { ov = document.createElement('div'); ov.id = 'sec-overlay'; ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:999999;display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:DM Sans,sans-serif;color:#fff;text-align:center;padding:24px;'; document.body.appendChild(ov); }
+    ov.innerHTML = `<div style="font-size:56px;margin-bottom:12px;">🚨</div><div style="font-size:22px;font-weight:800;margin-bottom:8px;">${msg}</div><div style="font-size:15px;color:#fbbf24;margin-bottom:18px;">${hint}</div><div style="font-size:14px;color:#e0e0e0;margin-bottom:4px;">Auto-submitting in</div><div id="ov-count" style="font-size:72px;font-weight:900;color:#f87171;line-height:1;">${secs}</div><div style="font-size:13px;color:#9ca3af;margin-top:4px;">seconds</div>${btn?`<button onclick="enterFullscreen()" style="margin-top:22px;padding:12px 32px;border-radius:30px;border:none;background:linear-gradient(135deg,#22c55e,#15803d);color:#fff;font-size:16px;font-weight:700;cursor:pointer;">🔲 Return to Fullscreen</button>`:''}`;
+    ov.style.display = 'flex';
+}
+function updateOverlay(n) { const el = document.getElementById('ov-count'); if (el) el.textContent = n; }
+function hideOverlay() { const ov = document.getElementById('sec-overlay'); if (ov) ov.style.display = 'none'; }
+</script>
+
+<script>
+function generatePDF() {
+    const name = localStorage.getItem('cbtUserName') || 'Student';
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'});
+    const timeStr = now.toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'});
+
+    let correct=0,incorrect=0,unanswered=0;
+    mockTest.questions.forEach(q => {
+        if (!q.userAnswer) unanswered++;
+        else if (q.userAnswer === q.correctAnswer) correct++;
+        else incorrect++;
+    });
+    const score = (correct*5)+(incorrect*-1);
+    const maxScore = mockTest.questions.length*5;
+    const pct = ((score/maxScore)*100).toFixed(1);
+    const lbl = {a:'A',b:'B',c:'C',d:'D'};
+
+    let qHTML = '';
+    mockTest.questions.forEach((q,i) => {
+        const ok = q.userAnswer === q.correctAnswer;
+        const wrong = q.userAnswer && !ok;
+        const skip = !q.userAnswer;
+        const statusColor = ok?'#059669':wrong?'#dc2626':'#9ca3af';
+        const statusLabel = ok?'✓ Correct':wrong?'✗ Wrong':'— Skipped';
+        const rowBg = ok?'#f0fdf4':wrong?'#fef2f2':'#fafafa';
+        let optsHTML='';
+        for (const [k,v] of Object.entries(q.options)) {
+            const isRight=k===q.correctAnswer, isUser=k===q.userAnswer;
+            let bg='transparent',fw='normal',pre='';
+            if(isRight){bg='#dcfce7';fw='bold';pre='✓ ';}
+            if(isUser&&!isRight){bg='#fee2e2';fw='bold';pre='✗ ';}
+            optsHTML+=`<div style="display:flex;gap:8px;padding:4px 8px;border-radius:4px;background:${bg};font-weight:${fw};font-size:12px;margin:2px 0;"><span style="min-width:18px;font-weight:700;">${lbl[k]}.</span><span>${pre}${v}</span></div>`;
+        }
+        const yourAns = skip?'<span style="color:#9ca3af;">Not Attempted</span>':`<span style="color:${ok?'#059669':'#dc2626'};font-weight:bold;">${lbl[q.userAnswer]}. ${q.options[q.userAnswer]}</span>`;
+        qHTML+=`<div style="margin-bottom:16px;padding:14px;border-radius:8px;background:${rowBg};border:1px solid #e5e7eb;page-break-inside:avoid;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                <div style="font-weight:700;font-size:13px;color:#1e293b;">Q${i+1}. ${q.text}</div>
+                <div style="font-weight:700;font-size:12px;color:${statusColor};white-space:nowrap;margin-left:12px;">${statusLabel}</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:8px;">${optsHTML}</div>
+            <div style="font-size:12px;border-top:1px solid #e5e7eb;padding-top:6px;">
+                Your answer: ${yourAns}&nbsp;&nbsp;
+                Correct: <span style="color:#059669;font-weight:bold;">${lbl[q.correctAnswer]}. ${q.options[q.correctAnswer]}</span>
+            </div>
+        </div>`;
+    });
+
+    const scoreColor = pct>=60?'#059669':pct>=35?'#d97706':'#dc2626';
+    const html=`<div style="max-width:780px;margin:0 auto;font-family:Arial,sans-serif;color:#111;">
+        <div style="background:linear-gradient(135deg,#1a6fc4,#0ea5e9);color:white;padding:20px 24px;border-radius:10px 10px 0 0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                <div><div style="font-size:22px;font-weight:800;">⚡ Thunderstudy CBT</div><div style="font-size:13px;opacity:0.85;margin-top:3px;">English Result Report</div></div>
+                <div style="text-align:right;font-size:12px;opacity:0.85;"><div>📅 ${dateStr} 🕐 ${timeStr}</div><div>👤 ${name}</div></div>
+            </div>
+        </div>
+        <div style="background:#f0f6ff;border:1px solid #bfdbfe;border-top:none;padding:16px 24px;margin-bottom:20px;border-radius:0 0 10px 10px;">
+            <div style="display:flex;flex-wrap:wrap;gap:12px;">
+                <div style="background:white;border:1px solid #dbeafe;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">SCORE</div><div style="font-size:24px;font-weight:800;color:${scoreColor};">${score}<span style="font-size:14px;color:#6b7280;">/${maxScore}</span></div></div>
+                <div style="background:white;border:1px solid #dbeafe;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">PERCENTAGE</div><div style="font-size:24px;font-weight:800;color:${scoreColor};">${pct}%</div></div>
+                <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#059669;">CORRECT</div><div style="font-size:24px;font-weight:800;color:#059669;">${correct}</div></div>
+                <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#dc2626;">WRONG</div><div style="font-size:24px;font-weight:800;color:#dc2626;">${incorrect}</div></div>
+                <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">SKIPPED</div><div style="font-size:24px;font-weight:800;color:#6b7280;">${unanswered}</div></div>
+            </div>
+        </div>
+        <div style="font-size:15px;font-weight:700;color:#1a6fc4;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #1a6fc4;">📋 Answer Key</div>
+        ${qHTML}
+        <div style="text-align:center;margin-top:20px;padding:12px;background:#f0f6ff;border-radius:8px;font-size:12px;color:#6b7280;">Generated by <b>Thunderstudy CBT</b> | t.me/thunderstudy_official | ${dateStr}</div>
+    </div>`;
+
+    const w = window.open('','_blank','width=950,height=700,scrollbars=yes');
+    if (!w) { alert('Popup blocked! Allow popups and retry.'); return; }
+    w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"/><title>Thunderstudy_English_${name}</title><style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Arial,sans-serif;background:#fff;padding:20px;}@media print{.no-print{display:none!important;}}.print-btn{display:block;margin:0 auto 20px;padding:12px 36px;background:linear-gradient(135deg,#1a6fc4,#0ea5e9);color:white;font-size:16px;font-weight:700;border:none;border-radius:30px;cursor:pointer;}</style></head><body><button class="print-btn no-print" onclick="window.print()">🖨️ Print / Save PDF</button>${html}</body></html>`);
+    w.document.close(); w.focus();
+}
+</script>
+
+</body>
+</html>
