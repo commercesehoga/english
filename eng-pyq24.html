@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thunderstudy CBT — English 2024 PYQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+const SUBJECT_ID  = "eng";
+const CHAPTER_ID  = "eng-voc-ows";
+</script>
+
+<style>
+:root {
+    --primary: #1a6fc4;
+    --primary-dark: #0d4f96;
+    --primary-light: #4a9de8;
+    --accent: #0ea5e9;
+    --accent2: #38bdf8;
+    --white: #ffffff;
+    --off-white: #f0f6ff;
+    --light-blue: #dbeafe;
+    --mid-blue: #bfdbfe;
+    --border: #bfdbfe;
+    --text-dark: #0f1e3d;
+    --text-mid: #2d4a7a;
+    --text-muted: #6b8ab5;
+    --correct: #059669;
+    --correct-bg: #ecfdf5;
+    --incorrect: #dc2626;
+    --incorrect-bg: #fef2f2;
+    --answered: #22c55e;
+    --marked: #0ea5e9;
+    --unanswered: #f97316;
+    --shadow: 0 4px 24px rgba(26,111,196,0.10);
+    --shadow-lg: 0 8px 40px rgba(26,111,196,0.16);
+
+    /* Dark mode vars */
+    --dm-bg: #0b1526;
+    --dm-surface: #111e35;
+    --dm-surface2: #172340;
+    --dm-border: #1e3460;
+    --dm-text: #e2eeff;
+    --dm-muted: #7ba4d4;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text-dark);
+    min-height: 100vh;
+    display: flex;
+    transition: background 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+    background: var(--dm-bg);
+    color: var(--dm-text);
+}
+
+/* ===== START SCREEN ===== */
+#start-screen {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--white);
+    display: flex; flex-direction: column; align-items: center;
+    overflow-y: auto; padding: 0 20px 50px;
+    transition: background 0.3s;
+}
+
+body.dark-mode #start-screen { background: var(--dm-bg); }
+
+.start-hero {
+    width: 100%; max-width: 600px;
+    padding: 48px 0 0;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+}
+
+.start-logo {
+    width: 68px; height: 68px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 8px 28px rgba(26,111,196,0.35);
+    margin-bottom: 20px;
+    animation: floatLogo 3s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.start-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 6px;
+}
+body.dark-mode .start-brand { color: var(--accent2); }
+
+.start-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px; font-weight: 800;
+    color: var(--text-dark);
+    line-height: 1.15;
+    margin-bottom: 10px;
+}
+body.dark-mode .start-title { color: var(--dm-text); }
+
+.start-sub {
+    font-size: 16px; color: var(--text-muted);
+    margin-bottom: 8px;
+}
+body.dark-mode .start-sub { color: var(--dm-muted); }
+
+.tg-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, #0088cc, #006fa8);
+    color: white; text-decoration: none;
+    padding: 10px 24px; border-radius: 40px;
+    font-size: 14px; font-weight: 700;
+    box-shadow: 0 4px 16px rgba(0,136,204,0.4);
+    transition: transform 0.18s, box-shadow 0.18s;
+    margin: 16px 0 28px;
+}
+.tg-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,136,204,0.55); color: white; }
+
+.info-card {
+    width: 100%; max-width: 500px;
+    background: var(--light-blue);
+    border: 1.5px solid var(--mid-blue);
+    border-radius: 16px;
+    padding: 22px 24px;
+    text-align: left;
+    margin-bottom: 24px;
+}
+body.dark-mode .info-card { background: var(--dm-surface); border-color: var(--dm-border); }
+
+.info-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--primary); margin-bottom: 14px;
+}
+body.dark-mode .info-card h3 { color: var(--accent2); }
+
+.info-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+
+.info-pill {
+    background: white;
+    border-radius: 10px; padding: 10px 14px;
+    font-size: 13px; color: var(--text-mid);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+}
+body.dark-mode .info-pill { background: var(--dm-surface2); border-color: var(--dm-border); color: var(--dm-text); }
+
+.info-pill strong { color: var(--primary-dark); font-weight: 700; }
+body.dark-mode .info-pill strong { color: var(--accent2); }
+
+.name-input {
+    width: 100%; max-width: 380px;
+    padding: 14px 20px;
+    border: 2px solid var(--mid-blue);
+    border-radius: 50px;
+    font-size: 16px; font-family: 'DM Sans', sans-serif;
+    text-align: center;
+    background: white; color: var(--text-dark);
+    outline: none; transition: border 0.2s, box-shadow 0.2s;
+    margin-bottom: 18px;
+}
+.name-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(26,111,196,0.12); }
+body.dark-mode .name-input { background: var(--dm-surface); color: var(--dm-text); border-color: var(--dm-border); }
+
+.start-btns { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; max-width: 340px; }
+
+.s-btn {
+    width: 100%; padding: 14px 0;
+    border: none; border-radius: 50px; cursor: pointer;
+    font-size: 16px; font-weight: 700; font-family: 'DM Sans', sans-serif;
+    transition: transform 0.18s, box-shadow 0.18s;
+    letter-spacing: 0.3px;
+}
+.s-btn:hover { transform: translateY(-3px); }
+
+.s-btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; box-shadow: 0 6px 20px rgba(26,111,196,0.4);
+}
+.s-btn-primary:hover { box-shadow: 0 10px 28px rgba(26,111,196,0.55); }
+
+.s-btn-green {
+    background: linear-gradient(135deg, #22c55e, #15803d);
+    color: white; box-shadow: 0 6px 20px rgba(34,197,94,0.35);
+}
+.s-btn-green:hover { box-shadow: 0 10px 28px rgba(34,197,94,0.5); }
+
+.s-btn-purple {
+    background: linear-gradient(135deg, #7c3aed, #4c1d95);
+    color: white; box-shadow: 0 6px 20px rgba(124,58,237,0.35);
+}
+.s-btn-purple:hover { box-shadow: 0 10px 28px rgba(124,58,237,0.5); }
+
+.dark-toggle {
+    position: absolute; top: 16px; right: 16px; z-index: 10000;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; border: none; border-radius: 40px;
+    padding: 8px 18px; font-size: 14px; font-weight: 600;
+    cursor: pointer; display: flex; align-items: center; gap: 7px;
+    box-shadow: 0 4px 14px rgba(26,111,196,0.4);
+    transition: background 0.3s, transform 0.2s;
+    font-family: 'DM Sans', sans-serif;
+}
+.dark-toggle:hover { transform: scale(1.05); }
+body.dark-mode .dark-toggle { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 4px 14px rgba(245,158,11,0.4); }
+
+/* ===== INSTRUCTION SCREEN ===== */
+#instruction-screen {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--white); display: none; overflow-y: auto; padding: 40px 20px;
+}
+body.dark-mode #instruction-screen { background: var(--dm-bg); }
+
+.instr-wrap { max-width: 700px; margin: 0 auto; }
+
+.instr-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 800; color: var(--primary);
+    margin-bottom: 24px; text-align: center;
+}
+body.dark-mode .instr-title { color: var(--accent2); }
+
+.instr-box {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 1.5px solid var(--mid-blue); border-radius: 16px; padding: 28px;
+}
+body.dark-mode .instr-box { background: linear-gradient(135deg, var(--dm-surface), var(--dm-surface2)); border-color: var(--dm-border); }
+
+.instr-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; color: var(--primary);
+    border-left: 4px solid var(--primary); padding-left: 12px; margin-bottom: 16px;
+}
+body.dark-mode .instr-box h3 { color: var(--accent2); border-left-color: var(--accent2); }
+
+.instr-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.instr-list li {
+    background: white; border-radius: 10px; padding: 12px 16px;
+    font-size: 15px; color: var(--text-mid);
+    border: 1px solid var(--border);
+    transition: transform 0.15s;
+}
+body.dark-mode .instr-list li { background: var(--dm-surface2); border-color: var(--dm-border); color: var(--dm-text); }
+.instr-list li:hover { transform: translateX(5px); }
+
+.instr-legend {
+    display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;
+}
+
+.leg-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--text-mid); }
+body.dark-mode .leg-item { color: var(--dm-text); }
+.leg-dot { width: 14px; height: 14px; border-radius: 50%; }
+
+.agree-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 20px; font-size: 15px; font-weight: 600; cursor: pointer;
+    color: var(--text-mid);
+}
+body.dark-mode .agree-row { color: var(--dm-text); }
+
+.agree-row input { display: none; }
+
+.chk-box {
+    width: 22px; height: 22px; border-radius: 6px;
+    border: 2px solid var(--primary);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; color: transparent; transition: 0.15s;
+    background: white;
+}
+body.dark-mode .chk-box { background: var(--dm-surface); border-color: var(--accent2); }
+
+.agree-row input:checked + .chk-box { background: var(--primary); color: white; }
+body.dark-mode .agree-row input:checked + .chk-box { background: var(--accent2); }
+
+#start-test-btn {
+    margin-top: 22px; width: 100%;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; border: none; border-radius: 50px; padding: 14px;
+    font-size: 17px; font-weight: 700; cursor: not-allowed; opacity: 0.55;
+    font-family: 'DM Sans', sans-serif;
+    transition: opacity 0.2s, transform 0.18s, box-shadow 0.18s;
+    box-shadow: 0 6px 20px rgba(26,111,196,0.35);
+}
+#start-test-btn:not(:disabled) { cursor: pointer; opacity: 1; }
+#start-test-btn:not(:disabled):hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(26,111,196,0.5); }
+
+/* ===== TEST SCREEN ===== */
+#test-screen {
+    position: fixed; inset: 0; z-index: 9998;
+    background: var(--off-white); display: none; overflow: auto;
+}
+body.dark-mode #test-screen { background: var(--dm-bg); }
+
+/* SIDEBAR */
+.sidebar {
+    width: 280px; background: white;
+    height: 100vh; position: fixed; right: 0; top: 0;
+    padding: 20px; overflow-y: auto;
+    border-left: 2px solid var(--light-blue);
+    box-shadow: -4px 0 20px rgba(26,111,196,0.08);
+}
+body.dark-mode .sidebar { background: var(--dm-surface); border-left-color: var(--dm-border); }
+
+.timer {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; padding: 10px 0; border-radius: 40px;
+    font-weight: 700; font-size: 19px; text-align: center;
+    letter-spacing: 1px; margin-bottom: 18px;
+    box-shadow: 0 4px 14px rgba(26,111,196,0.35);
+}
+
+.sidebar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700; color: var(--primary);
+    margin-bottom: 14px; padding-bottom: 12px; border-bottom: 2px solid var(--light-blue);
+}
+body.dark-mode .sidebar-brand { color: var(--accent2); border-bottom-color: var(--dm-border); }
+
+.test-info-row { font-size: 13px; color: var(--text-muted); margin: 5px 0; display: flex; gap: 6px; }
+.test-info-row strong { color: var(--text-dark); font-weight: 600; }
+body.dark-mode .test-info-row { color: var(--dm-muted); }
+body.dark-mode .test-info-row strong { color: var(--dm-text); }
+
+.palette-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin: 18px 0 10px; font-size: 13px; font-weight: 600; color: var(--text-mid);
+}
+body.dark-mode .palette-header { color: var(--dm-text); }
+
+.palette-count { color: var(--primary); font-weight: 700; }
+body.dark-mode .palette-count { color: var(--accent2); }
+
+.palette-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px;
+}
+
+.palette-btn {
+    aspect-ratio: 1; border-radius: 50%; border: 2px solid #e5e7eb;
+    background: #fee2e2; /* unanswered = orange-ish red */
+    color: var(--text-dark); font-size: 11px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+}
+.palette-btn:hover { transform: scale(1.1); }
+.palette-btn.answered { background: #bbf7d0; border-color: #22c55e; color: #14532d; }
+.palette-btn.marked { background: #bae6fd; border-color: #0ea5e9; color: #0c4a6e; }
+.palette-btn.current { background: white; border: 2.5px solid var(--primary); color: var(--primary); box-shadow: 0 0 0 3px rgba(26,111,196,0.2); }
+.palette-btn.review-correct { background: #22c55e; border-color: #16a34a; color: white; }
+.palette-btn.review-wrong { background: #ef4444; border-color: #dc2626; color: white; }
+.palette-btn.review-unanswered { background: #60a5fa; border-color: #3b82f6; color: white; }
+
+body.dark-mode .palette-btn { background: #7f1d1d; border-color: #991b1b; color: #fecaca; }
+body.dark-mode .palette-btn.answered { background: #14532d; border-color: #22c55e; color: #bbf7d0; }
+body.dark-mode .palette-btn.marked { background: #0c4a6e; border-color: #0ea5e9; color: #bae6fd; }
+body.dark-mode .palette-btn.current { background: var(--dm-surface2); border-color: var(--accent); color: var(--accent); }
+
+#palette-legend { margin-top: 14px; font-size: 12px; color: var(--text-muted); }
+body.dark-mode #palette-legend { color: var(--dm-muted); }
+#palette-legend .leg-label { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; }
+
+/* MAIN CONTENT */
+.main-content {
+    margin-right: 280px; padding: 20px 24px;
+    min-height: 100vh;
+}
+
+.test-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px; padding-bottom: 14px;
+    border-bottom: 2px solid var(--light-blue);
+}
+body.dark-mode .test-header { border-bottom-color: var(--dm-border); }
+
+.user-badge {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white; padding: 7px 16px; border-radius: 30px;
+    font-size: 13px; font-weight: 700;
+}
+
+.q-counter {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700; color: var(--text-dark);
+}
+body.dark-mode .q-counter { color: var(--dm-text); }
+.q-counter span { color: var(--primary); }
+body.dark-mode .q-counter span { color: var(--accent2); }
+
+.progress-wrap { flex: 1; max-width: 200px; margin: 0 16px; }
+.progress-bar-bg { height: 8px; background: var(--light-blue); border-radius: 10px; overflow: hidden; }
+body.dark-mode .progress-bar-bg { background: var(--dm-surface2); }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 10px; transition: width 0.4s; width: 0; }
+.progress-label { font-size: 12px; color: var(--text-muted); text-align: right; margin-top: 4px; }
+body.dark-mode .progress-label { color: var(--dm-muted); }
+
+/* QUESTION CARD */
+.question-card {
+    background: white; border-radius: 16px; padding: 28px;
+    box-shadow: var(--shadow); border: 1.5px solid var(--light-blue);
+    margin-bottom: 20px;
+}
+body.dark-mode .question-card { background: var(--dm-surface); border-color: var(--dm-border); box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+
+.q-num-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--light-blue); color: var(--primary);
+    padding: 5px 14px; border-radius: 20px; font-size: 13px; font-weight: 700;
+    margin-bottom: 14px;
+}
+body.dark-mode .q-num-tag { background: var(--dm-surface2); color: var(--accent2); }
+
+.section-badge {
+    display: inline-flex; align-items: center;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white; padding: 3px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 600; margin-bottom: 12px;
+}
+
+.q-text {
+    font-size: 18px; font-weight: 500; color: var(--text-dark);
+    line-height: 1.6; margin-bottom: 22px;
+}
+body.dark-mode .q-text { color: var(--dm-text); }
+
+/* OPTIONS */
+.option {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px; border: 2px solid var(--border);
+    border-radius: 12px; margin-bottom: 10px; cursor: pointer;
+    background: white; transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    user-select: none;
+}
+body.dark-mode .option { background: var(--dm-surface2); border-color: var(--dm-border); }
+.option:hover { border-color: var(--primary); background: var(--off-white); transform: translateX(4px); }
+body.dark-mode .option:hover { background: #1e3460; border-color: var(--accent); }
+
+.option.selected { border-color: var(--primary-dark); background: #dbeafe; }
+body.dark-mode .option.selected { background: #0d2a56; border-color: var(--accent); }
+
+.option.correct { border-color: var(--correct) !important; background: var(--correct-bg) !important; }
+.option.incorrect { border-color: var(--incorrect) !important; background: var(--incorrect-bg) !important; }
+
+.opt-letter {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid var(--border); background: var(--off-white);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: var(--text-muted);
+    flex-shrink: 0; transition: all 0.15s;
+}
+.option.selected .opt-letter { background: var(--primary); border-color: var(--primary); color: white; }
+.option.correct .opt-letter { background: var(--correct); border-color: var(--correct); color: white; }
+.option.incorrect .opt-letter { background: var(--incorrect); border-color: var(--incorrect); color: white; }
+
+.opt-text { font-size: 15px; color: var(--text-dark); line-height: 1.5; flex: 1; }
+body.dark-mode .opt-text { color: var(--dm-text); }
+.option.selected .opt-text { color: var(--primary-dark); font-weight: 600; }
+body.dark-mode .option.selected .opt-text { color: var(--accent2); }
+.option.correct .opt-text { color: var(--correct); font-weight: 600; }
+.option.incorrect .opt-text { color: var(--incorrect); font-weight: 600; }
+
+.opt-indicator { font-size: 12px; font-weight: 700; margin-left: 4px; }
+.correct-indicator { color: var(--correct); }
+.incorrect-indicator { color: var(--incorrect); }
+
+.explanation-box {
+    margin-top: 18px; padding: 14px 18px;
+    border-radius: 12px; border-left: 4px solid var(--primary);
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    font-size: 14px; color: var(--text-mid); line-height: 1.7;
+}
+body.dark-mode .explanation-box { background: linear-gradient(135deg, var(--dm-surface), var(--dm-surface2)); border-left-color: var(--accent); color: var(--dm-text); }
+
+/* NAV BUTTONS */
+.nav-row {
+    display: flex; justify-content: space-between; align-items: center; margin-top: 24px;
+}
+
+.nav-btn {
+    padding: 10px 24px; border-radius: 10px; border: 2px solid var(--primary);
+    background: transparent; color: var(--primary); font-size: 14px; font-weight: 700;
+    cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.18s;
+}
+.nav-btn:hover { background: var(--light-blue); }
+body.dark-mode .nav-btn { border-color: var(--accent2); color: var(--accent2); }
+body.dark-mode .nav-btn:hover { background: var(--dm-surface2); }
+
+.next-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; border: none;
+    padding: 12px 30px; border-radius: 10px; font-size: 15px; font-weight: 700;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    box-shadow: 0 4px 14px rgba(26,111,196,0.35); transition: all 0.18s;
+}
+.next-btn:hover { transform: translateY(-2px); box-shadow: 0 7px 20px rgba(26,111,196,0.5); }
+body.dark-mode .next-btn { background: linear-gradient(135deg, var(--accent), var(--primary)); }
+
+.mark-btn-q {
+    padding: 9px 18px; border-radius: 10px;
+    border: 2px solid var(--accent); background: transparent; color: var(--accent);
+    font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+}
+.mark-btn-q.marked { background: var(--accent); color: white; }
+.mark-btn-q:hover { background: var(--light-blue); }
+
+/* SUBMIT SECTION */
+.submit-row {
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 600px; margin: 20px auto; gap: 14px; flex-wrap: wrap;
+}
+
+.fancy-btn {
+    flex: 1; min-width: 140px; padding: 14px; border: none; border-radius: 50px;
+    font-size: 15px; font-weight: 700; cursor: pointer; text-align: center;
+    text-decoration: none; display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif; transition: transform 0.18s, box-shadow 0.18s;
+}
+.fancy-btn:hover { transform: translateY(-3px); }
+
+.fancy-submit { background: linear-gradient(135deg, #22c55e, #15803d); color: white; box-shadow: 0 6px 20px rgba(34,197,94,0.4); max-width: 260px; }
+.fancy-submit:hover { box-shadow: 0 10px 28px rgba(34,197,94,0.55); }
+.fancy-tg { background: linear-gradient(135deg, #0088cc, #005a99); color: white; box-shadow: 0 6px 20px rgba(0,136,204,0.4); max-width: 200px; }
+.fancy-tg:hover { box-shadow: 0 10px 28px rgba(0,136,204,0.55); color: white; }
+
+.fancy-pdf { background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 6px 20px rgba(249,115,22,0.4); }
+.fancy-pdf:hover { box-shadow: 0 10px 28px rgba(249,115,22,0.55); }
+.fancy-result { background: linear-gradient(135deg, #7c3aed, #4c1d95); color: white; box-shadow: 0 6px 20px rgba(124,58,237,0.4); }
+.fancy-result:hover { box-shadow: 0 10px 28px rgba(124,58,237,0.55); }
+
+.stream-btn {
+    display: block; width: 100%; padding: 14px;
+    border-radius: 14px; color: white; font-weight: 700; font-size: 16px;
+    text-decoration: none; font-family: 'DM Sans', sans-serif;
+    transition: transform 0.18s, box-shadow 0.18s;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+.stream-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,0,0.3); color: white; }
+
+body.dark-mode #stream-picker-box { background: var(--dm-surface); }
+body.dark-mode #stream-picker-box h3 { color: var(--accent2); }
+body.dark-mode #stream-picker-box p { color: var(--dm-muted); }
+body.dark-mode #stream-picker-box button { color: var(--dm-muted); }
+
+/* FOOTER */
+.test-footer {
+    background: linear-gradient(135deg, #0f1e3d, #1a3066);
+    color: #94b8e8; text-align: center; padding: 22px 16px;
+    margin-top: 10px;
+}
+.test-footer p { font-size: 12px; margin-bottom: 12px; }
+.footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.footer-link {
+    padding: 8px 18px; border-radius: 30px; font-size: 13px; font-weight: 600;
+    text-decoration: none; color: white; transition: transform 0.18s, box-shadow 0.18s;
+}
+.footer-link:hover { transform: translateY(-2px); color: white; }
+.fl-purple { background: linear-gradient(135deg, #7c3aed, #4c1d95); box-shadow: 0 3px 10px rgba(124,58,237,0.35); }
+.fl-green { background: linear-gradient(135deg, #059669, #065f46); box-shadow: 0 3px 10px rgba(5,150,105,0.35); }
+.fl-red { background: linear-gradient(135deg, #dc2626, #991b1b); box-shadow: 0 3px 10px rgba(220,38,38,0.35); }
+
+/* MODAL */
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99999; justify-content: center; align-items: center; }
+.modal.show { display: flex; }
+
+.modal-content {
+    background: white; border-radius: 20px; padding: 32px;
+    width: 90%; max-width: 580px; max-height: 90vh; overflow-y: auto;
+    animation: modalIn 0.3s ease;
+}
+body.dark-mode .modal-content { background: var(--dm-surface); border: 1.5px solid var(--dm-border); }
+
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.92) translateY(-20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--light-blue);
+}
+body.dark-mode .modal-head { border-bottom-color: var(--dm-border); }
+
+.modal-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; color: var(--primary);
+}
+body.dark-mode .modal-head h2 { color: var(--accent2); }
+
+.close-x { background: none; border: none; font-size: 26px; cursor: pointer; color: var(--text-muted); }
+
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+
+.stat-tile {
+    background: var(--off-white); border-radius: 14px; padding: 18px;
+    text-align: center; border: 1.5px solid var(--border);
+}
+body.dark-mode .stat-tile { background: var(--dm-surface2); border-color: var(--dm-border); }
+
+.stat-tile h4 { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+body.dark-mode .stat-tile h4 { color: var(--dm-muted); }
+
+.stat-tile p { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 800; }
+.stat-correct { color: var(--correct); }
+.stat-wrong { color: var(--incorrect); }
+.stat-neutral { color: var(--text-muted); }
+.stat-score { color: var(--primary); }
+body.dark-mode .stat-score { color: var(--accent2); }
+
+.analysis { font-size: 14px; color: var(--text-mid); margin-bottom: 18px; line-height: 1.8; }
+body.dark-mode .analysis { color: var(--dm-text); }
+
+.modal-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.modal-btn {
+    flex: 1; padding: 12px; border-radius: 12px; border: none; cursor: pointer;
+    font-size: 14px; font-weight: 700; font-family: 'DM Sans', sans-serif; transition: all 0.18s;
+}
+.modal-btn:hover { transform: translateY(-2px); }
+.mb-review { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; box-shadow: 0 4px 14px rgba(26,111,196,0.4); }
+.mb-pdf { background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 4px 14px rgba(249,115,22,0.4); }
+
+/* MOBILE */
+.mobile-bar { display: none; }
+
+@media (max-width: 768px) {
+    .mobile-bar {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 8px 12px; background: white; border-bottom: 2px solid var(--light-blue);
+        margin-bottom: 8px; border-radius: 10px; box-shadow: var(--shadow);
+    }
+    body.dark-mode .mobile-bar { background: var(--dm-surface); border-color: var(--dm-border); }
+    .mob-timer {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white; padding: 6px 14px; border-radius: 30px; font-weight: 700; font-size: 14px;
+    }
+    #user-name-display { display: none !important; }
+    .sidebar .timer, .sidebar .sidebar-brand { display: none !important; }
+    .sidebar { position: relative; width: 100%; height: auto; right: 0; left: 0; border-left: none; border-top: 2px solid var(--light-blue); box-shadow: none; }
+    body { flex-direction: column; }
+    .main-content { margin-right: 0; width: 100%; padding: 12px; }
+    .question-card { padding: 18px; }
+    .q-text { font-size: 16px; }
+    .nav-row { flex-direction: row; gap: 8px; }
+    .palette-grid { max-height: 200px; overflow-y: auto; }
+}
+
+@media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .modal-btns { flex-direction: column; }
+}
+
+/* option radio hide */
+.option input[type="radio"] { display: none; }
+
+#pdf-print-area { display: none; }
+@media print {
+    body > * { display: none !important; }
+    #pdf-print-area { display: block !important; font-family: Arial, sans-serif; color: #111; padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="start-screen">
+
+<button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode" style="position:absolute;top:16px;right:16px;">
+    <span id="toggle-icon">🌙</span>
+    <span id="toggle-label">Dark</span>
+</button>
+
+<div class="start-hero">
+    <div class="start-logo">📝</div>
+    <div class="start-brand">Thunderstudy CBT</div>
+    <h1 class="start-title">English 2024 PYQ</h1>
+    <p class="start-sub">English Vocabulary | Provided by <strong>Thunderstudy</strong></p>
+
+    <a href="https://t.me/thunderstudy_official" target="_blank" class="tg-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-2.04 9.607c-.148.666-.543.828-1.098.516l-3.04-2.24-1.467 1.413c-.162.162-.298.298-.611.298l.217-3.083 5.613-5.067c.244-.217-.054-.337-.378-.12L7.08 14.807 4.09 13.89c-.657-.205-.67-.657.137-.973l10.88-4.196c.548-.198 1.027.133.855.973z"/></svg>
+        @thunderstudy_official
+    </a>
+
+    <div class="info-card">
+        <h3>📋 Quick Overview</h3>
+        <div class="info-grid">
+            <div class="info-pill">📝 <div><strong>50 Questions</strong></div></div>
+            <div class="info-pill">⏱️ <div><strong>60 Minutes</strong></div></div>
+            <div class="info-pill">✅ <div><strong>+5 Correct</strong></div></div>
+            <div class="info-pill">❌ <div><strong>−1 Wrong</strong></div></div>
+            <div class="info-pill">🚫 <div><strong>No tab switching</strong></div></div>
+            <div class="info-pill">🔁 <div><strong>Auto-submits</strong></div></div>
+        </div>
+    </div>
+
+<input type="text" id="username-input" class="name-input" placeholder="Enter your name to begin">
+    <div id="sid-display-area" style="font-size: 13px; font-weight: 700; color: #4f6ef7; background: rgba(79,110,247,0.1); padding: 5px 15px; border-radius: 20px; display: none; margin-top: 8px;">
+        🪪 ID: <span id="sid-value">---</span>
+    </div>
+    <div class="start-btns">
+        <button class="s-btn s-btn-primary" onclick="startMock()">🚀 Start Mock Test</button>
+        <button class="s-btn s-btn-green" onclick="window.location.href='https://commercesehoga.github.io/commerce/bst/result.html'">📊 Previous Results</button>
+        <button class="s-btn s-btn-purple" onclick="window.open('https://commercesehoga.blogspot.com/2026/03/business-studies-cuet-cbt-mock-test-free.html','_blank')">📚 More Mock Tests</button>
+    </div>
+</div>
+</div>
+
+<!-- INSTRUCTION SCREEN -->
+<div id="instruction-screen">
+<div class="instr-wrap">
+    <h2 class="instr-title">📜 Instructions</h2>
+    <div class="instr-box">
+        <h3>General Guidelines</h3>
+        <ol class="instr-list">
+            <li>Total duration is <strong>60 minutes</strong>. Timer is shown in the sidebar.</li>
+            <li>The test <strong>auto-submits</strong> when time runs out.</li>
+            <li>Test runs in <strong>fullscreen</strong>. Exiting starts a <strong>5-second</strong> countdown to auto-submit.</li>
+            <li><strong>Do not switch tabs.</strong> Switching tabs starts a <strong>2-second</strong> countdown.</li>
+            <li>Return before the countdown ends to cancel auto-submission.</li>
+            <li>Right panel shows palette with question status (answered, marked, etc.)</li>
+            <li>Marking: <strong>+5 correct</strong> / <strong>−1 wrong</strong> / <strong>0 unanswered</strong>.</li>
+        </ol>
+
+        <div class="instr-legend" style="margin-top: 20px;">
+            <strong style="font-size:13px; display:block; margin-bottom:8px;">Status Legend:</strong>
+            <div class="leg-item"><div class="leg-dot" style="background:#22c55e;border:1px solid #16a34a;"></div>Answered</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#bae6fd;border:1px solid #0ea5e9;"></div>Marked</div>
+            <div class="leg-item"><div class="leg-dot" style="background:white;border:2px solid #1a6fc4;"></div>Current</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#fee2e2;border:1px solid #fca5a5;"></div>Unanswered</div>
+        </div>
+
+        <label class="agree-row">
+            <input type="checkbox" id="agree-checkbox">
+            <span class="chk-box">✓</span>
+            I have read and understood all instructions
+        </label>
+
+        <button id="start-test-btn" disabled>▶ Start Test</button>
+    </div>
+</div>
+</div>
+
+<!-- TEST SCREEN -->
+<div id="test-screen">
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="timer">01:00:00</div>
+    <div class="sidebar-brand">⚡ Thunderstudy CBT</div>
+
+          <div class="test-info-row"><strong>Name:</strong> <span id="display-user-name">Student</span></div>
+    <div class="test-info-row"><strong>ID:</strong> <span id="display-user-sid" style="font-family:monospace;">---</span></div>
+    <div class="test-info-row"><strong>Subject:</strong> English — Syn/Ant</div>
+    <div class="test-info-row"><strong>Questions:</strong> 50</div>
+    <div class="test-info-row"><strong>Duration:</strong> 60 min</div>
+    <div class="test-info-row"><strong>Marking:</strong> +5 / −1</div>
+    <div class="test-info-row"><strong>Section:</strong> <span id="current-section">—</span></div>
+
+    <div class="palette-header">
+        <span>Questions</span>
+        <span class="palette-count" id="answered-count">0/50</span>
+    </div>
+    <div class="palette-grid" id="question-palette-grid"></div>
+    <div id="palette-legend" style="margin-top:14px; font-size:12px;"></div>
+</div>
+
+<!-- Main -->
+<div class="main-content">
+
+    <div class="mobile-bar">
+        <div class="mob-timer">01:00:00</div>
+        <div id="mobile-name-display" style="background:linear-gradient(135deg,var(--primary),var(--accent));color:white;padding:6px 14px;border-radius:20px;font-weight:700;font-size:13px;">👤 Student</div>
+    </div>
+
+    <div class="test-header">
+        <div id="user-name-display" class="user-badge">👤 Student</div>
+        <div class="q-counter">Q <span id="current-q-number">1</span>/50</div>
+        <div class="progress-wrap">
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="test-progress"></div></div>
+            <div class="progress-label" id="progress-percent">0%</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="q-num-tag">Question <span id="q-number">1</span></div>
+        <div class="section-badge" id="section-badge">Reading Comprehension</div>
+        <div class="q-text" id="question-text"></div>
+        <div id="options-container"></div>
+
+        <div class="nav-row">
+            <button class="nav-btn" id="prev-btn">← Previous</button>
+            <div style="display:flex;gap:10px;align-items:center;">
+                <button class="mark-btn-q" id="mark-btn">🔖 Mark</button>
+                <button class="next-btn" id="next-btn">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="submit-row" id="submit-row-before">
+        <a href="https://t.me/thunderstudy_official" target="_blank" class="fancy-btn fancy-tg">⚡ Join Thunder</a>
+        <button class="fancy-btn fancy-submit" id="submit-test-btn">✅ Submit Test</button>
+    </div>
+
+    <!-- Post-submit action row (hidden until submitted) -->
+    <div class="submit-row" id="submit-row-after" style="display:none;">
+        <a href="https://t.me/thunderstudy_official" target="_blank" class="fancy-btn fancy-tg" style="flex:1;max-width:180px;">⚡ Join Thunder</a>
+        <button class="fancy-btn fancy-pdf" id="pdf-action-btn" style="flex:1;max-width:180px;">📄 Download PDF</button>
+        <button class="fancy-btn fancy-result" id="result-action-btn" style="flex:1;max-width:180px;">📊 Result</button>
+    </div>
+
+    <!-- Stream Picker Popup -->
+    <div id="stream-picker-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:999998;justify-content:center;align-items:center;">
+        <div id="stream-picker-box" style="background:white;border-radius:20px;padding:32px 28px;width:90%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.25);animation:modalIn 0.3s ease;text-align:center;position:relative;">
+            <button onclick="document.getElementById('stream-picker-overlay').style.display='none'" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:#6b8ab5;">×</button>
+            <div style="font-size:36px;margin-bottom:10px;">📊</div>
+            <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:#1a6fc4;margin-bottom:6px;">View Previous Results</h3>
+            <p style="font-size:13px;color:#6b8ab5;margin-bottom:22px;">Select your stream to view results</p>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+                <a href="https://commercesehoga.github.io/commerce/bst/result.html" target="_blank" class="stream-btn" style="background:linear-gradient(135deg,#1a6fc4,#0ea5e9);">
+                    🏪 Commerce
+                </a>
+                <a href="https://commercesehoga.github.io/science/result.html" target="_blank" class="stream-btn" style="background:linear-gradient(135deg,#059669,#0d9488);">
+                    🔬 Science
+                </a>
+                <a href="https://commercesehoga.github.io/humanities/result.html" target="_blank" class="stream-btn" style="background:linear-gradient(135deg,#7c3aed,#a855f7);">
+                    📚 Humanities
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="test-footer">
+        <p>© 2025 Thunderstudy. All Rights Reserved.</p>
+        <div class="footer-links">
+            <a href="https://commercesehoga.blogspot.com/2026/03/business-studies-cuet-cbt-mock-test-free.html" target="_blank" class="footer-link fl-purple">📚 More Mocks</a>
+            <a href="https://commercesehoga.blogspot.com/" target="_blank" class="footer-link fl-green">🌐 Website</a>
+            <a href="https://t.me/mindmaster_robot" target="_blank" class="footer-link fl-red">🚨 Report Error</a>
+        </div>
+    </footer>
+</div>
+
+<!-- Results Modal -->
+<div class="modal" id="results-modal">
+<div class="modal-content">
+    <div class="modal-head">
+        <h2>🏆 Test Results</h2>
+        <button class="close-x" id="close-modal">×</button>
+    </div>
+    <div class="stats-grid">
+        <div class="stat-tile"><h4>Correct</h4><p class="stat-correct" id="correct-answers">0</p></div>
+        <div class="stat-tile"><h4>Wrong</h4><p class="stat-wrong" id="incorrect-answers">0</p></div>
+        <div class="stat-tile"><h4>Unanswered</h4><p class="stat-neutral" id="unanswered">50</p></div>
+        <div class="stat-tile"><h4>Score</h4><p class="stat-score" id="total-score">0</p></div>
+    </div>
+    <div class="analysis">
+        Percentage: <strong><span id="percentage">0</span>%</strong> &nbsp;|&nbsp;
+        Accuracy: <strong><span id="accuracy">0</span>%</strong>
+    </div>
+    <div class="modal-btns">
+        <button class="modal-btn mb-review" id="review-btn">👁 Review Answers</button>
+        <button class="modal-btn mb-pdf" id="download-pdf-btn">📄 Download PDF</button>
+        <button class="modal-btn mb-result" id="modal-result-btn" style="background:linear-gradient(135deg,#7c3aed,#a855f7);color:white;box-shadow:0 4px 14px rgba(124,58,237,0.4);">📊 Result</button>
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="pdf-print-area"></div>
+
+<script>
+/* ============================================================
+   MOCK TEST DATA — English Chapter 1
+   ============================================================ */
+const mockTest = {
+    title: "English — One Word",
+    questions: [
+  {
+    "id": 1,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 1: Coffee's Genetic Make-up</strong><br><br>Coffee's genetic make-up is no trivial concern; 10 million tonnes of the crop were grown and sold in 2022–23. The coffee that we drink comes from two species: Coffea Canephora, which is also known as Robusta and Coffea Arabica, known as Arabica. In many cases, beans from the two species are blended to make a brew. But the beans of single species are also roasted and sold. Overall, Arabica beans represent around 56%. Most genetic variation in living organisms comes from hybridization with other species. However, this is a relatively rare event for Coffea Arabica because it has more than two copies of each chromosome — a phenomenon called polyploidy. Coffea Canephora has two copies of each chromosome, but Coffea Arabica contains multiple copies. This makes it much more difficult for Arabica to interbreed with other species. As a result, Coffea Arabica's main source of single nucleotide variation is mutation, which occurs at a steady rate over time. However, the species is also relatively young, having formed as a hybrid of Robusta and Coffea Eugenioides — another coffee species that is not widely cultivated — within the past 50,000 years. From that single plant, which has basically no variation, you create the whole species, and then the variation is only the novel mutations that have occurred since that event. Despite this, there is substantial variation in the physical characteristics of the Arabica coffee plant, including different flavour profiles in the beans and variations in disease resistance, says emeritus geneticist Juan Medrano at the UC Davis Coffee Center at the University of California, Davis. \"We're always talking about low variability at the DNA level, but there is variability at the structural level, at the chromosomal level, at the level of deletions ... and insertions,\" Medrano says.<br><br><strong>Q1. Which of the following statements is true about Coffea Arabica?</strong>",
+    "options": { "a": "Hybridization is the main source of its genetic variation.", "b": "It has only two copies of each chromosome.", "c": "It displays the phenomenon of polyploidy.", "d": "It is easily interbred with other species." },
+    "correctAnswer": "c",
+    "explanation": "The passage states that Coffea Arabica has more than two copies of each chromosome — a phenomenon called polyploidy.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 2,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 1: Coffee's Genetic Make-up</strong><br><br>(Read the passage above to answer Q1 to Q6)<br><br><strong>Q2. Which of the following varieties of coffee is the most sold in the world?</strong>",
+    "options": { "a": "Coffea Canephora", "b": "Coffea Arabica", "c": "Coffea Eugenioides", "d": "A blend of Coffea Canephora and Coffea Arabica" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'Overall, Arabica beans represent around 56%' — the majority share.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 3,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 1: Coffee's Genetic Make-up</strong><br><br>(Read the passage above to answer Q1 to Q6)<br><br><strong>Q3. Which of the following species of coffee has more than two copies of each chromosome?</strong>",
+    "options": { "a": "Arabica", "b": "Robusta", "c": "Coffea Eugenioides", "d": "A blend of Arabica and Robusta" },
+    "correctAnswer": "a",
+    "explanation": "The passage states: 'Coffea Arabica contains multiple copies' of each chromosome.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 4,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 1: Coffee's Genetic Make-up</strong><br><br>(Read the passage above to answer Q1 to Q6)<br><br><strong>Q4. Which of the following species of coffee developed only in the last 50,000 years?</strong>",
+    "options": { "a": "Coffea Canephora", "b": "Coffea Eugenioides", "c": "Arabica", "d": "Robusta" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'having formed as a hybrid... within the past 50,000 years' — referring to Coffea Arabica.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 5,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 1: Coffee's Genetic Make-up</strong><br><br>(Read the passage above to answer Q1 to Q6)<br><br><strong>Q5. Which of the following types of variability is not very high for Coffea Arabica?</strong>",
+    "options": { "a": "Variability at the structural level.", "b": "Variability at the chromosomal level.", "c": "Variability at the level of deletions and insertions.", "d": "Variability at the DNA level." },
+    "correctAnswer": "d",
+    "explanation": "The passage states: 'We're always talking about low variability at the DNA level'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 6,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 1: Coffee's Genetic Make-up</strong><br><br>(Read the passage above to answer Q1 to Q6)<br><br><strong>Q6. Choose the statement that is factually incorrect from the options given below.</strong>",
+    "options": { "a": "It is possible to roast the beans of a single species of coffee.", "b": "Two species of coffee can be blended to make a brew.", "c": "Due to its genetic make-up, novel mutations do not occur in the species Coffea Arabica.", "d": "Variations in disease resistance can be seen in the Arabica coffee plant." },
+    "correctAnswer": "c",
+    "explanation": "The passage states that novel mutations do occur — 'the variation is only the novel mutations that have occurred since that event'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 7,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q7. Re-arrange the following phrases in the correct sequence to form a meaningful sentence.</strong><br>(A) created by human<br>(B) collective cultural heritage<br>(C) all languages<br>(D) communities are our",
+    "options": { "a": "(A), (B), (D), (C)", "b": "(B), (A), (D), (C)", "c": "(C), (A), (D), (B)", "d": "(D), (B), (C), (A)" },
+    "correctAnswer": "c",
+    "explanation": "The correct sequence is: 'All languages created by human communities are our collective cultural heritage'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 8,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q8. Fill in the blank with the correct option to form a meaningful sentence.</strong><br>The Principal addressed us in the assembly and ______ the rumors of an early summer break.",
+    "options": { "a": "defended", "b": "quashed", "c": "cleared", "d": "rebuked" },
+    "correctAnswer": "b",
+    "explanation": "'Quashed' means to suppress or stop — the Principal would stop the rumors.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 9,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q9. Complete the sentences given in List-I with the appropriate phrasal verbs given in List-II.</strong><br><br>List-I (Sentences):<br>(A) She was very ______ with him for his offensive remarks on women in politics.<br>(B) I have plenty of interesting books to ______ to book lovers.<br>(C) Strange that people easily ______ to temptation and ruin their reputation!<br>(D) Rahul is trying to ______ on his smoking.<br><br>List-II (Phrasal Verbs): (I) give away | (II) cut down | (III) cut up | (IV) give in",
+    "options": { "a": "(A) - (III), (B) - (I), (C) - (IV), (D) - (II)", "b": "(A) - (II), (B) - (IV), (C) - (I), (D) - (III)", "c": "(A) - (I), (B) - (II), (C) - (IV), (D) - (III)", "d": "(A) - (III), (B) - (I), (C) - (IV), (D) - (II)" },
+    "correctAnswer": "a",
+    "explanation": "'Cut up' means upset; 'give away' means distribute; 'give in' means surrender; 'cut down' means reduce.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 10,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q10. Complete the sentences given in List-I with the appropriate adverbs given in List-II.</strong><br><br>List-I (Sentences):<br>(A) I thought the restaurant would be expensive but it was ______ affordable.<br>(B) It was a serious accident. But the car was ______ damaged.<br>(C) The meeting was a disaster as it was very ______ organized.<br>(D) Mira is gifted; she has the ability to learn any language ______.<br><br>List-II (Adverbs): (I) badly | (II) reasonably | (III) quickly | (IV) hardly",
+    "options": { "a": "(A) - (II), (B) - (IV), (C) - (I), (D) - (III)", "b": "(A) - (IV), (B) - (II), (C) - (III), (D) - (I)", "c": "(A) - (I), (B) - (II), (C) - (IV), (D) - (III)", "d": "(A) - (III), (B) - (IV), (C) - (I), (D) - (II)" },
+    "correctAnswer": "a",
+    "explanation": "'Reasonably' means fairly; 'hardly' means barely; 'badly' means poorly; 'quickly' means fast.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 11,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q11. Choose the appropriate word pair to complete the sentence.</strong><br>I didn't know Rahul was in the hospital. If I ______, I would ______ him.",
+    "options": { "a": "knew, go", "b": "had known, have visited", "c": "have known, be going", "d": "know, had gone" },
+    "correctAnswer": "b",
+    "explanation": "Third conditional: if + past perfect, would have + past participle.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 12,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q12. Identify the option closest in meaning to the underlined word.</strong><br>The movie star's biography is a glossy, <u>sycophantic</u> portrayal.",
+    "options": { "a": "cowardly", "b": "domineering", "c": "flattering", "d": "insolent" },
+    "correctAnswer": "c",
+    "explanation": "'Sycophantic' means excessively flattering or obsequious.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 13,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q13. Choose the correct antonym of the underlined word.</strong><br>The Minister unleashed a <u>compliment</u> against the newspaper for its biased editorial on illiteracy among women in his constituency.",
+    "options": { "a": "denunciation", "b": "endorsement", "c": "regulation", "d": "speculation" },
+    "correctAnswer": "a",
+    "explanation": "'Compliment' means praise; 'denunciation' means criticism — the opposite.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 14,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q14. Choose the correct synonym for 'redoubtable' from the options given below.</strong>",
+    "options": { "a": "flimsy", "b": "perplexing", "c": "formidable", "d": "voluble" },
+    "correctAnswer": "c",
+    "explanation": "'Redoubtable' means formidable, inspiring fear or respect.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 15,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q15. Choose the correct antonym for 'sullen' from the options given below.</strong>",
+    "options": { "a": "morose", "b": "reticent", "c": "timid", "d": "genial" },
+    "correctAnswer": "d",
+    "explanation": "'Sullen' means gloomy and bad-tempered; 'genial' means friendly and cheerful — the opposite.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 16,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q16. Rearrange the following parts in the correct sequence to make a meaningful sentence.</strong><br>(A) are inborn but our<br>(B) constituents of flavor, are learned<br>(C) our responses to basic tastes<br>(D) perceptions of smells, the main",
+    "options": { "a": "(B), (D), (A), (C)", "b": "(A), (C), (B), (D)", "c": "(C), (A), (D), (B)", "d": "(C), (B), (D), (A)" },
+    "correctAnswer": "c",
+    "explanation": "Correct sequence: 'Our responses to basic tastes are inborn but our perceptions of smells, the main constituents of flavor, are learned'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 17,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q17. Match the words in List-I with their definitions in List-II.</strong><br><br>List-I (Words): (A) Theocracy | (B) Megalomania | (C) Apothecary | (D) Antiquarian<br><br>List-II (Definitions):<br>(I) One who keeps drugs for sale and puts up prescriptions<br>(II) One who collects and studies objects or artistic works from the distant past<br>(III) A government by divine guidance or religious leaders<br>(IV) A morbid delusion of one's power, importance, or godliness",
+    "options": { "a": "(A) - (III), (B) - (IV), (C) - (I), (D) - (II)", "b": "(A) - (IV), (B) - (III), (C) - (II), (D) - (I)", "c": "(A) - (I), (B) - (III), (C) - (IV), (D) - (II)", "d": "(A) - (III), (B) - (IV), (C) - (II), (D) - (I)" },
+    "correctAnswer": "a",
+    "explanation": "Theocracy = religious government; Megalomania = delusion of power; Apothecary = pharmacist; Antiquarian = collector of ancient objects.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 18,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q18. Fill in the blank with the correct option.</strong><br>A small ______ between two children ended up as a group fight.",
+    "options": { "a": "altercation", "b": "match", "c": "contest", "d": "race" },
+    "correctAnswer": "a",
+    "explanation": "'Altercation' means a noisy argument or disagreement.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 19,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q19. Re-arrange the following phrases in the right sequence to form a meaningful sentence.</strong><br>(A) for seven hours but was hardly<br>(B) because of the absence of any motivation<br>(C) able to decide who the murderer was<br>(D) she worked on the case",
+    "options": { "a": "(A), (C), (D), (B)", "b": "(D), (A), (C), (B)", "c": "(D), (C), (B), (A)", "d": "(A), (B), (C), (D)" },
+    "correctAnswer": "b",
+    "explanation": "Correct sequence: 'She worked on the case for seven hours but was hardly able to decide who the murderer was because of the absence of any motivation'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 20,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q20. Fill in the blank with the correct option.</strong><br>The candidate assured the interviewers that the dip in her grades during her second semester was an ______ since she had always been a top scorer in the first semester.",
+    "options": { "a": "anomaly", "b": "allay", "c": "adage", "d": "abatement" },
+    "correctAnswer": "a",
+    "explanation": "'Anomaly' means something that deviates from the normal pattern.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 21,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q21. Replace the underlined word with the most appropriate SYNONYM.</strong><br>For some time now, we've been <u>toying with</u> the idea of transferring all our business from physical to online sales only.",
+    "options": { "a": "launch", "b": "showing", "c": "considering", "d": "careful" },
+    "correctAnswer": "c",
+    "explanation": "'Toying with' means considering casually or lightly.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 22,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q22. Select the word opposite in meaning to the underlined word.</strong><br>At first the workers were <u>agreeable</u> to the proposals of their Manager, but later they were reconciled to the new proposals.",
+    "options": { "a": "resistant", "b": "estranged", "c": "cooperate", "d": "agreed" },
+    "correctAnswer": "a",
+    "explanation": "'Agreeable' means willing to accept; 'resistant' means opposed — the opposite.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 23,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q23. Complete the sentences given in List-I with the appropriate words given in List-II.</strong><br><br>List-I (Sentences):<br>(A) She was able to give a ______ explanation in the court for her presence near the crime scene.<br>(B) The Rockland Hospital ______ with AIIMS to conduct a free cancer screening camp.<br>(C) Though she has shown only 4% improvement in achieving her target yet her efforts are ______.<br>(D) The doctors give the prognosis by ______ their diagnosis with several tests.<br><br>List-II (Words): (I) collaborated | (II) corroborated | (III) credible | (IV) creditable",
+    "options": { "a": "(A) - (III), (B) - (I), (C) - (IV), (D) - (II)", "b": "(A) - (I), (B) - (II), (C) - (III), (D) - (IV)", "c": "(A) - (III), (B) - (II), (C) - (IV), (D) - (I)", "d": "(A) - (II), (B) - (III), (C) - (I), (D) - (IV)" },
+    "correctAnswer": "a",
+    "explanation": "Credible = believable; collaborated = worked together; creditable = praiseworthy; corroborated = confirmed.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 24,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q24. Fill in the blank with the correct option.</strong><br>Most of the guests arrived for the concert ______ bus.",
+    "options": { "a": "by", "b": "with", "c": "from", "d": "through" },
+    "correctAnswer": "a",
+    "explanation": "'By bus' is the correct preposition for mode of transport.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 25,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q25. Choose the word closest in meaning to the underlined word.</strong><br>Why did you make that <u>flippant</u> remark about her choice of clothes?",
+    "options": { "a": "sarcastic", "b": "disrespectful", "c": "casual", "d": "indifferent" },
+    "correctAnswer": "b",
+    "explanation": "'Flippant' means not showing proper respect or seriousness.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 26,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q26. Select the word opposite in meaning to the underlined word.</strong><br>The thief showed his <u>disbelief</u> when informed that his partner had been arrested.",
+    "options": { "a": "displayed", "b": "concealed", "c": "battled", "d": "marked" },
+    "correctAnswer": "b",
+    "explanation": "'Showed' means revealed; 'concealed' means hid — the opposite.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 27,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q27. Fill in the blank with the correct option.</strong><br>The President finally had to ______ the demands of the public for his resignation.",
+    "options": { "a": "ignore", "b": "initiate", "c": "accede to", "d": "condone" },
+    "correctAnswer": "c",
+    "explanation": "'Accede to' means agree to a demand or request.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 28,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q28. Re-arrange the following parts of a sentence in their correct sequence to form a meaningful sentence.</strong><br>(A) for organizations which provide<br>(B) services to customers on a face-to-face basis,<br>(C) employees with whom they deal is very important<br>(D) the quality of the relationship between customers and",
+    "options": { "a": "(A), (B), (D), (C)", "b": "(C), (A), (B), (D)", "c": "(B), (D), (A), (C)", "d": "(D), (A), (C), (B)" },
+    "correctAnswer": "d",
+    "explanation": "Correct sequence: 'The quality of the relationship between customers and employees with whom they deal is very important for organizations which provide services to customers on a face-to-face basis'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 29,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q29. Re-arrange the following parts of a sentence in their correct sequence to form a meaningful sentence.</strong><br>(A) as a concept fundamental to<br>(B) especially with the injunction to treat equals equally<br>(C) justice is associated with the notion of equity and equality,<br>(D) ethical theory and political philosophy,",
+    "options": { "a": "(D), (B), (C), (A)", "b": "(C), (A), (B), (D)", "c": "(B), (A), (D), (C)", "d": "(A), (D), (C), (B)" },
+    "correctAnswer": "b",
+    "explanation": "Correct sequence: 'Justice is associated with the notion of equity and equality, as a concept fundamental to ethical theory and political philosophy, especially with the injunction to treat equals equally'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 30,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q30. Match the idioms in List-I with their meanings in List-II.</strong><br><br>List-I (Idioms): (A) blow the gaff | (B) at the end of your tether | (C) be full of beans | (D) want to curl up and die<br><br>List-II (Meanings): (I) feel unable to deal with something | (II) feel terribly ashamed and embarrassed | (III) divulge a secret | (IV) be full of energy",
+    "options": { "a": "(A) - (III), (B) - (I), (C) - (IV), (D) - (II)", "b": "(A) - (II), (B) - (IV), (C) - (I), (D) - (III)", "c": "(A) - (IV), (B) - (I), (C) - (II), (D) - (III)", "d": "(A) - (III), (B) - (IV), (C) - (I), (D) - (II)" },
+    "correctAnswer": "a",
+    "explanation": "Blow the gaff = reveal a secret; at the end of your tether = unable to cope; full of beans = energetic; want to curl up and die = feel ashamed.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 31,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q31. Match the blanks in List-I with the prepositions in List-II.</strong><br><br>List-I (Sentences):<br>(A) The edited version of her article is indistinguishable ______ her first version.<br>(B) I just don't feel any affinity ______ his prose style. It's too caustic.<br>(C) Her ideas are not all that dissimilar ______ mine.<br>(D) It would be wrong to mistake his diffidence ______ his arrogance or coldness.<br><br>List-II (Prepositions): (I) with | (II) to | (III) for | (IV) from",
+    "options": { "a": "(A) - (IV), (B) - (II), (C) - (I), (D) - (III)", "b": "(A) - (I), (B) - (III), (C) - (II), (D) - (IV)", "c": "(A) - (IV), (B) - (I), (C) - (III), (D) - (II)", "d": "(A) - (III), (B) - (IV), (C) - (I), (D) - (II)" },
+    "correctAnswer": "a",
+    "explanation": "Indistinguishable from; affinity with/to; dissimilar to; mistake for.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 32,
+    "section": "Reading Comprehension",
+    "text": "<strong>Standalone Questions</strong><br><br><strong>Q32. Re-arrange the parts in their correct sequence to form a meaningful sentence.</strong><br>(A) students with tools for critical thinking<br>(B) cooperative learning is an<br>(C) that enhances creativity and provides<br>(D) eclectic and unique teaching method",
+    "options": { "a": "(A), (C), (B), (D)", "b": "(B), (D), (C), (A)", "c": "(B), (A), (D), (C)", "d": "(C), (B), (D), (A)" },
+    "correctAnswer": "b",
+    "explanation": "Correct sequence: 'Cooperative learning is an eclectic and unique teaching method that enhances creativity and provides students with tools for critical thinking'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 33,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 2: A Granddaughter's Inheritance</strong><br><br>When I was in my late teens and still undecided about which language I should write in, he told me that the language one is born into, one's mother tongue, can be the only possible medium of creative expression. For most of his life, my father, Sripat Rai, had been a Hindi editor and critic. Off and on, he translated writings into English from Hindi. He was fond of saying that a failed writer becomes a critic. The weight of his literary expectation came, eventually, to rest on me. He seemed happy that I was showing an inclination for writing. \"She will go far,\" he told my mother after reading the first story that I sent him from Melbourne. My father's pronouncement on the mother tongue stayed with me when I later started writing fiction in Hindi. Another thing that I barely acknowledged even to myself was that I felt something like shame whenever I thought of writing in English. It seemed wrong for a granddaughter of Premchand even to be thinking so. Our family had a certain linguistic pride. I knew that Premchand was famous, but I had not at that time realised the extent of his popularity. The fact that I was the granddaughter of Premchand, followed me everywhere. Everyone had a story to tell about their personal engagement with his fiction — the shopkeeper, the long time cook in my father's Delhi house, a tea vendor, etc. The list was long, for there was practically no one who had not read something by him that had moved them. However, it was this very ubiquity, the reverence and love that he inspired in people, that made of him something too large for me to comprehend in the early years of my life. It led also to the strange feeling that, without having read him and just by being related to him, I had somehow inhaled his writing. The reading happened much later.<br><br><strong>Q33. The author grew up with the expectation that she would take up ______.</strong>",
+    "options": { "a": "editorship of a magazine", "b": "translation of literary pieces", "c": "creative writing", "d": "the job of a critic" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'He seemed happy that I was showing an inclination for writing'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 34,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 2: A Granddaughter's Inheritance</strong><br><br>(Read the passage above to answer Q33 to Q38)<br><br><strong>Q34. When her father said, \"She will go far,\" he meant that ______.</strong>",
+    "options": { "a": "she will travel widely", "b": "she will achieve great heights in life", "c": "she will go too far, one of these days", "d": "she will settle in a far-off place" },
+    "correctAnswer": "b",
+    "explanation": "The phrase 'go far' is an idiom meaning to achieve great success.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 35,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 2: A Granddaughter's Inheritance</strong><br><br>(Read the passage above to answer Q33 to Q38)<br><br><strong>Q35. Choose a statement which is not true with respect to the passage:</strong>",
+    "options": { "a": "The author felt pressurized to write in Hindi because of her father.", "b": "She felt obligated to carry on the legacy of Premchand.", "c": "Her family was chauvinistic about the English language.", "d": "She was in awe of the extensive reach of her grandfather's writings." },
+    "correctAnswer": "c",
+    "explanation": "The passage says she felt shame writing in English, not that the family was chauvinistic about English. They valued Hindi.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 36,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 2: A Granddaughter's Inheritance</strong><br><br>(Read the passage above to answer Q33 to Q38)<br><br><strong>Q36. Premchand became too large for her to understand mainly because of ______.</strong>",
+    "options": { "a": "the societal expectations around his legacy", "b": "the complex language in his works", "c": "his far-reaching influence and impact", "d": "her emotional connection to his work" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'this very ubiquity, the reverence and love that he inspired in people, that made of him something too large for me to comprehend'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 37,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 2: A Granddaughter's Inheritance</strong><br><br>(Read the passage above to answer Q33 to Q38)<br><br><strong>Q37. \"Inhaled his writing\" refers to ______.</strong>",
+    "options": { "a": "imbibing his style subconsciously", "b": "being compelled to write like him", "c": "being influenced by what people said about him", "d": "her father's expectation from her" },
+    "correctAnswer": "a",
+    "explanation": "The phrase suggests absorbing his writing style without consciously reading him.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 38,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 2: A Granddaughter's Inheritance</strong><br><br>(Read the passage above to answer Q33 to Q38)<br><br><strong>Q38. Choose the correct meaning of the word 'Ubiquity' as it appears in the passage:</strong>",
+    "options": { "a": "Occasional", "b": "Restricted", "c": "Omnipresence", "d": "Unwanted" },
+    "correctAnswer": "c",
+    "explanation": "'Ubiquity' means being everywhere at the same time — omnipresence.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 39,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 3: Free Will — A Myth?</strong><br><br>Free will is the ability to decide and act free from any influence of past events or environment. It implies complete freedom to make any choice absolutely. We clearly don't have free will. Our decisions and actions are never divorced from our past. We have a conditioned mind. Our memories, past impressions and experiences bias and shape our thoughts and actions in the present. It is our karmic imprint. Not just what we are born with, but also what we accumulate while living. We can consider it as the result of our genetic code, upbringing and environment. It's our backstory. The only way to experience free will is to get rid of all such conditioning; to neutralise our karmic imprint; to be independent of our psychological coding. That's possible only if we can purify our mind by letting go of all our ego, attachments and fixed beliefs. Then we can reside in the truth of our being. The above is an exacting definition of free will. What we commonly mean by free will is that we have a choice in most situations like, who you choose to marry, what profession you pursue or how you react to someone's aggression. Sounds reasonable. But here's the catch. Our ability to make that choice too is significantly restricted, dictated by our predispositions. This applies even to our ability to bring about change within ourselves. Despite a strong resolve to be calmer, kinder or less anxious, our ability to manifest that change depends, partly on our emotional and mental wiring. That's why some people succeed in such efforts more than the others. If you wish to expand the scope of your agency, explore ways to engage in sustained inner work, deepen your self-awareness, examine and reform your conditioned beliefs. But then, I wonder if your inclination to embark on that journey too depends on your current karmic coding.<br><br><strong>Q39. The author argues that humans don't have 'free will' because ______.</strong>",
+    "options": { "a": "our decisions are shaped by past events and environmental influences", "b": "we are born with pre-determined choices that we are forced to make", "c": "we are always dictated by our mind to make irrational choices", "d": "human beings are born slaves of social constructs and expectations" },
+    "correctAnswer": "a",
+    "explanation": "The passage states: 'Our decisions and actions are never divorced from our past.'",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 40,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 3: Free Will — A Myth?</strong><br><br>(Read the passage above to answer Q39 to Q44)<br><br><strong>Q40. 'Karmic imprint' referred to in the passage implies ______.</strong>",
+    "options": { "a": "the ability to bring about change in oneself", "b": "our genetic code, upbringing, and environment", "c": "the truth of our being, our individuality", "d": "the wrongdoings and vices of our past lives" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'We can consider it as the result of our genetic code, upbringing and environment.'",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 41,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 3: Free Will — A Myth?</strong><br><br>(Read the passage above to answer Q39 to Q44)<br><br><strong>Q41. 'Free will' can be experienced if ______.</strong>",
+    "options": { "a": "we embrace our past experiences and conditioning", "b": "we make choices without considering the consequences", "c": "we let go of our ego, attachments, and fixed beliefs", "d": "we accumulate more and more karmic imprints" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'That's possible only if we can purify our mind by letting go of all our ego, attachments and fixed beliefs.'",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 42,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 3: Free Will — A Myth?</strong><br><br>(Read the passage above to answer Q39 to Q44)<br><br><strong>Q42. The author proves that the idea of 'free will' is a myth by suggesting that ______.</strong>",
+    "options": { "a": "our ability to make a choice is restricted by our predispositions", "b": "we are unable to bring a change in ourselves", "c": "our choices are solely guided by the current environment", "d": "our choices are completely independent of past events and our genetic code" },
+    "correctAnswer": "a",
+    "explanation": "The passage states: 'Our ability to make that choice too is significantly restricted, dictated by our predispositions.'",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 43,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 3: Free Will — A Myth?</strong><br><br>(Read the passage above to answer Q39 to Q44)<br><br><strong>Q43. What does the author propose as a means to expand the scope of one's agency?</strong>",
+    "options": { "a": "Making choices frequently and impulsively", "b": "Engaging in sustained inner work and self-awareness", "c": "Holding on to fixed beliefs and stringent mindsets", "d": "Ignoring one's past experiences and dispositions" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'explore ways to engage in sustained inner work, deepen your self-awareness, examine and reform your conditioned beliefs.'",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 44,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 3: Free Will — A Myth?</strong><br><br>(Read the passage above to answer Q39 to Q44)<br><br><strong>Q44. What do you think could be a suitable title for this passage?</strong>",
+    "options": { "a": "Definition of 'Free Will'", "b": "Our backstory – key to a successful life", "c": "Do human beings really have 'Free Will'?", "d": "Making Choices – Every Man's Prerogative!" },
+    "correctAnswer": "c",
+    "explanation": "The passage questions the existence of free will throughout.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 45,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 4: The History of Hot Chocolate</strong><br><br>On a chilly winter evening, nothing warms you up better than a cup of hot cocoa. Chocolate was first consumed in liquid form by the Olmec people of northwestern Central America around 1500 BCE. It was even enjoyed by the Aztec Emperor Montezuma, and the Aztec word for it (xocolatl, pronounced shoh-kwah-tl) evolved into the English word Chocolate. But the Aztecs didn't serve their cocoa hot. And since sugar had not yet arrived from Europe, back then, the drink was often flavoured with peppers and spices. It may not have been quite as indulgent as today's version, but it was more palatable if you believed, as the Aztecs did, that chocolate was a gift from the Gods and had healing properties. After the Spanish arrived in the Americas in the 1500s, liquid chocolate made its way across the pond, where wealthy Europeans added sugar and drank it warm. In Chocolate: History, Culture and Heritage, author Bertram Gordon says hot chocolate became 'the beverage of the aristocracy,' as sugar was still a luxury. Soon enough, though, hot chocolate caught on with the masses. Chocolate houses — a cross between cafes and casinos — started popping up around 17th-century Europe. In these lively places, hot chocolate was poured from gilded pots into elegant cups (for a posh experience, one can still find it today at the famed Parisian tearoom Angelina's, which is also in New York City). But by the end of the 18th century, chocolate houses had mostly died off, partly because the cost of chocolate was much higher than that of coffee or tea. Taking a tour of international cups of cocoa, Italians serve it like a thick pudding. Colombians serve it with a dollop of soft cheese while Mexicans punch it up with vanilla, chilli powder and cinnamon. And Filipinos serve it with mango chunks.<br><br><strong>Q45. Cocoa was first introduced by the ______.</strong>",
+    "options": { "a": "American people", "b": "Olmec people", "c": "Aztec people", "d": "Spanish people" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'by the Olmec people of northwestern Central America around 1500 BCE'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 46,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 4: The History of Hot Chocolate</strong><br><br>(Read the passage above to answer Q45 to Q50)<br><br><strong>Q46. The Aztec people made their cocoa palatable by ______.</strong>",
+    "options": { "a": "serving it cold", "b": "adding sugar to the drink", "c": "spiking it with spices", "d": "drinking it as a medicine" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'the drink was often flavoured with peppers and spices'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 47,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 4: The History of Hot Chocolate</strong><br><br>(Read the passage above to answer Q45 to Q50)<br><br><strong>Q47. Why did hot chocolate become 'the beverage of the aristocracy' in Europe?</strong>",
+    "options": { "a": "The essential ingredient was out of reach of the commoners.", "b": "The Queen had a marked chocolate maker.", "c": "Only wealthy Europeans could buy it.", "d": "It was being consumed by the pharma companies." },
+    "correctAnswer": "a",
+    "explanation": "The passage states: 'as sugar was still a luxury' — sugar was the essential ingredient.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 48,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 4: The History of Hot Chocolate</strong><br><br>(Read the passage above to answer Q45 to Q50)<br><br><strong>Q48. The Chocolate Houses didn't survive past the 18th century as ______.</strong>",
+    "options": { "a": "people preferred tea/coffee to hot chocolate", "b": "it catered to the not-so-elite of society", "c": "chocolate was costlier than tea or coffee", "d": "the supply of cocoa dwindled over the years" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'partly because the cost of chocolate was much higher than that of coffee or tea'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 49,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 4: The History of Hot Chocolate</strong><br><br>(Read the passage above to answer Q45 to Q50)<br><br><strong>Q49. Choose the correct statement from the following.</strong>",
+    "options": { "a": "Italians serve hot chocolate flavored with spices.", "b": "Mexicans serve hot chocolate topped with a dollop of cream.", "c": "Colombians serve hot chocolate topped with a dollop of cheese.", "d": "Filipinos serve hot chocolate flavored with peppers." },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'Colombians serve it with a dollop of soft cheese'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 50,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 4: The History of Hot Chocolate</strong><br><br>(Read the passage above to answer Q45 to Q50)<br><br><strong>Q50. Choose the correct meaning of the underlined expression in the following sentence:</strong><br>'Soon enough, though, hot chocolate <u>caught on</u> with the masses.'",
+    "options": { "a": "was readily available in cafes", "b": "became popular among the commoners", "c": "hot chocolate did not appeal to people", "d": "masses got attracted to the rich experience of drinking hot chocolate" },
+    "correctAnswer": "b",
+    "explanation": "'Caught on' means became popular.",
+    "marked": false,
+    "userAnswer": ""
+  }
+],
+    duration: 60 * 60,
+    markingScheme: { correct: 5, incorrect: -1 }
+};
+
+/* ============================================================
+   TEST ENGINE
+   ============================================================ */
+let currentQuestionIndex = 0;
+let timeLeft = mockTest.duration;
+let timer;
+let testSubmitted = false;
+let testStarted = false;
+
+const timerEl = document.querySelector('.timer');
+const questionTextEl = document.getElementById('question-text');
+const optionsEl = document.getElementById('options-container');
+const qNumEl = document.getElementById('q-number');
+const curQNumEl = document.getElementById('current-q-number');
+const progressFill = document.getElementById('test-progress');
+const progressPct = document.getElementById('progress-percent');
+const paletteGrid = document.getElementById('question-palette-grid');
+const answeredCountEl = document.getElementById('answered-count');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const markBtn = document.getElementById('mark-btn');
+const submitBtn = document.getElementById('submit-test-btn');
+const modal = document.getElementById('results-modal');
+const closeModal = document.getElementById('close-modal');
+const reviewBtn = document.getElementById('review-btn');
+
+function initTest() {
+    renderPalette();
+    renderQuestion();
+    startTimer();
+    updateProgress();
+    renderLegend(false);
+    prevBtn.addEventListener('click', () => { if (currentQuestionIndex > 0) { currentQuestionIndex--; renderQuestion(); } });
+    nextBtn.addEventListener('click', () => { if (currentQuestionIndex < mockTest.questions.length - 1) { currentQuestionIndex++; renderQuestion(); } });
+    markBtn.addEventListener('click', toggleMark);
+    submitBtn.addEventListener('click', () => { if (confirm('Submit the test?')) submitTest(); });
+    closeModal.addEventListener('click', () => modal.classList.remove('show'));
+    reviewBtn.addEventListener('click', () => { modal.classList.remove('show'); currentQuestionIndex = 0; renderQuestion(); });
+    document.getElementById('download-pdf-btn').addEventListener('click', generatePDF);
+    document.getElementById('modal-result-btn').addEventListener('click', () => { modal.classList.remove('show'); document.getElementById('stream-picker-overlay').style.display = 'flex'; });
+    document.getElementById('pdf-action-btn').addEventListener('click', generatePDF);
+    document.getElementById('result-action-btn').addEventListener('click', () => { document.getElementById('stream-picker-overlay').style.display = 'flex'; });
+}
+
+function startTimer() {
+    updateTimerDisplay();
+    timer = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) { clearInterval(timer); submitTest(); }
+        if (timeLeft === 300) alert('⚠️ Only 5 minutes remaining!');
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const h = Math.floor(timeLeft / 3600);
+    const m = Math.floor((timeLeft % 3600) / 60);
+    const s = timeLeft % 60;
+    const str = `${pad(h)}:${pad(m)}:${pad(s)}`;
+    timerEl.textContent = str;
+    const mob = document.querySelector('.mob-timer');
+    if (mob) mob.textContent = str;
+}
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function renderQuestion() {
+    const q = mockTest.questions[currentQuestionIndex];
+    document.getElementById('current-section').textContent = q.section;
+    document.getElementById('section-badge').textContent = '📘 ' + q.section;
+    questionTextEl.textContent = q.text;
+    qNumEl.textContent = q.id;
+    curQNumEl.textContent = q.id;
+    optionsEl.innerHTML = '';
+
+    for (const [key, val] of Object.entries(q.options)) {
+        const div = document.createElement('div');
+        div.className = 'option';
+        if (testSubmitted) {
+            if (key === q.correctAnswer) div.classList.add('correct');
+            else if (key === q.userAnswer) div.classList.add('incorrect');
+        } else {
+            if (key === q.userAnswer) div.classList.add('selected');
+        }
+        if (!testSubmitted) {
+            div.addEventListener('click', () => {
+                optionsEl.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+                div.classList.add('selected');
+                q.userAnswer = key;
+                updatePalette();
+                updateProgress();
+            });
+        }
+        const letter = document.createElement('div');
+        letter.className = 'opt-letter';
+        letter.textContent = key.toUpperCase();
+        const text = document.createElement('span');
+        text.className = 'opt-text';
+        text.textContent = val;
+        if (testSubmitted) {
+            if (key === q.correctAnswer) {
+                const ind = document.createElement('span');
+                ind.className = 'opt-indicator correct-indicator';
+                ind.textContent = ' ✓ Correct';
+                text.appendChild(ind);
+            } else if (key === q.userAnswer) {
+                const ind = document.createElement('span');
+                ind.className = 'opt-indicator incorrect-indicator';
+                ind.textContent = ' ✗ Your Answer';
+                text.appendChild(ind);
+            }
+        }
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'q-opt';
+        radio.value = key;
+        radio.checked = q.userAnswer === key;
+        div.appendChild(radio);
+        div.appendChild(letter);
+        div.appendChild(text);
+        optionsEl.appendChild(div);
+    }
+
+    if (testSubmitted && q.explanation) {
+        const exp = document.createElement('div');
+        exp.className = 'explanation-box';
+        exp.innerHTML = `<strong>Explanation:</strong> ${q.explanation}`;
+        optionsEl.appendChild(exp);
+    }
+
+    markBtn.classList.toggle('marked', q.marked);
+    markBtn.textContent = q.marked ? '🔖 Marked' : '🔖 Mark';
+    prevBtn.style.visibility = currentQuestionIndex === 0 ? 'hidden' : 'visible';
+    nextBtn.style.visibility = currentQuestionIndex === mockTest.questions.length - 1 ? 'hidden' : 'visible';
+    updatePalette();
+}
+
+function toggleMark() {
+    const q = mockTest.questions[currentQuestionIndex];
+    q.marked = !q.marked;
+    markBtn.classList.toggle('marked', q.marked);
+    markBtn.textContent = q.marked ? '🔖 Marked' : '🔖 Mark';
+    updatePalette();
+}
+
+function renderPalette() {
+    paletteGrid.innerHTML = '';
+    mockTest.questions.forEach((q, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'palette-btn';
+        btn.textContent = q.id;
+        btn.addEventListener('click', () => { currentQuestionIndex = i; renderQuestion(); });
+        paletteGrid.appendChild(btn);
+    });
+    updatePalette();
+}
+
+function updatePalette() {
+    const btns = paletteGrid.querySelectorAll('.palette-btn');
+    mockTest.questions.forEach((q, i) => {
+        const btn = btns[i];
+        btn.className = 'palette-btn';
+        if (testSubmitted) {
+            if (!q.userAnswer) btn.classList.add('review-unanswered');
+            else if (q.userAnswer === q.correctAnswer) btn.classList.add('review-correct');
+            else btn.classList.add('review-wrong');
+        } else {
+            if (q.userAnswer) btn.classList.add('answered');
+            if (q.marked) btn.classList.add('marked');
+        }
+        if (i === currentQuestionIndex) btn.classList.add('current');
+    });
+    const ans = mockTest.questions.filter(q => q.userAnswer).length;
+    answeredCountEl.textContent = `${ans}/${mockTest.questions.length}`;
+}
+
+function updateProgress() {
+    const ans = mockTest.questions.filter(q => q.userAnswer).length;
+    const pct = Math.round((ans / mockTest.questions.length) * 100);
+    progressFill.style.width = pct + '%';
+    progressPct.textContent = pct + '%';
+}
+
+function renderLegend(reviewMode) {
+    const leg = document.getElementById('palette-legend');
+    if (!leg) return;
+    if (reviewMode) {
+        leg.innerHTML = `
+        <div class="leg-label"><div class="leg-dot" style="background:#22c55e;"></div>Correct</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#ef4444;"></div>Wrong</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#60a5fa;"></div>Unanswered</div>`;
+    } else {
+        leg.innerHTML = `
+        <div class="leg-label"><div class="leg-dot" style="background:#bbf7d0;border:1px solid #22c55e;"></div>Answered</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#bae6fd;border:1px solid #0ea5e9;"></div>Marked</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#fee2e2;border:1px solid #fca5a5;"></div>Unanswered</div>
+        <div class="leg-label"><div class="leg-dot" style="background:white;border:2px solid #1a6fc4;"></div>Current</div>`;
+    }
+}
+
+function submitTest() {
+    if (testSubmitted) return;
+    testSubmitted = true;
+    clearInterval(timer);
+
+    let correct = 0, incorrect = 0, unanswered = 0;
+    mockTest.questions.forEach(q => {
+        if (!q.userAnswer) unanswered++;
+        else if (q.userAnswer === q.correctAnswer) correct++;
+        else incorrect++;
+    });
+
+    const total = mockTest.questions.length;
+    const maxScore = total * mockTest.markingScheme.correct;
+    const score = (correct * mockTest.markingScheme.correct) + (incorrect * mockTest.markingScheme.incorrect);
+    const pct = ((score / maxScore) * 100).toFixed(2);
+    const acc = correct + incorrect > 0 ? ((correct / (correct + incorrect)) * 100).toFixed(2) : '0';
+
+const resultData = {
+        studentId: localStorage.getItem('ts_student_id') || '',
+        name: localStorage.getItem('cbtUserName') || 'Unknown',
+        subject: SUBJECT_ID,
+        chapter: CHAPTER_ID,
+        date: new Date().toISOString(),
+        score, maxScore, correct,
+        wrong: incorrect,
+        skipped: unanswered,
+        totalQ: total,
+        percentage: parseFloat(pct),
+        accuracy: parseFloat(acc),
+        timeTaken: mockTest.duration - timeLeft
+    };
+
+    const key = `thunderstudy_result_${SUBJECT_ID}_${CHAPTER_ID}`;
+    localStorage.setItem(key, JSON.stringify(resultData));
+
+    const GS_URL = "https://script.google.com/macros/s/AKfycbyEsrvdSuRh06TIKPK0ozP-jQNjqHO8PaIeBcW5r45aGdr4H3ZVFHpKMm3xaDHrYmqX/exec";
+    fetch(GS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(resultData)
+    }).then(() => {
+        localStorage.setItem(`synced_${SUBJECT_ID}_${CHAPTER_ID}`, "true");
+    }).catch(err => console.error("Sync failed", err));
+
+    const idxKey = `thunderstudy_index_${SUBJECT_ID}`;
+    let idx = [];
+    try { idx = JSON.parse(localStorage.getItem(idxKey) || '[]'); } catch(e) {}
+    if (!idx.includes(CHAPTER_ID)) idx.push(CHAPTER_ID);
+    localStorage.setItem(idxKey, JSON.stringify(idx));
+
+    document.getElementById('correct-answers').textContent = correct;
+    document.getElementById('incorrect-answers').textContent = incorrect;
+    document.getElementById('unanswered').textContent = unanswered;
+    document.getElementById('total-score').textContent = score;
+    document.getElementById('percentage').textContent = pct;
+    document.getElementById('accuracy').textContent = acc;
+    modal.classList.add('show');
+
+    renderQuestion();
+    renderLegend(true);
+
+    // Swap submit rows
+    document.getElementById('submit-row-before').style.display = 'none';
+    document.getElementById('submit-row-after').style.display = 'flex';
+}
+
+/* Visibility change guard */
+document.addEventListener("visibilitychange", () => {
+    if (!testStarted || testSubmitted) return;
+    if (document.hidden) startCountdown('tab');
+    else cancelCountdown();
+});
+
+/* Arrow key nav */
+document.addEventListener('keydown', e => {
+    if (document.getElementById('test-screen').style.display === 'none') return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { if (currentQuestionIndex < mockTest.questions.length - 1) { currentQuestionIndex++; renderQuestion(); } }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { if (currentQuestionIndex > 0) { currentQuestionIndex--; renderQuestion(); } }
+});
+</script>
+
+<script>
+function startMock() {
+    const savedName = localStorage.getItem('cbtUserName') || '';
+    const savedSID = localStorage.getItem('ts_student_id') || '';
+    const inputName = document.getElementById('username-input').value.trim();
+
+    if (!savedName && !inputName) {
+        alert("⚠️ Please enter your name to continue!");
+        document.getElementById('username-input').focus();
+        return;
+    }
+
+    if (!savedName && inputName) {
+        localStorage.setItem("cbtUserName", inputName);
+    }
+
+    if (!savedSID) {
+        const goToDash = confirm("⚠️ Student ID not found!\n\nYou must have a Student ID to start the mock.\n\nClick OK to open Dashboard to generate one, or Cancel to stay here.");
+        if (goToDash) {
+            window.open('https://commercesehoga.github.io/dashboard/', '_blank');
+        }
+        return;
+    }
+
+    enterFullscreen();
+    document.getElementById('start-screen').style.display = 'none';
+    document.getElementById('instruction-screen').style.display = 'block';
+}
+
+    window.addEventListener('DOMContentLoaded', () => {
+    const savedName = localStorage.getItem('cbtUserName') || '';
+    const savedSID = localStorage.getItem('ts_student_id') || '';
+
+    if (savedName) {
+        const inp = document.getElementById('username-input');
+        if (inp) {
+            inp.value = savedName;
+            inp.style.background = 'rgba(79,110,247,.07)';
+            inp.style.borderColor = '#4f6ef7';
+            inp.style.color = '#4f6ef7';
+            inp.style.fontWeight = 'bold';
+            inp.setAttribute('readonly', true);
+            inp.insertAdjacentHTML('afterend',
+                `<div style="font-size:11px; color:#4f6ef7; font-weight:700; margin-top:5px;">
+                    ✅ Verified Dashboard Profile
+                </div>`
+            );
+        }
+    }
+
+    if (savedSID) {
+        const sidArea = document.getElementById('sid-display-area');
+        const sidVal = document.getElementById('sid-value');
+        if (sidArea && sidVal) {
+            sidArea.style.display = 'block';
+            sidVal.textContent = savedSID;
+        }
+    }
+});
+
+document.getElementById('dark-toggle').addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const dark = document.body.classList.contains('dark-mode');
+    document.getElementById('toggle-icon').textContent = dark ? '☀️' : '🌙';
+    document.getElementById('toggle-label').textContent = dark ? 'Light' : 'Dark';
+});
+
+const checkbox = document.getElementById('agree-checkbox');
+const startTestBtn = document.getElementById('start-test-btn');
+checkbox.addEventListener('change', () => {
+    startTestBtn.disabled = !checkbox.checked;
+});
+startTestBtn.addEventListener('click', () => {
+    if (!checkbox.checked) { alert('Please agree to instructions!'); return; }
+    document.getElementById('instruction-screen').style.display = 'none';
+    document.getElementById('test-screen').style.display = 'block';
+    const name = localStorage.getItem('cbtUserName') || 'Student';
+    const sid = localStorage.getItem('ts_student_id') || 'N/A';
+    document.getElementById('user-name-display').textContent = '👤 ' + name;
+    if (document.getElementById('display-user-name')) document.getElementById('display-user-name').textContent = name;
+    if (document.getElementById('display-user-sid')) document.getElementById('display-user-sid').textContent = sid;
+    const mob = document.getElementById('mobile-name-display');
+    if (mob) mob.textContent = '👤 ' + name + ' | ' + sid;
+    testStarted = true;
+    enterFullscreen();
+    initTest();
+});
+
+function enterFullscreen() {
+    const el = document.documentElement;
+    try {
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+    } catch(e) {}
+}
+
+['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange'].forEach(evt => document.addEventListener(evt, onFSChange));
+
+function isFullscreen() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement);
+}
+function onFSChange() {
+    if (!testStarted || testSubmitted) return;
+    if (document.getElementById('test-screen').style.display === 'none') return;
+    if (!isFullscreen()) startCountdown('fullscreen');
+    else cancelCountdown();
+}
+
+let cdTimer = null, cdSecs = 0;
+function startCountdown(reason) {
+    if (!testStarted || testSubmitted || cdTimer) return;
+    cdSecs = reason === 'tab' ? 2 : 5;
+    const msg = reason === 'tab' ? '⚠️ Tab switched!' : '⚠️ Exited fullscreen!';
+    const hint = reason === 'tab' ? 'Return to this tab to cancel.' : 'Click below to return to fullscreen.';
+    showOverlay(msg, hint, cdSecs, reason === 'fullscreen');
+    cdTimer = setInterval(() => { cdSecs--; updateOverlay(cdSecs); if (cdSecs <= 0) { cancelCountdown(); submitTest(); } }, 1000);
+}
+function cancelCountdown() {
+    if (cdTimer) { clearInterval(cdTimer); cdTimer = null; }
+    hideOverlay();
+}
+function showOverlay(msg, hint, secs, btn) {
+    let ov = document.getElementById('sec-overlay');
+    if (!ov) { ov = document.createElement('div'); ov.id = 'sec-overlay'; ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:999999;display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:DM Sans,sans-serif;color:#fff;text-align:center;padding:24px;'; document.body.appendChild(ov); }
+    ov.innerHTML = `<div style="font-size:56px;margin-bottom:12px;">🚨</div><div style="font-size:22px;font-weight:800;margin-bottom:8px;">${msg}</div><div style="font-size:15px;color:#fbbf24;margin-bottom:18px;">${hint}</div><div style="font-size:14px;color:#e0e0e0;margin-bottom:4px;">Auto-submitting in</div><div id="ov-count" style="font-size:72px;font-weight:900;color:#f87171;line-height:1;">${secs}</div><div style="font-size:13px;color:#9ca3af;margin-top:4px;">seconds</div>${btn?`<button onclick="enterFullscreen()" style="margin-top:22px;padding:12px 32px;border-radius:30px;border:none;background:linear-gradient(135deg,#22c55e,#15803d);color:#fff;font-size:16px;font-weight:700;cursor:pointer;">🔲 Return to Fullscreen</button>`:''}`;
+    ov.style.display = 'flex';
+}
+function updateOverlay(n) { const el = document.getElementById('ov-count'); if (el) el.textContent = n; }
+function hideOverlay() { const ov = document.getElementById('sec-overlay'); if (ov) ov.style.display = 'none'; }
+</script>
+
+<script>
+function generatePDF() {
+    const name = localStorage.getItem('cbtUserName') || 'Student';
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'});
+    const timeStr = now.toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'});
+
+    let correct=0,incorrect=0,unanswered=0;
+    mockTest.questions.forEach(q => {
+        if (!q.userAnswer) unanswered++;
+        else if (q.userAnswer === q.correctAnswer) correct++;
+        else incorrect++;
+    });
+    const score = (correct*5)+(incorrect*-1);
+    const maxScore = mockTest.questions.length*5;
+    const pct = ((score/maxScore)*100).toFixed(1);
+    const lbl = {a:'A',b:'B',c:'C',d:'D'};
+
+    let qHTML = '';
+    mockTest.questions.forEach((q,i) => {
+        const ok = q.userAnswer === q.correctAnswer;
+        const wrong = q.userAnswer && !ok;
+        const skip = !q.userAnswer;
+        const statusColor = ok?'#059669':wrong?'#dc2626':'#9ca3af';
+        const statusLabel = ok?'✓ Correct':wrong?'✗ Wrong':'— Skipped';
+        const rowBg = ok?'#f0fdf4':wrong?'#fef2f2':'#fafafa';
+        let optsHTML='';
+        for (const [k,v] of Object.entries(q.options)) {
+            const isRight=k===q.correctAnswer, isUser=k===q.userAnswer;
+            let bg='transparent',fw='normal',pre='';
+            if(isRight){bg='#dcfce7';fw='bold';pre='✓ ';}
+            if(isUser&&!isRight){bg='#fee2e2';fw='bold';pre='✗ ';}
+            optsHTML+=`<div style="display:flex;gap:8px;padding:4px 8px;border-radius:4px;background:${bg};font-weight:${fw};font-size:12px;margin:2px 0;"><span style="min-width:18px;font-weight:700;">${lbl[k]}.</span><span>${pre}${v}</span></div>`;
+        }
+        const yourAns = skip?'<span style="color:#9ca3af;">Not Attempted</span>':`<span style="color:${ok?'#059669':'#dc2626'};font-weight:bold;">${lbl[q.userAnswer]}. ${q.options[q.userAnswer]}</span>`;
+        qHTML+=`<div style="margin-bottom:16px;padding:14px;border-radius:8px;background:${rowBg};border:1px solid #e5e7eb;page-break-inside:avoid;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                <div style="font-weight:700;font-size:13px;color:#1e293b;">Q${i+1}. ${q.text}</div>
+                <div style="font-weight:700;font-size:12px;color:${statusColor};white-space:nowrap;margin-left:12px;">${statusLabel}</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:8px;">${optsHTML}</div>
+            <div style="font-size:12px;border-top:1px solid #e5e7eb;padding-top:6px;">
+                Your answer: ${yourAns}&nbsp;&nbsp;
+                Correct: <span style="color:#059669;font-weight:bold;">${lbl[q.correctAnswer]}. ${q.options[q.correctAnswer]}</span>
+            </div>
+        </div>`;
+    });
+
+    const scoreColor = pct>=60?'#059669':pct>=35?'#d97706':'#dc2626';
+    const html=`<div style="max-width:780px;margin:0 auto;font-family:Arial,sans-serif;color:#111;">
+        <div style="background:linear-gradient(135deg,#1a6fc4,#0ea5e9);color:white;padding:20px 24px;border-radius:10px 10px 0 0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                <div><div style="font-size:22px;font-weight:800;">⚡ Thunderstudy CBT</div><div style="font-size:13px;opacity:0.85;margin-top:3px;">English Result Report</div></div>
+                <div style="text-align:right;font-size:12px;opacity:0.85;"><div>📅 ${dateStr} 🕐 ${timeStr}</div><div>👤 ${name}</div></div>
+            </div>
+        </div>
+        <div style="background:#f0f6ff;border:1px solid #bfdbfe;border-top:none;padding:16px 24px;margin-bottom:20px;border-radius:0 0 10px 10px;">
+            <div style="display:flex;flex-wrap:wrap;gap:12px;">
+                <div style="background:white;border:1px solid #dbeafe;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">SCORE</div><div style="font-size:24px;font-weight:800;color:${scoreColor};">${score}<span style="font-size:14px;color:#6b7280;">/${maxScore}</span></div></div>
+                <div style="background:white;border:1px solid #dbeafe;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">PERCENTAGE</div><div style="font-size:24px;font-weight:800;color:${scoreColor};">${pct}%</div></div>
+                <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#059669;">CORRECT</div><div style="font-size:24px;font-weight:800;color:#059669;">${correct}</div></div>
+                <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#dc2626;">WRONG</div><div style="font-size:24px;font-weight:800;color:#dc2626;">${incorrect}</div></div>
+                <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">SKIPPED</div><div style="font-size:24px;font-weight:800;color:#6b7280;">${unanswered}</div></div>
+            </div>
+        </div>
+        <div style="font-size:15px;font-weight:700;color:#1a6fc4;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #1a6fc4;">📋 Answer Key</div>
+        ${qHTML}
+        <div style="text-align:center;margin-top:20px;padding:12px;background:#f0f6ff;border-radius:8px;font-size:12px;color:#6b7280;">Generated by <b>Thunderstudy CBT</b> | t.me/thunderstudy_official | ${dateStr}</div>
+    </div>`;
+
+    const w = window.open('','_blank','width=950,height=700,scrollbars=yes');
+    if (!w) { alert('Popup blocked! Allow popups and retry.'); return; }
+    w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"/><title>Thunderstudy_English_${name}</title><style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Arial,sans-serif;background:#fff;padding:20px;}@media print{.no-print{display:none!important;}}.print-btn{display:block;margin:0 auto 20px;padding:12px 36px;background:linear-gradient(135deg,#1a6fc4,#0ea5e9);color:white;font-size:16px;font-weight:700;border:none;border-radius:30px;cursor:pointer;}</style></head><body><button class="print-btn no-print" onclick="window.print()">🖨️ Print / Save PDF</button>${html}</body></html>`);
+    w.document.close(); w.focus();
+}
+</script>
+
+</body>
+</html>
