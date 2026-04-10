@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thunderstudy CBT — Parajumbles</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+const SUBJECT_ID  = "eng";
+const CHAPTER_ID  = "eng-ra-para";
+</script>
+
+<style>
+:root {
+    --primary: #1a6fc4;
+    --primary-dark: #0d4f96;
+    --primary-light: #4a9de8;
+    --accent: #0ea5e9;
+    --accent2: #38bdf8;
+    --white: #ffffff;
+    --off-white: #f0f6ff;
+    --light-blue: #dbeafe;
+    --mid-blue: #bfdbfe;
+    --border: #bfdbfe;
+    --text-dark: #0f1e3d;
+    --text-mid: #2d4a7a;
+    --text-muted: #6b8ab5;
+    --correct: #059669;
+    --correct-bg: #ecfdf5;
+    --incorrect: #dc2626;
+    --incorrect-bg: #fef2f2;
+    --answered: #22c55e;
+    --marked: #0ea5e9;
+    --unanswered: #f97316;
+    --shadow: 0 4px 24px rgba(26,111,196,0.10);
+    --shadow-lg: 0 8px 40px rgba(26,111,196,0.16);
+
+    /* Dark mode vars */
+    --dm-bg: #0b1526;
+    --dm-surface: #111e35;
+    --dm-surface2: #172340;
+    --dm-border: #1e3460;
+    --dm-text: #e2eeff;
+    --dm-muted: #7ba4d4;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text-dark);
+    min-height: 100vh;
+    display: flex;
+    transition: background 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+    background: var(--dm-bg);
+    color: var(--dm-text);
+}
+
+/* ===== START SCREEN ===== */
+#start-screen {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--white);
+    display: flex; flex-direction: column; align-items: center;
+    overflow-y: auto; padding: 0 20px 50px;
+    transition: background 0.3s;
+}
+
+body.dark-mode #start-screen { background: var(--dm-bg); }
+
+.start-hero {
+    width: 100%; max-width: 600px;
+    padding: 48px 0 0;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+}
+
+.start-logo {
+    width: 68px; height: 68px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 8px 28px rgba(26,111,196,0.35);
+    margin-bottom: 20px;
+    animation: floatLogo 3s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.start-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 6px;
+}
+body.dark-mode .start-brand { color: var(--accent2); }
+
+.start-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px; font-weight: 800;
+    color: var(--text-dark);
+    line-height: 1.15;
+    margin-bottom: 10px;
+}
+body.dark-mode .start-title { color: var(--dm-text); }
+
+.start-sub {
+    font-size: 16px; color: var(--text-muted);
+    margin-bottom: 8px;
+}
+body.dark-mode .start-sub { color: var(--dm-muted); }
+
+.tg-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, #0088cc, #006fa8);
+    color: white; text-decoration: none;
+    padding: 10px 24px; border-radius: 40px;
+    font-size: 14px; font-weight: 700;
+    box-shadow: 0 4px 16px rgba(0,136,204,0.4);
+    transition: transform 0.18s, box-shadow 0.18s;
+    margin: 16px 0 28px;
+}
+.tg-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,136,204,0.55); color: white; }
+
+.info-card {
+    width: 100%; max-width: 500px;
+    background: var(--light-blue);
+    border: 1.5px solid var(--mid-blue);
+    border-radius: 16px;
+    padding: 22px 24px;
+    text-align: left;
+    margin-bottom: 24px;
+}
+body.dark-mode .info-card { background: var(--dm-surface); border-color: var(--dm-border); }
+
+.info-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--primary); margin-bottom: 14px;
+}
+body.dark-mode .info-card h3 { color: var(--accent2); }
+
+.info-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+
+.info-pill {
+    background: white;
+    border-radius: 10px; padding: 10px 14px;
+    font-size: 13px; color: var(--text-mid);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+}
+body.dark-mode .info-pill { background: var(--dm-surface2); border-color: var(--dm-border); color: var(--dm-text); }
+
+.info-pill strong { color: var(--primary-dark); font-weight: 700; }
+body.dark-mode .info-pill strong { color: var(--accent2); }
+
+.name-input {
+    width: 100%; max-width: 380px;
+    padding: 14px 20px;
+    border: 2px solid var(--mid-blue);
+    border-radius: 50px;
+    font-size: 16px; font-family: 'DM Sans', sans-serif;
+    text-align: center;
+    background: white; color: var(--text-dark);
+    outline: none; transition: border 0.2s, box-shadow 0.2s;
+    margin-bottom: 18px;
+}
+.name-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(26,111,196,0.12); }
+body.dark-mode .name-input { background: var(--dm-surface); color: var(--dm-text); border-color: var(--dm-border); }
+
+.start-btns { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; max-width: 340px; }
+
+.s-btn {
+    width: 100%; padding: 14px 0;
+    border: none; border-radius: 50px; cursor: pointer;
+    font-size: 16px; font-weight: 700; font-family: 'DM Sans', sans-serif;
+    transition: transform 0.18s, box-shadow 0.18s;
+    letter-spacing: 0.3px;
+}
+.s-btn:hover { transform: translateY(-3px); }
+
+.s-btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; box-shadow: 0 6px 20px rgba(26,111,196,0.4);
+}
+.s-btn-primary:hover { box-shadow: 0 10px 28px rgba(26,111,196,0.55); }
+
+.s-btn-green {
+    background: linear-gradient(135deg, #22c55e, #15803d);
+    color: white; box-shadow: 0 6px 20px rgba(34,197,94,0.35);
+}
+.s-btn-green:hover { box-shadow: 0 10px 28px rgba(34,197,94,0.5); }
+
+.s-btn-purple {
+    background: linear-gradient(135deg, #7c3aed, #4c1d95);
+    color: white; box-shadow: 0 6px 20px rgba(124,58,237,0.35);
+}
+.s-btn-purple:hover { box-shadow: 0 10px 28px rgba(124,58,237,0.5); }
+
+.dark-toggle {
+    position: absolute; top: 16px; right: 16px; z-index: 10000;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; border: none; border-radius: 40px;
+    padding: 8px 18px; font-size: 14px; font-weight: 600;
+    cursor: pointer; display: flex; align-items: center; gap: 7px;
+    box-shadow: 0 4px 14px rgba(26,111,196,0.4);
+    transition: background 0.3s, transform 0.2s;
+    font-family: 'DM Sans', sans-serif;
+}
+.dark-toggle:hover { transform: scale(1.05); }
+body.dark-mode .dark-toggle { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 4px 14px rgba(245,158,11,0.4); }
+
+/* ===== INSTRUCTION SCREEN ===== */
+#instruction-screen {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--white); display: none; overflow-y: auto; padding: 40px 20px;
+}
+body.dark-mode #instruction-screen { background: var(--dm-bg); }
+
+.instr-wrap { max-width: 700px; margin: 0 auto; }
+
+.instr-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 800; color: var(--primary);
+    margin-bottom: 24px; text-align: center;
+}
+body.dark-mode .instr-title { color: var(--accent2); }
+
+.instr-box {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 1.5px solid var(--mid-blue); border-radius: 16px; padding: 28px;
+}
+body.dark-mode .instr-box { background: linear-gradient(135deg, var(--dm-surface), var(--dm-surface2)); border-color: var(--dm-border); }
+
+.instr-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; color: var(--primary);
+    border-left: 4px solid var(--primary); padding-left: 12px; margin-bottom: 16px;
+}
+body.dark-mode .instr-box h3 { color: var(--accent2); border-left-color: var(--accent2); }
+
+.instr-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.instr-list li {
+    background: white; border-radius: 10px; padding: 12px 16px;
+    font-size: 15px; color: var(--text-mid);
+    border: 1px solid var(--border);
+    transition: transform 0.15s;
+}
+body.dark-mode .instr-list li { background: var(--dm-surface2); border-color: var(--dm-border); color: var(--dm-text); }
+.instr-list li:hover { transform: translateX(5px); }
+
+.instr-legend {
+    display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;
+}
+
+.leg-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--text-mid); }
+body.dark-mode .leg-item { color: var(--dm-text); }
+.leg-dot { width: 14px; height: 14px; border-radius: 50%; }
+
+.agree-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 20px; font-size: 15px; font-weight: 600; cursor: pointer;
+    color: var(--text-mid);
+}
+body.dark-mode .agree-row { color: var(--dm-text); }
+
+.agree-row input { display: none; }
+
+.chk-box {
+    width: 22px; height: 22px; border-radius: 6px;
+    border: 2px solid var(--primary);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; color: transparent; transition: 0.15s;
+    background: white;
+}
+body.dark-mode .chk-box { background: var(--dm-surface); border-color: var(--accent2); }
+
+.agree-row input:checked + .chk-box { background: var(--primary); color: white; }
+body.dark-mode .agree-row input:checked + .chk-box { background: var(--accent2); }
+
+#start-test-btn {
+    margin-top: 22px; width: 100%;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; border: none; border-radius: 50px; padding: 14px;
+    font-size: 17px; font-weight: 700; cursor: not-allowed; opacity: 0.55;
+    font-family: 'DM Sans', sans-serif;
+    transition: opacity 0.2s, transform 0.18s, box-shadow 0.18s;
+    box-shadow: 0 6px 20px rgba(26,111,196,0.35);
+}
+#start-test-btn:not(:disabled) { cursor: pointer; opacity: 1; }
+#start-test-btn:not(:disabled):hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(26,111,196,0.5); }
+
+/* ===== TEST SCREEN ===== */
+#test-screen {
+    position: fixed; inset: 0; z-index: 9998;
+    background: var(--off-white); display: none; overflow: auto;
+}
+body.dark-mode #test-screen { background: var(--dm-bg); }
+
+/* SIDEBAR */
+.sidebar {
+    width: 280px; background: white;
+    height: 100vh; position: fixed; right: 0; top: 0;
+    padding: 20px; overflow-y: auto;
+    border-left: 2px solid var(--light-blue);
+    box-shadow: -4px 0 20px rgba(26,111,196,0.08);
+}
+body.dark-mode .sidebar { background: var(--dm-surface); border-left-color: var(--dm-border); }
+
+.timer {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; padding: 10px 0; border-radius: 40px;
+    font-weight: 700; font-size: 19px; text-align: center;
+    letter-spacing: 1px; margin-bottom: 18px;
+    box-shadow: 0 4px 14px rgba(26,111,196,0.35);
+}
+
+.sidebar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700; color: var(--primary);
+    margin-bottom: 14px; padding-bottom: 12px; border-bottom: 2px solid var(--light-blue);
+}
+body.dark-mode .sidebar-brand { color: var(--accent2); border-bottom-color: var(--dm-border); }
+
+.test-info-row { font-size: 13px; color: var(--text-muted); margin: 5px 0; display: flex; gap: 6px; }
+.test-info-row strong { color: var(--text-dark); font-weight: 600; }
+body.dark-mode .test-info-row { color: var(--dm-muted); }
+body.dark-mode .test-info-row strong { color: var(--dm-text); }
+
+.palette-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin: 18px 0 10px; font-size: 13px; font-weight: 600; color: var(--text-mid);
+}
+body.dark-mode .palette-header { color: var(--dm-text); }
+
+.palette-count { color: var(--primary); font-weight: 700; }
+body.dark-mode .palette-count { color: var(--accent2); }
+
+.palette-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px;
+}
+
+.palette-btn {
+    aspect-ratio: 1; border-radius: 50%; border: 2px solid #e5e7eb;
+    background: #fee2e2; /* unanswered = orange-ish red */
+    color: var(--text-dark); font-size: 11px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+}
+.palette-btn:hover { transform: scale(1.1); }
+.palette-btn.answered { background: #bbf7d0; border-color: #22c55e; color: #14532d; }
+.palette-btn.marked { background: #bae6fd; border-color: #0ea5e9; color: #0c4a6e; }
+.palette-btn.current { background: white; border: 2.5px solid var(--primary); color: var(--primary); box-shadow: 0 0 0 3px rgba(26,111,196,0.2); }
+.palette-btn.review-correct { background: #22c55e; border-color: #16a34a; color: white; }
+.palette-btn.review-wrong { background: #ef4444; border-color: #dc2626; color: white; }
+.palette-btn.review-unanswered { background: #60a5fa; border-color: #3b82f6; color: white; }
+
+body.dark-mode .palette-btn { background: #7f1d1d; border-color: #991b1b; color: #fecaca; }
+body.dark-mode .palette-btn.answered { background: #14532d; border-color: #22c55e; color: #bbf7d0; }
+body.dark-mode .palette-btn.marked { background: #0c4a6e; border-color: #0ea5e9; color: #bae6fd; }
+body.dark-mode .palette-btn.current { background: var(--dm-surface2); border-color: var(--accent); color: var(--accent); }
+
+#palette-legend { margin-top: 14px; font-size: 12px; color: var(--text-muted); }
+body.dark-mode #palette-legend { color: var(--dm-muted); }
+#palette-legend .leg-label { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; }
+
+/* MAIN CONTENT */
+.main-content {
+    margin-right: 280px; padding: 20px 24px;
+    min-height: 100vh;
+}
+
+.test-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px; padding-bottom: 14px;
+    border-bottom: 2px solid var(--light-blue);
+}
+body.dark-mode .test-header { border-bottom-color: var(--dm-border); }
+
+.user-badge {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white; padding: 7px 16px; border-radius: 30px;
+    font-size: 13px; font-weight: 700;
+}
+
+.q-counter {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700; color: var(--text-dark);
+}
+body.dark-mode .q-counter { color: var(--dm-text); }
+.q-counter span { color: var(--primary); }
+body.dark-mode .q-counter span { color: var(--accent2); }
+
+.progress-wrap { flex: 1; max-width: 200px; margin: 0 16px; }
+.progress-bar-bg { height: 8px; background: var(--light-blue); border-radius: 10px; overflow: hidden; }
+body.dark-mode .progress-bar-bg { background: var(--dm-surface2); }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 10px; transition: width 0.4s; width: 0; }
+.progress-label { font-size: 12px; color: var(--text-muted); text-align: right; margin-top: 4px; }
+body.dark-mode .progress-label { color: var(--dm-muted); }
+
+/* QUESTION CARD */
+.question-card {
+    background: white; border-radius: 16px; padding: 28px;
+    box-shadow: var(--shadow); border: 1.5px solid var(--light-blue);
+    margin-bottom: 20px;
+}
+body.dark-mode .question-card { background: var(--dm-surface); border-color: var(--dm-border); box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+
+.q-num-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--light-blue); color: var(--primary);
+    padding: 5px 14px; border-radius: 20px; font-size: 13px; font-weight: 700;
+    margin-bottom: 14px;
+}
+body.dark-mode .q-num-tag { background: var(--dm-surface2); color: var(--accent2); }
+
+.section-badge {
+    display: inline-flex; align-items: center;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white; padding: 3px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 600; margin-bottom: 12px;
+}
+
+.q-text {
+    font-size: 18px; font-weight: 500; color: var(--text-dark);
+    line-height: 1.6; margin-bottom: 22px;
+}
+body.dark-mode .q-text { color: var(--dm-text); }
+
+/* OPTIONS */
+.option {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px; border: 2px solid var(--border);
+    border-radius: 12px; margin-bottom: 10px; cursor: pointer;
+    background: white; transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    user-select: none;
+}
+body.dark-mode .option { background: var(--dm-surface2); border-color: var(--dm-border); }
+.option:hover { border-color: var(--primary); background: var(--off-white); transform: translateX(4px); }
+body.dark-mode .option:hover { background: #1e3460; border-color: var(--accent); }
+
+.option.selected { border-color: var(--primary-dark); background: #dbeafe; }
+body.dark-mode .option.selected { background: #0d2a56; border-color: var(--accent); }
+
+.option.correct { border-color: var(--correct) !important; background: var(--correct-bg) !important; }
+.option.incorrect { border-color: var(--incorrect) !important; background: var(--incorrect-bg) !important; }
+
+.opt-letter {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid var(--border); background: var(--off-white);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: var(--text-muted);
+    flex-shrink: 0; transition: all 0.15s;
+}
+.option.selected .opt-letter { background: var(--primary); border-color: var(--primary); color: white; }
+.option.correct .opt-letter { background: var(--correct); border-color: var(--correct); color: white; }
+.option.incorrect .opt-letter { background: var(--incorrect); border-color: var(--incorrect); color: white; }
+
+.opt-text { font-size: 15px; color: var(--text-dark); line-height: 1.5; flex: 1; }
+body.dark-mode .opt-text { color: var(--dm-text); }
+.option.selected .opt-text { color: var(--primary-dark); font-weight: 600; }
+body.dark-mode .option.selected .opt-text { color: var(--accent2); }
+.option.correct .opt-text { color: var(--correct); font-weight: 600; }
+.option.incorrect .opt-text { color: var(--incorrect); font-weight: 600; }
+
+.opt-indicator { font-size: 12px; font-weight: 700; margin-left: 4px; }
+.correct-indicator { color: var(--correct); }
+.incorrect-indicator { color: var(--incorrect); }
+
+.explanation-box {
+    margin-top: 18px; padding: 14px 18px;
+    border-radius: 12px; border-left: 4px solid var(--primary);
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    font-size: 14px; color: var(--text-mid); line-height: 1.7;
+}
+body.dark-mode .explanation-box { background: linear-gradient(135deg, var(--dm-surface), var(--dm-surface2)); border-left-color: var(--accent); color: var(--dm-text); }
+
+/* NAV BUTTONS */
+.nav-row {
+    display: flex; justify-content: space-between; align-items: center; margin-top: 24px;
+}
+
+.nav-btn {
+    padding: 10px 24px; border-radius: 10px; border: 2px solid var(--primary);
+    background: transparent; color: var(--primary); font-size: 14px; font-weight: 700;
+    cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.18s;
+}
+.nav-btn:hover { background: var(--light-blue); }
+body.dark-mode .nav-btn { border-color: var(--accent2); color: var(--accent2); }
+body.dark-mode .nav-btn:hover { background: var(--dm-surface2); }
+
+.next-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; border: none;
+    padding: 12px 30px; border-radius: 10px; font-size: 15px; font-weight: 700;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    box-shadow: 0 4px 14px rgba(26,111,196,0.35); transition: all 0.18s;
+}
+.next-btn:hover { transform: translateY(-2px); box-shadow: 0 7px 20px rgba(26,111,196,0.5); }
+body.dark-mode .next-btn { background: linear-gradient(135deg, var(--accent), var(--primary)); }
+
+.mark-btn-q {
+    padding: 9px 18px; border-radius: 10px;
+    border: 2px solid var(--accent); background: transparent; color: var(--accent);
+    font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+}
+.mark-btn-q.marked { background: var(--accent); color: white; }
+.mark-btn-q:hover { background: var(--light-blue); }
+
+/* SUBMIT SECTION */
+.submit-row {
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 600px; margin: 20px auto; gap: 14px; flex-wrap: wrap;
+}
+
+.fancy-btn {
+    flex: 1; min-width: 140px; padding: 14px; border: none; border-radius: 50px;
+    font-size: 15px; font-weight: 700; cursor: pointer; text-align: center;
+    text-decoration: none; display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif; transition: transform 0.18s, box-shadow 0.18s;
+}
+.fancy-btn:hover { transform: translateY(-3px); }
+
+.fancy-submit { background: linear-gradient(135deg, #22c55e, #15803d); color: white; box-shadow: 0 6px 20px rgba(34,197,94,0.4); max-width: 260px; }
+.fancy-submit:hover { box-shadow: 0 10px 28px rgba(34,197,94,0.55); }
+.fancy-tg { background: linear-gradient(135deg, #0088cc, #005a99); color: white; box-shadow: 0 6px 20px rgba(0,136,204,0.4); max-width: 200px; }
+.fancy-tg:hover { box-shadow: 0 10px 28px rgba(0,136,204,0.55); color: white; }
+
+.fancy-pdf { background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 6px 20px rgba(249,115,22,0.4); }
+.fancy-pdf:hover { box-shadow: 0 10px 28px rgba(249,115,22,0.55); }
+.fancy-result { background: linear-gradient(135deg, #7c3aed, #4c1d95); color: white; box-shadow: 0 6px 20px rgba(124,58,237,0.4); }
+.fancy-result:hover { box-shadow: 0 10px 28px rgba(124,58,237,0.55); }
+
+.stream-btn {
+    display: block; width: 100%; padding: 14px;
+    border-radius: 14px; color: white; font-weight: 700; font-size: 16px;
+    text-decoration: none; font-family: 'DM Sans', sans-serif;
+    transition: transform 0.18s, box-shadow 0.18s;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+.stream-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,0,0.3); color: white; }
+
+body.dark-mode #stream-picker-box { background: var(--dm-surface); }
+body.dark-mode #stream-picker-box h3 { color: var(--accent2); }
+body.dark-mode #stream-picker-box p { color: var(--dm-muted); }
+body.dark-mode #stream-picker-box button { color: var(--dm-muted); }
+
+/* FOOTER */
+.test-footer {
+    background: linear-gradient(135deg, #0f1e3d, #1a3066);
+    color: #94b8e8; text-align: center; padding: 22px 16px;
+    margin-top: 10px;
+}
+.test-footer p { font-size: 12px; margin-bottom: 12px; }
+.footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.footer-link {
+    padding: 8px 18px; border-radius: 30px; font-size: 13px; font-weight: 600;
+    text-decoration: none; color: white; transition: transform 0.18s, box-shadow 0.18s;
+}
+.footer-link:hover { transform: translateY(-2px); color: white; }
+.fl-purple { background: linear-gradient(135deg, #7c3aed, #4c1d95); box-shadow: 0 3px 10px rgba(124,58,237,0.35); }
+.fl-green { background: linear-gradient(135deg, #059669, #065f46); box-shadow: 0 3px 10px rgba(5,150,105,0.35); }
+.fl-red { background: linear-gradient(135deg, #dc2626, #991b1b); box-shadow: 0 3px 10px rgba(220,38,38,0.35); }
+
+/* MODAL */
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99999; justify-content: center; align-items: center; }
+.modal.show { display: flex; }
+
+.modal-content {
+    background: white; border-radius: 20px; padding: 32px;
+    width: 90%; max-width: 580px; max-height: 90vh; overflow-y: auto;
+    animation: modalIn 0.3s ease;
+}
+body.dark-mode .modal-content { background: var(--dm-surface); border: 1.5px solid var(--dm-border); }
+
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.92) translateY(-20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--light-blue);
+}
+body.dark-mode .modal-head { border-bottom-color: var(--dm-border); }
+
+.modal-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; color: var(--primary);
+}
+body.dark-mode .modal-head h2 { color: var(--accent2); }
+
+.close-x { background: none; border: none; font-size: 26px; cursor: pointer; color: var(--text-muted); }
+
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+
+.stat-tile {
+    background: var(--off-white); border-radius: 14px; padding: 18px;
+    text-align: center; border: 1.5px solid var(--border);
+}
+body.dark-mode .stat-tile { background: var(--dm-surface2); border-color: var(--dm-border); }
+
+.stat-tile h4 { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+body.dark-mode .stat-tile h4 { color: var(--dm-muted); }
+
+.stat-tile p { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 800; }
+.stat-correct { color: var(--correct); }
+.stat-wrong { color: var(--incorrect); }
+.stat-neutral { color: var(--text-muted); }
+.stat-score { color: var(--primary); }
+body.dark-mode .stat-score { color: var(--accent2); }
+
+.analysis { font-size: 14px; color: var(--text-mid); margin-bottom: 18px; line-height: 1.8; }
+body.dark-mode .analysis { color: var(--dm-text); }
+
+.modal-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.modal-btn {
+    flex: 1; padding: 12px; border-radius: 12px; border: none; cursor: pointer;
+    font-size: 14px; font-weight: 700; font-family: 'DM Sans', sans-serif; transition: all 0.18s;
+}
+.modal-btn:hover { transform: translateY(-2px); }
+.mb-review { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; box-shadow: 0 4px 14px rgba(26,111,196,0.4); }
+.mb-pdf { background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 4px 14px rgba(249,115,22,0.4); }
+
+/* MOBILE */
+.mobile-bar { display: none; }
+
+@media (max-width: 768px) {
+    .mobile-bar {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 8px 12px; background: white; border-bottom: 2px solid var(--light-blue);
+        margin-bottom: 8px; border-radius: 10px; box-shadow: var(--shadow);
+    }
+    body.dark-mode .mobile-bar { background: var(--dm-surface); border-color: var(--dm-border); }
+    .mob-timer {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white; padding: 6px 14px; border-radius: 30px; font-weight: 700; font-size: 14px;
+    }
+    #user-name-display { display: none !important; }
+    .sidebar .timer, .sidebar .sidebar-brand { display: none !important; }
+    .sidebar { position: relative; width: 100%; height: auto; right: 0; left: 0; border-left: none; border-top: 2px solid var(--light-blue); box-shadow: none; }
+    body { flex-direction: column; }
+    .main-content { margin-right: 0; width: 100%; padding: 12px; }
+    .question-card { padding: 18px; }
+    .q-text { font-size: 16px; }
+    .nav-row { flex-direction: row; gap: 8px; }
+    .palette-grid { max-height: 200px; overflow-y: auto; }
+}
+
+@media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .modal-btns { flex-direction: column; }
+}
+
+/* option radio hide */
+.option input[type="radio"] { display: none; }
+
+#pdf-print-area { display: none; }
+@media print {
+    body > * { display: none !important; }
+    #pdf-print-area { display: block !important; font-family: Arial, sans-serif; color: #111; padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="start-screen">
+
+<button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode" style="position:absolute;top:16px;right:16px;">
+    <span id="toggle-icon">🌙</span>
+    <span id="toggle-label">Dark</span>
+</button>
+
+<div class="start-hero">
+    <div class="start-logo">📝</div>
+    <div class="start-brand">Thunderstudy CBT</div>
+    <h1 class="start-title">Parajumbles</h1>
+    <p class="start-sub">English Vocabulary | Provided by <strong>Thunderstudy</strong></p>
+
+    <a href="https://t.me/thunderstudy_official" target="_blank" class="tg-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-2.04 9.607c-.148.666-.543.828-1.098.516l-3.04-2.24-1.467 1.413c-.162.162-.298.298-.611.298l.217-3.083 5.613-5.067c.244-.217-.054-.337-.378-.12L7.08 14.807 4.09 13.89c-.657-.205-.67-.657.137-.973l10.88-4.196c.548-.198 1.027.133.855.973z"/></svg>
+        @thunderstudy_official
+    </a>
+
+    <div class="info-card">
+        <h3>📋 Quick Overview</h3>
+        <div class="info-grid">
+            <div class="info-pill">📝 <div><strong>50 Questions</strong></div></div>
+            <div class="info-pill">⏱️ <div><strong>60 Minutes</strong></div></div>
+            <div class="info-pill">✅ <div><strong>+5 Correct</strong></div></div>
+            <div class="info-pill">❌ <div><strong>−1 Wrong</strong></div></div>
+            <div class="info-pill">🚫 <div><strong>No tab switching</strong></div></div>
+            <div class="info-pill">🔁 <div><strong>Auto-submits</strong></div></div>
+        </div>
+    </div>
+
+<input type="text" id="username-input" class="name-input" placeholder="Enter your name to begin">
+    <div id="sid-display-area" style="font-size: 13px; font-weight: 700; color: #4f6ef7; background: rgba(79,110,247,0.1); padding: 5px 15px; border-radius: 20px; display: none; margin-top: 8px;">
+        🪪 ID: <span id="sid-value">---</span>
+    </div>
+    <div class="start-btns">
+        <button class="s-btn s-btn-primary" onclick="startMock()">🚀 Start Mock Test</button>
+        <button class="s-btn s-btn-green" onclick="window.location.href='https://commercesehoga.github.io/commerce/bst/result.html'">📊 Previous Results</button>
+        <button class="s-btn s-btn-purple" onclick="window.open('https://commercesehoga.blogspot.com/2026/03/business-studies-cuet-cbt-mock-test-free.html','_blank')">📚 More Mock Tests</button>
+    </div>
+</div>
+</div>
+
+<!-- INSTRUCTION SCREEN -->
+<div id="instruction-screen">
+<div class="instr-wrap">
+    <h2 class="instr-title">📜 Instructions</h2>
+    <div class="instr-box">
+        <h3>General Guidelines</h3>
+        <ol class="instr-list">
+            <li>Total duration is <strong>60 minutes</strong>. Timer is shown in the sidebar.</li>
+            <li>The test <strong>auto-submits</strong> when time runs out.</li>
+            <li>Test runs in <strong>fullscreen</strong>. Exiting starts a <strong>5-second</strong> countdown to auto-submit.</li>
+            <li><strong>Do not switch tabs.</strong> Switching tabs starts a <strong>2-second</strong> countdown.</li>
+            <li>Return before the countdown ends to cancel auto-submission.</li>
+            <li>Right panel shows palette with question status (answered, marked, etc.)</li>
+            <li>Marking: <strong>+5 correct</strong> / <strong>−1 wrong</strong> / <strong>0 unanswered</strong>.</li>
+        </ol>
+
+        <div class="instr-legend" style="margin-top: 20px;">
+            <strong style="font-size:13px; display:block; margin-bottom:8px;">Status Legend:</strong>
+            <div class="leg-item"><div class="leg-dot" style="background:#22c55e;border:1px solid #16a34a;"></div>Answered</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#bae6fd;border:1px solid #0ea5e9;"></div>Marked</div>
+            <div class="leg-item"><div class="leg-dot" style="background:white;border:2px solid #1a6fc4;"></div>Current</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#fee2e2;border:1px solid #fca5a5;"></div>Unanswered</div>
+        </div>
+
+        <label class="agree-row">
+            <input type="checkbox" id="agree-checkbox">
+            <span class="chk-box">✓</span>
+            I have read and understood all instructions
+        </label>
+
+        <button id="start-test-btn" disabled>▶ Start Test</button>
+    </div>
+</div>
+</div>
+
+<!-- TEST SCREEN -->
+<div id="test-screen">
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="timer">01:00:00</div>
+    <div class="sidebar-brand">⚡ Thunderstudy CBT</div>
+
+          <div class="test-info-row"><strong>Name:</strong> <span id="display-user-name">Student</span></div>
+    <div class="test-info-row"><strong>ID:</strong> <span id="display-user-sid" style="font-family:monospace;">---</span></div>
+    <div class="test-info-row"><strong>Subject:</strong> English — Syn/Ant</div>
+    <div class="test-info-row"><strong>Questions:</strong> 50</div>
+    <div class="test-info-row"><strong>Duration:</strong> 60 min</div>
+    <div class="test-info-row"><strong>Marking:</strong> +5 / −1</div>
+    <div class="test-info-row"><strong>Section:</strong> <span id="current-section">—</span></div>
+
+    <div class="palette-header">
+        <span>Questions</span>
+        <span class="palette-count" id="answered-count">0/50</span>
+    </div>
+    <div class="palette-grid" id="question-palette-grid"></div>
+    <div id="palette-legend" style="margin-top:14px; font-size:12px;"></div>
+</div>
+
+<!-- Main -->
+<div class="main-content">
+
+    <div class="mobile-bar">
+        <div class="mob-timer">01:00:00</div>
+        <div id="mobile-name-display" style="background:linear-gradient(135deg,var(--primary),var(--accent));color:white;padding:6px 14px;border-radius:20px;font-weight:700;font-size:13px;">👤 Student</div>
+    </div>
+
+    <div class="test-header">
+        <div id="user-name-display" class="user-badge">👤 Student</div>
+        <div class="q-counter">Q <span id="current-q-number">1</span>/50</div>
+        <div class="progress-wrap">
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="test-progress"></div></div>
+            <div class="progress-label" id="progress-percent">0%</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="q-num-tag">Question <span id="q-number">1</span></div>
+        <div class="section-badge" id="section-badge">Reading Comprehension</div>
+        <div class="q-text" id="question-text"></div>
+        <div id="options-container"></div>
+
+        <div class="nav-row">
+            <button class="nav-btn" id="prev-btn">← Previous</button>
+            <div style="display:flex;gap:10px;align-items:center;">
+                <button class="mark-btn-q" id="mark-btn">🔖 Mark</button>
+                <button class="next-btn" id="next-btn">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="submit-row" id="submit-row-before">
+        <a href="https://t.me/thunderstudy_official" target="_blank" class="fancy-btn fancy-tg">⚡ Join Thunder</a>
+        <button class="fancy-btn fancy-submit" id="submit-test-btn">✅ Submit Test</button>
+    </div>
+
+    <!-- Post-submit action row (hidden until submitted) -->
+    <div class="submit-row" id="submit-row-after" style="display:none;">
+        <a href="https://t.me/thunderstudy_official" target="_blank" class="fancy-btn fancy-tg" style="flex:1;max-width:180px;">⚡ Join Thunder</a>
+        <button class="fancy-btn fancy-pdf" id="pdf-action-btn" style="flex:1;max-width:180px;">📄 Download PDF</button>
+        <button class="fancy-btn fancy-result" id="result-action-btn" style="flex:1;max-width:180px;">📊 Result</button>
+    </div>
+
+    <!-- Stream Picker Popup -->
+    <div id="stream-picker-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:999998;justify-content:center;align-items:center;">
+        <div id="stream-picker-box" style="background:white;border-radius:20px;padding:32px 28px;width:90%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.25);animation:modalIn 0.3s ease;text-align:center;position:relative;">
+            <button onclick="document.getElementById('stream-picker-overlay').style.display='none'" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:#6b8ab5;">×</button>
+            <div style="font-size:36px;margin-bottom:10px;">📊</div>
+            <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:#1a6fc4;margin-bottom:6px;">View Previous Results</h3>
+            <p style="font-size:13px;color:#6b8ab5;margin-bottom:22px;">Select your stream to view results</p>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+                <a href="https://commercesehoga.github.io/commerce/bst/result.html" target="_blank" class="stream-btn" style="background:linear-gradient(135deg,#1a6fc4,#0ea5e9);">
+                    🏪 Commerce
+                </a>
+                <a href="https://commercesehoga.github.io/science/result.html" target="_blank" class="stream-btn" style="background:linear-gradient(135deg,#059669,#0d9488);">
+                    🔬 Science
+                </a>
+                <a href="https://commercesehoga.github.io/humanities/result.html" target="_blank" class="stream-btn" style="background:linear-gradient(135deg,#7c3aed,#a855f7);">
+                    📚 Humanities
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="test-footer">
+        <p>© 2025 Thunderstudy. All Rights Reserved.</p>
+        <div class="footer-links">
+            <a href="https://commercesehoga.blogspot.com/2026/03/business-studies-cuet-cbt-mock-test-free.html" target="_blank" class="footer-link fl-purple">📚 More Mocks</a>
+            <a href="https://commercesehoga.blogspot.com/" target="_blank" class="footer-link fl-green">🌐 Website</a>
+            <a href="https://t.me/mindmaster_robot" target="_blank" class="footer-link fl-red">🚨 Report Error</a>
+        </div>
+    </footer>
+</div>
+
+<!-- Results Modal -->
+<div class="modal" id="results-modal">
+<div class="modal-content">
+    <div class="modal-head">
+        <h2>🏆 Test Results</h2>
+        <button class="close-x" id="close-modal">×</button>
+    </div>
+    <div class="stats-grid">
+        <div class="stat-tile"><h4>Correct</h4><p class="stat-correct" id="correct-answers">0</p></div>
+        <div class="stat-tile"><h4>Wrong</h4><p class="stat-wrong" id="incorrect-answers">0</p></div>
+        <div class="stat-tile"><h4>Unanswered</h4><p class="stat-neutral" id="unanswered">50</p></div>
+        <div class="stat-tile"><h4>Score</h4><p class="stat-score" id="total-score">0</p></div>
+    </div>
+    <div class="analysis">
+        Percentage: <strong><span id="percentage">0</span>%</strong> &nbsp;|&nbsp;
+        Accuracy: <strong><span id="accuracy">0</span>%</strong>
+    </div>
+    <div class="modal-btns">
+        <button class="modal-btn mb-review" id="review-btn">👁 Review Answers</button>
+        <button class="modal-btn mb-pdf" id="download-pdf-btn">📄 Download PDF</button>
+        <button class="modal-btn mb-result" id="modal-result-btn" style="background:linear-gradient(135deg,#7c3aed,#a855f7);color:white;box-shadow:0 4px 14px rgba(124,58,237,0.4);">📊 Result</button>
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="pdf-print-area"></div>
+
+<script>
+/* ============================================================
+   MOCK TEST DATA — English Chapter 1
+   ============================================================ */
+const mockTest = {
+    title: "English — One Word",
+    questions: [
+  {
+    id: 1,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. She was French, dressed exquisitely, spoke five languages and to my mind was astonishingly sophisticated.<br>B. As a 21-year-old journalist in Mexico, I met a most fascinating woman.<br>C. Christian Amanpour became my guide, my teacher, my inspiration for everything to do with journalism.<br>D. She was a journalist and had logged in over 20 years covering guerrilla warfare, the Tiananmen Square massacre, and various military conflicts around the world.",
+    options: { a: "DBCA", b: "CDAB", c: "BADC", d: "ABCD" },
+    correctAnswer: "c",
+    explanation: "The correct order is BADC: B introduces the meeting, A describes her appearance, D describes her professional background, and C concludes with her becoming an inspiration.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 2,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. So Ramkrishna Movement is not the history of a particular person or persons.<br>B. Despite completing a 100 years, the movement has still a youthful image, a contemporaneous trend.<br>C. Further ahead is a long road to traverse 'at least 15 more centuries' as prophesied by Swami Vivekananda before it can rest on its laurels.<br>D. The pageant of Ramkrishna Movement reflects not only the modes and manners of contemporary times but also a saga of a bygone era.",
+    options: { a: "DBCA", b: "CBDA", c: "BCAD", d: "DACB" },
+    correctAnswer: "a",
+    explanation: "The correct order is DBCA: D introduces the movement's broad scope, B notes its youthful image despite 100 years, C mentions the long road ahead, and A concludes that it is not about any single person.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 3,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. The liver is your body's very own powerhouse.<br>B. It provides your entire body with energy to function normally.<br>C. The single biggest cause for liver damage is alcohol.<br>D. Therefore, any damage to the liver can short-circuit your body functions.",
+    options: { a: "ABCD", b: "BCDA", c: "CABD", d: "DACB" },
+    correctAnswer: "c",
+    explanation: "The correct order is CABD: C introduces the main threat to the liver (alcohol), A establishes the liver's importance, B explains its function, and D gives the consequence of damage.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 4,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. Especially when we feel there's a gap between how we are spending our time and what we feel is deeply important in our lives.<br>B. We're also living with the consequences of those choices.<br>C. We're constantly making choices about the way we spend our time from the major seasons to the individual moments in our lives.<br>D. And many of us don't like those consequences.",
+    options: { a: "DABC", b: "ACDB", c: "CBDA", d: "BDCA" },
+    correctAnswer: "c",
+    explanation: "The correct order is CBDA: C introduces the idea of making choices, B notes we live with consequences, D says we dislike those consequences, and A specifies when this feeling is sharpest.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 5,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. Just three decades ago, there were fewer than a dozen significant books on the subject.<br>B. It reflects something of a 'popcorn phenomenon' with increasing heat and pressure of the culture creating a rapidly exploding body of literature and tools.<br>C. Our most recent survey led us through well over a hundred books, and a wide variety of calendar, planners, software and other time management tools.<br>D. In our effort to close the gap between the clock and the compass in our lives, many of us turn to the field of 'time management'.",
+    options: { a: "ABCD", b: "BACD", c: "CADB", d: "DACB" },
+    correctAnswer: "d",
+    explanation: "The correct order is DACB: D introduces time management, A notes how few books existed 30 years ago, C contrasts with today's abundance, and B explains this as a 'popcorn phenomenon'.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 6,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. The mess that you've created is entirely your own doing.<br>B. And I don't blame the media or Nagma or anyone else other than you for that.<br>C. Because I don't think that there's much left about your personal life that's still a secret.<br>D. Why an open letter?",
+    options: { a: "CADB", b: "DCBA", c: "ACBD", d: "BACD" },
+    correctAnswer: "b",
+    explanation: "The correct order is DCBA: D raises the question of why an open letter, C gives the reason (no privacy left), B places the blame, and A concludes that the mess is self-created.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 7,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. If these basic needs aren't met, we feel empty, incomplete.<br>B. We may try to fill the void through urgency addiction.<br>C. As a result, we may become complacent, temporarily satisfied with partial fulfilment.<br>D. There are certain things that are fundamental to human fulfilment.",
+    options: { a: "DABC", b: "BCAD", c: "CADB", d: "BDAC" },
+    correctAnswer: "a",
+    explanation: "The correct order is DABC: D introduces fundamental needs, A states what happens when they are unmet, B describes the coping mechanism (urgency addiction), and C explains the temporary satisfaction that results.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 8,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. Farmers are suddenly hot politically. So hot that our current Parliament session began with Sonia Gandhi and Mulayam Singh Yadav fighting over who should speak first for India's farmers.<br>B. Yadav claimed first right on grounds of his peasant origins but if he had anything more worthwhile to say than Sonia nobody knows.<br>C. It was the polemics that became the floor show.<br>D. And if this was not cabaret enough, we then had Parliament's most famous windbag, Renuka Chowdhury, driving to Parliament House on a tractor and effectively trivializing the issue.",
+    options: { a: "DABC", b: "ABCD", c: "BDCA", d: "CDBA" },
+    correctAnswer: "b",
+    explanation: "The correct order is ABCD: A sets the political context, B describes Yadav's claim, C notes the debate became mere polemics, and D adds the final absurdity of the tractor stunt.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 9,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. In some situations it may be desirable to divest the business before decline, or in the maturity phase.<br>B. Once decline is clear, buyers for the assets inside and outside the industry will be in a stronger bargaining position.<br>C. Selling the business early usually maximizes the value of the firm that can be realized from the sale of the business because, the earlier the business is sold the greater is the uncertainty.<br>D. On the other hand, selling early also entails the risk that the firm forecast of the future will prove incorrect.",
+    options: { a: "CABD", b: "ADBC", c: "BCDA", d: "DBAC" },
+    correctAnswer: "a",
+    explanation: "The correct order is CABD: C presents the general idea of early selling, A specifies when divestment is desirable, B explains why waiting is risky, and D provides the counterpoint about early selling risks.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 10,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. He hounded his former wife until she gave back $6,000 in cash he had given her as a wedding gift, then gave $4,000 of it to Li.<br>B. Now seven years later, the tables are turned.<br>C. 'What are your conditions?' was the first thing he asked her.<br>D. She demanded a small house, money and jewellery.",
+    options: { a: "DABC", b: "CBAD", c: "ABCD", d: "CDAB" },
+    correctAnswer: "c",
+    explanation: "The correct order is ABCD: A describes his earlier action of reclaiming money, B signals a reversal seven years later, C shows him now asking her conditions, and D reveals her demands.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 11,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. They are active, hard-working, competent, caring people dedicated to making a difference.<br>B. The fact that you picked up these sentences indicates that you can probably identify with what they're feeling.<br>C. Yet these people consistently tell us of the tremendous struggles they face daily while trying to put first things first in their lives.<br>D. Through our work at the Leadership centre, we've come in contact with many people from around the world, and we're constantly impressed by what they represent.",
+    options: { a: "DACB", b: "ADCB", c: "ABCD", d: "BDAC" },
+    correctAnswer: "a",
+    explanation: "The correct order is DACB: D introduces the context of meeting people, A describes who they are, C reveals their struggles, and B connects this to the reader's own experience.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 12,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. Thus, we're not in control of our lives: PRINCIPLES are.<br>B. Universal laws or Principles do.<br>C. Basing our happiness on our ability to control everything is futile.<br>D. While we do control our choice of action, we cannot control the consequence of our choices.",
+    options: { a: "ADCB", b: "CDBA", c: "ACBD", d: "DBAC" },
+    correctAnswer: "b",
+    explanation: "The correct order is CDBA: C states the futility of control, D clarifies what we can and cannot control, B introduces the role of principles, and A concludes that principles govern our lives.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 13,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. There is no shortcut in life but there is a path.<br>B. The path is based on principles reversed throughout history.<br>C. If there is one message to glean, it is that a meaningful life is not a matter of speed or efficiency.<br>D. It's much more a matter of what you do and why you do it, than how fast you get it done.",
+    options: { a: "ABCD", b: "BCDA", c: "CDBA", d: "DBAC" },
+    correctAnswer: "a",
+    explanation: "The correct order is ABCD: A introduces the idea of a path, B describes what that path is based on, C states the key message about meaningful life, and D elaborates that it's about 'what' and 'why' not speed.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 14,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. All states except Maharashtra were in favour of the move.<br>B. When the matter came up at the meeting, the representative of Maharashtra vehemently opposed it, saying it would not be in the interest of students and people.<br>C. Evening law colleges all over the nation will be closed within six months, as per a decision taken by the Bar Council of India.<br>D. He argued that it would not be possible for working students to attend day colleges.",
+    options: { a: "CBDA", b: "CABD", c: "CDBA", d: "CADB" },
+    correctAnswer: "b",
+    explanation: "The correct order is CABD: C announces the Bar Council's decision, A states all states except Maharashtra agreed, B describes Maharashtra's opposition at the meeting, and D gives the specific argument made.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 15,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. To at least the dozen authors who have been shortlisted, six in each category, that's probably exciting news.<br>B. In the same week, Jet Bookstores owner was interviewed for a TV show.<br>C. Last week, Ace Bookstore announced their 2nd Annual Function Award.<br>D. This time, they've upped the prize money from Rs. 2 lakh to Rs. 3 lakh.",
+    options: { a: "DACB", b: "CDAB", c: "DCAB", d: "CBDA" },
+    correctAnswer: "b",
+    explanation: "The correct order is CDAB: C announces the award, D gives the prize money update, A describes the shortlisted authors' reaction, and B adds the related news about the bookstore interview in the same week.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 16,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. The MTNL in a circular had made it mandatory for all operators to charge only Re 1 for every local call made to Mumbai.<br>B. New Bombay residents are being forced to pay an extra rupee from every call made to Mumbai from local telephone booths despite orders to the contrary issued by MTNL.<br>C. It had also warned that failure to comply would entail legal action.<br>D. 'We have in fact sent notices to around 100 call operators,' said a senior officer of MTNL's vigilance section.",
+    options: { a: "BDCA", b: "BCDA", c: "ABDC", d: "BACD" },
+    correctAnswer: "d",
+    explanation: "The correct order is BACD: B describes the problem faced by residents, A explains the MTNL circular that should have prevented it, C mentions the warning of legal action, and D confirms notices were sent.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 17,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. He was accosted by a down-and-out fan, who appealed for assistance one day.<br>B. Lester seemed not to hear, and continued on his way.<br>C. 'Please,' said the old man feebly, 'just a couple of pounds for a life-long fan.'<br>D. The brilliant jockey Lester Piggott was known to put his hardness of hearing to good effect.",
+    options: { a: "DCBA", b: "DACB", c: "DBAC", d: "CBAD" },
+    correctAnswer: "b",
+    explanation: "The correct order is DACB: D introduces Lester Piggott and his trait, A describes the fan accosting him, C gives the fan's appeal, and B shows Lester pretending not to hear.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 18,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. Helpful advice is given on matching the right speech and structuring, timing and delivering.<br>B. For most of us, speech-making is an event to be dreaded.<br>C. Also included are speeches for the sportsman, the sales force and special occasions.<br>D. This book is designed to prevent those embarrassing nerves and blushes, providing all the essentials for a successful comic speech.",
+    options: { a: "DBAC", b: "BDCA", c: "BDAC", d: "DBCA" },
+    correctAnswer: "c",
+    explanation: "The correct order is BDAC: B establishes the fear of speech-making, D introduces the book as the solution, A describes the advice given, and C adds more content included in the book.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 19,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. And if they're going to remember a single thing you said, it's likely to be the final line so make sure that it's worth remembering.<br>B. Sir Thomas Beecham once said of his orchestra that the important thing was to 'begin and end together, what happens in-between doesn't matter very much'.<br>C. If you can capture the attention of the audience with your first line, you're likely to have their attention for the rest of the speech.<br>D. Pretty much the same can be said of making a comic speech.",
+    options: { a: "BDCA", b: "CBAD", c: "ABDC", d: "BCDA" },
+    correctAnswer: "a",
+    explanation: "The correct order is BDCA: B gives Beecham's quote, D applies it to comic speeches, C discusses capturing attention at the start, and A emphasizes making the final line memorable.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 20,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. As baseball's all-time home run king, he played 23 years as an outfielder for the Milwaukee Braves.<br>B. After retiring as a player, he moved into the Atlanta Braves front office as executive vice president.<br>C. Aaron Hank was a baseball player and executive born in Alabama.<br>D. He holds many of baseball's most distinguished records.",
+    options: { a: "CBDA", b: "CADB", c: "CDBA", d: "CABD" },
+    correctAnswer: "b",
+    explanation: "The correct order is CADB: C introduces Aaron Hank, A describes his playing career, D notes his records, and B describes his post-retirement role.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 21,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. But the real story behind the filming of The Beach looks like concluding in ecological disaster and court cases.<br>B. Witnesses say it is now a 'forlorn scene of ugly bamboo fences and dead native plants'.<br>C. It was the ultimate Hollywood dream, the most handsome man in the world on the most idyllic beach in the Orient.<br>D. The location of the film The Beach has repeatedly been wrecked after several months of filming.",
+    options: { a: "DCAB", b: "DBAC", c: "CADB", d: "CABD" },
+    correctAnswer: "c",
+    explanation: "The correct order is CADB: C sets the glamorous Hollywood dream, A reveals the real story of disaster, D describes the location being wrecked, and B gives an eyewitness account of the damage.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 22,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. K. Gilt has given investors an annualised return of 10.58%.<br>B. But we're not resting on our laurels.<br>C. Nine months ago, we launched our first two schemes K. Gilt and K 30.<br>D. And K 30, the equity scheme, has yielded an absolute return of 102.20%.",
+    options: { a: "CDAB", b: "ABCD", c: "CABD", d: "CADB" },
+    correctAnswer: "d",
+    explanation: "The correct order is CADB: C introduces the two schemes launched, A gives K. Gilt's return, D gives K 30's return, and B concludes with the intent to do even better.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 23,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. Interested candidates should send their detailed bio datas to the following address within seven days.<br>B. Axel, the readymade garment division of Silky Silk Mills Ltd., is a leading player in the fashion industry.<br>C. Marketing executive — whose job will include interacting with corporate clients and procuring orders.<br>D. In our march towards the future, we are looking for a dynamic person for the following position.",
+    options: { a: "BDCA", b: "BCDA", c: "BADC", d: "DBAC" },
+    correctAnswer: "a",
+    explanation: "The correct order is BDCA: B introduces the company, D announces the job requirement, C specifies the position, and A gives application instructions.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 24,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. Bill Austin belongs to a profession as rare as those objects he delicately deals with, clocks.<br>B. The world of a collector is romantic, rarefied, revolving around priceless antiques.<br>C. His life could fill a book with enough more for many a sequel.<br>D. It is always a pleasure meeting Austin.",
+    options: { a: "BADC", b: "BCDA", c: "DBAC", d: "ABCD" },
+    correctAnswer: "a",
+    explanation: "The correct order is BADC: B sets the romantic world of collecting, A introduces Bill Austin and his rare profession, D expresses the pleasure of meeting him, and C notes his remarkable life story.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 25,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. This enables member countries to work together in an atmosphere of greater trust and understanding than generally prevails among nations.<br>B. It is also a 'family' of nations, originally linked together in the British Empire.<br>C. It now concentrates on building the common heritage in language, culture, law and education.<br>D. The Commonwealth is an association of governments set up so that member countries can support each other.",
+    options: { a: "DBCA", b: "DBAC", c: "DABC", d: "ABCD" },
+    correctAnswer: "a",
+    explanation: "The correct order is DBCA: D defines the Commonwealth, B notes its family-like origins, C describes its current focus, and A explains the resulting atmosphere of trust.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 26,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. There is a danger of a bomb wiping out a whole continent.<br>B. The threat from the Taliban is great.<br>C. India must start a world campaign against terrorism.<br>D. Hence, disarmament is a must.",
+    options: { a: "CBDA", b: "ABCD", c: "CDAB", d: "CBAD" },
+    correctAnswer: "d",
+    explanation: "The correct order is CBAD: C identifies the need to campaign against terrorism, B highlights the Taliban threat, A describes the existential danger of weapons, and D concludes that disarmament is necessary.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 27,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. These delays will only worsen unless remedial measures are soon adopted.<br>B. Legal delays have become a topic of routine discussion.<br>C. But no one has taken concrete steps to tackle them.<br>D. Although the Chief Justice of India has repeatedly urged the government to appoint more judges, there has been no response.",
+    options: { a: "ABCD", b: "BCDA", c: "DCBA", d: "CBDA" },
+    correctAnswer: "b",
+    explanation: "The correct order is BCDA: B introduces legal delays as a common topic, C notes that no action has been taken, D provides a specific example of the CJI's unheeded urging, and A warns of worsening delays.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 28,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. It also empowers us to visualize ourselves living our mission statement even in the most challenging circumstances, and to apply principles in effective ways in new situations.<br>B. It's the endowment that enables us to see ourselves and others differently and better than we are now.<br>C. It enables us to write a personal mission statement, set a goal, or plan a meeting.<br>D. Creative imagination is the power to envision a future state, to create something in our mind, and to solve problems synergistically.",
+    options: { a: "DACB", b: "BCDA", c: "DBCA", d: "ADBC" },
+    correctAnswer: "c",
+    explanation: "The correct order is DBCA: D defines creative imagination, B describes the endowment it gives us, C gives practical applications, and A extends to more challenging uses like living a mission statement.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 29,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. We may be alone or we may choose to be with friends or family.<br>B. But our most significant life is our deep inner life.<br>C. We have our private life, where we're away from the public.<br>D. In a sense, we each live three lives, we have our public life, where we interact with other people at work, in the community, at social events.",
+    options: { a: "ADBC", b: "BCDA", c: "ADCB", d: "DCAB" },
+    correctAnswer: "d",
+    explanation: "The correct order is DCAB: D introduces the idea of three lives and the public life, C introduces the private life, A elaborates on private life choices, and B concludes with the most significant — the inner life.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 30,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. Thus, everyone's task is unique as his specific opportunity to implement it.<br>B. Everyone has his own specific vocation in life.<br>C. Everyone must carry out a concrete assignment that demands fulfilment.<br>D. Therein he cannot be replaced, nor can his life be repeated.",
+    options: { a: "ACDB", b: "BCDA", c: "ABCD", d: "DCBA" },
+    correctAnswer: "b",
+    explanation: "The correct order is BCDA: B states everyone has a specific vocation, C elaborates that it demands fulfilment, D notes the irreplaceability of each person, and A concludes that the task and opportunity are uniquely theirs.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 31,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. For this reason, no week's experience would be complete without some kind of evaluation that enables us to process it.<br>B. It takes us back to the beginning of the process again, but with greater capacity.<br>C. Evaluation is the first and final step in a living and learning cycle that creates an upward spiral of growth.<br>D. The value of any week is not limited to what we do in it; it's also in what we learn from it and become as a result of it.",
+    options: { a: "ABCD", b: "DACB", c: "CDAB", d: "BCDA" },
+    correctAnswer: "b",
+    explanation: "The correct order is DACB: D establishes that value comes from learning, A states the need for evaluation, C explains evaluation as a cycle, and B describes how it leads to greater capacity.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 32,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. The communist regime in Russia has collapsed, and alongwith it, the communist government in East European nations has also collapsed.<br>B. The powerful communist lobby is no more, the tension of cold war has ended.<br>C. Yet, tension still exists in many parts of the world.<br>D. If these tensions lead to another world war, the whole world would be destroyed.",
+    options: { a: "ADBC", b: "CBDA", c: "BCDA", d: "ABCD" },
+    correctAnswer: "d",
+    explanation: "The correct order is ABCD: A describes the collapse of communism, B notes the end of Cold War tensions, C introduces the continuing tension elsewhere, and D warns of the catastrophic consequences.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 33,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. However, within nine years of the defeat of the Sikhs, the English regime was shaken by the widespread revolt of 1857 against the rule of East India Company.<br>B. Since then, they resorted to the policy of expansion and eventually established rule almost over the whole of India.<br>C. The English defeated the Sikhs in 1848 and apparently they had no opponent.<br>D. The victory of the English in the Battle of Plassey in 1757 laid the foundation of the political rule of the English who had come to India for trade.",
+    options: { a: "ABCD", b: "DBCA", c: "CBDA", d: "DCBA" },
+    correctAnswer: "d",
+    explanation: "The correct order is DCBA: D sets the foundation with the Battle of Plassey (1757), C mentions the defeat of the Sikhs (1848), B describes the expansion of English rule, and A introduces the 1857 revolt as a setback.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 34,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. After the British left India, the French started negotiations with the Indian Government.<br>B. All French colonies decided to merge with India, putting an end to French rule in India.<br>C. It was decided that the decision about territories under the French should be made on the basis of plebiscite.<br>D. The French had witnessed the plight of the British imperialism due to the thrust of the Indian National Movement.",
+    options: { a: "CADB", b: "CDBA", c: "DACB", d: "DBCA" },
+    correctAnswer: "c",
+    explanation: "The correct order is DACB: D describes the French witnessing British imperialism's plight, A states the French began negotiations after the British left, C notes the plebiscite decision, and B concludes with all French colonies merging with India.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 35,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. The Indian Tricolour replaced the Union Jack.<br>B. At midnight of August 14, 1947, that is on August 15, Independence was celebrated throughout India.<br>C. Pt. Nehru stepped into the office as the first Prime Minister of Independent India.<br>D. Transfer of power and Independence Day celebrations were held in Delhi.",
+    options: { a: "DBAC", b: "BDAC", c: "CBAD", d: "ABCD" },
+    correctAnswer: "b",
+    explanation: "The correct order is BDAC: B describes the midnight celebration, D specifies where celebrations were held, A notes the flag change, and C concludes with Nehru assuming office.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 36,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. Hitler became the dictator of Germany.<br>B. In 1934, Hitler assumed the Presidentship of Germany along with Chancellorship.<br>C. He abolished the Federal System of Government and established centralized government.<br>D. On becoming the Chancellor, Hitler concentrated all power in his hands.",
+    options: { a: "DBCA", b: "ABCD", c: "CBDA", d: "DCBA" },
+    correctAnswer: "a",
+    explanation: "The correct order is DBCA: D describes Hitler concentrating power as Chancellor, B notes the assumption of Presidentship in 1934, C describes abolishing the federal system, and A concludes with his becoming dictator.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 37,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. The number of the unemployed increased enormously.<br>B. Trade suffered, banks collapsed and industries were closed.<br>C. The national income of the United States started declining.<br>D. In 1929, the United States was hit by economic depression.",
+    options: { a: "DCBA", b: "BCDA", c: "ABCD", d: "DCAB" },
+    correctAnswer: "a",
+    explanation: "The correct order is DCBA: D introduces the 1929 depression, C describes the falling national income, B describes the collapse of trade, banks and industries, and A concludes with the surge in unemployment.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 38,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. It became necessary for the industrial nations of Europe to search for markets outside their own countries.<br>B. England was the birthplace of the industrial revolution.<br>C. Soon after England, industries and factories grew in France and Germany as well.<br>D. 19th-century Europe experienced a fast growth of industries.",
+    options: { a: "BDAC", b: "DBCA", c: "ABCD", d: "DBAC" },
+    correctAnswer: "b",
+    explanation: "The correct order is DBCA: D introduces the fast industrial growth in 19th-century Europe, B identifies England as the birthplace, C notes the spread to France and Germany, and A explains the resulting need for external markets.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 39,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. If your tour has been arranged by Rajasthan Tourism Development Corp., you can travel by jeep through a special route.<br>B. Ranthambore is best known for its wildlife sanctuary.<br>C. Here you can spot tigers and lions.<br>D. The other attraction is the Ranthamba Fort, which involves a steep climb.",
+    options: { a: "ADBC", b: "ABCD", c: "BCAD", d: "BCDA" },
+    correctAnswer: "d",
+    explanation: "The correct order is BCDA: B introduces Ranthambore's fame, C describes what you can spot, D mentions the other attraction (the fort), and A adds a specific touring tip for RTDC visitors.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 40,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. Don't forget that, ever.<br>B. Your footwear are being noticed just as much as your smile.<br>C. You can go in for a fourth elegant pair, which you can keep at the office.<br>D. Ideally, you should have at least three pairs of shoes, one for rigorous daily wear, another for special occasions and a third for sport or leisure activity.",
+    options: { a: "BADC", b: "DCBA", c: "BDCA", d: "DCAB" },
+    correctAnswer: "a",
+    explanation: "The correct order is BADC: B states that footwear is noticed as much as your smile, A emphasizes never forgetting this, D recommends having three pairs, and C suggests a fourth pair for the office.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 41,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. But in the secret war being waged on German morale in the 1940's, it was a deadly serious device.<br>B. The reviled rodents have always been a hazard to health, but rarely as lethal a threat as this.<br>C. It is hard to imagine Q, the gadgetry mastermind from the James Bond films, producing anything so crude.<br>D. The exploding rat, designed to wreak havoc in the enemy workplace, emerged for the first time last week from the dusty files of the public record office at Kier.",
+    options: { a: "CADB", b: "BCDA", c: "CDBA", d: "CBDA" },
+    correctAnswer: "c",
+    explanation: "The correct order is CDBA: C introduces the James Bond comparison, D reveals the exploding rat device, B contextualizes rats as health hazards, and A clarifies its deadly serious wartime purpose.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 42,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. Humans hardly look at every move in a position.<br>B. If a position contains 30 moves, a human would consider about five or six.<br>C. This is a highly efficient method, since it is likely that other moves are inferior.<br>D. However, this efficiency comes at a price.",
+    options: { a: "ABCD", b: "BACD", c: "DBAC", d: "ACDB" },
+    correctAnswer: "a",
+    explanation: "The correct order is ABCD: A states humans don't consider every move, B gives a specific example of how many they consider, C explains why this is efficient, and D introduces the downside of this efficiency.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 43,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. Personally I am very fond of strawberries and cream, but I have found that for some strange reason, fish prefer worms.<br>B. I thought about what they wanted.<br>C. I often went fishing up in Maine during summer.<br>D. So when I went fishing, I didn't think about what I wanted.",
+    options: { a: "DBAC", b: "CADB", c: "DABC", d: "ABCD" },
+    correctAnswer: "b",
+    explanation: "The correct order is CADB: C sets the scene of fishing in Maine, A reveals the author's personal preference (strawberries), D states he didn't think of his own wants, and B says he thought of what the fish wanted.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 44,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. Why did Carnegie pay a million dollars to Schwab?<br>B. One of the first people to be paid a salary of over a million dollars a year was Charles Schwab.<br>C. Schwab later left to take over the then troubled BCS and rebuild it into one of the most successful companies in the US.<br>D. He had been picked by Andrew Carnegie to become the first president of the USSC in 1921.",
+    options: { a: "BADC", b: "BDCA", c: "ABDC", d: "BACD" },
+    correctAnswer: "b",
+    explanation: "The correct order is BDCA: B introduces Schwab's remarkable salary, D explains Carnegie chose him as USSC president, C describes his later success at BCS, and A poses the rhetorical question about Carnegie's motivation.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 45,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. They worked from morning till late at night.<br>B. The women's work was very hard.<br>C. During the war there were no men in the village, so the women had to do everything.<br>D. They were anaemic, exhausted and had stiff shoulders.",
+    options: { a: "ABCD", b: "CBAD", c: "DCAB", d: "ABDC" },
+    correctAnswer: "b",
+    explanation: "The correct order is CBAD: C gives the wartime context (no men), B states the work was very hard, A describes their long hours, and D describes their physical condition as a result.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 46,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. A digital delivery system in digital cameras will allow theatres to switch films with a phone call, saving millions per movie on negative costs.<br>B. These digital images will be so interactive that they will allow a moviemaker to download a bit character or the Roman Colosseum for negligible cost.<br>C. Moreover, within five years, digital images of actors and backgrounds will be interactive.<br>D. Soon the technology of digital cameras that can shoot in natural light will remove the film for filmmaking.",
+    options: { a: "CDBA", b: "CDAB", c: "DACB", d: "ADCB" },
+    correctAnswer: "c",
+    explanation: "The correct order is DACB: D introduces the future of digital cameras removing film, A describes the digital delivery system benefit, C adds the further development of interactive images, and B elaborates on how interactive those images will be.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 47,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. Many people believe that calcium-rich foods will make their nails stronger.<br>B. But actually, Calcium plays little or no part in strengthening them.<br>C. This is because nails are made of a protein called keratin.<br>D. The small white flecks that appear on nails are thought to be the result of a lack of keratin.",
+    options: { a: "ACBD", b: "ADBC", c: "ABCD", d: "CABD" },
+    correctAnswer: "a",
+    explanation: "The correct order is ACBD: A states the common belief about calcium and nails, C explains what nails are actually made of (keratin), B corrects the myth about calcium, and D adds information about white flecks and keratin.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 48,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. His first task for that day was to change an air-vent pipe on top of the tank.<br>B. On stepping on its roof, he felt heat of the radiation through the soles of his thick work boots despite the tank's layer of insulation.<br>C. Puzzled he swung around and saw steam hissing from a breather pipe in the centre of the tank, a sign that pressure was mounting inside.<br>D. Suddenly, he heard a roaring sound.",
+    options: { a: "CDBA", b: "ACDB", c: "ABCD", d: "CADB" },
+    correctAnswer: "c",
+    explanation: "The correct order is ABCD: A sets the task, B describes the alarming heat felt on the roof, C describes the puzzling sight of steam hissing, and D adds the sudden roaring sound — building suspense progressively.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 49,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. The government gave them food — huge pots of rice, vegetables and fruits.<br>B. I started the first feeding centre for children in a converted motorshed.<br>C. All I had to do was organise the children.<br>D. Children were running wild.",
+    options: { a: "ABDC", b: "DABC", c: "DCAB", d: "ABCD" },
+    correctAnswer: "b",
+    explanation: "The correct order is DABC: D describes the chaotic situation with children, A notes the government was providing food, B describes starting the feeding centre, and C concludes that the narrator's role was to organise the children.",
+    marked: false, userAnswer: null
+  },
+  {
+    id: 50,
+    section: "Paragraph Jumbles",
+    text: "<strong>Directions:</strong> Arrange the sentences A, B, C, and D to make a sensible and coherent paragraph.<br><br>A. Author, socialist and a mother of four, Locke is a historian of the social history of her country for the past half century.<br>B. From advocating rights for the unemployed to the legalization of family planning, Locke's commitment to social justice is continuous.<br>C. Her interest in Maori culture led her to study and become fluent in the Maori language.<br>D. This enabled her to contribute to a better understanding of Maori culture and history.",
+    options: { a: "ABCD", b: "CADB", c: "CABD", d: "ABDC" },
+    correctAnswer: "a",
+    explanation: "The correct order is ABCD: A introduces Locke as an author, socialist, and historian, B describes her commitment to social justice, C notes her interest in Maori culture and learning the language, and D describes the resulting contribution to Maori history.",
+    marked: false, userAnswer: null
+  }
+],
+    duration: 60 * 60,
+    markingScheme: { correct: 5, incorrect: -1 }
+};
+
+/* ============================================================
+   TEST ENGINE
+   ============================================================ */
+let currentQuestionIndex = 0;
+let timeLeft = mockTest.duration;
+let timer;
+let testSubmitted = false;
+let testStarted = false;
+
+const timerEl = document.querySelector('.timer');
+const questionTextEl = document.getElementById('question-text');
+const optionsEl = document.getElementById('options-container');
+const qNumEl = document.getElementById('q-number');
+const curQNumEl = document.getElementById('current-q-number');
+const progressFill = document.getElementById('test-progress');
+const progressPct = document.getElementById('progress-percent');
+const paletteGrid = document.getElementById('question-palette-grid');
+const answeredCountEl = document.getElementById('answered-count');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const markBtn = document.getElementById('mark-btn');
+const submitBtn = document.getElementById('submit-test-btn');
+const modal = document.getElementById('results-modal');
+const closeModal = document.getElementById('close-modal');
+const reviewBtn = document.getElementById('review-btn');
+
+function initTest() {
+    renderPalette();
+    renderQuestion();
+    startTimer();
+    updateProgress();
+    renderLegend(false);
+    prevBtn.addEventListener('click', () => { if (currentQuestionIndex > 0) { currentQuestionIndex--; renderQuestion(); } });
+    nextBtn.addEventListener('click', () => { if (currentQuestionIndex < mockTest.questions.length - 1) { currentQuestionIndex++; renderQuestion(); } });
+    markBtn.addEventListener('click', toggleMark);
+    submitBtn.addEventListener('click', () => { if (confirm('Submit the test?')) submitTest(); });
+    closeModal.addEventListener('click', () => modal.classList.remove('show'));
+    reviewBtn.addEventListener('click', () => { modal.classList.remove('show'); currentQuestionIndex = 0; renderQuestion(); });
+    document.getElementById('download-pdf-btn').addEventListener('click', generatePDF);
+    document.getElementById('modal-result-btn').addEventListener('click', () => { modal.classList.remove('show'); document.getElementById('stream-picker-overlay').style.display = 'flex'; });
+    document.getElementById('pdf-action-btn').addEventListener('click', generatePDF);
+    document.getElementById('result-action-btn').addEventListener('click', () => { document.getElementById('stream-picker-overlay').style.display = 'flex'; });
+}
+
+function startTimer() {
+    updateTimerDisplay();
+    timer = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) { clearInterval(timer); submitTest(); }
+        if (timeLeft === 300) alert('⚠️ Only 5 minutes remaining!');
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const h = Math.floor(timeLeft / 3600);
+    const m = Math.floor((timeLeft % 3600) / 60);
+    const s = timeLeft % 60;
+    const str = `${pad(h)}:${pad(m)}:${pad(s)}`;
+    timerEl.textContent = str;
+    const mob = document.querySelector('.mob-timer');
+    if (mob) mob.textContent = str;
+}
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function renderQuestion() {
+    const q = mockTest.questions[currentQuestionIndex];
+    document.getElementById('current-section').textContent = q.section;
+    document.getElementById('section-badge').textContent = '📘 ' + q.section;
+    questionTextEl.textContent = q.text;
+    qNumEl.textContent = q.id;
+    curQNumEl.textContent = q.id;
+    optionsEl.innerHTML = '';
+
+    for (const [key, val] of Object.entries(q.options)) {
+        const div = document.createElement('div');
+        div.className = 'option';
+        if (testSubmitted) {
+            if (key === q.correctAnswer) div.classList.add('correct');
+            else if (key === q.userAnswer) div.classList.add('incorrect');
+        } else {
+            if (key === q.userAnswer) div.classList.add('selected');
+        }
+        if (!testSubmitted) {
+            div.addEventListener('click', () => {
+                optionsEl.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+                div.classList.add('selected');
+                q.userAnswer = key;
+                updatePalette();
+                updateProgress();
+            });
+        }
+        const letter = document.createElement('div');
+        letter.className = 'opt-letter';
+        letter.textContent = key.toUpperCase();
+        const text = document.createElement('span');
+        text.className = 'opt-text';
+        text.textContent = val;
+        if (testSubmitted) {
+            if (key === q.correctAnswer) {
+                const ind = document.createElement('span');
+                ind.className = 'opt-indicator correct-indicator';
+                ind.textContent = ' ✓ Correct';
+                text.appendChild(ind);
+            } else if (key === q.userAnswer) {
+                const ind = document.createElement('span');
+                ind.className = 'opt-indicator incorrect-indicator';
+                ind.textContent = ' ✗ Your Answer';
+                text.appendChild(ind);
+            }
+        }
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'q-opt';
+        radio.value = key;
+        radio.checked = q.userAnswer === key;
+        div.appendChild(radio);
+        div.appendChild(letter);
+        div.appendChild(text);
+        optionsEl.appendChild(div);
+    }
+
+    if (testSubmitted && q.explanation) {
+        const exp = document.createElement('div');
+        exp.className = 'explanation-box';
+        exp.innerHTML = `<strong>Explanation:</strong> ${q.explanation}`;
+        optionsEl.appendChild(exp);
+    }
+
+    markBtn.classList.toggle('marked', q.marked);
+    markBtn.textContent = q.marked ? '🔖 Marked' : '🔖 Mark';
+    prevBtn.style.visibility = currentQuestionIndex === 0 ? 'hidden' : 'visible';
+    nextBtn.style.visibility = currentQuestionIndex === mockTest.questions.length - 1 ? 'hidden' : 'visible';
+    updatePalette();
+}
+
+function toggleMark() {
+    const q = mockTest.questions[currentQuestionIndex];
+    q.marked = !q.marked;
+    markBtn.classList.toggle('marked', q.marked);
+    markBtn.textContent = q.marked ? '🔖 Marked' : '🔖 Mark';
+    updatePalette();
+}
+
+function renderPalette() {
+    paletteGrid.innerHTML = '';
+    mockTest.questions.forEach((q, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'palette-btn';
+        btn.textContent = q.id;
+        btn.addEventListener('click', () => { currentQuestionIndex = i; renderQuestion(); });
+        paletteGrid.appendChild(btn);
+    });
+    updatePalette();
+}
+
+function updatePalette() {
+    const btns = paletteGrid.querySelectorAll('.palette-btn');
+    mockTest.questions.forEach((q, i) => {
+        const btn = btns[i];
+        btn.className = 'palette-btn';
+        if (testSubmitted) {
+            if (!q.userAnswer) btn.classList.add('review-unanswered');
+            else if (q.userAnswer === q.correctAnswer) btn.classList.add('review-correct');
+            else btn.classList.add('review-wrong');
+        } else {
+            if (q.userAnswer) btn.classList.add('answered');
+            if (q.marked) btn.classList.add('marked');
+        }
+        if (i === currentQuestionIndex) btn.classList.add('current');
+    });
+    const ans = mockTest.questions.filter(q => q.userAnswer).length;
+    answeredCountEl.textContent = `${ans}/${mockTest.questions.length}`;
+}
+
+function updateProgress() {
+    const ans = mockTest.questions.filter(q => q.userAnswer).length;
+    const pct = Math.round((ans / mockTest.questions.length) * 100);
+    progressFill.style.width = pct + '%';
+    progressPct.textContent = pct + '%';
+}
+
+function renderLegend(reviewMode) {
+    const leg = document.getElementById('palette-legend');
+    if (!leg) return;
+    if (reviewMode) {
+        leg.innerHTML = `
+        <div class="leg-label"><div class="leg-dot" style="background:#22c55e;"></div>Correct</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#ef4444;"></div>Wrong</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#60a5fa;"></div>Unanswered</div>`;
+    } else {
+        leg.innerHTML = `
+        <div class="leg-label"><div class="leg-dot" style="background:#bbf7d0;border:1px solid #22c55e;"></div>Answered</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#bae6fd;border:1px solid #0ea5e9;"></div>Marked</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#fee2e2;border:1px solid #fca5a5;"></div>Unanswered</div>
+        <div class="leg-label"><div class="leg-dot" style="background:white;border:2px solid #1a6fc4;"></div>Current</div>`;
+    }
+}
+
+function submitTest() {
+    if (testSubmitted) return;
+    testSubmitted = true;
+    clearInterval(timer);
+
+    let correct = 0, incorrect = 0, unanswered = 0;
+    mockTest.questions.forEach(q => {
+        if (!q.userAnswer) unanswered++;
+        else if (q.userAnswer === q.correctAnswer) correct++;
+        else incorrect++;
+    });
+
+    const total = mockTest.questions.length;
+    const maxScore = total * mockTest.markingScheme.correct;
+    const score = (correct * mockTest.markingScheme.correct) + (incorrect * mockTest.markingScheme.incorrect);
+    const pct = ((score / maxScore) * 100).toFixed(2);
+    const acc = correct + incorrect > 0 ? ((correct / (correct + incorrect)) * 100).toFixed(2) : '0';
+
+const resultData = {
+        studentId: localStorage.getItem('ts_student_id') || '',
+        name: localStorage.getItem('cbtUserName') || 'Unknown',
+        subject: SUBJECT_ID,
+        chapter: CHAPTER_ID,
+        date: new Date().toISOString(),
+        score, maxScore, correct,
+        wrong: incorrect,
+        skipped: unanswered,
+        totalQ: total,
+        percentage: parseFloat(pct),
+        accuracy: parseFloat(acc),
+        timeTaken: mockTest.duration - timeLeft
+    };
+
+    const key = `thunderstudy_result_${SUBJECT_ID}_${CHAPTER_ID}`;
+    localStorage.setItem(key, JSON.stringify(resultData));
+
+    const GS_URL = "https://script.google.com/macros/s/AKfycbyEsrvdSuRh06TIKPK0ozP-jQNjqHO8PaIeBcW5r45aGdr4H3ZVFHpKMm3xaDHrYmqX/exec";
+    fetch(GS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(resultData)
+    }).then(() => {
+        localStorage.setItem(`synced_${SUBJECT_ID}_${CHAPTER_ID}`, "true");
+    }).catch(err => console.error("Sync failed", err));
+
+    const idxKey = `thunderstudy_index_${SUBJECT_ID}`;
+    let idx = [];
+    try { idx = JSON.parse(localStorage.getItem(idxKey) || '[]'); } catch(e) {}
+    if (!idx.includes(CHAPTER_ID)) idx.push(CHAPTER_ID);
+    localStorage.setItem(idxKey, JSON.stringify(idx));
+
+    document.getElementById('correct-answers').textContent = correct;
+    document.getElementById('incorrect-answers').textContent = incorrect;
+    document.getElementById('unanswered').textContent = unanswered;
+    document.getElementById('total-score').textContent = score;
+    document.getElementById('percentage').textContent = pct;
+    document.getElementById('accuracy').textContent = acc;
+    modal.classList.add('show');
+
+    renderQuestion();
+    renderLegend(true);
+
+    // Swap submit rows
+    document.getElementById('submit-row-before').style.display = 'none';
+    document.getElementById('submit-row-after').style.display = 'flex';
+}
+
+/* Visibility change guard */
+document.addEventListener("visibilitychange", () => {
+    if (!testStarted || testSubmitted) return;
+    if (document.hidden) startCountdown('tab');
+    else cancelCountdown();
+});
+
+/* Arrow key nav */
+document.addEventListener('keydown', e => {
+    if (document.getElementById('test-screen').style.display === 'none') return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { if (currentQuestionIndex < mockTest.questions.length - 1) { currentQuestionIndex++; renderQuestion(); } }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { if (currentQuestionIndex > 0) { currentQuestionIndex--; renderQuestion(); } }
+});
+</script>
+
+<script>
+function startMock() {
+    const savedName = localStorage.getItem('cbtUserName') || '';
+    const savedSID = localStorage.getItem('ts_student_id') || '';
+    const inputName = document.getElementById('username-input').value.trim();
+
+    if (!savedName && !inputName) {
+        alert("⚠️ Please enter your name to continue!");
+        document.getElementById('username-input').focus();
+        return;
+    }
+
+    if (!savedName && inputName) {
+        localStorage.setItem("cbtUserName", inputName);
+    }
+
+    if (!savedSID) {
+        const goToDash = confirm("⚠️ Student ID not found!\n\nYou must have a Student ID to start the mock.\n\nClick OK to open Dashboard to generate one, or Cancel to stay here.");
+        if (goToDash) {
+            window.open('https://commercesehoga.github.io/dashboard/', '_blank');
+        }
+        return;
+    }
+
+    enterFullscreen();
+    document.getElementById('start-screen').style.display = 'none';
+    document.getElementById('instruction-screen').style.display = 'block';
+}
+
+    window.addEventListener('DOMContentLoaded', () => {
+    const savedName = localStorage.getItem('cbtUserName') || '';
+    const savedSID = localStorage.getItem('ts_student_id') || '';
+
+    if (savedName) {
+        const inp = document.getElementById('username-input');
+        if (inp) {
+            inp.value = savedName;
+            inp.style.background = 'rgba(79,110,247,.07)';
+            inp.style.borderColor = '#4f6ef7';
+            inp.style.color = '#4f6ef7';
+            inp.style.fontWeight = 'bold';
+            inp.setAttribute('readonly', true);
+            inp.insertAdjacentHTML('afterend',
+                `<div style="font-size:11px; color:#4f6ef7; font-weight:700; margin-top:5px;">
+                    ✅ Verified Dashboard Profile
+                </div>`
+            );
+        }
+    }
+
+    if (savedSID) {
+        const sidArea = document.getElementById('sid-display-area');
+        const sidVal = document.getElementById('sid-value');
+        if (sidArea && sidVal) {
+            sidArea.style.display = 'block';
+            sidVal.textContent = savedSID;
+        }
+    }
+});
+
+document.getElementById('dark-toggle').addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const dark = document.body.classList.contains('dark-mode');
+    document.getElementById('toggle-icon').textContent = dark ? '☀️' : '🌙';
+    document.getElementById('toggle-label').textContent = dark ? 'Light' : 'Dark';
+});
+
+const checkbox = document.getElementById('agree-checkbox');
+const startTestBtn = document.getElementById('start-test-btn');
+checkbox.addEventListener('change', () => {
+    startTestBtn.disabled = !checkbox.checked;
+});
+startTestBtn.addEventListener('click', () => {
+    if (!checkbox.checked) { alert('Please agree to instructions!'); return; }
+    document.getElementById('instruction-screen').style.display = 'none';
+    document.getElementById('test-screen').style.display = 'block';
+    const name = localStorage.getItem('cbtUserName') || 'Student';
+    const sid = localStorage.getItem('ts_student_id') || 'N/A';
+    document.getElementById('user-name-display').textContent = '👤 ' + name;
+    if (document.getElementById('display-user-name')) document.getElementById('display-user-name').textContent = name;
+    if (document.getElementById('display-user-sid')) document.getElementById('display-user-sid').textContent = sid;
+    const mob = document.getElementById('mobile-name-display');
+    if (mob) mob.textContent = '👤 ' + name + ' | ' + sid;
+    testStarted = true;
+    enterFullscreen();
+    initTest();
+});
+
+function enterFullscreen() {
+    const el = document.documentElement;
+    try {
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+    } catch(e) {}
+}
+
+['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange'].forEach(evt => document.addEventListener(evt, onFSChange));
+
+function isFullscreen() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement);
+}
+function onFSChange() {
+    if (!testStarted || testSubmitted) return;
+    if (document.getElementById('test-screen').style.display === 'none') return;
+    if (!isFullscreen()) startCountdown('fullscreen');
+    else cancelCountdown();
+}
+
+let cdTimer = null, cdSecs = 0;
+function startCountdown(reason) {
+    if (!testStarted || testSubmitted || cdTimer) return;
+    cdSecs = reason === 'tab' ? 2 : 5;
+    const msg = reason === 'tab' ? '⚠️ Tab switched!' : '⚠️ Exited fullscreen!';
+    const hint = reason === 'tab' ? 'Return to this tab to cancel.' : 'Click below to return to fullscreen.';
+    showOverlay(msg, hint, cdSecs, reason === 'fullscreen');
+    cdTimer = setInterval(() => { cdSecs--; updateOverlay(cdSecs); if (cdSecs <= 0) { cancelCountdown(); submitTest(); } }, 1000);
+}
+function cancelCountdown() {
+    if (cdTimer) { clearInterval(cdTimer); cdTimer = null; }
+    hideOverlay();
+}
+function showOverlay(msg, hint, secs, btn) {
+    let ov = document.getElementById('sec-overlay');
+    if (!ov) { ov = document.createElement('div'); ov.id = 'sec-overlay'; ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:999999;display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:DM Sans,sans-serif;color:#fff;text-align:center;padding:24px;'; document.body.appendChild(ov); }
+    ov.innerHTML = `<div style="font-size:56px;margin-bottom:12px;">🚨</div><div style="font-size:22px;font-weight:800;margin-bottom:8px;">${msg}</div><div style="font-size:15px;color:#fbbf24;margin-bottom:18px;">${hint}</div><div style="font-size:14px;color:#e0e0e0;margin-bottom:4px;">Auto-submitting in</div><div id="ov-count" style="font-size:72px;font-weight:900;color:#f87171;line-height:1;">${secs}</div><div style="font-size:13px;color:#9ca3af;margin-top:4px;">seconds</div>${btn?`<button onclick="enterFullscreen()" style="margin-top:22px;padding:12px 32px;border-radius:30px;border:none;background:linear-gradient(135deg,#22c55e,#15803d);color:#fff;font-size:16px;font-weight:700;cursor:pointer;">🔲 Return to Fullscreen</button>`:''}`;
+    ov.style.display = 'flex';
+}
+function updateOverlay(n) { const el = document.getElementById('ov-count'); if (el) el.textContent = n; }
+function hideOverlay() { const ov = document.getElementById('sec-overlay'); if (ov) ov.style.display = 'none'; }
+</script>
+
+<script>
+function generatePDF() {
+    const name = localStorage.getItem('cbtUserName') || 'Student';
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'});
+    const timeStr = now.toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'});
+
+    let correct=0,incorrect=0,unanswered=0;
+    mockTest.questions.forEach(q => {
+        if (!q.userAnswer) unanswered++;
+        else if (q.userAnswer === q.correctAnswer) correct++;
+        else incorrect++;
+    });
+    const score = (correct*5)+(incorrect*-1);
+    const maxScore = mockTest.questions.length*5;
+    const pct = ((score/maxScore)*100).toFixed(1);
+    const lbl = {a:'A',b:'B',c:'C',d:'D'};
+
+    let qHTML = '';
+    mockTest.questions.forEach((q,i) => {
+        const ok = q.userAnswer === q.correctAnswer;
+        const wrong = q.userAnswer && !ok;
+        const skip = !q.userAnswer;
+        const statusColor = ok?'#059669':wrong?'#dc2626':'#9ca3af';
+        const statusLabel = ok?'✓ Correct':wrong?'✗ Wrong':'— Skipped';
+        const rowBg = ok?'#f0fdf4':wrong?'#fef2f2':'#fafafa';
+        let optsHTML='';
+        for (const [k,v] of Object.entries(q.options)) {
+            const isRight=k===q.correctAnswer, isUser=k===q.userAnswer;
+            let bg='transparent',fw='normal',pre='';
+            if(isRight){bg='#dcfce7';fw='bold';pre='✓ ';}
+            if(isUser&&!isRight){bg='#fee2e2';fw='bold';pre='✗ ';}
+            optsHTML+=`<div style="display:flex;gap:8px;padding:4px 8px;border-radius:4px;background:${bg};font-weight:${fw};font-size:12px;margin:2px 0;"><span style="min-width:18px;font-weight:700;">${lbl[k]}.</span><span>${pre}${v}</span></div>`;
+        }
+        const yourAns = skip?'<span style="color:#9ca3af;">Not Attempted</span>':`<span style="color:${ok?'#059669':'#dc2626'};font-weight:bold;">${lbl[q.userAnswer]}. ${q.options[q.userAnswer]}</span>`;
+        qHTML+=`<div style="margin-bottom:16px;padding:14px;border-radius:8px;background:${rowBg};border:1px solid #e5e7eb;page-break-inside:avoid;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                <div style="font-weight:700;font-size:13px;color:#1e293b;">Q${i+1}. ${q.text}</div>
+                <div style="font-weight:700;font-size:12px;color:${statusColor};white-space:nowrap;margin-left:12px;">${statusLabel}</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:8px;">${optsHTML}</div>
+            <div style="font-size:12px;border-top:1px solid #e5e7eb;padding-top:6px;">
+                Your answer: ${yourAns}&nbsp;&nbsp;
+                Correct: <span style="color:#059669;font-weight:bold;">${lbl[q.correctAnswer]}. ${q.options[q.correctAnswer]}</span>
+            </div>
+        </div>`;
+    });
+
+    const scoreColor = pct>=60?'#059669':pct>=35?'#d97706':'#dc2626';
+    const html=`<div style="max-width:780px;margin:0 auto;font-family:Arial,sans-serif;color:#111;">
+        <div style="background:linear-gradient(135deg,#1a6fc4,#0ea5e9);color:white;padding:20px 24px;border-radius:10px 10px 0 0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                <div><div style="font-size:22px;font-weight:800;">⚡ Thunderstudy CBT</div><div style="font-size:13px;opacity:0.85;margin-top:3px;">English Result Report</div></div>
+                <div style="text-align:right;font-size:12px;opacity:0.85;"><div>📅 ${dateStr} 🕐 ${timeStr}</div><div>👤 ${name}</div></div>
+            </div>
+        </div>
+        <div style="background:#f0f6ff;border:1px solid #bfdbfe;border-top:none;padding:16px 24px;margin-bottom:20px;border-radius:0 0 10px 10px;">
+            <div style="display:flex;flex-wrap:wrap;gap:12px;">
+                <div style="background:white;border:1px solid #dbeafe;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">SCORE</div><div style="font-size:24px;font-weight:800;color:${scoreColor};">${score}<span style="font-size:14px;color:#6b7280;">/${maxScore}</span></div></div>
+                <div style="background:white;border:1px solid #dbeafe;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">PERCENTAGE</div><div style="font-size:24px;font-weight:800;color:${scoreColor};">${pct}%</div></div>
+                <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#059669;">CORRECT</div><div style="font-size:24px;font-weight:800;color:#059669;">${correct}</div></div>
+                <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#dc2626;">WRONG</div><div style="font-size:24px;font-weight:800;color:#dc2626;">${incorrect}</div></div>
+                <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">SKIPPED</div><div style="font-size:24px;font-weight:800;color:#6b7280;">${unanswered}</div></div>
+            </div>
+        </div>
+        <div style="font-size:15px;font-weight:700;color:#1a6fc4;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #1a6fc4;">📋 Answer Key</div>
+        ${qHTML}
+        <div style="text-align:center;margin-top:20px;padding:12px;background:#f0f6ff;border-radius:8px;font-size:12px;color:#6b7280;">Generated by <b>Thunderstudy CBT</b> | t.me/thunderstudy_official | ${dateStr}</div>
+    </div>`;
+
+    const w = window.open('','_blank','width=950,height=700,scrollbars=yes');
+    if (!w) { alert('Popup blocked! Allow popups and retry.'); return; }
+    w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"/><title>Thunderstudy_English_${name}</title><style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Arial,sans-serif;background:#fff;padding:20px;}@media print{.no-print{display:none!important;}}.print-btn{display:block;margin:0 auto 20px;padding:12px 36px;background:linear-gradient(135deg,#1a6fc4,#0ea5e9);color:white;font-size:16px;font-weight:700;border:none;border-radius:30px;cursor:pointer;}</style></head><body><button class="print-btn no-print" onclick="window.print()">🖨️ Print / Save PDF</button>${html}</body></html>`);
+    w.document.close(); w.focus();
+}
+</script>
+
+</body>
+</html>
