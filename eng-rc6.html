@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thunderstudy CBT — Reading Comprehension</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+const SUBJECT_ID  = "eng";
+const CHAPTER_ID  = "eng-rc6";
+</script>
+
+<style>
+:root {
+    --primary: #1a6fc4;
+    --primary-dark: #0d4f96;
+    --primary-light: #4a9de8;
+    --accent: #0ea5e9;
+    --accent2: #38bdf8;
+    --white: #ffffff;
+    --off-white: #f0f6ff;
+    --light-blue: #dbeafe;
+    --mid-blue: #bfdbfe;
+    --border: #bfdbfe;
+    --text-dark: #0f1e3d;
+    --text-mid: #2d4a7a;
+    --text-muted: #6b8ab5;
+    --correct: #059669;
+    --correct-bg: #ecfdf5;
+    --incorrect: #dc2626;
+    --incorrect-bg: #fef2f2;
+    --answered: #22c55e;
+    --marked: #0ea5e9;
+    --unanswered: #f97316;
+    --shadow: 0 4px 24px rgba(26,111,196,0.10);
+    --shadow-lg: 0 8px 40px rgba(26,111,196,0.16);
+
+    /* Dark mode vars */
+    --dm-bg: #0b1526;
+    --dm-surface: #111e35;
+    --dm-surface2: #172340;
+    --dm-border: #1e3460;
+    --dm-text: #e2eeff;
+    --dm-muted: #7ba4d4;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--off-white);
+    color: var(--text-dark);
+    min-height: 100vh;
+    display: flex;
+    transition: background 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+    background: var(--dm-bg);
+    color: var(--dm-text);
+}
+
+/* ===== START SCREEN ===== */
+#start-screen {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--white);
+    display: flex; flex-direction: column; align-items: center;
+    overflow-y: auto; padding: 0 20px 50px;
+    transition: background 0.3s;
+}
+
+body.dark-mode #start-screen { background: var(--dm-bg); }
+
+.start-hero {
+    width: 100%; max-width: 600px;
+    padding: 48px 0 0;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+}
+
+.start-logo {
+    width: 68px; height: 68px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 8px 28px rgba(26,111,196,0.35);
+    margin-bottom: 20px;
+    animation: floatLogo 3s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.start-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 6px;
+}
+body.dark-mode .start-brand { color: var(--accent2); }
+
+.start-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px; font-weight: 800;
+    color: var(--text-dark);
+    line-height: 1.15;
+    margin-bottom: 10px;
+}
+body.dark-mode .start-title { color: var(--dm-text); }
+
+.start-sub {
+    font-size: 16px; color: var(--text-muted);
+    margin-bottom: 8px;
+}
+body.dark-mode .start-sub { color: var(--dm-muted); }
+
+.tg-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, #0088cc, #006fa8);
+    color: white; text-decoration: none;
+    padding: 10px 24px; border-radius: 40px;
+    font-size: 14px; font-weight: 700;
+    box-shadow: 0 4px 16px rgba(0,136,204,0.4);
+    transition: transform 0.18s, box-shadow 0.18s;
+    margin: 16px 0 28px;
+}
+.tg-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,136,204,0.55); color: white; }
+
+.info-card {
+    width: 100%; max-width: 500px;
+    background: var(--light-blue);
+    border: 1.5px solid var(--mid-blue);
+    border-radius: 16px;
+    padding: 22px 24px;
+    text-align: left;
+    margin-bottom: 24px;
+}
+body.dark-mode .info-card { background: var(--dm-surface); border-color: var(--dm-border); }
+
+.info-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--primary); margin-bottom: 14px;
+}
+body.dark-mode .info-card h3 { color: var(--accent2); }
+
+.info-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+
+.info-pill {
+    background: white;
+    border-radius: 10px; padding: 10px 14px;
+    font-size: 13px; color: var(--text-mid);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+}
+body.dark-mode .info-pill { background: var(--dm-surface2); border-color: var(--dm-border); color: var(--dm-text); }
+
+.info-pill strong { color: var(--primary-dark); font-weight: 700; }
+body.dark-mode .info-pill strong { color: var(--accent2); }
+
+.name-input {
+    width: 100%; max-width: 380px;
+    padding: 14px 20px;
+    border: 2px solid var(--mid-blue);
+    border-radius: 50px;
+    font-size: 16px; font-family: 'DM Sans', sans-serif;
+    text-align: center;
+    background: white; color: var(--text-dark);
+    outline: none; transition: border 0.2s, box-shadow 0.2s;
+    margin-bottom: 18px;
+}
+.name-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(26,111,196,0.12); }
+body.dark-mode .name-input { background: var(--dm-surface); color: var(--dm-text); border-color: var(--dm-border); }
+
+.start-btns { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; max-width: 340px; }
+
+.s-btn {
+    width: 100%; padding: 14px 0;
+    border: none; border-radius: 50px; cursor: pointer;
+    font-size: 16px; font-weight: 700; font-family: 'DM Sans', sans-serif;
+    transition: transform 0.18s, box-shadow 0.18s;
+    letter-spacing: 0.3px;
+}
+.s-btn:hover { transform: translateY(-3px); }
+
+.s-btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; box-shadow: 0 6px 20px rgba(26,111,196,0.4);
+}
+.s-btn-primary:hover { box-shadow: 0 10px 28px rgba(26,111,196,0.55); }
+
+.s-btn-green {
+    background: linear-gradient(135deg, #22c55e, #15803d);
+    color: white; box-shadow: 0 6px 20px rgba(34,197,94,0.35);
+}
+.s-btn-green:hover { box-shadow: 0 10px 28px rgba(34,197,94,0.5); }
+
+.s-btn-purple {
+    background: linear-gradient(135deg, #7c3aed, #4c1d95);
+    color: white; box-shadow: 0 6px 20px rgba(124,58,237,0.35);
+}
+.s-btn-purple:hover { box-shadow: 0 10px 28px rgba(124,58,237,0.5); }
+
+.dark-toggle {
+    position: absolute; top: 16px; right: 16px; z-index: 10000;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; border: none; border-radius: 40px;
+    padding: 8px 18px; font-size: 14px; font-weight: 600;
+    cursor: pointer; display: flex; align-items: center; gap: 7px;
+    box-shadow: 0 4px 14px rgba(26,111,196,0.4);
+    transition: background 0.3s, transform 0.2s;
+    font-family: 'DM Sans', sans-serif;
+}
+.dark-toggle:hover { transform: scale(1.05); }
+body.dark-mode .dark-toggle { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 4px 14px rgba(245,158,11,0.4); }
+
+/* ===== INSTRUCTION SCREEN ===== */
+#instruction-screen {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--white); display: none; overflow-y: auto; padding: 40px 20px;
+}
+body.dark-mode #instruction-screen { background: var(--dm-bg); }
+
+.instr-wrap { max-width: 700px; margin: 0 auto; }
+
+.instr-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 800; color: var(--primary);
+    margin-bottom: 24px; text-align: center;
+}
+body.dark-mode .instr-title { color: var(--accent2); }
+
+.instr-box {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 1.5px solid var(--mid-blue); border-radius: 16px; padding: 28px;
+}
+body.dark-mode .instr-box { background: linear-gradient(135deg, var(--dm-surface), var(--dm-surface2)); border-color: var(--dm-border); }
+
+.instr-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; color: var(--primary);
+    border-left: 4px solid var(--primary); padding-left: 12px; margin-bottom: 16px;
+}
+body.dark-mode .instr-box h3 { color: var(--accent2); border-left-color: var(--accent2); }
+
+.instr-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.instr-list li {
+    background: white; border-radius: 10px; padding: 12px 16px;
+    font-size: 15px; color: var(--text-mid);
+    border: 1px solid var(--border);
+    transition: transform 0.15s;
+}
+body.dark-mode .instr-list li { background: var(--dm-surface2); border-color: var(--dm-border); color: var(--dm-text); }
+.instr-list li:hover { transform: translateX(5px); }
+
+.instr-legend {
+    display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;
+}
+
+.leg-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--text-mid); }
+body.dark-mode .leg-item { color: var(--dm-text); }
+.leg-dot { width: 14px; height: 14px; border-radius: 50%; }
+
+.agree-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 20px; font-size: 15px; font-weight: 600; cursor: pointer;
+    color: var(--text-mid);
+}
+body.dark-mode .agree-row { color: var(--dm-text); }
+
+.agree-row input { display: none; }
+
+.chk-box {
+    width: 22px; height: 22px; border-radius: 6px;
+    border: 2px solid var(--primary);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; color: transparent; transition: 0.15s;
+    background: white;
+}
+body.dark-mode .chk-box { background: var(--dm-surface); border-color: var(--accent2); }
+
+.agree-row input:checked + .chk-box { background: var(--primary); color: white; }
+body.dark-mode .agree-row input:checked + .chk-box { background: var(--accent2); }
+
+#start-test-btn {
+    margin-top: 22px; width: 100%;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; border: none; border-radius: 50px; padding: 14px;
+    font-size: 17px; font-weight: 700; cursor: not-allowed; opacity: 0.55;
+    font-family: 'DM Sans', sans-serif;
+    transition: opacity 0.2s, transform 0.18s, box-shadow 0.18s;
+    box-shadow: 0 6px 20px rgba(26,111,196,0.35);
+}
+#start-test-btn:not(:disabled) { cursor: pointer; opacity: 1; }
+#start-test-btn:not(:disabled):hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(26,111,196,0.5); }
+
+/* ===== TEST SCREEN ===== */
+#test-screen {
+    position: fixed; inset: 0; z-index: 9998;
+    background: var(--off-white); display: none; overflow: auto;
+}
+body.dark-mode #test-screen { background: var(--dm-bg); }
+
+/* SIDEBAR */
+.sidebar {
+    width: 280px; background: white;
+    height: 100vh; position: fixed; right: 0; top: 0;
+    padding: 20px; overflow-y: auto;
+    border-left: 2px solid var(--light-blue);
+    box-shadow: -4px 0 20px rgba(26,111,196,0.08);
+}
+body.dark-mode .sidebar { background: var(--dm-surface); border-left-color: var(--dm-border); }
+
+.timer {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; padding: 10px 0; border-radius: 40px;
+    font-weight: 700; font-size: 19px; text-align: center;
+    letter-spacing: 1px; margin-bottom: 18px;
+    box-shadow: 0 4px 14px rgba(26,111,196,0.35);
+}
+
+.sidebar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700; color: var(--primary);
+    margin-bottom: 14px; padding-bottom: 12px; border-bottom: 2px solid var(--light-blue);
+}
+body.dark-mode .sidebar-brand { color: var(--accent2); border-bottom-color: var(--dm-border); }
+
+.test-info-row { font-size: 13px; color: var(--text-muted); margin: 5px 0; display: flex; gap: 6px; }
+.test-info-row strong { color: var(--text-dark); font-weight: 600; }
+body.dark-mode .test-info-row { color: var(--dm-muted); }
+body.dark-mode .test-info-row strong { color: var(--dm-text); }
+
+.palette-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin: 18px 0 10px; font-size: 13px; font-weight: 600; color: var(--text-mid);
+}
+body.dark-mode .palette-header { color: var(--dm-text); }
+
+.palette-count { color: var(--primary); font-weight: 700; }
+body.dark-mode .palette-count { color: var(--accent2); }
+
+.palette-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px;
+}
+
+.palette-btn {
+    aspect-ratio: 1; border-radius: 50%; border: 2px solid #e5e7eb;
+    background: #fee2e2; /* unanswered = orange-ish red */
+    color: var(--text-dark); font-size: 11px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+}
+.palette-btn:hover { transform: scale(1.1); }
+.palette-btn.answered { background: #bbf7d0; border-color: #22c55e; color: #14532d; }
+.palette-btn.marked { background: #bae6fd; border-color: #0ea5e9; color: #0c4a6e; }
+.palette-btn.current { background: white; border: 2.5px solid var(--primary); color: var(--primary); box-shadow: 0 0 0 3px rgba(26,111,196,0.2); }
+.palette-btn.review-correct { background: #22c55e; border-color: #16a34a; color: white; }
+.palette-btn.review-wrong { background: #ef4444; border-color: #dc2626; color: white; }
+.palette-btn.review-unanswered { background: #60a5fa; border-color: #3b82f6; color: white; }
+
+body.dark-mode .palette-btn { background: #7f1d1d; border-color: #991b1b; color: #fecaca; }
+body.dark-mode .palette-btn.answered { background: #14532d; border-color: #22c55e; color: #bbf7d0; }
+body.dark-mode .palette-btn.marked { background: #0c4a6e; border-color: #0ea5e9; color: #bae6fd; }
+body.dark-mode .palette-btn.current { background: var(--dm-surface2); border-color: var(--accent); color: var(--accent); }
+
+#palette-legend { margin-top: 14px; font-size: 12px; color: var(--text-muted); }
+body.dark-mode #palette-legend { color: var(--dm-muted); }
+#palette-legend .leg-label { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; }
+
+/* MAIN CONTENT */
+.main-content {
+    margin-right: 280px; padding: 20px 24px;
+    min-height: 100vh;
+}
+
+.test-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px; padding-bottom: 14px;
+    border-bottom: 2px solid var(--light-blue);
+}
+body.dark-mode .test-header { border-bottom-color: var(--dm-border); }
+
+.user-badge {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white; padding: 7px 16px; border-radius: 30px;
+    font-size: 13px; font-weight: 700;
+}
+
+.q-counter {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700; color: var(--text-dark);
+}
+body.dark-mode .q-counter { color: var(--dm-text); }
+.q-counter span { color: var(--primary); }
+body.dark-mode .q-counter span { color: var(--accent2); }
+
+.progress-wrap { flex: 1; max-width: 200px; margin: 0 16px; }
+.progress-bar-bg { height: 8px; background: var(--light-blue); border-radius: 10px; overflow: hidden; }
+body.dark-mode .progress-bar-bg { background: var(--dm-surface2); }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: 10px; transition: width 0.4s; width: 0; }
+.progress-label { font-size: 12px; color: var(--text-muted); text-align: right; margin-top: 4px; }
+body.dark-mode .progress-label { color: var(--dm-muted); }
+
+/* QUESTION CARD */
+.question-card {
+    background: white; border-radius: 16px; padding: 28px;
+    box-shadow: var(--shadow); border: 1.5px solid var(--light-blue);
+    margin-bottom: 20px;
+}
+body.dark-mode .question-card { background: var(--dm-surface); border-color: var(--dm-border); box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+
+.q-num-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--light-blue); color: var(--primary);
+    padding: 5px 14px; border-radius: 20px; font-size: 13px; font-weight: 700;
+    margin-bottom: 14px;
+}
+body.dark-mode .q-num-tag { background: var(--dm-surface2); color: var(--accent2); }
+
+.section-badge {
+    display: inline-flex; align-items: center;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white; padding: 3px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 600; margin-bottom: 12px;
+}
+
+.q-text {
+    font-size: 18px; font-weight: 500; color: var(--text-dark);
+    line-height: 1.6; margin-bottom: 22px;
+}
+body.dark-mode .q-text { color: var(--dm-text); }
+
+/* OPTIONS */
+.option {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px; border: 2px solid var(--border);
+    border-radius: 12px; margin-bottom: 10px; cursor: pointer;
+    background: white; transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    user-select: none;
+}
+body.dark-mode .option { background: var(--dm-surface2); border-color: var(--dm-border); }
+.option:hover { border-color: var(--primary); background: var(--off-white); transform: translateX(4px); }
+body.dark-mode .option:hover { background: #1e3460; border-color: var(--accent); }
+
+.option.selected { border-color: var(--primary-dark); background: #dbeafe; }
+body.dark-mode .option.selected { background: #0d2a56; border-color: var(--accent); }
+
+.option.correct { border-color: var(--correct) !important; background: var(--correct-bg) !important; }
+.option.incorrect { border-color: var(--incorrect) !important; background: var(--incorrect-bg) !important; }
+
+.opt-letter {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid var(--border); background: var(--off-white);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: var(--text-muted);
+    flex-shrink: 0; transition: all 0.15s;
+}
+.option.selected .opt-letter { background: var(--primary); border-color: var(--primary); color: white; }
+.option.correct .opt-letter { background: var(--correct); border-color: var(--correct); color: white; }
+.option.incorrect .opt-letter { background: var(--incorrect); border-color: var(--incorrect); color: white; }
+
+.opt-text { font-size: 15px; color: var(--text-dark); line-height: 1.5; flex: 1; }
+body.dark-mode .opt-text { color: var(--dm-text); }
+.option.selected .opt-text { color: var(--primary-dark); font-weight: 600; }
+body.dark-mode .option.selected .opt-text { color: var(--accent2); }
+.option.correct .opt-text { color: var(--correct); font-weight: 600; }
+.option.incorrect .opt-text { color: var(--incorrect); font-weight: 600; }
+
+.opt-indicator { font-size: 12px; font-weight: 700; margin-left: 4px; }
+.correct-indicator { color: var(--correct); }
+.incorrect-indicator { color: var(--incorrect); }
+
+.explanation-box {
+    margin-top: 18px; padding: 14px 18px;
+    border-radius: 12px; border-left: 4px solid var(--primary);
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    font-size: 14px; color: var(--text-mid); line-height: 1.7;
+}
+body.dark-mode .explanation-box { background: linear-gradient(135deg, var(--dm-surface), var(--dm-surface2)); border-left-color: var(--accent); color: var(--dm-text); }
+
+/* NAV BUTTONS */
+.nav-row {
+    display: flex; justify-content: space-between; align-items: center; margin-top: 24px;
+}
+
+.nav-btn {
+    padding: 10px 24px; border-radius: 10px; border: 2px solid var(--primary);
+    background: transparent; color: var(--primary); font-size: 14px; font-weight: 700;
+    cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.18s;
+}
+.nav-btn:hover { background: var(--light-blue); }
+body.dark-mode .nav-btn { border-color: var(--accent2); color: var(--accent2); }
+body.dark-mode .nav-btn:hover { background: var(--dm-surface2); }
+
+.next-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white; border: none;
+    padding: 12px 30px; border-radius: 10px; font-size: 15px; font-weight: 700;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    box-shadow: 0 4px 14px rgba(26,111,196,0.35); transition: all 0.18s;
+}
+.next-btn:hover { transform: translateY(-2px); box-shadow: 0 7px 20px rgba(26,111,196,0.5); }
+body.dark-mode .next-btn { background: linear-gradient(135deg, var(--accent), var(--primary)); }
+
+.mark-btn-q {
+    padding: 9px 18px; border-radius: 10px;
+    border: 2px solid var(--accent); background: transparent; color: var(--accent);
+    font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+}
+.mark-btn-q.marked { background: var(--accent); color: white; }
+.mark-btn-q:hover { background: var(--light-blue); }
+
+/* SUBMIT SECTION */
+.submit-row {
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 600px; margin: 20px auto; gap: 14px; flex-wrap: wrap;
+}
+
+.fancy-btn {
+    flex: 1; min-width: 140px; padding: 14px; border: none; border-radius: 50px;
+    font-size: 15px; font-weight: 700; cursor: pointer; text-align: center;
+    text-decoration: none; display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Sans', sans-serif; transition: transform 0.18s, box-shadow 0.18s;
+}
+.fancy-btn:hover { transform: translateY(-3px); }
+
+.fancy-submit { background: linear-gradient(135deg, #22c55e, #15803d); color: white; box-shadow: 0 6px 20px rgba(34,197,94,0.4); max-width: 260px; }
+.fancy-submit:hover { box-shadow: 0 10px 28px rgba(34,197,94,0.55); }
+.fancy-tg { background: linear-gradient(135deg, #0088cc, #005a99); color: white; box-shadow: 0 6px 20px rgba(0,136,204,0.4); max-width: 200px; }
+.fancy-tg:hover { box-shadow: 0 10px 28px rgba(0,136,204,0.55); color: white; }
+
+.fancy-pdf { background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 6px 20px rgba(249,115,22,0.4); }
+.fancy-pdf:hover { box-shadow: 0 10px 28px rgba(249,115,22,0.55); }
+.fancy-result { background: linear-gradient(135deg, #7c3aed, #4c1d95); color: white; box-shadow: 0 6px 20px rgba(124,58,237,0.4); }
+.fancy-result:hover { box-shadow: 0 10px 28px rgba(124,58,237,0.55); }
+
+.stream-btn {
+    display: block; width: 100%; padding: 14px;
+    border-radius: 14px; color: white; font-weight: 700; font-size: 16px;
+    text-decoration: none; font-family: 'DM Sans', sans-serif;
+    transition: transform 0.18s, box-shadow 0.18s;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+.stream-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,0,0.3); color: white; }
+
+body.dark-mode #stream-picker-box { background: var(--dm-surface); }
+body.dark-mode #stream-picker-box h3 { color: var(--accent2); }
+body.dark-mode #stream-picker-box p { color: var(--dm-muted); }
+body.dark-mode #stream-picker-box button { color: var(--dm-muted); }
+
+/* FOOTER */
+.test-footer {
+    background: linear-gradient(135deg, #0f1e3d, #1a3066);
+    color: #94b8e8; text-align: center; padding: 22px 16px;
+    margin-top: 10px;
+}
+.test-footer p { font-size: 12px; margin-bottom: 12px; }
+.footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.footer-link {
+    padding: 8px 18px; border-radius: 30px; font-size: 13px; font-weight: 600;
+    text-decoration: none; color: white; transition: transform 0.18s, box-shadow 0.18s;
+}
+.footer-link:hover { transform: translateY(-2px); color: white; }
+.fl-purple { background: linear-gradient(135deg, #7c3aed, #4c1d95); box-shadow: 0 3px 10px rgba(124,58,237,0.35); }
+.fl-green { background: linear-gradient(135deg, #059669, #065f46); box-shadow: 0 3px 10px rgba(5,150,105,0.35); }
+.fl-red { background: linear-gradient(135deg, #dc2626, #991b1b); box-shadow: 0 3px 10px rgba(220,38,38,0.35); }
+
+/* MODAL */
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99999; justify-content: center; align-items: center; }
+.modal.show { display: flex; }
+
+.modal-content {
+    background: white; border-radius: 20px; padding: 32px;
+    width: 90%; max-width: 580px; max-height: 90vh; overflow-y: auto;
+    animation: modalIn 0.3s ease;
+}
+body.dark-mode .modal-content { background: var(--dm-surface); border: 1.5px solid var(--dm-border); }
+
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.92) translateY(-20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--light-blue);
+}
+body.dark-mode .modal-head { border-bottom-color: var(--dm-border); }
+
+.modal-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; color: var(--primary);
+}
+body.dark-mode .modal-head h2 { color: var(--accent2); }
+
+.close-x { background: none; border: none; font-size: 26px; cursor: pointer; color: var(--text-muted); }
+
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+
+.stat-tile {
+    background: var(--off-white); border-radius: 14px; padding: 18px;
+    text-align: center; border: 1.5px solid var(--border);
+}
+body.dark-mode .stat-tile { background: var(--dm-surface2); border-color: var(--dm-border); }
+
+.stat-tile h4 { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+body.dark-mode .stat-tile h4 { color: var(--dm-muted); }
+
+.stat-tile p { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 800; }
+.stat-correct { color: var(--correct); }
+.stat-wrong { color: var(--incorrect); }
+.stat-neutral { color: var(--text-muted); }
+.stat-score { color: var(--primary); }
+body.dark-mode .stat-score { color: var(--accent2); }
+
+.analysis { font-size: 14px; color: var(--text-mid); margin-bottom: 18px; line-height: 1.8; }
+body.dark-mode .analysis { color: var(--dm-text); }
+
+.modal-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.modal-btn {
+    flex: 1; padding: 12px; border-radius: 12px; border: none; cursor: pointer;
+    font-size: 14px; font-weight: 700; font-family: 'DM Sans', sans-serif; transition: all 0.18s;
+}
+.modal-btn:hover { transform: translateY(-2px); }
+.mb-review { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; box-shadow: 0 4px 14px rgba(26,111,196,0.4); }
+.mb-pdf { background: linear-gradient(135deg, #f97316, #ea580c); color: white; box-shadow: 0 4px 14px rgba(249,115,22,0.4); }
+
+/* MOBILE */
+.mobile-bar { display: none; }
+
+@media (max-width: 768px) {
+    .mobile-bar {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 8px 12px; background: white; border-bottom: 2px solid var(--light-blue);
+        margin-bottom: 8px; border-radius: 10px; box-shadow: var(--shadow);
+    }
+    body.dark-mode .mobile-bar { background: var(--dm-surface); border-color: var(--dm-border); }
+    .mob-timer {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: white; padding: 6px 14px; border-radius: 30px; font-weight: 700; font-size: 14px;
+    }
+    #user-name-display { display: none !important; }
+    .sidebar .timer, .sidebar .sidebar-brand { display: none !important; }
+    .sidebar { position: relative; width: 100%; height: auto; right: 0; left: 0; border-left: none; border-top: 2px solid var(--light-blue); box-shadow: none; }
+    body { flex-direction: column; }
+    .main-content { margin-right: 0; width: 100%; padding: 12px; }
+    .question-card { padding: 18px; }
+    .q-text { font-size: 16px; }
+    .nav-row { flex-direction: row; gap: 8px; }
+    .palette-grid { max-height: 200px; overflow-y: auto; }
+}
+
+@media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .modal-btns { flex-direction: column; }
+}
+
+/* option radio hide */
+.option input[type="radio"] { display: none; }
+
+#pdf-print-area { display: none; }
+@media print {
+    body > * { display: none !important; }
+    #pdf-print-area { display: block !important; font-family: Arial, sans-serif; color: #111; padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- START SCREEN -->
+<div id="start-screen">
+
+<button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode" style="position:absolute;top:16px;right:16px;">
+    <span id="toggle-icon">🌙</span>
+    <span id="toggle-label">Dark</span>
+</button>
+
+<div class="start-hero">
+    <div class="start-logo">📝</div>
+    <div class="start-brand">Thunderstudy CBT</div>
+    <h1 class="start-title">Reading Comprehension</h1>
+    <p class="start-sub">English Vocabulary | Provided by <strong>Thunderstudy</strong></p>
+
+    <a href="https://t.me/thunderstudy_official" target="_blank" class="tg-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-2.04 9.607c-.148.666-.543.828-1.098.516l-3.04-2.24-1.467 1.413c-.162.162-.298.298-.611.298l.217-3.083 5.613-5.067c.244-.217-.054-.337-.378-.12L7.08 14.807 4.09 13.89c-.657-.205-.67-.657.137-.973l10.88-4.196c.548-.198 1.027.133.855.973z"/></svg>
+        @thunderstudy_official
+    </a>
+
+    <div class="info-card">
+        <h3>📋 Quick Overview</h3>
+        <div class="info-grid">
+            <div class="info-pill">📝 <div><strong>50 Questions</strong></div></div>
+            <div class="info-pill">⏱️ <div><strong>60 Minutes</strong></div></div>
+            <div class="info-pill">✅ <div><strong>+5 Correct</strong></div></div>
+            <div class="info-pill">❌ <div><strong>−1 Wrong</strong></div></div>
+            <div class="info-pill">🚫 <div><strong>No tab switching</strong></div></div>
+            <div class="info-pill">🔁 <div><strong>Auto-submits</strong></div></div>
+        </div>
+    </div>
+
+<input type="text" id="username-input" class="name-input" placeholder="Enter your name to begin">
+    <div id="sid-display-area" style="font-size: 13px; font-weight: 700; color: #4f6ef7; background: rgba(79,110,247,0.1); padding: 5px 15px; border-radius: 20px; display: none; margin-top: 8px;">
+        🪪 ID: <span id="sid-value">---</span>
+    </div>
+    <div class="start-btns">
+        <button class="s-btn s-btn-primary" onclick="startMock()">🚀 Start Mock Test</button>
+        <button class="s-btn s-btn-green" onclick="window.location.href='https://commercesehoga.github.io/commerce/bst/result.html'">📊 Previous Results</button>
+        <button class="s-btn s-btn-purple" onclick="window.open('https://commercesehoga.blogspot.com/2026/03/business-studies-cuet-cbt-mock-test-free.html','_blank')">📚 More Mock Tests</button>
+    </div>
+</div>
+</div>
+
+<!-- INSTRUCTION SCREEN -->
+<div id="instruction-screen">
+<div class="instr-wrap">
+    <h2 class="instr-title">📜 Instructions</h2>
+    <div class="instr-box">
+        <h3>General Guidelines</h3>
+        <ol class="instr-list">
+            <li>Total duration is <strong>60 minutes</strong>. Timer is shown in the sidebar.</li>
+            <li>The test <strong>auto-submits</strong> when time runs out.</li>
+            <li>Test runs in <strong>fullscreen</strong>. Exiting starts a <strong>5-second</strong> countdown to auto-submit.</li>
+            <li><strong>Do not switch tabs.</strong> Switching tabs starts a <strong>2-second</strong> countdown.</li>
+            <li>Return before the countdown ends to cancel auto-submission.</li>
+            <li>Right panel shows palette with question status (answered, marked, etc.)</li>
+            <li>Marking: <strong>+5 correct</strong> / <strong>−1 wrong</strong> / <strong>0 unanswered</strong>.</li>
+        </ol>
+
+        <div class="instr-legend" style="margin-top: 20px;">
+            <strong style="font-size:13px; display:block; margin-bottom:8px;">Status Legend:</strong>
+            <div class="leg-item"><div class="leg-dot" style="background:#22c55e;border:1px solid #16a34a;"></div>Answered</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#bae6fd;border:1px solid #0ea5e9;"></div>Marked</div>
+            <div class="leg-item"><div class="leg-dot" style="background:white;border:2px solid #1a6fc4;"></div>Current</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#fee2e2;border:1px solid #fca5a5;"></div>Unanswered</div>
+        </div>
+
+        <label class="agree-row">
+            <input type="checkbox" id="agree-checkbox">
+            <span class="chk-box">✓</span>
+            I have read and understood all instructions
+        </label>
+
+        <button id="start-test-btn" disabled>▶ Start Test</button>
+    </div>
+</div>
+</div>
+
+<!-- TEST SCREEN -->
+<div id="test-screen">
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="timer">01:00:00</div>
+    <div class="sidebar-brand">⚡ Thunderstudy CBT</div>
+
+          <div class="test-info-row"><strong>Name:</strong> <span id="display-user-name">Student</span></div>
+    <div class="test-info-row"><strong>ID:</strong> <span id="display-user-sid" style="font-family:monospace;">---</span></div>
+    <div class="test-info-row"><strong>Subject:</strong> English — Syn/Ant</div>
+    <div class="test-info-row"><strong>Questions:</strong> 50</div>
+    <div class="test-info-row"><strong>Duration:</strong> 60 min</div>
+    <div class="test-info-row"><strong>Marking:</strong> +5 / −1</div>
+    <div class="test-info-row"><strong>Section:</strong> <span id="current-section">—</span></div>
+
+    <div class="palette-header">
+        <span>Questions</span>
+        <span class="palette-count" id="answered-count">0/50</span>
+    </div>
+    <div class="palette-grid" id="question-palette-grid"></div>
+    <div id="palette-legend" style="margin-top:14px; font-size:12px;"></div>
+</div>
+
+<!-- Main -->
+<div class="main-content">
+
+    <div class="mobile-bar">
+        <div class="mob-timer">01:00:00</div>
+        <div id="mobile-name-display" style="background:linear-gradient(135deg,var(--primary),var(--accent));color:white;padding:6px 14px;border-radius:20px;font-weight:700;font-size:13px;">👤 Student</div>
+    </div>
+
+    <div class="test-header">
+        <div id="user-name-display" class="user-badge">👤 Student</div>
+        <div class="q-counter">Q <span id="current-q-number">1</span>/50</div>
+        <div class="progress-wrap">
+            <div class="progress-bar-bg"><div class="progress-bar-fill" id="test-progress"></div></div>
+            <div class="progress-label" id="progress-percent">0%</div>
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="q-num-tag">Question <span id="q-number">1</span></div>
+        <div class="section-badge" id="section-badge">Reading Comprehension</div>
+        <div class="q-text" id="question-text"></div>
+        <div id="options-container"></div>
+
+        <div class="nav-row">
+            <button class="nav-btn" id="prev-btn">← Previous</button>
+            <div style="display:flex;gap:10px;align-items:center;">
+                <button class="mark-btn-q" id="mark-btn">🔖 Mark</button>
+                <button class="next-btn" id="next-btn">Next →</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="submit-row" id="submit-row-before">
+        <a href="https://t.me/thunderstudy_official" target="_blank" class="fancy-btn fancy-tg">⚡ Join Thunder</a>
+        <button class="fancy-btn fancy-submit" id="submit-test-btn">✅ Submit Test</button>
+    </div>
+
+    <!-- Post-submit action row (hidden until submitted) -->
+    <div class="submit-row" id="submit-row-after" style="display:none;">
+        <a href="https://t.me/thunderstudy_official" target="_blank" class="fancy-btn fancy-tg" style="flex:1;max-width:180px;">⚡ Join Thunder</a>
+        <button class="fancy-btn fancy-pdf" id="pdf-action-btn" style="flex:1;max-width:180px;">📄 Download PDF</button>
+        <button class="fancy-btn fancy-result" id="result-action-btn" style="flex:1;max-width:180px;">📊 Result</button>
+    </div>
+
+    <!-- Stream Picker Popup -->
+    <div id="stream-picker-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:999998;justify-content:center;align-items:center;">
+        <div id="stream-picker-box" style="background:white;border-radius:20px;padding:32px 28px;width:90%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.25);animation:modalIn 0.3s ease;text-align:center;position:relative;">
+            <button onclick="document.getElementById('stream-picker-overlay').style.display='none'" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:#6b8ab5;">×</button>
+            <div style="font-size:36px;margin-bottom:10px;">📊</div>
+            <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:#1a6fc4;margin-bottom:6px;">View Previous Results</h3>
+            <p style="font-size:13px;color:#6b8ab5;margin-bottom:22px;">Select your stream to view results</p>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+                <a href="https://commercesehoga.github.io/commerce/bst/result.html" target="_blank" class="stream-btn" style="background:linear-gradient(135deg,#1a6fc4,#0ea5e9);">
+                    🏪 Commerce
+                </a>
+                <a href="https://commercesehoga.github.io/science/result.html" target="_blank" class="stream-btn" style="background:linear-gradient(135deg,#059669,#0d9488);">
+                    🔬 Science
+                </a>
+                <a href="https://commercesehoga.github.io/humanities/result.html" target="_blank" class="stream-btn" style="background:linear-gradient(135deg,#7c3aed,#a855f7);">
+                    📚 Humanities
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="test-footer">
+        <p>© 2025 Thunderstudy. All Rights Reserved.</p>
+        <div class="footer-links">
+            <a href="https://commercesehoga.blogspot.com/2026/03/business-studies-cuet-cbt-mock-test-free.html" target="_blank" class="footer-link fl-purple">📚 More Mocks</a>
+            <a href="https://commercesehoga.blogspot.com/" target="_blank" class="footer-link fl-green">🌐 Website</a>
+            <a href="https://t.me/mindmaster_robot" target="_blank" class="footer-link fl-red">🚨 Report Error</a>
+        </div>
+    </footer>
+</div>
+
+<!-- Results Modal -->
+<div class="modal" id="results-modal">
+<div class="modal-content">
+    <div class="modal-head">
+        <h2>🏆 Test Results</h2>
+        <button class="close-x" id="close-modal">×</button>
+    </div>
+    <div class="stats-grid">
+        <div class="stat-tile"><h4>Correct</h4><p class="stat-correct" id="correct-answers">0</p></div>
+        <div class="stat-tile"><h4>Wrong</h4><p class="stat-wrong" id="incorrect-answers">0</p></div>
+        <div class="stat-tile"><h4>Unanswered</h4><p class="stat-neutral" id="unanswered">50</p></div>
+        <div class="stat-tile"><h4>Score</h4><p class="stat-score" id="total-score">0</p></div>
+    </div>
+    <div class="analysis">
+        Percentage: <strong><span id="percentage">0</span>%</strong> &nbsp;|&nbsp;
+        Accuracy: <strong><span id="accuracy">0</span>%</strong>
+    </div>
+    <div class="modal-btns">
+        <button class="modal-btn mb-review" id="review-btn">👁 Review Answers</button>
+        <button class="modal-btn mb-pdf" id="download-pdf-btn">📄 Download PDF</button>
+        <button class="modal-btn mb-result" id="modal-result-btn" style="background:linear-gradient(135deg,#7c3aed,#a855f7);color:white;box-shadow:0 4px 14px rgba(124,58,237,0.4);">📊 Result</button>
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="pdf-print-area"></div>
+
+<script>
+/* ============================================================
+   MOCK TEST DATA — English Chapter 1
+   ============================================================ */
+const mockTest = {
+    title: "English — One Word",
+    questions: [
+  {
+    "id": 1,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 1: The Round Table Conferences (1930-1932)</strong><br><br>The Three Round Table Conferences were held in London between 1930 and 1932 to discuss constitutional reforms in India. The First Round Table Conference (November 1930 - January 1931) was boycotted by the Indian National Congress because its leaders were in jail following the Salt March. The conference failed due to Congress's absence. The Second Round Table Conference (September-December 1931) was attended by Mahatma Gandhi, who represented Congress. However, no agreement was reached, especially on the issue of separate electorates for minorities. The British Prime Minister Ramsay MacDonald announced the Communal Award in August 1932, granting separate electorates to depressed classes (Dalits). Gandhi opposed this and went on a fast unto death, leading to the Poona Pact (September 1932) between Gandhi and B.R. Ambedkar, which replaced separate electorates with reserved seats. The Third Round Table Conference (November-December 1932) was largely ignored by Congress and ended inconclusively. The conferences ultimately led to the Government of India Act 1935.<br><br><strong>Q1. How many Round Table Conferences were held?</strong>",
+    "options": { "a": "One", "b": "Two", "c": "Three", "d": "Four" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'The Three Round Table Conferences were held in London between 1930 and 1932'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 2,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 1: The Round Table Conferences (1930-1932)</strong><br><br>(Read the passage above to answer Q1 to Q5)<br><br><strong>Q2. Which Round Table Conference was attended by Mahatma Gandhi?</strong>",
+    "options": { "a": "First", "b": "Second", "c": "Third", "d": "None" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'The Second Round Table Conference (September-December 1931) was attended by Mahatma Gandhi'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 3,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 1: The Round Table Conferences (1930-1932)</strong><br><br>(Read the passage above to answer Q1 to Q5)<br><br><strong>Q3. Who announced the Communal Award?</strong>",
+    "options": { "a": "Winston Churchill", "b": "Lord Irwin", "c": "Ramsay MacDonald", "d": "Lord Mountbatten" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'British Prime Minister Ramsay MacDonald announced the Communal Award in August 1932'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 4,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 1: The Round Table Conferences (1930-1932)</strong><br><br>(Read the passage above to answer Q1 to Q5)<br><br><strong>Q4. What was the Poona Pact between Gandhi and Ambedkar about?</strong>",
+    "options": { "a": "Separate electorates for Muslims", "b": "Replacing separate electorates with reserved seats for Dalits", "c": "Land reforms", "d": "Educational rights" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'Poona Pact... replaced separate electorates with reserved seats'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 5,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 1: The Round Table Conferences (1930-1932)</strong><br><br>(Read the passage above to answer Q1 to Q5)<br><br><strong>Q5. Which act was ultimately influenced by the Round Table Conferences?</strong>",
+    "options": { "a": "Government of India Act 1919", "b": "Government of India Act 1935", "c": "Indian Independence Act 1947", "d": "Rowlatt Act 1919" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'The conferences ultimately led to the Government of India Act 1935'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 6,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 2: The Gaganyaan Mission</strong><br><br>Gaganyaan is India's first manned space mission planned by the Indian Space Research Organisation (ISRO). The mission aims to send a crew of three astronauts to a Low Earth Orbit (LEO) at an altitude of 400 km for a duration of up to seven days. The crew will be carried by the Gaganyaan spacecraft, launched using the Human-rated Launch Vehicle Mark III (HLVM3). The mission was announced in 2018, with an initial target of 2022, later revised to 2024-2025. Four Indian Air Force pilots have been selected as astronaut-designates and have undergone training in Russia. ISRO has successfully conducted several tests, including the Crew Module Atmospheric Re-entry Experiment and the Pad Abort Test. The mission includes an Orbital Module comprising the Crew Module and Service Module. The Crew Module will safely return to Earth and splash down in the sea. Gaganyaan will make India the fourth nation to send a human into space after the Soviet Union, the USA, and China.<br><br><strong>Q6. What is the name of India's first manned space mission?</strong>",
+    "options": { "a": "Chandrayaan", "b": "Mangalyaan", "c": "Gaganyaan", "d": "Aditya-L1" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'Gaganyaan is India's first manned space mission'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 7,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 2: The Gaganyaan Mission</strong><br><br>(Read the passage above to answer Q6 to Q10)<br><br><strong>Q7. How many astronauts will the Gaganyaan mission carry?</strong>",
+    "options": { "a": "One", "b": "Two", "c": "Three", "d": "Four" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'crew of three astronauts'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 8,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 2: The Gaganyaan Mission</strong><br><br>(Read the passage above to answer Q6 to Q10)<br><br><strong>Q8. Which launch vehicle will be used for Gaganyaan?</strong>",
+    "options": { "a": "PSLV", "b": "GSLV Mk III", "c": "Human-rated Launch Vehicle Mark III (HLVM3)", "d": "SSLV" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'launched using the Human-rated Launch Vehicle Mark III (HLVM3)'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 9,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 2: The Gaganyaan Mission</strong><br><br>(Read the passage above to answer Q6 to Q10)<br><br><strong>Q9. Which countries have already sent humans into space?</strong>",
+    "options": { "a": "USA, Russia, China", "b": "USA, Russia, Japan", "c": "USA, France, China", "d": "Russia, China, UK" },
+    "correctAnswer": "a",
+    "explanation": "The passage states: 'fourth nation to send a human into space after the Soviet Union, the USA, and China'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 10,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 2: The Gaganyaan Mission</strong><br><br>(Read the passage above to answer Q6 to Q10)<br><br><strong>Q10. Where will the Crew Module splash down after return?</strong>",
+    "options": { "a": "In a lake", "b": "On land", "c": "In the sea", "d": "In a desert" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'splash down in the sea'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 11,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 3: The Deccan Riots (1875)</strong><br><br>The Deccan Riots of 1875 were a series of peasant uprisings in the Poona and Ahmednagar districts of Maharashtra. The riots were directed against moneylenders (savukars), many of whom were Marwaris and Gujaratis, who had imposed exorbitant interest rates and exploited peasants through fraudulent accounting. The peasants had suffered from high land revenue demands, cotton price collapse after the American Civil War, and drought. The riots began in the village of Supa on 12 May 1875. Peasants attacked moneylenders' houses, burnt debt bonds, and looted grain. The British government suppressed the riots with force. The government appointed a commission to investigate. The Deccan Agriculturists' Relief Act was passed in 1879, which provided protection to peasants by limiting interest rates and regulating moneylending practices. The Deccan Riots highlighted the agrarian distress caused by British revenue policies and the exploitative nature of the moneylending system. They also led to the first systematic collection of agrarian statistics in India.<br><br><strong>Q11. In which year did the Deccan Riots take place?</strong>",
+    "options": { "a": "1873", "b": "1874", "c": "1875", "d": "1876" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'The Deccan Riots of 1875'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 12,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 3: The Deccan Riots (1875)</strong><br><br>(Read the passage above to answer Q11 to Q15)<br><br><strong>Q12. Against whom were the Deccan Riots directed?</strong>",
+    "options": { "a": "British officials", "b": "Zamindars", "c": "Moneylenders (savukars)", "d": "Police" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'directed against moneylenders (savukars)'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 13,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 3: The Deccan Riots (1875)</strong><br><br>(Read the passage above to answer Q11 to Q15)<br><br><strong>Q13. In which village did the Deccan Riots begin?</strong>",
+    "options": { "a": "Poona", "b": "Ahmednagar", "c": "Supa", "d": "Satara" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'began in the village of Supa on 12 May 1875'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 14,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 3: The Deccan Riots (1875)</strong><br><br>(Read the passage above to answer Q11 to Q15)<br><br><strong>Q14. Which act was passed as a result of the Deccan Riots?</strong>",
+    "options": { "a": "Bengal Tenancy Act", "b": "Deccan Agriculturists' Relief Act", "c": "Land Acquisition Act", "d": "Moneylenders Act" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'Deccan Agriculturists' Relief Act was passed in 1879'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 15,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 3: The Deccan Riots (1875)</strong><br><br>(Read the passage above to answer Q11 to Q15)<br><br><strong>Q15. What did the Deccan Agriculturists' Relief Act provide?</strong>",
+    "options": { "a": "Free land to peasants", "b": "Limiting interest rates and regulating moneylending", "c": "Cancellation of all debts", "d": "Transfer of land to British" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'providing protection to peasants by limiting interest rates and regulating moneylending practices'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 16,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 4: The One Sun, One World, One Grid (OSOWOG) Initiative</strong><br><br>The One Sun, One World, One Grid (OSOWOG) initiative was proposed by India in 2018 at the First Assembly of the International Solar Alliance (ISA). The vision is to connect solar energy grids across continents, enabling the transmission of solar power from regions with abundant sunlight to regions with less sunlight. The initiative aims to reduce reliance on fossil fuels and promote renewable energy globally. The OSOWOG plan is divided into three phases: Phase 1 involves connecting the Middle East, South Asia, and Southeast Asia; Phase 2 connects Africa; Phase 3 achieves global interconnection. The initiative leverages the fact that when it is daytime in one part of the world, it is nighttime in another, so solar power can be transmitted continuously. India has been working with the ISA and the World Bank to develop the framework. The initiative faces challenges including high infrastructure costs, geopolitical tensions, and technical issues of grid synchronization across national boundaries.<br><br><strong>Q16. When was the OSOWOG initiative proposed?</strong>",
+    "options": { "a": "2016", "b": "2017", "c": "2018", "d": "2019" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'proposed by India in 2018'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 17,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 4: The One Sun, One World, One Grid (OSOWOG) Initiative</strong><br><br>(Read the passage above to answer Q16 to Q20)<br><br><strong>Q17. What does OSOWOG stand for?</strong>",
+    "options": { "a": "One Sun, One World, One Grid", "b": "One Solar, One World, One Grid", "c": "One Sun, One World, One Goal", "d": "One Solar, One World, One Goal" },
+    "correctAnswer": "a",
+    "explanation": "The passage states: 'One Sun, One World, One Grid (OSOWOG) initiative'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 18,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 4: The One Sun, One World, One Grid (OSOWOG) Initiative</strong><br><br>(Read the passage above to answer Q16 to Q20)<br><br><strong>Q18. Which assembly of the International Solar Alliance proposed the initiative?</strong>",
+    "options": { "a": "First Assembly", "b": "Second Assembly", "c": "Third Assembly", "d": "Fourth Assembly" },
+    "correctAnswer": "a",
+    "explanation": "The passage states: 'at the First Assembly of the International Solar Alliance (ISA)'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 19,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 4: The One Sun, One World, One Grid (OSOWOG) Initiative</strong><br><br>(Read the passage above to answer Q16 to Q20)<br><br><strong>Q19. Which regions are connected in Phase 1 of OSOWOG?</strong>",
+    "options": { "a": "Africa and Europe", "b": "Middle East, South Asia, and Southeast Asia", "c": "North and South America", "d": "Australia and Antarctica" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'Phase 1 involves connecting the Middle East, South Asia, and Southeast Asia'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 20,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 4: The One Sun, One World, One Grid (OSOWOG) Initiative</strong><br><br>(Read the passage above to answer Q16 to Q20)<br><br><strong>Q20. What is one challenge mentioned for OSOWOG?</strong>",
+    "options": { "a": "Lack of sunlight", "b": "High infrastructure costs", "c": "Low demand for solar power", "d": "No international support" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'challenges including high infrastructure costs'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 21,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 5: The Bhoodan Movement (1951)</strong><br><br>The Bhoodan (Land Gift) Movement was launched by Acharya Vinoba Bhave on 18 April 1951 at Pochampally village in Telangana. The movement was inspired by the plight of landless peasants in the region. Vinoba Bhave, a disciple of Mahatma Gandhi, started the movement after a meeting with landless Harijans who requested land for cultivation. He asked landowners to voluntarily donate a portion of their land to the landless. The movement spread across India, with Vinoba Bhave walking thousands of kilometers. The movement later evolved into the Gramdan (Village Gift) movement, where entire villages donated all their land for collective distribution. By 1957, over 4 million acres of land had been donated. The Bhoodan Movement was the first major land reform initiative independent India. It influenced later land ceiling legislation. However, critics argue that the donated land was often of poor quality and that the movement failed to bring about structural change in land ownership patterns.<br><br><strong>Q21. Who launched the Bhoodan Movement?</strong>",
+    "options": { "a": "Mahatma Gandhi", "b": "Jawaharlal Nehru", "c": "Vinoba Bhave", "d": "B.R. Ambedkar" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'launched by Acharya Vinoba Bhave on 18 April 1951'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 22,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 5: The Bhoodan Movement (1951)</strong><br><br>(Read the passage above to answer Q21 to Q25)<br><br><strong>Q22. In which village was the Bhoodan Movement launched?</strong>",
+    "options": { "a": "Pochampally", "b": "Sevagram", "c": "Wardha", "d": "Sabarmati" },
+    "correctAnswer": "a",
+    "explanation": "The passage states: 'at Pochampally village in Telangana'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 23,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 5: The Bhoodan Movement (1951)</strong><br><br>(Read the passage above to answer Q21 to Q25)<br><br><strong>Q23. What does 'Bhoodan' mean?</strong>",
+    "options": { "a": "Land gift", "b": "Land reform", "c": "Land donation", "d": "Land distribution" },
+    "correctAnswer": "a",
+    "explanation": "The passage states: 'Bhoodan (Land Gift) Movement'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 24,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 5: The Bhoodan Movement (1951)</strong><br><br>(Read the passage above to answer Q21 to Q25)<br><br><strong>Q24. What was the later evolution of the Bhoodan Movement called?</strong>",
+    "options": { "a": "Gramdan", "b": "Sarvodaya", "c": "Khilafat", "d": "Swadeshi" },
+    "correctAnswer": "a",
+    "explanation": "The passage states: 'evolved into the Gramdan (Village Gift) movement'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 25,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 5: The Bhoodan Movement (1951)</strong><br><br>(Read the passage above to answer Q21 to Q25)<br><br><strong>Q25. How many acres of land were donated by 1957?</strong>",
+    "options": { "a": "1 million", "b": "2 million", "c": "3 million", "d": "4 million" },
+    "correctAnswer": "d",
+    "explanation": "The passage states: 'over 4 million acres of land had been donated'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 26,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 6: The National Hydrogen Mission</strong><br><br>The National Hydrogen Mission was launched by the Government of India in 2021, announced in the Union Budget 2021-22. The mission aims to make India a global hub for the production and export of green hydrogen. Green hydrogen is produced by electrolysis of water using renewable energy sources like solar and wind, with no carbon emissions. The mission targets to produce 5 million tonnes of green hydrogen by 2030. It aims to reduce India's dependence on fossil fuel imports and decarbonize hard-to-abate sectors like steel, cement, and heavy transport. The mission includes pilot projects, research and development, and incentives for private investment. The government has allocated ₹19,744 crore for the mission. India has set a target of 500 GW of renewable energy capacity by 2030 to support green hydrogen production. The mission also aims to position India as an exporter of green hydrogen to countries like Japan, South Korea, and Germany. However, challenges include high production costs and infrastructure requirements.<br><br><strong>Q26. In which year was the National Hydrogen Mission announced?</strong>",
+    "options": { "a": "2019", "b": "2020", "c": "2021", "d": "2022" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'announced in the Union Budget 2021-22'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 27,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 6: The National Hydrogen Mission</strong><br><br>(Read the passage above to answer Q26 to Q30)<br><br><strong>Q27. What is green hydrogen produced from?</strong>",
+    "options": { "a": "Natural gas", "b": "Coal", "c": "Electrolysis of water using renewable energy", "d": "Nuclear power" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'produced by electrolysis of water using renewable energy sources'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 28,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 6: The National Hydrogen Mission</strong><br><br>(Read the passage above to answer Q26 to Q30)<br><br><strong>Q28. What is the target production of green hydrogen by 2030?</strong>",
+    "options": { "a": "2 million tonnes", "b": "3 million tonnes", "c": "4 million tonnes", "d": "5 million tonnes" },
+    "correctAnswer": "d",
+    "explanation": "The passage states: 'targets to produce 5 million tonnes of green hydrogen by 2030'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 29,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 6: The National Hydrogen Mission</strong><br><br>(Read the passage above to answer Q26 to Q30)<br><br><strong>Q29. How much has the government allocated for the mission?</strong>",
+    "options": { "a": "₹10,000 crore", "b": "₹15,000 crore", "c": "₹19,744 crore", "d": "₹25,000 crore" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'allocated ₹19,744 crore for the mission'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 30,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 6: The National Hydrogen Mission</strong><br><br>(Read the passage above to answer Q26 to Q30)<br><br><strong>Q30. Which countries are mentioned as potential importers of green hydrogen from India?</strong>",
+    "options": { "a": "USA and Canada", "b": "Japan, South Korea, and Germany", "c": "China and Russia", "d": "Brazil and Argentina" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'export of green hydrogen to countries like Japan, South Korea, and Germany'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 31,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 7: The Lucknow Pact (1916)</strong><br><br>The Lucknow Pact was an agreement signed between the Indian National Congress and the Muslim League in December 1916 at their joint session in Lucknow. The pact marked a significant moment of Hindu-Muslim unity against British rule. The key provisions included separate electorates for Muslims (which the Congress accepted for the first time) and weightage in representation for minorities. The pact also demanded self-government for India, similar to the dominions of Canada and Australia. The leaders involved included Bal Gangadhar Tilak and Mohammed Ali Jinnah (who was then a member of both Congress and Muslim League). The Lucknow Pact is considered a high point of Congress-League cooperation. However, the unity did not last long. The pact's provisions influenced the Montagu-Chelmsford Reforms of 1919 and the Government of India Act 1919. The pact also helped Jinnah emerge as a national leader. The failure of subsequent cooperation led to the eventual demand for Pakistan.<br><br><strong>Q31. In which year was the Lucknow Pact signed?</strong>",
+    "options": { "a": "1914", "b": "1915", "c": "1916", "d": "1917" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'signed between the Indian National Congress and the Muslim League in December 1916'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 32,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 7: The Lucknow Pact (1916)</strong><br><br>(Read the passage above to answer Q31 to Q35)<br><br><strong>Q32. Which two leaders were key to the Lucknow Pact?</strong>",
+    "options": { "a": "Gandhi and Jinnah", "b": "Tilak and Jinnah", "c": "Nehru and Jinnah", "d": "Gandhi and Nehru" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'leaders involved included Bal Gangadhar Tilak and Mohammed Ali Jinnah'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 33,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 7: The Lucknow Pact (1916)</strong><br><br>(Read the passage above to answer Q31 to Q35)<br><br><strong>Q33. What did the Congress accept for the first time in the Lucknow Pact?</strong>",
+    "options": { "a": "Separate electorates for Muslims", "b": "Partition of India", "c": "British sovereignty", "d": "Self-government" },
+    "correctAnswer": "a",
+    "explanation": "The passage states: 'separate electorates for Muslims (which the Congress accepted for the first time)'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 34,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 7: The Lucknow Pact (1916)</strong><br><br>(Read the passage above to answer Q31 to Q35)<br><br><strong>Q34. Which reforms were influenced by the Lucknow Pact?</strong>",
+    "options": { "a": "Minto-Morley Reforms", "b": "Montagu-Chelmsford Reforms", "c": "Rowlatt Act", "d": "Simon Commission" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'influenced the Montagu-Chelmsford Reforms of 1919'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 35,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 7: The Lucknow Pact (1916)</strong><br><br>(Read the passage above to answer Q31 to Q35)<br><br><strong>Q35. How is the Lucknow Pact described in the passage?</strong>",
+    "options": { "a": "A high point of Congress-League cooperation", "b": "The beginning of the partition demand", "c": "A British conspiracy", "d": "A failure from the start" },
+    "correctAnswer": "a",
+    "explanation": "The passage states: 'considered a high point of Congress-League cooperation'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 36,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 8: The Global Biofuel Alliance</strong><br><br>The Global Biofuel Alliance was launched by India during its G20 Presidency on 9 September 2023 at the G20 Summit in New Delhi. The alliance aims to accelerate the global adoption of biofuels as a sustainable alternative to fossil fuels. Founding members include India, the United States, Brazil, Argentina, Canada, Italy, and the United Arab Emirates. The alliance promotes collaboration in technology, policy, and investment for biofuel production. Biofuels are derived from biomass (organic matter) and include ethanol, biodiesel, and biogas. The alliance focuses on three key areas: promoting international cooperation, supporting research and development, and facilitating trade in biofuels. India has set a target of 20% ethanol blending in petrol by 2025 (E20 target). The alliance will help India achieve its ethanol blending targets by facilitating technology transfer and feedstock availability. The alliance also aims to support developing countries in building domestic biofuel production capacity.<br><br><strong>Q36. When was the Global Biofuel Alliance launched?</strong>",
+    "options": { "a": "9 September 2022", "b": "9 September 2023", "c": "9 September 2024", "d": "9 September 2025" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'launched by India during its G20 Presidency on 9 September 2023'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 37,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 8: The Global Biofuel Alliance</strong><br><br>(Read the passage above to answer Q36 to Q40)<br><br><strong>Q37. Which countries are mentioned as founding members of the alliance?</strong>",
+    "options": { "a": "India, USA, China", "b": "India, USA, Brazil", "c": "India, Russia, Brazil", "d": "India, Japan, Germany" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'Founding members include India, the United States, Brazil, Argentina, Canada, Italy, and the United Arab Emirates' (India, USA, Brazil are mentioned).",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 38,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 8: The Global Biofuel Alliance</strong><br><br>(Read the passage above to answer Q36 to Q40)<br><br><strong>Q38. What is India's ethanol blending target by 2025?</strong>",
+    "options": { "a": "10%", "b": "15%", "c": "20%", "d": "25%" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'target of 20% ethanol blending in petrol by 2025 (E20 target)'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 39,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 8: The Global Biofuel Alliance</strong><br><br>(Read the passage above to answer Q36 to Q40)<br><br><strong>Q39. What event coincided with the launch of the alliance?</strong>",
+    "options": { "a": "UN Climate Summit", "b": "G20 Summit in New Delhi", "c": "World Economic Forum", "d": "COP28" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'at the G20 Summit in New Delhi'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 40,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 8: The Global Biofuel Alliance</strong><br><br>(Read the passage above to answer Q36 to Q40)<br><br><strong>Q40. What are the three key areas of focus for the alliance?</strong>",
+    "options": { "a": "Production, consumption, export", "b": "International cooperation, R&D, trade", "c": "Taxation, regulation, licensing", "d": "Agriculture, industry, transport" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'promoting international cooperation, supporting research and development, and facilitating trade in biofuels'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 41,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 9: The Indigo Revolt (1859-1860)</strong><br><br>The Indigo Revolt (Neel Bidroha) was a peasant uprising that took place in Bengal in 1859-1860, in the districts of Nadia, Pabna, Jessore, and Murshidabad. The revolt was led by indigo farmers against British indigo planters who forced peasants to grow indigo instead of food crops. The planters paid very low prices and used illegal methods, including torture and imprisonment, to enforce contracts. The revolt began in Nadia district and spread rapidly. Peasants refused to grow indigo, attacked indigo factories, and formed unions. The revolt had no single leader but was spontaneous and widespread. The British government appointed the Indigo Commission in 1860, which recommended the end of forced indigo cultivation. The commission's report led to the abolition of the system of forced cultivation. However, the planters were not prosecuted for their crimes. The Indigo Revolt is significant because it forced the British government to intervene in the indigo trade and led to the eventual decline of the indigo industry in Bengal. The revolt was later depicted in Dinabandhu Mitra's play 'Neel Darpan'.<br><br><strong>Q41. In which years did the Indigo Revolt take place?</strong>",
+    "options": { "a": "1857-1858", "b": "1858-1859", "c": "1859-1860", "d": "1860-1861" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'took place in Bengal in 1859-1860'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 42,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 9: The Indigo Revolt (1859-1860)</strong><br><br>(Read the passage above to answer Q41 to Q45)<br><br><strong>Q42. Against whom was the Indigo Revolt directed?</strong>",
+    "options": { "a": "Zamindars", "b": "British indigo planters", "c": "Moneylenders", "d": "Police" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'against British indigo planters who forced peasants to grow indigo'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 43,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 9: The Indigo Revolt (1859-1860)</strong><br><br>(Read the passage above to answer Q41 to Q45)<br><br><strong>Q43. Which commission was appointed by the British government to investigate the revolt?</strong>",
+    "options": { "a": "Indigo Commission", "b": "Hunter Commission", "c": "Rowlatt Commission", "d": "Simon Commission" },
+    "correctAnswer": "a",
+    "explanation": "The passage states: 'appointed the Indigo Commission in 1860'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 44,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 9: The Indigo Revolt (1859-1860)</strong><br><br>(Read the passage above to answer Q41 to Q45)<br><br><strong>Q44. Which play depicted the Indigo Revolt?</strong>",
+    "options": { "a": "Anandamath", "b": "Neel Darpan", "c": "Durgesh Nandini", "d": "Kapalkundala" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'depicted in Dinabandhu Mitra's play 'Neel Darpan'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 45,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 9: The Indigo Revolt (1859-1860)</strong><br><br>(Read the passage above to answer Q41 to Q45)<br><br><strong>Q45. What did the Indigo Commission recommend?</strong>",
+    "options": { "a": "More indigo cultivation", "b": "End of forced indigo cultivation", "c": "Arrest of all peasants", "d": "Higher prices for indigo" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'recommended the end of forced indigo cultivation'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 46,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 10: The Start-Up India Scheme</strong><br><br>Start-Up India was launched by Prime Minister Narendra Modi on 16 January 2016. The scheme aims to promote entrepreneurship and create a conducive ecosystem for start-ups in India. Key features include tax exemptions for three years, self-certification compliance for labour and environment laws, and a Fund of Funds with a corpus of ₹10,000 crore. The scheme defines a start-up as an entity up to 10 years from incorporation with an annual turnover not exceeding ₹100 crore. It also provides intellectual property rights (IPR) support, including fast-tracking of patents and 80% rebate on patent filing fees. Start-up India has facilitated the growth of unicorns (start-ups valued at over $1 billion) in India, which now number over 100. The scheme has also promoted incubation centres and research parks. However, critics point to challenges including regulatory hurdles, funding gaps for early-stage start-ups, and uneven regional distribution of start-up activity. Despite these challenges, India has become the third-largest start-up ecosystem in the world after the US and China.<br><br><strong>Q46. When was Start-Up India launched?</strong>",
+    "options": { "a": "16 January 2015", "b": "16 January 2016", "c": "16 January 2017", "d": "16 January 2018" },
+    "correctAnswer": "b",
+    "explanation": "The passage states: 'launched by Prime Minister Narendra Modi on 16 January 2016'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 47,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 10: The Start-Up India Scheme</strong><br><br>(Read the passage above to answer Q46 to Q50)<br><br><strong>Q47. What is the corpus of the Fund of Funds under Start-Up India?</strong>",
+    "options": { "a": "₹5,000 crore", "b": "₹7,500 crore", "c": "₹10,000 crore", "d": "₹15,000 crore" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'Fund of Funds with a corpus of ₹10,000 crore'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 48,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 10: The Start-Up India Scheme</strong><br><br>(Read the passage above to answer Q46 to Q50)<br><br><strong>Q48. What is the maximum age of a start-up under the scheme?</strong>",
+    "options": { "a": "5 years", "b": "7 years", "c": "10 years", "d": "12 years" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'up to 10 years from incorporation'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 49,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 10: The Start-Up India Scheme</strong><br><br>(Read the passage above to answer Q46 to Q50)<br><br><strong>Q49. How many unicorns are there in India as mentioned?</strong>",
+    "options": { "a": "50", "b": "75", "c": "100", "d": "125" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'unicorns... now number over 100'.",
+    "marked": false,
+    "userAnswer": ""
+  },
+  {
+    "id": 50,
+    "section": "Reading Comprehension",
+    "text": "<strong>Passage 10: The Start-Up India Scheme</strong><br><br>(Read the passage above to answer Q46 to Q50)<br><br><strong>Q50. What is India's global ranking among start-up ecosystems?</strong>",
+    "options": { "a": "First", "b": "Second", "c": "Third", "d": "Fourth" },
+    "correctAnswer": "c",
+    "explanation": "The passage states: 'India has become the third-largest start-up ecosystem in the world after the US and China'.",
+    "marked": false,
+    "userAnswer": ""
+  }
+],
+    duration: 60 * 60,
+    markingScheme: { correct: 5, incorrect: -1 }
+};
+
+/* ============================================================
+   TEST ENGINE
+   ============================================================ */
+let currentQuestionIndex = 0;
+let timeLeft = mockTest.duration;
+let timer;
+let testSubmitted = false;
+let testStarted = false;
+
+const timerEl = document.querySelector('.timer');
+const questionTextEl = document.getElementById('question-text');
+const optionsEl = document.getElementById('options-container');
+const qNumEl = document.getElementById('q-number');
+const curQNumEl = document.getElementById('current-q-number');
+const progressFill = document.getElementById('test-progress');
+const progressPct = document.getElementById('progress-percent');
+const paletteGrid = document.getElementById('question-palette-grid');
+const answeredCountEl = document.getElementById('answered-count');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const markBtn = document.getElementById('mark-btn');
+const submitBtn = document.getElementById('submit-test-btn');
+const modal = document.getElementById('results-modal');
+const closeModal = document.getElementById('close-modal');
+const reviewBtn = document.getElementById('review-btn');
+
+function initTest() {
+    renderPalette();
+    renderQuestion();
+    startTimer();
+    updateProgress();
+    renderLegend(false);
+    prevBtn.addEventListener('click', () => { if (currentQuestionIndex > 0) { currentQuestionIndex--; renderQuestion(); } });
+    nextBtn.addEventListener('click', () => { if (currentQuestionIndex < mockTest.questions.length - 1) { currentQuestionIndex++; renderQuestion(); } });
+    markBtn.addEventListener('click', toggleMark);
+    submitBtn.addEventListener('click', () => { if (confirm('Submit the test?')) submitTest(); });
+    closeModal.addEventListener('click', () => modal.classList.remove('show'));
+    reviewBtn.addEventListener('click', () => { modal.classList.remove('show'); currentQuestionIndex = 0; renderQuestion(); });
+    document.getElementById('download-pdf-btn').addEventListener('click', generatePDF);
+    document.getElementById('modal-result-btn').addEventListener('click', () => { modal.classList.remove('show'); document.getElementById('stream-picker-overlay').style.display = 'flex'; });
+    document.getElementById('pdf-action-btn').addEventListener('click', generatePDF);
+    document.getElementById('result-action-btn').addEventListener('click', () => { document.getElementById('stream-picker-overlay').style.display = 'flex'; });
+}
+
+function startTimer() {
+    updateTimerDisplay();
+    timer = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) { clearInterval(timer); submitTest(); }
+        if (timeLeft === 300) alert('⚠️ Only 5 minutes remaining!');
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const h = Math.floor(timeLeft / 3600);
+    const m = Math.floor((timeLeft % 3600) / 60);
+    const s = timeLeft % 60;
+    const str = `${pad(h)}:${pad(m)}:${pad(s)}`;
+    timerEl.textContent = str;
+    const mob = document.querySelector('.mob-timer');
+    if (mob) mob.textContent = str;
+}
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function renderQuestion() {
+    const q = mockTest.questions[currentQuestionIndex];
+    document.getElementById('current-section').textContent = q.section;
+    document.getElementById('section-badge').textContent = '📘 ' + q.section;
+    questionTextEl.innerHTML = q.text;
+    qNumEl.textContent = q.id;
+    curQNumEl.textContent = q.id;
+    optionsEl.innerHTML = '';
+
+    for (const [key, val] of Object.entries(q.options)) {
+        const div = document.createElement('div');
+        div.className = 'option';
+        if (testSubmitted) {
+            if (key === q.correctAnswer) div.classList.add('correct');
+            else if (key === q.userAnswer) div.classList.add('incorrect');
+        } else {
+            if (key === q.userAnswer) div.classList.add('selected');
+        }
+        if (!testSubmitted) {
+            div.addEventListener('click', () => {
+                optionsEl.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+                div.classList.add('selected');
+                q.userAnswer = key;
+                updatePalette();
+                updateProgress();
+            });
+        }
+        const letter = document.createElement('div');
+        letter.className = 'opt-letter';
+        letter.textContent = key.toUpperCase();
+        const text = document.createElement('span');
+        text.className = 'opt-text';
+        text.textContent = val;
+        if (testSubmitted) {
+            if (key === q.correctAnswer) {
+                const ind = document.createElement('span');
+                ind.className = 'opt-indicator correct-indicator';
+                ind.textContent = ' ✓ Correct';
+                text.appendChild(ind);
+            } else if (key === q.userAnswer) {
+                const ind = document.createElement('span');
+                ind.className = 'opt-indicator incorrect-indicator';
+                ind.textContent = ' ✗ Your Answer';
+                text.appendChild(ind);
+            }
+        }
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'q-opt';
+        radio.value = key;
+        radio.checked = q.userAnswer === key;
+        div.appendChild(radio);
+        div.appendChild(letter);
+        div.appendChild(text);
+        optionsEl.appendChild(div);
+    }
+
+    if (testSubmitted && q.explanation) {
+        const exp = document.createElement('div');
+        exp.className = 'explanation-box';
+        exp.innerHTML = `<strong>Explanation:</strong> ${q.explanation}`;
+        optionsEl.appendChild(exp);
+    }
+
+    markBtn.classList.toggle('marked', q.marked);
+    markBtn.textContent = q.marked ? '🔖 Marked' : '🔖 Mark';
+    prevBtn.style.visibility = currentQuestionIndex === 0 ? 'hidden' : 'visible';
+    nextBtn.style.visibility = currentQuestionIndex === mockTest.questions.length - 1 ? 'hidden' : 'visible';
+    updatePalette();
+}
+
+function toggleMark() {
+    const q = mockTest.questions[currentQuestionIndex];
+    q.marked = !q.marked;
+    markBtn.classList.toggle('marked', q.marked);
+    markBtn.textContent = q.marked ? '🔖 Marked' : '🔖 Mark';
+    updatePalette();
+}
+
+function renderPalette() {
+    paletteGrid.innerHTML = '';
+    mockTest.questions.forEach((q, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'palette-btn';
+        btn.textContent = q.id;
+        btn.addEventListener('click', () => { currentQuestionIndex = i; renderQuestion(); });
+        paletteGrid.appendChild(btn);
+    });
+    updatePalette();
+}
+
+function updatePalette() {
+    const btns = paletteGrid.querySelectorAll('.palette-btn');
+    mockTest.questions.forEach((q, i) => {
+        const btn = btns[i];
+        btn.className = 'palette-btn';
+        if (testSubmitted) {
+            if (!q.userAnswer) btn.classList.add('review-unanswered');
+            else if (q.userAnswer === q.correctAnswer) btn.classList.add('review-correct');
+            else btn.classList.add('review-wrong');
+        } else {
+            if (q.userAnswer) btn.classList.add('answered');
+            if (q.marked) btn.classList.add('marked');
+        }
+        if (i === currentQuestionIndex) btn.classList.add('current');
+    });
+    const ans = mockTest.questions.filter(q => q.userAnswer).length;
+    answeredCountEl.textContent = `${ans}/${mockTest.questions.length}`;
+}
+
+function updateProgress() {
+    const ans = mockTest.questions.filter(q => q.userAnswer).length;
+    const pct = Math.round((ans / mockTest.questions.length) * 100);
+    progressFill.style.width = pct + '%';
+    progressPct.textContent = pct + '%';
+}
+
+function renderLegend(reviewMode) {
+    const leg = document.getElementById('palette-legend');
+    if (!leg) return;
+    if (reviewMode) {
+        leg.innerHTML = `
+        <div class="leg-label"><div class="leg-dot" style="background:#22c55e;"></div>Correct</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#ef4444;"></div>Wrong</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#60a5fa;"></div>Unanswered</div>`;
+    } else {
+        leg.innerHTML = `
+        <div class="leg-label"><div class="leg-dot" style="background:#bbf7d0;border:1px solid #22c55e;"></div>Answered</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#bae6fd;border:1px solid #0ea5e9;"></div>Marked</div>
+        <div class="leg-label"><div class="leg-dot" style="background:#fee2e2;border:1px solid #fca5a5;"></div>Unanswered</div>
+        <div class="leg-label"><div class="leg-dot" style="background:white;border:2px solid #1a6fc4;"></div>Current</div>`;
+    }
+}
+
+function submitTest() {
+    if (testSubmitted) return;
+    testSubmitted = true;
+    clearInterval(timer);
+
+    let correct = 0, incorrect = 0, unanswered = 0;
+    mockTest.questions.forEach(q => {
+        if (!q.userAnswer) unanswered++;
+        else if (q.userAnswer === q.correctAnswer) correct++;
+        else incorrect++;
+    });
+
+    const total = mockTest.questions.length;
+    const maxScore = total * mockTest.markingScheme.correct;
+    const score = (correct * mockTest.markingScheme.correct) + (incorrect * mockTest.markingScheme.incorrect);
+    const pct = ((score / maxScore) * 100).toFixed(2);
+    const acc = correct + incorrect > 0 ? ((correct / (correct + incorrect)) * 100).toFixed(2) : '0';
+
+const resultData = {
+        studentId: localStorage.getItem('ts_student_id') || '',
+        name: localStorage.getItem('cbtUserName') || 'Unknown',
+        subject: SUBJECT_ID,
+        chapter: CHAPTER_ID,
+        date: new Date().toISOString(),
+        score, maxScore, correct,
+        wrong: incorrect,
+        skipped: unanswered,
+        totalQ: total,
+        percentage: parseFloat(pct),
+        accuracy: parseFloat(acc),
+        timeTaken: mockTest.duration - timeLeft
+    };
+
+    const key = `thunderstudy_result_${SUBJECT_ID}_${CHAPTER_ID}`;
+    localStorage.setItem(key, JSON.stringify(resultData));
+
+    const GS_URL = "https://script.google.com/macros/s/AKfycbyEsrvdSuRh06TIKPK0ozP-jQNjqHO8PaIeBcW5r45aGdr4H3ZVFHpKMm3xaDHrYmqX/exec";
+    fetch(GS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(resultData)
+    }).then(() => {
+        localStorage.setItem(`synced_${SUBJECT_ID}_${CHAPTER_ID}`, "true");
+    }).catch(err => console.error("Sync failed", err));
+
+    const idxKey = `thunderstudy_index_${SUBJECT_ID}`;
+    let idx = [];
+    try { idx = JSON.parse(localStorage.getItem(idxKey) || '[]'); } catch(e) {}
+    if (!idx.includes(CHAPTER_ID)) idx.push(CHAPTER_ID);
+    localStorage.setItem(idxKey, JSON.stringify(idx));
+
+    document.getElementById('correct-answers').textContent = correct;
+    document.getElementById('incorrect-answers').textContent = incorrect;
+    document.getElementById('unanswered').textContent = unanswered;
+    document.getElementById('total-score').textContent = score;
+    document.getElementById('percentage').textContent = pct;
+    document.getElementById('accuracy').textContent = acc;
+    modal.classList.add('show');
+
+    renderQuestion();
+    renderLegend(true);
+
+    // Swap submit rows
+    document.getElementById('submit-row-before').style.display = 'none';
+    document.getElementById('submit-row-after').style.display = 'flex';
+}
+
+/* Visibility change guard */
+document.addEventListener("visibilitychange", () => {
+    if (!testStarted || testSubmitted) return;
+    if (document.hidden) startCountdown('tab');
+    else cancelCountdown();
+});
+
+/* Arrow key nav */
+document.addEventListener('keydown', e => {
+    if (document.getElementById('test-screen').style.display === 'none') return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { if (currentQuestionIndex < mockTest.questions.length - 1) { currentQuestionIndex++; renderQuestion(); } }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { if (currentQuestionIndex > 0) { currentQuestionIndex--; renderQuestion(); } }
+});
+</script>
+
+<script>
+function startMock() {
+    const savedName = localStorage.getItem('cbtUserName') || '';
+    const savedSID = localStorage.getItem('ts_student_id') || '';
+    const inputName = document.getElementById('username-input').value.trim();
+
+    if (!savedName && !inputName) {
+        alert("⚠️ Please enter your name to continue!");
+        document.getElementById('username-input').focus();
+        return;
+    }
+
+    if (!savedName && inputName) {
+        localStorage.setItem("cbtUserName", inputName);
+    }
+
+    if (!savedSID) {
+        const goToDash = confirm("⚠️ Student ID not found!\n\nYou must have a Student ID to start the mock.\n\nClick OK to open Dashboard to generate one, or Cancel to stay here.");
+        if (goToDash) {
+            window.open('https://commercesehoga.github.io/dashboard/', '_blank');
+        }
+        return;
+    }
+
+    enterFullscreen();
+    document.getElementById('start-screen').style.display = 'none';
+    document.getElementById('instruction-screen').style.display = 'block';
+}
+
+    window.addEventListener('DOMContentLoaded', () => {
+    const savedName = localStorage.getItem('cbtUserName') || '';
+    const savedSID = localStorage.getItem('ts_student_id') || '';
+
+    if (savedName) {
+        const inp = document.getElementById('username-input');
+        if (inp) {
+            inp.value = savedName;
+            inp.style.background = 'rgba(79,110,247,.07)';
+            inp.style.borderColor = '#4f6ef7';
+            inp.style.color = '#4f6ef7';
+            inp.style.fontWeight = 'bold';
+            inp.setAttribute('readonly', true);
+            inp.insertAdjacentHTML('afterend',
+                `<div style="font-size:11px; color:#4f6ef7; font-weight:700; margin-top:5px;">
+                    ✅ Verified Dashboard Profile
+                </div>`
+            );
+        }
+    }
+
+    if (savedSID) {
+        const sidArea = document.getElementById('sid-display-area');
+        const sidVal = document.getElementById('sid-value');
+        if (sidArea && sidVal) {
+            sidArea.style.display = 'block';
+            sidVal.textContent = savedSID;
+        }
+    }
+});
+
+document.getElementById('dark-toggle').addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const dark = document.body.classList.contains('dark-mode');
+    document.getElementById('toggle-icon').textContent = dark ? '☀️' : '🌙';
+    document.getElementById('toggle-label').textContent = dark ? 'Light' : 'Dark';
+});
+
+const checkbox = document.getElementById('agree-checkbox');
+const startTestBtn = document.getElementById('start-test-btn');
+checkbox.addEventListener('change', () => {
+    startTestBtn.disabled = !checkbox.checked;
+});
+startTestBtn.addEventListener('click', () => {
+    if (!checkbox.checked) { alert('Please agree to instructions!'); return; }
+    document.getElementById('instruction-screen').style.display = 'none';
+    document.getElementById('test-screen').style.display = 'block';
+    const name = localStorage.getItem('cbtUserName') || 'Student';
+    const sid = localStorage.getItem('ts_student_id') || 'N/A';
+    document.getElementById('user-name-display').textContent = '👤 ' + name;
+    if (document.getElementById('display-user-name')) document.getElementById('display-user-name').textContent = name;
+    if (document.getElementById('display-user-sid')) document.getElementById('display-user-sid').textContent = sid;
+    const mob = document.getElementById('mobile-name-display');
+    if (mob) mob.textContent = '👤 ' + name + ' | ' + sid;
+    testStarted = true;
+    enterFullscreen();
+    initTest();
+});
+
+function enterFullscreen() {
+    const el = document.documentElement;
+    try {
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+    } catch(e) {}
+}
+
+['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange'].forEach(evt => document.addEventListener(evt, onFSChange));
+
+function isFullscreen() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement);
+}
+function onFSChange() {
+    if (!testStarted || testSubmitted) return;
+    if (document.getElementById('test-screen').style.display === 'none') return;
+    if (!isFullscreen()) startCountdown('fullscreen');
+    else cancelCountdown();
+}
+
+let cdTimer = null, cdSecs = 0;
+function startCountdown(reason) {
+    if (!testStarted || testSubmitted || cdTimer) return;
+    cdSecs = reason === 'tab' ? 2 : 5;
+    const msg = reason === 'tab' ? '⚠️ Tab switched!' : '⚠️ Exited fullscreen!';
+    const hint = reason === 'tab' ? 'Return to this tab to cancel.' : 'Click below to return to fullscreen.';
+    showOverlay(msg, hint, cdSecs, reason === 'fullscreen');
+    cdTimer = setInterval(() => { cdSecs--; updateOverlay(cdSecs); if (cdSecs <= 0) { cancelCountdown(); submitTest(); } }, 1000);
+}
+function cancelCountdown() {
+    if (cdTimer) { clearInterval(cdTimer); cdTimer = null; }
+    hideOverlay();
+}
+function showOverlay(msg, hint, secs, btn) {
+    let ov = document.getElementById('sec-overlay');
+    if (!ov) { ov = document.createElement('div'); ov.id = 'sec-overlay'; ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:999999;display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:DM Sans,sans-serif;color:#fff;text-align:center;padding:24px;'; document.body.appendChild(ov); }
+    ov.innerHTML = `<div style="font-size:56px;margin-bottom:12px;">🚨</div><div style="font-size:22px;font-weight:800;margin-bottom:8px;">${msg}</div><div style="font-size:15px;color:#fbbf24;margin-bottom:18px;">${hint}</div><div style="font-size:14px;color:#e0e0e0;margin-bottom:4px;">Auto-submitting in</div><div id="ov-count" style="font-size:72px;font-weight:900;color:#f87171;line-height:1;">${secs}</div><div style="font-size:13px;color:#9ca3af;margin-top:4px;">seconds</div>${btn?`<button onclick="enterFullscreen()" style="margin-top:22px;padding:12px 32px;border-radius:30px;border:none;background:linear-gradient(135deg,#22c55e,#15803d);color:#fff;font-size:16px;font-weight:700;cursor:pointer;">🔲 Return to Fullscreen</button>`:''}`;
+    ov.style.display = 'flex';
+}
+function updateOverlay(n) { const el = document.getElementById('ov-count'); if (el) el.textContent = n; }
+function hideOverlay() { const ov = document.getElementById('sec-overlay'); if (ov) ov.style.display = 'none'; }
+</script>
+
+<script>
+function generatePDF() {
+    const name = localStorage.getItem('cbtUserName') || 'Student';
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'});
+    const timeStr = now.toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'});
+
+    let correct=0,incorrect=0,unanswered=0;
+    mockTest.questions.forEach(q => {
+        if (!q.userAnswer) unanswered++;
+        else if (q.userAnswer === q.correctAnswer) correct++;
+        else incorrect++;
+    });
+    const score = (correct*5)+(incorrect*-1);
+    const maxScore = mockTest.questions.length*5;
+    const pct = ((score/maxScore)*100).toFixed(1);
+    const lbl = {a:'A',b:'B',c:'C',d:'D'};
+
+    let qHTML = '';
+    mockTest.questions.forEach((q,i) => {
+        const ok = q.userAnswer === q.correctAnswer;
+        const wrong = q.userAnswer && !ok;
+        const skip = !q.userAnswer;
+        const statusColor = ok?'#059669':wrong?'#dc2626':'#9ca3af';
+        const statusLabel = ok?'✓ Correct':wrong?'✗ Wrong':'— Skipped';
+        const rowBg = ok?'#f0fdf4':wrong?'#fef2f2':'#fafafa';
+        let optsHTML='';
+        for (const [k,v] of Object.entries(q.options)) {
+            const isRight=k===q.correctAnswer, isUser=k===q.userAnswer;
+            let bg='transparent',fw='normal',pre='';
+            if(isRight){bg='#dcfce7';fw='bold';pre='✓ ';}
+            if(isUser&&!isRight){bg='#fee2e2';fw='bold';pre='✗ ';}
+            optsHTML+=`<div style="display:flex;gap:8px;padding:4px 8px;border-radius:4px;background:${bg};font-weight:${fw};font-size:12px;margin:2px 0;"><span style="min-width:18px;font-weight:700;">${lbl[k]}.</span><span>${pre}${v}</span></div>`;
+        }
+        const yourAns = skip?'<span style="color:#9ca3af;">Not Attempted</span>':`<span style="color:${ok?'#059669':'#dc2626'};font-weight:bold;">${lbl[q.userAnswer]}. ${q.options[q.userAnswer]}</span>`;
+        qHTML+=`<div style="margin-bottom:16px;padding:14px;border-radius:8px;background:${rowBg};border:1px solid #e5e7eb;page-break-inside:avoid;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                <div style="font-weight:700;font-size:13px;color:#1e293b;">Q${i+1}. ${q.text}</div>
+                <div style="font-weight:700;font-size:12px;color:${statusColor};white-space:nowrap;margin-left:12px;">${statusLabel}</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:8px;">${optsHTML}</div>
+            <div style="font-size:12px;border-top:1px solid #e5e7eb;padding-top:6px;">
+                Your answer: ${yourAns}&nbsp;&nbsp;
+                Correct: <span style="color:#059669;font-weight:bold;">${lbl[q.correctAnswer]}. ${q.options[q.correctAnswer]}</span>
+            </div>
+        </div>`;
+    });
+
+    const scoreColor = pct>=60?'#059669':pct>=35?'#d97706':'#dc2626';
+    const html=`<div style="max-width:780px;margin:0 auto;font-family:Arial,sans-serif;color:#111;">
+        <div style="background:linear-gradient(135deg,#1a6fc4,#0ea5e9);color:white;padding:20px 24px;border-radius:10px 10px 0 0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                <div><div style="font-size:22px;font-weight:800;">⚡ Thunderstudy CBT</div><div style="font-size:13px;opacity:0.85;margin-top:3px;">English Result Report</div></div>
+                <div style="text-align:right;font-size:12px;opacity:0.85;"><div>📅 ${dateStr} 🕐 ${timeStr}</div><div>👤 ${name}</div></div>
+            </div>
+        </div>
+        <div style="background:#f0f6ff;border:1px solid #bfdbfe;border-top:none;padding:16px 24px;margin-bottom:20px;border-radius:0 0 10px 10px;">
+            <div style="display:flex;flex-wrap:wrap;gap:12px;">
+                <div style="background:white;border:1px solid #dbeafe;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">SCORE</div><div style="font-size:24px;font-weight:800;color:${scoreColor};">${score}<span style="font-size:14px;color:#6b7280;">/${maxScore}</span></div></div>
+                <div style="background:white;border:1px solid #dbeafe;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">PERCENTAGE</div><div style="font-size:24px;font-weight:800;color:${scoreColor};">${pct}%</div></div>
+                <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#059669;">CORRECT</div><div style="font-size:24px;font-weight:800;color:#059669;">${correct}</div></div>
+                <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#dc2626;">WRONG</div><div style="font-size:24px;font-weight:800;color:#dc2626;">${incorrect}</div></div>
+                <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:10px 18px;text-align:center;"><div style="font-size:11px;color:#6b7280;">SKIPPED</div><div style="font-size:24px;font-weight:800;color:#6b7280;">${unanswered}</div></div>
+            </div>
+        </div>
+        <div style="font-size:15px;font-weight:700;color:#1a6fc4;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #1a6fc4;">📋 Answer Key</div>
+        ${qHTML}
+        <div style="text-align:center;margin-top:20px;padding:12px;background:#f0f6ff;border-radius:8px;font-size:12px;color:#6b7280;">Generated by <b>Thunderstudy CBT</b> | t.me/thunderstudy_official | ${dateStr}</div>
+    </div>`;
+
+    const w = window.open('','_blank','width=950,height=700,scrollbars=yes');
+    if (!w) { alert('Popup blocked! Allow popups and retry.'); return; }
+    w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"/><title>Thunderstudy_English_${name}</title><style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:Arial,sans-serif;background:#fff;padding:20px;}@media print{.no-print{display:none!important;}}.print-btn{display:block;margin:0 auto 20px;padding:12px 36px;background:linear-gradient(135deg,#1a6fc4,#0ea5e9);color:white;font-size:16px;font-weight:700;border:none;border-radius:30px;cursor:pointer;}</style></head><body><button class="print-btn no-print" onclick="window.print()">🖨️ Print / Save PDF</button>${html}</body></html>`);
+    w.document.close(); w.focus();
+}
+</script>
+
+</body>
+</html>
