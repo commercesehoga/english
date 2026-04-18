@@ -1,1576 +1,1043 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-      <meta name="google-site-verification" content="lURKBn9aXa9wE4OQQN2qeCTWYtrgIHxh0bWfMIFVjSM" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ThunderStudy English — CBT Mock Test Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>⚡ English Dashboard | Thunderstudy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy: #07090f;
-    --navy2: #0d1120;
-    --gold: #f5c842;
-    --gold2: #e8b830;
-    --amber: #ff9f1c;
-    --indigo: #6366f1;
-    --teal: #14b8a6;
-    --rose: #f43f5e;
-    --green: #22c55e;
-    --white: #f1f5f9;
-    --gray: #94a3b8;
-    --gray2: #cbd5e1;
-    --card: #0e1421;
-    --card2: #111827;
-    --border: rgba(255,255,255,0.06);
-    --border2: rgba(255,255,255,0.1);
+:root {
+  --sky: #e8f4fd;
+  --sky2: #d0eaf8;
+  --sky3: #b8dcf2;
+  --blue: #2196f3;
+  --blue2: #1976d2;
+  --blue3: #0d47a1;
+  --accent: #00bcd4;
+  --accent2: #0097a7;
+  --white: #ffffff;
+  --glass: rgba(255,255,255,0.72);
+  --glass2: rgba(255,255,255,0.45);
+  --glass3: rgba(255,255,255,0.2);
+  --border: rgba(33,150,243,0.18);
+  --border2: rgba(33,150,243,0.28);
+  --text: #0d2137;
+  --text2: #2a5070;
+  --text3: #6898b8;
+  --shadow: 0 8px 32px rgba(33,150,243,0.12);
+  --shadow2: 0 16px 48px rgba(33,150,243,0.18);
+  --r: 18px;
+  --r2: 24px;
+  --fn: 'DM Sans', sans-serif;
+  --fnd: 'Syne', sans-serif;
+  --mono: 'DM Mono', monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{
+  font-family:var(--fn);
+  background: linear-gradient(135deg, #dceefb 0%, #e8f6ff 40%, #f0f9ff 70%, #e0f0fa 100%);
+  color:var(--text);
+  display:flex;
+}
+
+/* ── LOADING SCREEN ── */
+#loader{
+  position:fixed;inset:0;z-index:99999;
+  background:linear-gradient(135deg,#c8e6fa 0%,#e3f4ff 50%,#d6eefa 100%);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px;
+  transition:opacity .6s ease, transform .6s ease;
+}
+#loader.fade-out{opacity:0;transform:scale(1.05);pointer-events:none;}
+.loader-logo{
+  width:80px;height:80px;
+  background:linear-gradient(135deg,#2196f3,#00bcd4);
+  border-radius:22px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:38px;
+  box-shadow:0 12px 40px rgba(33,150,243,0.4);
+  animation:loaderPulse 1.4s ease-in-out infinite;
+}
+@keyframes loaderPulse{0%,100%{box-shadow:0 12px 40px rgba(33,150,243,0.4);}50%{box-shadow:0 12px 60px rgba(33,150,243,0.7);transform:scale(1.05);}}
+.loader-title{font-family:var(--fnd);font-size:28px;font-weight:800;color:#0d47a1;letter-spacing:-0.5px;}
+.loader-sub{font-size:12px;color:#5090b8;letter-spacing:3px;text-transform:uppercase;font-weight:600;}
+.loader-bar-wrap{width:200px;height:4px;background:rgba(33,150,243,0.2);border-radius:4px;overflow:hidden;}
+.loader-bar{height:100%;background:linear-gradient(90deg,#2196f3,#00bcd4);border-radius:4px;animation:loaderFill 2s ease forwards;}
+@keyframes loaderFill{from{width:0%;}to{width:100%;}}
+.loader-dots{display:flex;gap:6px;}
+.loader-dot{width:7px;height:7px;border-radius:50%;background:#2196f3;animation:dotBounce 1.2s ease-in-out infinite;}
+.loader-dot:nth-child(2){animation-delay:.15s;background:#00bcd4;}
+.loader-dot:nth-child(3){animation-delay:.3s;background:#2196f3;}
+@keyframes dotBounce{0%,80%,100%{transform:scale(0.6);opacity:.5;}40%{transform:scale(1);opacity:1;}}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:220px;height:100vh;
+  background:var(--glass);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-right:1px solid var(--border2);
+  display:flex;flex-direction:column;
+  flex-shrink:0;z-index:10;
+  box-shadow:4px 0 24px rgba(33,150,243,0.08);
+  animation:slideIn .5s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes slideIn{from{transform:translateX(-100%);opacity:0;}to{transform:translateX(0);opacity:1;}}
+.sb-logo{padding:22px 18px 16px;display:flex;align-items:center;gap:10px;}
+.sb-logo-icon{width:38px;height:38px;background:linear-gradient(135deg,#2196f3,#00bcd4);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 14px rgba(33,150,243,0.35);flex-shrink:0;}
+.sb-logo-text{font-family:var(--fnd);font-size:15px;font-weight:800;color:var(--text);letter-spacing:-.3px;}
+.sb-logo-text span{color:var(--blue);}
+.sb-nav{flex:1;overflow-y:auto;padding:4px 10px 10px;}
+.sb-nav::-webkit-scrollbar{width:0;}
+.nav-sec{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);padding:10px 10px 4px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:13px;cursor:pointer;transition:all .2s;margin-bottom:2px;color:var(--text2);font-size:13px;font-weight:600;}
+.nav-item:hover{background:rgba(33,150,243,0.1);color:var(--blue);}
+.nav-item.active{background:linear-gradient(135deg,rgba(33,150,243,0.15),rgba(0,188,212,0.1));color:var(--blue2);font-weight:700;}
+.nav-item.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:18px;background:linear-gradient(180deg,#2196f3,#00bcd4);border-radius:0 4px 4px 0;}
+.nav-item{position:relative;}
+.nav-icon{font-size:16px;width:20px;text-align:center;flex-shrink:0;}
+.nav-badge{margin-left:auto;background:var(--blue);color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:20px;}
+.nav-badge.teal{background:var(--accent);}
+.nav-badge.lock{background:rgba(244,63,94,.9);}
+.sb-profile{padding:14px;border-top:1px solid var(--border);background:rgba(33,150,243,0.04);}
+.sb-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#2196f3,#00bcd4);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0;}
+.sb-pname{font-size:12px;font-weight:700;color:var(--text);}
+.sb-prole{font-size:10px;color:var(--text3);}
+.sb-profile-inner{display:flex;align-items:center;gap:9px;}
+
+/* ── MAIN ── */
+.main{flex:1;height:100vh;overflow-y:auto;overflow-x:hidden;position:relative;}
+.main::-webkit-scrollbar{width:5px;}
+.main::-webkit-scrollbar-track{background:transparent;}
+.main::-webkit-scrollbar-thumb{background:rgba(33,150,243,0.3);border-radius:10px;}
+.page{display:none;padding:28px 30px;animation:fadeUp .35s ease both;}
+.page.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── TOPBAR ── */
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;gap:12px;flex-wrap:wrap;}
+.page-title{font-family:var(--fnd);font-size:22px;font-weight:800;color:var(--text);letter-spacing:-.4px;}
+.page-sub{font-size:12px;color:var(--text3);margin-top:3px;}
+.topbar-right{display:flex;align-items:center;gap:9px;}
+
+/* ── GLASS CARD ── */
+.glass-card{
+  background:var(--glass);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--border2);
+  border-radius:var(--r2);
+  box-shadow:var(--shadow);
+}
+.card-p{padding:20px 22px;}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,rgba(33,150,243,0.12),rgba(0,188,212,0.08));
+  border:1.5px solid rgba(33,150,243,0.25);
+  border-radius:var(--r2);
+  padding:24px;
+  margin-bottom:20px;
+  position:relative;overflow:hidden;
+}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:rgba(33,150,243,0.06);}
+.hero::after{content:'';position:absolute;bottom:-40px;left:30px;width:160px;height:160px;border-radius:50%;background:rgba(0,188,212,0.04);}
+
+/* ── STAT GRID ── */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:20px;}
+.stat-card{
+  background:var(--glass);
+  backdrop-filter:blur(12px);
+  border:1px solid var(--border2);
+  border-radius:18px;padding:16px;
+  transition:transform .2s,box-shadow .2s;
+}
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow2);}
+.stat-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:10px;}
+.stat-val{font-family:var(--mono);font-size:22px;font-weight:700;letter-spacing:-1px;}
+.stat-lbl{font-size:10px;color:var(--text3);font-weight:600;margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
+
+/* ── MOCK GRID ── */
+.mock-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;}
+.mock-card{
+  background:var(--glass);
+  backdrop-filter:blur(12px);
+  border:1.5px solid var(--border);
+  border-radius:16px;padding:14px;
+  transition:all .2s;position:relative;overflow:hidden;cursor:pointer;
+  text-decoration:none;color:var(--text);display:block;
+}
+.mock-card:hover{transform:translateY(-2px);box-shadow:var(--shadow2);border-color:rgba(33,150,243,0.4);}
+.mock-card.done{border-color:rgba(0,188,212,0.35);}
+.mock-card.done::after{content:'✓';position:absolute;top:9px;right:10px;font-size:10px;font-weight:800;color:var(--accent);background:rgba(0,188,212,0.12);border-radius:20px;padding:2px 7px;}
+.mock-num{font-size:28px;font-weight:900;font-family:var(--mono);color:var(--blue);opacity:.15;position:absolute;right:10px;bottom:6px;}
+.mock-title{font-size:13px;font-weight:700;margin-bottom:4px;}
+.mock-tag{font-size:10px;color:var(--text3);}
+.mock-score{font-size:18px;font-weight:800;font-family:var(--mono);color:var(--blue2);margin-top:6px;}
+.mock-icon{font-size:22px;margin-bottom:8px;}
+
+/* ── SECTION HEADER ── */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.sec-title{font-family:var(--fnd);font-size:15px;font-weight:700;color:var(--text);}
+.sec-badge{font-size:10px;font-weight:700;background:rgba(33,150,243,0.1);color:var(--blue2);padding:3px 10px;border-radius:20px;border:1px solid rgba(33,150,243,0.2);}
+
+/* ── PROMO BANNERS ── */
+.promo-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;}
+.promo-banner{border-radius:var(--r2);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;text-decoration:none;display:block;}
+.promo-banner:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(33,150,243,0.22);}
+
+/* ── TABS ── */
+.type-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px;}
+.type-tab{padding:7px 14px;border-radius:30px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--border2);background:var(--glass);color:var(--text2);transition:all .2s;}
+.type-tab.active{background:linear-gradient(135deg,#2196f3,#00bcd4);color:#fff;border-color:transparent;box-shadow:0 4px 14px rgba(33,150,243,0.3);}
+.type-tab:hover:not(.active){border-color:var(--blue);color:var(--blue);}
+
+/* ── LEADERBOARD ── */
+.lb-row{display:grid;grid-template-columns:40px 1fr 80px 70px;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid var(--border);transition:background .15s;}
+.lb-row:hover{background:rgba(33,150,243,0.04);}
+.lb-row:last-child{border-bottom:none;}
+.lb-rank{font-size:13px;font-weight:900;font-family:var(--mono);text-align:center;}
+.lb-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;background:linear-gradient(135deg,#2196f3,#00bcd4);}
+.lb-info{display:flex;align-items:center;gap:8px;}
+.lb-name{font-size:12px;font-weight:700;}
+.lb-pct{font-size:13px;font-weight:800;font-family:var(--mono);text-align:right;color:var(--blue2);}
+.lb-bar{height:3px;background:rgba(33,150,243,0.15);border-radius:3px;overflow:hidden;margin-top:2px;}
+.lb-bar-f{height:100%;background:linear-gradient(90deg,#2196f3,#00bcd4);border-radius:3px;}
+
+/* ── BOOK CARDS ── */
+.book-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;}
+.book-card{
+  background:var(--glass);
+  backdrop-filter:blur(12px);
+  border:1.5px solid var(--border2);
+  border-radius:var(--r2);
+  padding:20px;
+  transition:all .2s;cursor:pointer;
+  text-decoration:none;color:var(--text);display:block;
+}
+.book-card:hover{transform:translateY(-3px);box-shadow:var(--shadow2);border-color:rgba(33,150,243,0.4);}
+.book-cover{width:100%;height:120px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:40px;margin-bottom:14px;position:relative;overflow:hidden;}
+.book-title{font-family:var(--fnd);font-size:14px;font-weight:700;margin-bottom:4px;}
+.book-desc{font-size:11px;color:var(--text3);line-height:1.6;}
+.price-badge{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:800;}
+.price-free{background:rgba(0,188,212,.1);border:1px solid rgba(0,188,212,.3);color:var(--accent2);}
+.price-paid{background:rgba(33,150,243,.1);border:1px solid rgba(33,150,243,.3);color:var(--blue2);}
+
+/* ── LOCK OVERLAY ── */
+.lock-overlay{
+  position:fixed;inset:0;background:rgba(0,50,100,.35);backdrop-filter:blur(8px);
+  z-index:9999;display:none;align-items:center;justify-content:center;
+}
+.lock-overlay.open{display:flex;}
+.lock-box{
+  background:var(--glass);backdrop-filter:blur(20px);
+  border:1.5px solid var(--border2);border-radius:26px;
+  padding:36px 32px;max-width:420px;width:90%;text-align:center;
+  box-shadow:0 24px 80px rgba(33,150,243,0.25);
+  animation:mIn .35s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes mIn{from{opacity:0;transform:scale(.92) translateY(12px);}to{opacity:1;transform:none;}}
+
+/* ── TOAST ── */
+.toast-wrap{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:99999;pointer-events:none;}
+.toast{
+  background:rgba(13,65,120,0.92);color:#fff;
+  backdrop-filter:blur(12px);
+  padding:10px 22px;border-radius:30px;font-size:13px;font-weight:700;
+  box-shadow:0 8px 28px rgba(33,150,243,0.3);
+  opacity:0;transform:translateY(10px);
+  transition:all .3s cubic-bezier(.34,1.56,.64,1);
+  white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateY(0);}
+
+/* ── MOBILE DOCK ── */
+.mobile-dock{display:none;}
+@media(max-width:768px){
+  .sidebar{display:none;}
+  body{flex-direction:column;}
+  .main{height:100dvh;padding-bottom:80px;}
+  .page{padding:16px 14px;}
+  .promo-grid{grid-template-columns:1fr;gap:10px;}
+  .mobile-dock{
+    display:flex;position:fixed;bottom:10px;left:50%;transform:translateX(-50%);
+    width:calc(100% - 20px);max-width:420px;height:60px;
+    background:var(--glass);backdrop-filter:blur(20px);
+    border:1px solid var(--border2);border-radius:24px;
+    z-index:100;padding:0 4px;
+    box-shadow:var(--shadow2);
+    align-items:center;justify-content:space-around;
   }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{background:var(--navy);color:var(--white);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+  .dock-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;position:relative;height:60px;-webkit-tap-highlight-color:transparent;}
+  .dock-icon{font-size:18px;line-height:1;}
+  .dock-label{font-size:8px;font-weight:700;color:var(--text3);}
+  .dock-item.active .dock-label{color:var(--blue);}
+  .dock-active-dot{width:4px;height:4px;border-radius:50%;background:var(--blue);position:absolute;bottom:8px;display:none;}
+  .dock-item.active .dock-active-dot{display:block;}
+}
 
-  /* ── STAR CANVAS ── */
-  #stars-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+/* ── SEARCH ── */
+.search-inp{
+  background:var(--glass2);backdrop-filter:blur(10px);
+  border:1.5px solid var(--border2);border-radius:30px;
+  padding:8px 16px;font-size:12px;color:var(--text);
+  font-family:var(--fn);outline:none;min-width:180px;
+}
+.search-inp:focus{border-color:var(--blue);}
 
-  /* ── NOISE ── */
-  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.5;}
+/* ── BTN ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:30px;font-size:12px;font-weight:700;border:none;cursor:pointer;font-family:var(--fn);transition:all .18s;text-decoration:none;}
+.btn:hover{transform:translateY(-1px);}
+.btn-prim{background:linear-gradient(135deg,#2196f3,#00bcd4);color:#fff;box-shadow:0 4px 14px rgba(33,150,243,0.3);}
+.btn-ghost{background:var(--glass);border:1.5px solid var(--border2);color:var(--text2);}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue);}
 
-  /* ── GLOWS ── */
-  .glow-orb{position:fixed;border-radius:50%;filter:blur(140px);pointer-events:none;z-index:0;animation:drift 20s ease-in-out infinite alternate;}
-  .g1{width:600px;height:600px;background:rgba(99,102,241,.12);top:-150px;right:-150px;}
-  .g2{width:450px;height:450px;background:rgba(245,200,66,.07);bottom:5%;left:-100px;animation-delay:-8s;}
-  .g3{width:350px;height:350px;background:rgba(20,184,166,.1);top:55%;right:10%;animation-delay:-14s;}
-  @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(40px,50px) scale(1.12)}}
+/* ── PROGRESS BAR ── */
+.prog-track{height:5px;background:rgba(33,150,243,0.12);border-radius:5px;overflow:hidden;margin-top:4px;}
+.prog-fill{height:100%;background:linear-gradient(90deg,#2196f3,#00bcd4);border-radius:5px;transition:width 1s ease;}
 
-  /* ── TICKER STRIP ── */
-  .ticker-wrap{position:relative;z-index:300;background:linear-gradient(90deg,rgba(99,102,241,.18),rgba(20,184,166,.12),rgba(245,200,66,.1),rgba(99,102,241,.18));border-bottom:1px solid rgba(255,255,255,.07);overflow:hidden;height:32px;display:flex;align-items:center;}
-  .ticker-label{flex-shrink:0;background:linear-gradient(135deg,#6366f1,#818cf8);color:#fff;font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:0 14px;height:100%;display:flex;align-items:center;gap:6px;white-space:nowrap;z-index:2;}
-  .ticker-label .tl-dot{width:5px;height:5px;border-radius:50%;background:#fff;animation:pulse 1.5s infinite;}
-  .ticker-track{flex:1;overflow:hidden;position:relative;}
-  .ticker-track::before{content:'';position:absolute;left:0;top:0;bottom:0;width:40px;background:linear-gradient(90deg,rgba(7,9,15,.9),transparent);z-index:2;}
-  .ticker-track::after{content:'';position:absolute;right:0;top:0;bottom:0;width:40px;background:linear-gradient(270deg,rgba(7,9,15,.9),transparent);z-index:2;}
-  .ticker-inner{display:flex;gap:0;white-space:nowrap;animation:tickerScroll 40s linear infinite;}
-  .ticker-inner:hover{animation-play-state:paused;}
-  @keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-  .ticker-item{display:inline-flex;align-items:center;gap:7px;padding:0 28px;font-size:.72rem;font-weight:500;color:var(--gray2);text-decoration:none;transition:color .2s;}
-  .ticker-item:hover{color:var(--gold);}
-  .ticker-item .ti-icon{font-size:.8rem;}
-  .ticker-item .ti-sep{color:rgba(255,255,255,.15);margin-left:28px;font-size:.9rem;}
-  .ticker-item .ti-tag{font-size:.58rem;font-weight:700;padding:1px 5px;border-radius:3px;vertical-align:middle;margin-left:4px;}
+/* ── EMPTY STATE ── */
+.empty-state{text-align:center;padding:50px 20px;}
+.empty-state .icon{font-size:48px;margin-bottom:12px;}
+.empty-state h3{font-family:var(--fnd);font-size:18px;margin-bottom:6px;}
+.empty-state p{font-size:13px;color:var(--text3);}
 
-  /* ── SEARCH BAR ── */
-  .search-wrap{position:relative;flex:1;max-width:320px;margin:0 16px;}
-  .search-input{width:100%;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:10px;padding:7px 14px 7px 36px;font-size:.82rem;color:var(--white);font-family:'DM Sans',sans-serif;outline:none;transition:all .22s;}
-  .search-input::placeholder{color:var(--gray);}
-  .search-input:focus{background:rgba(255,255,255,.09);border-color:rgba(99,102,241,.4);box-shadow:0 0 0 3px rgba(99,102,241,.1);}
-  .search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:.85rem;opacity:.5;pointer-events:none;}
-  .search-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:.7rem;cursor:pointer;color:var(--gray);opacity:0;transition:opacity .2s;background:none;border:none;color:var(--gray);font-size:1rem;line-height:1;}
-  .search-clear.visible{opacity:1;}
-  .search-dropdown{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#0d1120;border:1px solid rgba(99,102,241,.25);border-radius:12px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.6);z-index:500;display:none;max-height:320px;overflow-y:auto;}
-  .search-dropdown.open{display:block;}
-  .search-group-label{font-size:.62rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gray);padding:9px 14px 4px;background:rgba(255,255,255,.02);}
-  .search-result{display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;transition:background .15s;text-decoration:none;color:var(--gray2);font-size:.81rem;}
-  .search-result:hover,.search-result.focused{background:rgba(99,102,241,.1);color:var(--white);}
-  .sr-icon{font-size:.85rem;flex-shrink:0;width:18px;text-align:center;}
-  .sr-name{flex:1;}
-  .sr-tag{font-size:.6rem;font-weight:600;padding:2px 6px;border-radius:4px;flex-shrink:0;}
-  .search-empty{padding:18px 14px;font-size:.8rem;color:var(--gray);text-align:center;}
+/* Background mesh */
+body::before{
+  content:'';position:fixed;inset:0;z-index:-1;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(33,150,243,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 80%, rgba(0,188,212,0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.4) 0%, transparent 70%);
+}
 
-  /* ── HEADER ── */
-  header{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:64px;background:rgba(7,9,15,.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
-  .logo{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:900;letter-spacing:-.5px;display:flex;align-items:center;gap:8px;}
-  .logo-icon{font-size:1.4rem;}
-  .logo-text .brand{color:var(--white);}
-  .logo-text .accent{color:var(--gold);}
-  .btn-telegram{background:linear-gradient(135deg,#229ED9,#1a8ac4);color:#fff;font-size:.8rem;font-weight:600;padding:7px 16px;border-radius:8px;text-decoration:none;transition:all .2s;display:flex;align-items:center;gap:6px;white-space:nowrap;}
-  .btn-telegram:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(34,158,217,.4);}
+/* Floating particles */
+.particle{position:fixed;border-radius:50%;pointer-events:none;z-index:0;animation:floatP var(--dur,8s) ease-in-out infinite var(--dl,0s);}
+@keyframes floatP{0%,100%{transform:translateY(0) translateX(0);opacity:.4;}50%{transform:translateY(var(--ty,-30px)) translateX(var(--tx,20px));opacity:.8;}}
 
-  /* ── HERO ── */
-  .hero{position:relative;z-index:1;padding:88px 5% 60px;text-align:center;}
-  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(99,102,241,.13);border:1px solid rgba(99,102,241,.28);color:#a5b4fc;font-size:.74rem;font-weight:600;letter-spacing:.9px;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:26px;animation:fadeUp .7s ease both;}
-  .hero-badge .dot{width:6px;height:6px;background:#818cf8;border-radius:50%;animation:pulse 2s infinite;}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-  h1.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,6.5vw,4.8rem);font-weight:900;line-height:1.07;letter-spacing:-2px;margin-bottom:20px;animation:fadeUp .8s .1s ease both;}
-  h1.hero-title .line1{display:block;color:var(--white);}
-  h1.hero-title .line2{display:block;color:var(--gold);}
-  h1.hero-title .line3{display:block;color:#a5b4fc;}
-  .hero-sub{font-size:.98rem;color:var(--gray);line-height:1.75;max-width:540px;margin:0 auto 34px;animation:fadeUp .8s .2s ease both;font-weight:300;}
-  .hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s .3s ease both;}
-  .btn-primary{background:linear-gradient(135deg,var(--indigo),#818cf8);color:#fff;font-size:.92rem;font-weight:600;padding:12px 26px;border-radius:10px;text-decoration:none;transition:all .25s;box-shadow:0 4px 24px rgba(99,102,241,.35);}
-  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(99,102,241,.5);}
-  .btn-outline{background:rgba(255,255,255,.05);border:1px solid var(--border2);color:var(--white);font-size:.92rem;font-weight:500;padding:12px 26px;border-radius:10px;text-decoration:none;transition:all .25s;}
-  .btn-outline:hover{background:rgba(255,255,255,.09);}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+/* Chips */
+.chip{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:20px;font-size:10px;font-weight:700;border:1px solid;}
+.chip-blue{background:rgba(33,150,243,.1);border-color:rgba(33,150,243,.25);color:var(--blue2);}
+.chip-teal{background:rgba(0,188,212,.1);border-color:rgba(0,188,212,.25);color:var(--accent2);}
+.chip-green{background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.25);color:#059669;}
+.chip-red{background:rgba(244,63,94,.1);border-color:rgba(244,63,94,.25);color:#e11d48;}
 
-  .stats-bar{display:flex;justify-content:center;max-width:660px;margin:50px auto 0;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;animation:fadeUp .8s .4s ease both;}
-  .stat-item{flex:1;padding:18px;text-align:center;border-right:1px solid var(--border);}
-  .stat-item:last-child{border-right:none;}
-  .stat-num{font-family:'Playfair Display',serif;font-size:1.85rem;font-weight:700;color:var(--gold);display:block;line-height:1;}
-  .stat-lbl{font-size:.68rem;color:var(--gray);margin-top:4px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;}
+/* Grid 2 */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:700px){.grid-2{grid-template-columns:1fr;}}
 
-  /* ── SECTION DIVIDER ── */
-  .divider{height:1px;background:var(--border);margin:0 5%;}
+/* Refresh icon spin */
+.spin-anim{animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
 
-  /* ── THICK SECTION BAND ── */
-  .section-band{position:relative;z-index:1;margin:0;padding:0;}
-  .band-header{padding:60px 5% 0;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:40px;}
-  .band-label{font-size:.7rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:10px;}
-  .band-label::before{content:'';width:26px;height:2px;background:var(--gold);display:block;}
-  .band-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,4vw,2.8rem);font-weight:900;letter-spacing:-.5px;line-height:1.1;}
-  .band-desc{font-size:.88rem;color:var(--gray);line-height:1.7;max-width:420px;}
-  .band-num{font-family:'Playfair Display',serif;font-size:5rem;font-weight:900;color:rgba(255,255,255,.04);line-height:1;flex-shrink:0;}
-
-  /* ── SECTION 1 BG ── */
-  .section-one{background:linear-gradient(180deg,var(--navy) 0%,rgba(99,102,241,.04) 50%,var(--navy) 100%);}
-  .section-two{background:linear-gradient(180deg,var(--navy) 0%,rgba(20,184,166,.04) 50%,var(--navy) 100%);}
-
-  /* ── SINGLE PROGRESS BAR (top strip) ── */
-  .progress-wrap{position:relative;z-index:10;padding:0;}
-  .progress-panel{background:rgba(10,14,26,.97);border-bottom:1px solid var(--border);padding:7px 5%;backdrop-filter:blur(16px);display:flex;align-items:center;gap:14px;}
-  .progress-panel::before{display:none;}
-  .prog-panel-title{display:none;}
-  .prog-panel-sub{display:none;}
-  .prog-label-txt{font-size:.7rem;font-weight:600;color:var(--gray);white-space:nowrap;letter-spacing:.3px;}
-  .prog-tracks{flex:1;display:flex;align-items:center;gap:10px;}
-  .prog-bar{flex:1;height:5px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;}
-  .prog-fill-single{height:100%;border-radius:4px;background:linear-gradient(90deg,#6366f1,#a855f7,#14b8a6);transition:width .7s cubic-bezier(.4,0,.2,1);width:0%;}
-  .prog-pct{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;color:var(--gold);white-space:nowrap;min-width:36px;text-align:right;}
-  .prog-done-label{display:none;}
-  .prog-track{display:none;}
-
-
-  /* ── IMAGE SLIDESHOW ── */
-  .slideshow-wrap{position:relative;z-index:1;padding:10px 0 44px;overflow:hidden;}
-  .slideshow-label{text-align:center;font-size:.68rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:12px;}
-  .slideshow-label::before,.slideshow-label::after{content:'';flex:1;max-width:80px;height:1px;background:var(--border);}
-  .ss-track-outer{overflow:hidden;position:relative;}
-  .ss-track-outer::before{content:'';position:absolute;left:0;top:0;bottom:0;width:80px;background:linear-gradient(90deg,var(--navy),transparent);z-index:2;pointer-events:none;}
-  .ss-track-outer::after{content:'';position:absolute;right:0;top:0;bottom:0;width:80px;background:linear-gradient(270deg,var(--navy),transparent);z-index:2;pointer-events:none;}
-  .ss-track{display:flex;gap:18px;animation:ssScroll 35s linear infinite;width:max-content;}
-  .ss-track:hover{animation-play-state:paused;}
-  @keyframes ssScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
-  .ss-card{width:200px;height:250px;border-radius:16px;overflow:hidden;position:relative;flex-shrink:0;cursor:pointer;border:1px solid var(--border);transition:transform .3s,box-shadow .3s;}
-  .ss-card:hover{transform:translateY(-6px) scale(1.03);box-shadow:0 20px 50px rgba(0,0,0,.5);}
-  .ss-card-inner{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0;position:relative;}
-
-  /* book spine effect */
-  .ss-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:14px;background:rgba(0,0,0,.25);z-index:2;border-radius:16px 0 0 16px;}
-
-  .ss-cover{width:100%;height:168px;position:relative;overflow:hidden;flex-shrink:0;}
-  .ss-cover-art{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
-  .ss-info{padding:12px 14px;background:rgba(0,0,0,.35);backdrop-filter:blur(8px);width:100%;flex:1;display:flex;flex-direction:column;justify-content:center;}
-  .ss-type{font-size:.58rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}
-  .ss-title{font-size:.78rem;font-weight:700;line-height:1.35;color:var(--white);}
-  .ss-sub{font-size:.62rem;color:rgba(255,255,255,.55);margin-top:3px;}
-
-  /* hover overlay */
-  .ss-card .ss-hover-badge{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:4px 9px;font-size:.64rem;font-weight:600;color:var(--white);opacity:0;transition:opacity .25s;z-index:5;}
-  .ss-card:hover .ss-hover-badge{opacity:1;}
-
-  /* ── QUICK ACCESS DROP ── */
-  .qd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;padding:0 5%;margin-bottom:52px;}
-
-  .qd-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color .2s;}
-  .qd-card:hover{border-color:rgba(255,255,255,.12);}
-
-  .qd-header{padding:20px 18px;cursor:pointer;display:flex;align-items:flex-start;gap:12px;user-select:none;position:relative;}
-  .qd-header::after{content:'';position:absolute;bottom:0;left:18px;right:18px;height:1px;background:var(--border);opacity:0;transition:opacity .2s;}
-  .qd-card.open .qd-header::after{opacity:1;}
-  .qd-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
-  .qd-info{flex:1;}
-  .qd-title{font-size:.92rem;font-weight:600;margin-bottom:4px;}
-  .qd-desc{font-size:.74rem;color:var(--gray);line-height:1.55;}
-  .qd-chevron{width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.68rem;color:var(--gray);flex-shrink:0;transition:transform .3s,background .2s;}
-  .qd-card.open .qd-chevron{transform:rotate(180deg);background:rgba(255,255,255,.09);}
-
-  .qd-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);}
-  .qd-card.open .qd-body{max-height:400px;}
-  .qd-body-inner{padding:10px 14px 14px;}
-  .qd-topic{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;font-size:.78rem;color:var(--gray2);text-decoration:none;transition:all .15s;}
-  .qd-topic:hover{background:rgba(255,255,255,.05);color:var(--white);}
-  .qd-topic-dot{width:5px;height:5px;border-radius:50%;background:var(--tc,var(--gold));flex-shrink:0;opacity:.65;}
-  .qd-topic-arrow{margin-left:auto;font-size:.65rem;color:var(--gray);opacity:0;transition:opacity .15s;}
-  .qd-topic:hover .qd-topic-arrow{opacity:1;}
-
-  /* ── MOCK / PDF / IMP DROP CARDS ── */
-  .drop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:17px;padding:0 5%;margin-bottom:56px;}
-  .sec-sub-head{padding:0 5%;margin-bottom:28px;}
-  .sec-sub-label{font-size:.68rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;display:flex;align-items:center;gap:8px;}
-  .sec-sub-label::before{content:'';width:22px;height:2px;background:var(--gold);display:block;}
-  .sec-sub-title{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;letter-spacing:-.4px;line-height:1.15;}
-  .sec-sub-desc{font-size:.86rem;color:var(--gray);margin-top:5px;line-height:1.65;}
-
-  .drop-card{background:var(--card);border:1px solid var(--border);border-radius:17px;overflow:hidden;transition:border-color .2s;}
-  .drop-card:hover{border-color:rgba(255,255,255,.1);}
-  .drop-header{padding:19px 21px;cursor:pointer;display:flex;align-items:flex-start;gap:11px;position:relative;user-select:none;}
-  .drop-header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--dc1,var(--indigo)),var(--dc2,var(--teal)));}
-  .drop-badge{font-size:.65rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 8px;border-radius:5px;display:inline-block;margin-bottom:5px;}
-  .drop-title{font-size:.93rem;font-weight:600;line-height:1.4;}
-  .drop-meta{display:flex;gap:10px;font-size:.72rem;color:var(--gray);margin-top:5px;}
-  .drop-chevron{margin-left:auto;flex-shrink:0;width:25px;height:25px;border-radius:7px;background:rgba(255,255,255,.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.7rem;transition:transform .3s,background .2s;}
-  .drop-card.open .drop-chevron{transform:rotate(180deg);background:rgba(255,255,255,.09);}
-  .drop-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);}
-  .drop-card.open .drop-body{max-height:520px;}
-  .drop-body-inner{padding:4px 21px 14px;border-top:1px solid var(--border);}
-  .drop-topic-list{display:flex;flex-direction:column;gap:1px;padding-top:8px;}
-  .drop-topic{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;font-size:.79rem;color:var(--gray2);text-decoration:none;transition:all .15s;}
-  .drop-topic:hover{background:rgba(255,255,255,.05);color:var(--white);}
-  .drop-topic-dot{width:5px;height:5px;border-radius:50%;background:var(--dt-c,var(--gold));flex-shrink:0;opacity:.65;}
-  .drop-topic-tag{margin-left:auto;font-size:.62rem;font-weight:600;padding:2px 7px;border-radius:5px;}
-  .drop-footer{padding:10px 21px 14px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-  .diff-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px;}
-  .start-btn{font-size:.74rem;font-weight:600;padding:6px 14px;border-radius:7px;background:rgba(99,102,241,.14);color:#a5b4fc;border:1px solid rgba(99,102,241,.24);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
-  .start-btn:hover:not(:disabled){background:rgba(99,102,241,.28);}
-  .start-btn.done{background:rgba(34,197,94,.1);color:#86efac;border-color:rgba(34,197,94,.2);cursor:default;}
-
-  /* PDF */
-  .pdf-grid-wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:14px;padding:0 5%;margin-bottom:56px;}
-  .pdf-drop-card{background:var(--card);border:1px solid var(--border);border-radius:15px;overflow:hidden;transition:border-color .2s;}
-  .pdf-drop-card:hover{border-color:rgba(244,63,94,.17);}
-  .pdf-drop-header{padding:13px 17px;cursor:pointer;display:flex;align-items:center;gap:12px;user-select:none;}
-  .pdf-icon-wrap{width:36px;height:44px;background:rgba(244,63,94,.1);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;border:1px solid rgba(244,63,94,.15);position:relative;}
-  .pdf-icon-wrap::after{content:'PDF';position:absolute;bottom:2px;font-size:.38rem;font-weight:800;color:#f43f5e;letter-spacing:.8px;}
-  .pdf-info{flex:1;}
-  .pdf-title{font-size:.84rem;font-weight:600;margin-bottom:2px;}
-  .pdf-meta-txt{font-size:.7rem;color:var(--gray);}
-  .pdf-chevron{font-size:.68rem;color:var(--gray);transition:transform .3s;flex-shrink:0;}
-  .pdf-drop-card.open .pdf-chevron{transform:rotate(180deg);}
-  .pdf-dl-btn{width:27px;height:27px;border-radius:7px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all .2s;flex-shrink:0;text-decoration:none;color:var(--white);}
-  .pdf-drop-card:hover .pdf-dl-btn{background:var(--rose);}
-  .pdf-drop-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);}
-  .pdf-drop-card.open .pdf-drop-body{max-height:280px;}
-  .pdf-drop-body-inner{padding:10px 17px 13px;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:6px;}
-  .pdf-topic-pill{font-size:.68rem;padding:3px 9px;border-radius:18px;background:rgba(244,63,94,.07);color:#fca5a5;border:1px solid rgba(244,63,94,.12);}
-
-  /* IMP Q */
-  .impq-drop-card{background:var(--card);border:1px solid var(--border);border-radius:15px;overflow:hidden;transition:border-color .2s;}
-  .impq-drop-card:hover{border-color:rgba(245,200,66,.15);}
-  .impq-drop-header{padding:13px 17px;cursor:pointer;display:flex;align-items:flex-start;gap:9px;user-select:none;}
-  .impq-num-badge{font-family:'JetBrains Mono',monospace;font-size:.68rem;background:rgba(245,200,66,.1);color:var(--gold);padding:3px 8px;border-radius:5px;flex-shrink:0;margin-top:2px;}
-  .impq-title-txt{font-size:.84rem;font-weight:600;flex:1;line-height:1.5;}
-  .impq-star-row{color:var(--amber);font-size:.72rem;white-space:nowrap;}
-  .impq-chevron{font-size:.66rem;color:var(--gray);flex-shrink:0;transition:transform .3s;margin-top:4px;}
-  .impq-drop-card.open .impq-chevron{transform:rotate(180deg);}
-  .impq-drop-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);}
-  .impq-drop-card.open .impq-drop-body{max-height:380px;}
-  .impq-drop-body-inner{padding:10px 17px 13px;border-top:1px solid var(--border);}
-  .impq-topic-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:.78rem;color:var(--gray2);text-decoration:none;transition:color .15s;}
-  .impq-topic-row:last-child{border-bottom:none;}
-  .impq-topic-row:hover{color:var(--white);}
-  .impq-topic-icon{font-size:.75rem;width:16px;text-align:center;}
-  .impq-topic-count{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--gray);}
-
-  /* ── SECTION 2 — ALL TOPICS ── */
-  .syllabus-wrapper{display:grid;grid-template-columns:repeat(auto-fill,minmax(305px,1fr));gap:20px;padding:0 5%;margin-bottom:70px;}
-  .syl-block{background:var(--card);border:1px solid var(--border);border-radius:19px;overflow:hidden;}
-  .syl-header{padding:15px 19px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);}
-  .syl-icon{font-size:1.3rem;}
-  .syl-htitle{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;}
-  .syl-htag{margin-left:auto;font-size:.64rem;font-weight:600;padding:3px 8px;border-radius:18px;letter-spacing:.4px;}
-  .syl-list{padding:5px 0;}
-  .syl-item{display:flex;align-items:center;gap:9px;padding:8px 19px;text-decoration:none;color:var(--gray2);font-size:.82rem;transition:all .17s;border-left:3px solid transparent;}
-  .syl-item:hover{color:var(--white);background:rgba(255,255,255,.04);border-left-color:var(--ac,var(--gold));padding-left:23px;}
-  .syl-item .bullet{width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.45;flex-shrink:0;}
-  .syl-item:hover .bullet{opacity:1;}
-  .syl-item .stag{margin-left:auto;font-size:.59rem;font-weight:600;padding:2px 6px;border-radius:6px;}
-  .syl-pills{padding:10px 15px 13px;display:flex;flex-wrap:wrap;gap:5px;border-top:1px solid var(--border);background:rgba(255,255,255,.012);}
-  .syl-pill{padding:4px 10px;border-radius:100px;font-size:.7rem;font-weight:500;background:rgba(255,255,255,.035);border:1px solid var(--border);text-decoration:none;color:var(--gray2);transition:all .17s;}
-  .syl-pill:hover{color:var(--white);border-color:var(--pc,var(--gold));background:rgba(245,200,66,.05);}
-  .syl-pill .cnt{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--gray);margin-left:4px;}
-
-  /* BADGES */
-  .new-badge{font-size:.54rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;background:var(--rose);color:#fff;padding:2px 5px;border-radius:3px;margin-left:5px;vertical-align:middle;}
-  .hot-badge{font-size:.54rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;background:var(--amber);color:var(--navy);padding:2px 5px;border-radius:3px;margin-left:5px;vertical-align:middle;}
-
-  /* ── THICK DIVIDER BETWEEN SECTIONS ── */
-  .section-break{position:relative;z-index:1;margin:20px 5% 0;padding:22px 32px;background:linear-gradient(135deg,rgba(99,102,241,.08),rgba(20,184,166,.06));border:1px solid rgba(255,255,255,.07);border-radius:16px;display:flex;align-items:center;gap:16px;overflow:hidden;}
-  .section-break::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,var(--indigo),var(--teal));}
-  .sb-icon{font-size:1.6rem;flex-shrink:0;}
-  .sb-label{font-size:.66rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--teal);margin-bottom:3px;}
-  .sb-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;}
-  .sb-arrow{margin-left:auto;font-size:1.3rem;color:var(--gray);animation:bounce 2s infinite;}
-  @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
-
-  /* FOOTER */
-  footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:38px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
-  .footer-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:900;}
-  .footer-logo span{color:var(--gold);}
-  .footer-note{font-size:.74rem;color:var(--gray);margin-top:3px;}
-  .footer-links{display:flex;gap:16px;flex-wrap:wrap;}
-  .footer-links a{font-size:.76rem;color:var(--gray);text-decoration:none;transition:color .2s;}
-  .footer-links a:hover{color:var(--white);}
-
-  @media(max-width:700px){
-    nav{display:none;}
-    .stats-bar{flex-direction:column;}
-    .stat-item{border-right:none;border-bottom:1px solid var(--border);}
-    .prog-tracks{grid-template-columns:1fr;}
-    .band-num{display:none;}
-    footer{flex-direction:column;}
-  }
+/* Stagger entrance */
+.stagger > *{opacity:0;animation:fadeUp .4s ease both;}
+.stagger > *:nth-child(1){animation-delay:.05s;}
+.stagger > *:nth-child(2){animation-delay:.1s;}
+.stagger > *:nth-child(3){animation-delay:.15s;}
+.stagger > *:nth-child(4){animation-delay:.2s;}
+.stagger > *:nth-child(5){animation-delay:.25s;}
+.stagger > *:nth-child(6){animation-delay:.3s;}
+.stagger > *:nth-child(n+7){animation-delay:.35s;}
 </style>
 </head>
 <body>
 
-<!-- STAR CANVAS -->
-<canvas id="stars-canvas"></canvas>
-<div class="glow-orb g1"></div>
-<div class="glow-orb g2"></div>
-<div class="glow-orb g3"></div>
-
-<!-- ═══ TICKER STRIP ═══ -->
-<div class="ticker-wrap">
-  <div class="ticker-label"><span class="tl-dot"></span> IMPORTANT</div>
-  <div class="ticker-track">
-    <div class="ticker-inner" id="ticker-inner">
-      <!-- set 1 -->
-      <a href="#mock-tests" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">⚡</span> Full Mock Test Set 1 — 100 Qs · 90 Min<span class="ti-tag" style="background:rgba(99,102,241,.2);color:#a5b4fc">NEW</span><span class="ti-sep">|</span></a>
-      <a href="#imp-questions" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">⭐</span> Top 100 Idioms for Entrance Exam<span class="ti-tag" style="background:rgba(245,200,66,.15);color:var(--gold)">HOT</span><span class="ti-sep">|</span></a>
-      <a href="#pdfs" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">📄</span> Sample Paper 2024 PDF — Download Now<span class="ti-tag" style="background:rgba(244,63,94,.15);color:#fca5a5">PDF</span><span class="ti-sep">|</span></a>
-      <a href="#imp-questions" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">📌</span> Tenses — 80 Important Fill-in-the-Blank Questions<span class="ti-tag" style="background:rgba(245,200,66,.15);color:var(--gold)">HOT</span><span class="ti-sep">|</span></a>
-      <a href="#all-topics" class="ticker-item" onclick="switchSection('topics')"><span class="ti-icon">🔵</span> Grammar — 14 Topics · 220 Questions Available<span class="ti-sep">|</span></a>
-      <a href="#imp-questions" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">⭐</span> One Word Substitution — 60 High-Weightage Qs<span class="ti-tag" style="background:rgba(245,200,66,.15);color:var(--gold)">HOT</span><span class="ti-sep">|</span></a>
-      <a href="#pdfs" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">📄</span> Grammar Quick Revision Notes — 55 Pages<span class="ti-tag" style="background:rgba(244,63,94,.15);color:#fca5a5">PDF</span><span class="ti-sep">|</span></a>
-      <a href="#mock-tests" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">⚡</span> Reading Comprehension Test — 35 Qs · 35 Min<span class="ti-sep">|</span></a>
-      <a href="#imp-questions" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">📌</span> Prepositions — 70 Most Asked Exam Questions<span class="ti-tag" style="background:rgba(245,200,66,.15);color:var(--gold)">HOT</span><span class="ti-sep">|</span></a>
-      <a href="#all-topics" class="ticker-item" onclick="switchSection('topics')"><span class="ti-icon">🟣</span> Vocabulary — 8 Topics · 120 Questions<span class="ti-sep">|</span></a>
-      <a href="#pdfs" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">📄</span> 300 Phrasal Verbs with Examples — Download<span class="ti-tag" style="background:rgba(244,63,94,.15);color:#fca5a5">PDF</span><span class="ti-sep">|</span></a>
-      <a href="#mock-tests" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">⚡</span> Vocabulary Mock Test — 40 Qs · 30 Min<span class="ti-tag" style="background:rgba(99,102,241,.2);color:#a5b4fc">NEW</span><span class="ti-sep">|</span></a>
-      <!-- duplicate for seamless loop -->
-      <a href="#mock-tests" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">⚡</span> Full Mock Test Set 1 — 100 Qs · 90 Min<span class="ti-tag" style="background:rgba(99,102,241,.2);color:#a5b4fc">NEW</span><span class="ti-sep">|</span></a>
-      <a href="#imp-questions" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">⭐</span> Top 100 Idioms for Entrance Exam<span class="ti-tag" style="background:rgba(245,200,66,.15);color:var(--gold)">HOT</span><span class="ti-sep">|</span></a>
-      <a href="#pdfs" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">📄</span> Sample Paper 2024 PDF — Download Now<span class="ti-tag" style="background:rgba(244,63,94,.15);color:#fca5a5">PDF</span><span class="ti-sep">|</span></a>
-      <a href="#imp-questions" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">📌</span> Tenses — 80 Important Fill-in-the-Blank Questions<span class="ti-tag" style="background:rgba(245,200,66,.15);color:var(--gold)">HOT</span><span class="ti-sep">|</span></a>
-      <a href="#all-topics" class="ticker-item" onclick="switchSection('topics')"><span class="ti-icon">🔵</span> Grammar — 14 Topics · 220 Questions Available<span class="ti-sep">|</span></a>
-      <a href="#imp-questions" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">⭐</span> One Word Substitution — 60 High-Weightage Qs<span class="ti-tag" style="background:rgba(245,200,66,.15);color:var(--gold)">HOT</span><span class="ti-sep">|</span></a>
-      <a href="#pdfs" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">📄</span> Grammar Quick Revision Notes — 55 Pages<span class="ti-tag" style="background:rgba(244,63,94,.15);color:#fca5a5">PDF</span><span class="ti-sep">|</span></a>
-      <a href="#mock-tests" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">⚡</span> Reading Comprehension Test — 35 Qs · 35 Min<span class="ti-sep">|</span></a>
-      <a href="#imp-questions" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">📌</span> Prepositions — 70 Most Asked Exam Questions<span class="ti-tag" style="background:rgba(245,200,66,.15);color:var(--gold)">HOT</span><span class="ti-sep">|</span></a>
-      <a href="#all-topics" class="ticker-item" onclick="switchSection('topics')"><span class="ti-icon">🟣</span> Vocabulary — 8 Topics · 120 Questions<span class="ti-sep">|</span></a>
-      <a href="#pdfs" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">📄</span> 300 Phrasal Verbs with Examples — Download<span class="ti-tag" style="background:rgba(244,63,94,.15);color:#fca5a5">PDF</span><span class="ti-sep">|</span></a>
-      <a href="#mock-tests" class="ticker-item" onclick="switchSection('cbt')"><span class="ti-icon">⚡</span> Vocabulary Mock Test — 40 Qs · 30 Min<span class="ti-tag" style="background:rgba(99,102,241,.2);color:#a5b4fc">NEW</span><span class="ti-sep">|</span></a>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ HEADER ═══ -->
-<header>
-  <div class="logo">
-    <span class="logo-icon">⚡</span>
-    <div class="logo-text"><span class="brand">Thunder</span><span class="accent">Study English</span></div>
-  </div>
-  <div class="search-wrap">
-    <span class="search-icon">🔍</span>
-    <input type="text" class="search-input" id="search-input" placeholder="Search topics, tests, PDFs…" oninput="onSearch(this)" onkeydown="searchKey(event)" autocomplete="off">
-    <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
-    <div class="search-dropdown" id="search-dropdown"></div>
-  </div>
-  <div class="sec-tabs" style="display:none">
-    <button class="sec-tab active-cbt" id="tab-cbt" onclick="switchSection('cbt')">⚡ Start CBT Mock Test</button>
-    <button class="sec-tab" id="tab-topics" onclick="switchSection('topics')">📘 Browse All Topics</button>
-  </div>
-  <a href="https://t.me/" class="btn-telegram" target="_blank">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.012 9.48c-.148.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.604.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.56-4.457c.537-.194 1.006.131.884.737z"/></svg>
-    Join Telegram
-  </a>
-</header>
-
-<!-- ═══ SLIM PROGRESS BAR (always visible top) ═══ -->
-<div class="progress-wrap" id="progress-section">
-  <div class="progress-panel">
-    <span class="prog-label-txt">📊 Mock Progress</span>
-    <div class="prog-tracks">
-      <div class="prog-bar">
-        <div class="prog-fill-single" id="prog-fill-single"></div>
-      </div>
-    </div>
-    <span class="prog-pct" id="prog-pct">0%</span>
-    <span style="font-size:.66rem;color:var(--gray);white-space:nowrap" id="prog-fraction">0 / 6 tests</span>
-  </div>
-</div>
-
-<!-- ═══ HERO ═══ -->
-<div class="hero">
-  <div class="hero-badge"><span class="dot"></span> English Entrance Exam Portal · 2024–25</div>
-  <h1 class="hero-title">
-    <span class="line1">Master Your</span>
-    <span class="line2">English Entrance</span>
-    <span class="line3">with ThunderStudy</span>
-  </h1>
-  <p class="hero-sub">CBT Mock Tests · Sample Papers · PDF Downloads · Important Questions — everything across Vocabulary, Grammar &amp; Reading Ability.</p>
-  <div class="hero-actions">
-    <a href="#section-one" class="btn-primary" onclick="switchSection('cbt')">⚡ Start CBT Mock Test</a>
-    <a href="#all-topics" class="btn-outline" onclick="switchSection('topics')">📘 Browse All Topics</a>
-  </div>
-  <div class="stats-bar">
-    <div class="stat-item"><span class="stat-num">500+</span><div class="stat-lbl">Questions</div></div>
-    <div class="stat-item"><span class="stat-num">6</span><div class="stat-lbl">Mock Tests</div></div>
-    <div class="stat-item"><span class="stat-num">3</span><div class="stat-lbl">Modules</div></div>
-    <div class="stat-item"><span class="stat-num">15+</span><div class="stat-lbl">PDF Papers</div></div>
-  </div>
-
-  <!-- BIG SECTION SWITCHER -->
-  <div style="margin-top:32px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s .5s ease both">
-    <button onclick="switchSection('cbt')" style="font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;padding:11px 28px;border-radius:12px;border:none;cursor:pointer;background:linear-gradient(135deg,#6366f1,#818cf8);color:#fff;box-shadow:0 4px 20px rgba(99,102,241,.35);transition:all .2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
-      ⚡ Start CBT Mock Test
-    </button>
-    <button onclick="switchSection('topics')" style="font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;padding:11px 28px;border-radius:12px;border:1px solid rgba(20,184,166,.3);cursor:pointer;background:rgba(20,184,166,.08);color:#5eead4;transition:all .2s;" onmouseover="this.style.background='rgba(20,184,166,.16)'" onmouseout="this.style.background='rgba(20,184,166,.08)'">
-      📘 Browse All Topics
-    </button>
-  </div>
-</div>
-
-</div>
-
-<!-- ═══ IMAGE SLIDESHOW ═══ -->
-<div class="slideshow-wrap">
-  <div class="slideshow-label">📚 Books · Notes · Sample Papers · Study Material</div>
-  <div class="ss-track-outer">
-    <div class="ss-track" id="ss-track">
-
-      <!-- 1 — English Grammar Book -->
-      <div class="ss-card" onclick="switchSection('topics')" title="English Grammar — All Topics">
-        <div class="ss-hover-badge">View Topics →</div>
-        <div class="ss-card-inner">
-          <div class="ss-cover">
-            <div class="ss-cover-art" style="background:linear-gradient(145deg,#1e1b4b,#312e81,#4338ca)">
-              <svg viewBox="0 0 200 168" width="200" height="168" xmlns="http://www.w3.org/2000/svg">
-                <rect x="30" y="20" width="140" height="128" rx="6" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
-                <rect x="38" y="28" width="124" height="3" rx="2" fill="rgba(255,255,255,.6)"/>
-                <rect x="38" y="36" width="90" height="2" rx="1" fill="rgba(255,255,255,.3)"/>
-                <text x="100" y="85" font-family="serif" font-size="38" font-weight="bold" fill="rgba(255,255,255,.9)" text-anchor="middle">Gr</text>
-                <text x="100" y="115" font-family="serif" font-size="11" fill="rgba(165,180,252,.9)" text-anchor="middle" font-weight="600">GRAMMAR</text>
-                <rect x="38" y="124" width="124" height="1.5" rx="1" fill="rgba(255,255,255,.15)"/>
-                <rect x="38" y="130" width="70" height="2" rx="1" fill="rgba(255,255,255,.2)"/>
-                <circle cx="168" cy="30" r="12" fill="rgba(245,200,66,.25)" stroke="rgba(245,200,66,.5)" stroke-width="1"/>
-                <text x="168" y="34" font-size="10" text-anchor="middle" fill="#f5c842" font-weight="bold">⭐</text>
-              </svg>
-            </div>
-          </div>
-          <div class="ss-info">
-            <div class="ss-type" style="color:#a5b4fc">Grammar Book</div>
-            <div class="ss-title">Complete English Grammar</div>
-            <div class="ss-sub">14 Topics · 220 Questions</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 2 — Sample Paper 2024 -->
-      <div class="ss-card" onclick="switchSection('cbt')" title="Sample Paper 2024">
-        <div class="ss-hover-badge">Download →</div>
-        <div class="ss-card-inner">
-          <div class="ss-cover">
-            <div class="ss-cover-art" style="background:linear-gradient(145deg,#7f1d1d,#991b1b,#dc2626)">
-              <svg viewBox="0 0 200 168" width="200" height="168" xmlns="http://www.w3.org/2000/svg">
-                <rect x="24" y="12" width="152" height="144" rx="4" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
-                <rect x="24" y="12" width="152" height="28" rx="4" fill="rgba(0,0,0,.3)"/>
-                <text x="100" y="31" font-size="9.5" font-family="sans-serif" font-weight="700" fill="rgba(255,255,255,.9)" text-anchor="middle" letter-spacing="2">SAMPLE PAPER</text>
-                <rect x="32" y="52" width="136" height="2" rx="1" fill="rgba(255,255,255,.25)"/>
-                <rect x="32" y="60" width="120" height="1.5" rx="1" fill="rgba(255,255,255,.15)"/>
-                <rect x="32" y="68" width="100" height="1.5" rx="1" fill="rgba(255,255,255,.15)"/>
-                <rect x="32" y="76" width="130" height="1.5" rx="1" fill="rgba(255,255,255,.15)"/>
-                <rect x="32" y="84" width="90" height="1.5" rx="1" fill="rgba(255,255,255,.15)"/>
-                <text x="100" y="118" font-size="28" font-weight="900" font-family="serif" fill="rgba(255,255,255,.9)" text-anchor="middle">2024</text>
-                <rect x="50" y="128" width="100" height="2" rx="1" fill="rgba(252,165,165,.4)"/>
-                <text x="100" y="144" font-size="8" font-family="sans-serif" fill="rgba(252,165,165,.7)" text-anchor="middle">100 Questions · All Topics</text>
-              </svg>
-            </div>
-          </div>
-          <div class="ss-info">
-            <div class="ss-type" style="color:#fca5a5">Sample Paper</div>
-            <div class="ss-title">Sample Paper 2024 — Full Set</div>
-            <div class="ss-sub">With Answer Key · PDF</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 3 — Vocabulary Notebook -->
-      <div class="ss-card" onclick="switchSection('topics')" title="Vocabulary Topics">
-        <div class="ss-hover-badge">Browse →</div>
-        <div class="ss-card-inner">
-          <div class="ss-cover">
-            <div class="ss-cover-art" style="background:linear-gradient(145deg,#3b0764,#6b21a8,#9333ea)">
-              <svg viewBox="0 0 200 168" width="200" height="168" xmlns="http://www.w3.org/2000/svg">
-                <rect x="20" y="10" width="160" height="148" rx="8" fill="rgba(255,255,255,.05)" stroke="rgba(216,180,254,.3)" stroke-width="1.5"/>
-                <!-- spiral binding -->
-                <circle cx="20" cy="30" r="4" fill="none" stroke="rgba(216,180,254,.4)" stroke-width="1.5"/>
-                <circle cx="20" cy="50" r="4" fill="none" stroke="rgba(216,180,254,.4)" stroke-width="1.5"/>
-                <circle cx="20" cy="70" r="4" fill="none" stroke="rgba(216,180,254,.4)" stroke-width="1.5"/>
-                <circle cx="20" cy="90" r="4" fill="none" stroke="rgba(216,180,254,.4)" stroke-width="1.5"/>
-                <circle cx="20" cy="110" r="4" fill="none" stroke="rgba(216,180,254,.4)" stroke-width="1.5"/>
-                <circle cx="20" cy="130" r="4" fill="none" stroke="rgba(216,180,254,.4)" stroke-width="1.5"/>
-                <circle cx="20" cy="150" r="4" fill="none" stroke="rgba(216,180,254,.4)" stroke-width="1.5"/>
-                <text x="115" y="60" font-size="36" text-anchor="middle" fill="rgba(255,255,255,.9)">📖</text>
-                <text x="115" y="95" font-size="13" font-family="serif" font-weight="700" fill="rgba(216,180,254,.95)" text-anchor="middle">VOCABULARY</text>
-                <rect x="55" y="103" width="120" height="1.5" rx="1" fill="rgba(216,180,254,.3)"/>
-                <text x="115" y="120" font-size="8.5" font-family="sans-serif" fill="rgba(255,255,255,.5)" text-anchor="middle">Idioms · Synonyms · OWS</text>
-                <text x="115" y="134" font-size="8.5" font-family="sans-serif" fill="rgba(255,255,255,.5)" text-anchor="middle">Phrasal Verbs · Analogy</text>
-              </svg>
-            </div>
-          </div>
-          <div class="ss-info">
-            <div class="ss-type" style="color:#d8b4fe">Vocabulary</div>
-            <div class="ss-title">Vocab Master Notebook</div>
-            <div class="ss-sub">8 Topics · 120 Questions</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 4 — Mock Test Paper -->
-      <div class="ss-card" onclick="switchSection('cbt')" title="CBT Mock Tests">
-        <div class="ss-hover-badge">Start Test →</div>
-        <div class="ss-card-inner">
-          <div class="ss-cover">
-            <div class="ss-cover-art" style="background:linear-gradient(145deg,#0c4a6e,#075985,#0369a1)">
-              <svg viewBox="0 0 200 168" width="200" height="168" xmlns="http://www.w3.org/2000/svg">
-                <rect x="22" y="10" width="156" height="148" rx="5" fill="rgba(255,255,255,.06)" stroke="rgba(147,197,253,.25)" stroke-width="1"/>
-                <rect x="22" y="10" width="156" height="22" rx="5" fill="rgba(3,105,161,.5)"/>
-                <text x="100" y="25" font-size="8.5" font-weight="700" font-family="sans-serif" fill="rgba(255,255,255,.9)" text-anchor="middle" letter-spacing="1.5">CBT MOCK TEST</text>
-                <!-- MCQ lines -->
-                <circle cx="38" cy="48" r="5" fill="rgba(147,197,253,.15)" stroke="rgba(147,197,253,.5)" stroke-width="1"/>
-                <rect x="50" y="45" width="100" height="2" rx="1" fill="rgba(255,255,255,.3)"/>
-                <circle cx="38" cy="66" r="5" fill="rgba(34,197,94,.3)" stroke="rgba(34,197,94,.6)" stroke-width="1"/>
-                <text x="38" y="70" font-size="7" fill="rgba(34,197,94,.9)" text-anchor="middle">✓</text>
-                <rect x="50" y="63" width="115" height="2" rx="1" fill="rgba(255,255,255,.3)"/>
-                <circle cx="38" cy="84" r="5" fill="rgba(147,197,253,.15)" stroke="rgba(147,197,253,.5)" stroke-width="1"/>
-                <rect x="50" y="81" width="88" height="2" rx="1" fill="rgba(255,255,255,.3)"/>
-                <circle cx="38" cy="102" r="5" fill="rgba(147,197,253,.15)" stroke="rgba(147,197,253,.5)" stroke-width="1"/>
-                <rect x="50" y="99" width="105" height="2" rx="1" fill="rgba(255,255,255,.3)"/>
-                <!-- timer -->
-                <circle cx="140" cy="132" r="18" fill="rgba(3,105,161,.4)" stroke="rgba(147,197,253,.4)" stroke-width="1.5"/>
-                <text x="140" y="129" font-size="8" font-family="sans-serif" fill="rgba(255,255,255,.6)" text-anchor="middle">TIME</text>
-                <text x="140" y="141" font-size="9" font-weight="700" font-family="monospace" fill="rgba(147,197,253,.9)" text-anchor="middle">90:00</text>
-                <text x="65" y="136" font-size="8.5" font-family="sans-serif" fill="rgba(255,255,255,.5)" text-anchor="middle">100 Qs</text>
-              </svg>
-            </div>
-          </div>
-          <div class="ss-info">
-            <div class="ss-type" style="color:#93c5fd">Mock Test</div>
-            <div class="ss-title">Full CBT Mock Test</div>
-            <div class="ss-sub">100 Qs · 90 Min · Timed</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 5 — Tenses Notes -->
-      <div class="ss-card" onclick="switchSection('topics')" title="Tenses">
-        <div class="ss-hover-badge">Study →</div>
-        <div class="ss-card-inner">
-          <div class="ss-cover">
-            <div class="ss-cover-art" style="background:linear-gradient(145deg,#064e3b,#065f46,#047857)">
-              <svg viewBox="0 0 200 168" width="200" height="168" xmlns="http://www.w3.org/2000/svg">
-                <rect x="18" y="8" width="164" height="152" rx="6" fill="rgba(255,255,255,.05)" stroke="rgba(110,231,183,.2)" stroke-width="1"/>
-                <!-- ruled lines -->
-                <rect x="28" y="30" width="144" height="1.5" rx="1" fill="rgba(110,231,183,.2)"/>
-                <rect x="28" y="45" width="144" height="1.5" rx="1" fill="rgba(110,231,183,.2)"/>
-                <rect x="28" y="60" width="144" height="1.5" rx="1" fill="rgba(110,231,183,.2)"/>
-                <rect x="28" y="75" width="144" height="1.5" rx="1" fill="rgba(110,231,183,.2)"/>
-                <!-- content -->
-                <text x="100" y="27" font-size="10" font-weight="700" font-family="sans-serif" fill="rgba(110,231,183,.9)" text-anchor="middle" letter-spacing="1">TENSES</text>
-                <text x="35" y="43" font-size="8" font-family="monospace" fill="rgba(255,255,255,.7)">Present Simple</text>
-                <text x="35" y="58" font-size="8" font-family="monospace" fill="rgba(255,255,255,.7)">Past Continuous</text>
-                <text x="35" y="73" font-size="8" font-family="monospace" fill="rgba(255,255,255,.7)">Future Perfect</text>
-                <rect x="28" y="88" width="144" height="1.5" rx="1" fill="rgba(110,231,183,.15)"/>
-                <!-- table grid -->
-                <rect x="28" y="98" width="144" height="55" rx="4" fill="rgba(0,0,0,.2)" stroke="rgba(110,231,183,.15)" stroke-width="1"/>
-                <text x="100" y="112" font-size="8" font-family="sans-serif" fill="rgba(110,231,183,.6)" text-anchor="middle">12 Tense Forms</text>
-                <rect x="28" y="117" width="144" height="1" fill="rgba(110,231,183,.1)"/>
-                <text x="56" y="131" font-size="7.5" font-family="sans-serif" fill="rgba(255,255,255,.5)" text-anchor="middle">Simple</text>
-                <text x="100" y="131" font-size="7.5" font-family="sans-serif" fill="rgba(255,255,255,.5)" text-anchor="middle">Continuous</text>
-                <text x="152" y="131" font-size="7.5" font-family="sans-serif" fill="rgba(255,255,255,.5)" text-anchor="middle">Perfect</text>
-                <text x="35" y="145" font-size="7.5" font-family="sans-serif" fill="rgba(255,255,255,.4)">Present</text>
-                <text x="35" y="155" font-size="7.5" font-family="sans-serif" fill="rgba(255,255,255,.4)">Past</text>
-              </svg>
-            </div>
-          </div>
-          <div class="ss-info">
-            <div class="ss-type" style="color:#6ee7b7">Grammar Notes</div>
-            <div class="ss-title">All 12 Tenses — Notes</div>
-            <div class="ss-sub">With Examples · 80 Practice Qs</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 6 — Sample Paper 2023 -->
-      <div class="ss-card" onclick="switchSection('cbt')" title="Sample Paper 2023">
-        <div class="ss-hover-badge">Download →</div>
-        <div class="ss-card-inner">
-          <div class="ss-cover">
-            <div class="ss-cover-art" style="background:linear-gradient(145deg,#1c1917,#292524,#44403c)">
-              <svg viewBox="0 0 200 168" width="200" height="168" xmlns="http://www.w3.org/2000/svg">
-                <rect x="22" y="8" width="156" height="152" rx="4" fill="rgba(255,255,255,.06)" stroke="rgba(253,186,116,.25)" stroke-width="1"/>
-                <rect x="22" y="8" width="156" height="36" rx="4" fill="rgba(180,83,9,.35)"/>
-                <text x="100" y="22" font-size="8" font-weight="700" font-family="sans-serif" fill="rgba(255,255,255,.9)" text-anchor="middle" letter-spacing="2">PREVIOUS YEAR</text>
-                <text x="100" y="36" font-size="8" font-family="sans-serif" fill="rgba(253,186,116,.8)" text-anchor="middle">SAMPLE PAPER</text>
-                <text x="100" y="82" font-size="42" font-weight="900" font-family="serif" fill="rgba(253,186,116,.85)" text-anchor="middle">2023</text>
-                <rect x="35" y="92" width="130" height="1.5" rx="1" fill="rgba(253,186,116,.25)"/>
-                <rect x="35" y="104" width="115" height="2" rx="1" fill="rgba(255,255,255,.15)"/>
-                <rect x="35" y="114" width="130" height="2" rx="1" fill="rgba(255,255,255,.1)"/>
-                <rect x="35" y="124" width="95" height="2" rx="1" fill="rgba(255,255,255,.1)"/>
-                <text x="100" y="150" font-size="8" font-family="sans-serif" fill="rgba(253,186,116,.55)" text-anchor="middle">With Answers · PDF</text>
-              </svg>
-            </div>
-          </div>
-          <div class="ss-info">
-            <div class="ss-type" style="color:#fdba74">Previous Year</div>
-            <div class="ss-title">Sample Paper 2023</div>
-            <div class="ss-sub">100 Qs · Answer Key Included</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 7 — Idioms & Phrases -->
-      <div class="ss-card" onclick="switchSection('cbt')" title="Idioms Important Questions">
-        <div class="ss-hover-badge">Practice →</div>
-        <div class="ss-card-inner">
-          <div class="ss-cover">
-            <div class="ss-cover-art" style="background:linear-gradient(145deg,#4a1942,#6b21a8,#a21caf)">
-              <svg viewBox="0 0 200 168" width="200" height="168" xmlns="http://www.w3.org/2000/svg">
-                <rect x="18" y="8" width="164" height="152" rx="7" fill="rgba(255,255,255,.05)" stroke="rgba(240,171,252,.2)" stroke-width="1"/>
-                <text x="100" y="48" font-size="34" text-anchor="middle" fill="rgba(255,255,255,.9)">💬</text>
-                <text x="100" y="78" font-size="11" font-weight="700" font-family="serif" fill="rgba(240,171,252,.95)" text-anchor="middle">IDIOMS</text>
-                <text x="100" y="91" font-size="8.5" font-family="serif" fill="rgba(240,171,252,.6)" text-anchor="middle">&amp; PHRASES</text>
-                <rect x="40" y="100" width="120" height="1.5" rx="1" fill="rgba(240,171,252,.2)"/>
-                <text x="100" y="116" font-size="7.5" font-family="sans-serif" fill="rgba(255,255,255,.5)" text-anchor="middle">"Beat around the bush"</text>
-                <text x="100" y="129" font-size="7.5" font-family="sans-serif" fill="rgba(255,255,255,.5)" text-anchor="middle">"Kick the bucket"</text>
-                <text x="100" y="142" font-size="7.5" font-family="sans-serif" fill="rgba(255,255,255,.5)" text-anchor="middle">"Hit the nail on the head"</text>
-                <text x="100" y="157" font-size="7" font-family="sans-serif" fill="rgba(240,171,252,.4)" text-anchor="middle">100 Most Asked Idioms</text>
-              </svg>
-            </div>
-          </div>
-          <div class="ss-info">
-            <div class="ss-type" style="color:#e879f9">Important Qs</div>
-            <div class="ss-title">Top 100 Idioms</div>
-            <div class="ss-sub">High-Weightage · Exam Focus</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 8 — Reading Comprehension -->
-      <div class="ss-card" onclick="switchSection('cbt')" title="Reading Comprehension">
-        <div class="ss-hover-badge">Practice →</div>
-        <div class="ss-card-inner">
-          <div class="ss-cover">
-            <div class="ss-cover-art" style="background:linear-gradient(145deg,#0f172a,#1e3a5f,#1d4ed8)">
-              <svg viewBox="0 0 200 168" width="200" height="168" xmlns="http://www.w3.org/2000/svg">
-                <rect x="18" y="8" width="164" height="152" rx="6" fill="rgba(255,255,255,.05)" stroke="rgba(147,197,253,.15)" stroke-width="1"/>
-                <text x="100" y="40" font-size="28" text-anchor="middle" fill="rgba(255,255,255,.8)">📰</text>
-                <text x="100" y="66" font-size="9.5" font-weight="700" font-family="sans-serif" fill="rgba(147,197,253,.9)" text-anchor="middle" letter-spacing="1">READING</text>
-                <text x="100" y="79" font-size="9.5" font-weight="700" font-family="sans-serif" fill="rgba(147,197,253,.9)" text-anchor="middle" letter-spacing="1">COMPREHENSION</text>
-                <rect x="28" y="88" width="144" height="1.5" rx="1" fill="rgba(147,197,253,.15)"/>
-                <rect x="28" y="98" width="144" height="2" rx="1" fill="rgba(255,255,255,.15)"/>
-                <rect x="28" y="106" width="120" height="2" rx="1" fill="rgba(255,255,255,.12)"/>
-                <rect x="28" y="114" width="136" height="2" rx="1" fill="rgba(255,255,255,.1)"/>
-                <rect x="28" y="122" width="100" height="2" rx="1" fill="rgba(255,255,255,.1)"/>
-                <rect x="28" y="130" width="130" height="2" rx="1" fill="rgba(255,255,255,.1)"/>
-                <text x="100" y="150" font-size="7.5" font-family="sans-serif" fill="rgba(147,197,253,.5)" text-anchor="middle">10 Passages · Model Answers</text>
-              </svg>
-            </div>
-          </div>
-          <div class="ss-info">
-            <div class="ss-type" style="color:#93c5fd">Reading</div>
-            <div class="ss-title">Reading Comprehension</div>
-            <div class="ss-sub">10 Passages · With Q&amp;A</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 9 — Phrasal Verbs PDF -->
-      <div class="ss-card" onclick="switchSection('cbt')" title="Phrasal Verbs PDF">
-        <div class="ss-hover-badge">Download →</div>
-        <div class="ss-card-inner">
-          <div class="ss-cover">
-            <div class="ss-cover-art" style="background:linear-gradient(145deg,#14532d,#166534,#16a34a)">
-              <svg viewBox="0 0 200 168" width="200" height="168" xmlns="http://www.w3.org/2000/svg">
-                <rect x="20" y="10" width="160" height="148" rx="6" fill="rgba(255,255,255,.05)" stroke="rgba(134,239,172,.2)" stroke-width="1"/>
-                <text x="100" y="44" font-size="28" text-anchor="middle" fill="rgba(255,255,255,.85)">🔤</text>
-                <text x="100" y="70" font-size="12" font-weight="700" font-family="sans-serif" fill="rgba(134,239,172,.9)" text-anchor="middle">PHRASAL VERBS</text>
-                <rect x="35" y="78" width="130" height="1.5" rx="1" fill="rgba(134,239,172,.2)"/>
-                <text x="100" y="95" font-size="32" font-weight="900" font-family="serif" fill="rgba(134,239,172,.7)" text-anchor="middle">300</text>
-                <text x="100" y="112" font-size="8" font-family="sans-serif" fill="rgba(255,255,255,.5)" text-anchor="middle">with example sentences</text>
-                <rect x="35" y="120" width="130" height="1.5" rx="1" fill="rgba(134,239,172,.15)"/>
-                <rect x="35" y="130" width="100" height="2" rx="1" fill="rgba(255,255,255,.15)"/>
-                <rect x="35" y="140" width="120" height="2" rx="1" fill="rgba(255,255,255,.1)"/>
-                <rect x="35" y="150" width="85" height="2" rx="1" fill="rgba(255,255,255,.1)"/>
-              </svg>
-            </div>
-          </div>
-          <div class="ss-info">
-            <div class="ss-type" style="color:#86efac">PDF Notes</div>
-            <div class="ss-title">300 Phrasal Verbs</div>
-            <div class="ss-sub">With Examples · Practice Exercises</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 10 — Important Questions Bank -->
-      <div class="ss-card" onclick="switchSection('cbt')" title="Important Questions Bank">
-        <div class="ss-hover-badge">View Qs →</div>
-        <div class="ss-card-inner">
-          <div class="ss-cover">
-            <div class="ss-cover-art" style="background:linear-gradient(145deg,#1a0a00,#431407,#9a3412)">
-              <svg viewBox="0 0 200 168" width="200" height="168" xmlns="http://www.w3.org/2000/svg">
-                <rect x="18" y="8" width="164" height="152" rx="6" fill="rgba(255,255,255,.06)" stroke="rgba(253,186,116,.2)" stroke-width="1"/>
-                <rect x="18" y="8" width="164" height="30" rx="6" fill="rgba(154,52,18,.5)"/>
-                <text x="100" y="27" font-size="9" font-weight="700" font-family="sans-serif" fill="rgba(255,255,255,.9)" text-anchor="middle" letter-spacing="1.5">IMPORTANT QUESTIONS</text>
-                <!-- star rows -->
-                <text x="35" y="56" font-size="10" fill="#f5c842">★★★</text>
-                <rect x="65" y="50" width="100" height="2" rx="1" fill="rgba(255,255,255,.25)"/>
-                <rect x="65" y="57" width="80" height="1.5" rx="1" fill="rgba(255,255,255,.12)"/>
-                <text x="35" y="78" font-size="10" fill="#f5c842">★★★</text>
-                <rect x="65" y="72" width="110" height="2" rx="1" fill="rgba(255,255,255,.25)"/>
-                <rect x="65" y="79" width="85" height="1.5" rx="1" fill="rgba(255,255,255,.12)"/>
-                <text x="35" y="100" font-size="10" fill="#f5c842">★★</text>
-                <rect x="65" y="94" width="95" height="2" rx="1" fill="rgba(255,255,255,.25)"/>
-                <rect x="65" y="101" width="70" height="1.5" rx="1" fill="rgba(255,255,255,.12)"/>
-                <rect x="28" y="112" width="144" height="1.5" rx="1" fill="rgba(253,186,116,.15)"/>
-                <text x="100" y="130" font-size="26" font-weight="900" font-family="serif" fill="rgba(253,186,116,.8)" text-anchor="middle">200</text>
-                <text x="100" y="146" font-size="8" font-family="sans-serif" fill="rgba(253,186,116,.5)" text-anchor="middle">High-Weightage Questions</text>
-                <text x="100" y="158" font-size="7.5" font-family="sans-serif" fill="rgba(255,255,255,.35)" text-anchor="middle">Vocab · Grammar · Reading</text>
-              </svg>
-            </div>
-          </div>
-          <div class="ss-info">
-            <div class="ss-type" style="color:#fdba74">Question Bank</div>
-            <div class="ss-title">Important Questions 2024</div>
-            <div class="ss-sub">200 Qs · All Modules</div>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /ss-track (JS will duplicate for seamless loop) -->
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════
-     SECTION 1 — START CBT MOCK TEST
-══════════════════════════════════════════ -->
-<div class="section-band section-one" id="section-one" data-section="cbt">
-
-  <div class="band-header">
-    <div>
-      <div class="band-label">Section 1</div>
-      <div class="band-title">Start CBT Mock Test</div>
-      <div class="band-desc" style="margin-top:6px">Tests, papers, PDFs and important questions — everything to prepare and practise.</div>
-    </div>
-    <div class="band-num">01</div>
-  </div>
-
-  <!-- JUMP RIGHT IN -->
-  <div class="sec-sub-head">
-    <div class="sec-sub-label">Jump Right In</div>
-    <div class="sec-sub-title">Quick Access</div>
-    <div class="sec-sub-desc">Click ▾ to see which topics are covered, then jump in.</div>
-  </div>
-  <div class="qd-grid" id="quick-access">
-
-    <div class="qd-card" onclick="toggleCard(this)">
-      <div class="qd-header">
-        <div class="qd-icon" style="background:rgba(99,102,241,.14)">⚡</div>
-        <div class="qd-info">
-          <div class="qd-title">CBT Mock Test</div>
-          <div class="qd-desc">Full-length timed tests for real exam simulation</div>
-        </div>
-        <div class="qd-chevron">▾</div>
-      </div>
-      <div class="qd-body"><div class="qd-body-inner">
-        <a href="#mock-tests" class="qd-topic"><span class="qd-topic-dot" style="--tc:#a5b4fc"></span>Full Mock — Set 1 (100Q)<span class="qd-topic-arrow">→</span></a>
-        <a href="#mock-tests" class="qd-topic"><span class="qd-topic-dot" style="--tc:#fcd34d"></span>Full Mock — Set 2 (100Q)<span class="qd-topic-arrow">→</span></a>
-        <a href="#mock-tests" class="qd-topic"><span class="qd-topic-dot" style="--tc:#fca5a5"></span>Full Mock — Set 3 (100Q)<span class="qd-topic-arrow">→</span></a>
-        <a href="#mock-tests" class="qd-topic"><span class="qd-topic-dot" style="--tc:#d8b4fe"></span>Vocabulary — Set 1 (40Q)<span class="qd-topic-arrow">→</span></a>
-        <a href="#mock-tests" class="qd-topic"><span class="qd-topic-dot" style="--tc:#93c5fd"></span>Grammar — Set 1 (50Q)<span class="qd-topic-arrow">→</span></a>
-        <a href="#mock-tests" class="qd-topic"><span class="qd-topic-dot" style="--tc:#6ee7b7"></span>Reading — Set 1 (35Q)<span class="qd-topic-arrow">→</span></a>
-      </div></div>
-    </div>
-
-    <div class="qd-card" onclick="toggleCard(this)">
-      <div class="qd-header">
-        <div class="qd-icon" style="background:rgba(244,63,94,.12)">📄</div>
-        <div class="qd-info">
-          <div class="qd-title">Sample Papers PDF</div>
-          <div class="qd-desc">Download previous year &amp; model papers</div>
-        </div>
-        <div class="qd-chevron">▾</div>
-      </div>
-      <div class="qd-body"><div class="qd-body-inner">
-        <a href="#pdfs" class="qd-topic"><span class="qd-topic-dot" style="--tc:#fca5a5"></span>Sample Paper 2024 — Full Set<span class="qd-topic-arrow">→</span></a>
-        <a href="#pdfs" class="qd-topic"><span class="qd-topic-dot" style="--tc:#fca5a5"></span>Sample Paper 2023 — Full Set<span class="qd-topic-arrow">→</span></a>
-        <a href="#pdfs" class="qd-topic"><span class="qd-topic-dot" style="--tc:#c084fc"></span>Vocabulary Master Notes<span class="qd-topic-arrow">→</span></a>
-        <a href="#pdfs" class="qd-topic"><span class="qd-topic-dot" style="--tc:#60a5fa"></span>Grammar Quick Revision Notes<span class="qd-topic-arrow">→</span></a>
-        <a href="#pdfs" class="qd-topic"><span class="qd-topic-dot" style="--tc:#34d399"></span>Reading Comprehension Passages<span class="qd-topic-arrow">→</span></a>
-        <a href="#pdfs" class="qd-topic"><span class="qd-topic-dot" style="--tc:#fcd34d"></span>Important Questions Bank 2024<span class="qd-topic-arrow">→</span></a>
-      </div></div>
-    </div>
-
-    <div class="qd-card" onclick="toggleCard(this)">
-      <div class="qd-header">
-        <div class="qd-icon" style="background:rgba(245,200,66,.12)">⭐</div>
-        <div class="qd-info">
-          <div class="qd-title">Important Questions</div>
-          <div class="qd-desc">High-weightage curated questions by topic</div>
-        </div>
-        <div class="qd-chevron">▾</div>
-      </div>
-      <div class="qd-body"><div class="qd-body-inner">
-        <a href="#imp-questions" class="qd-topic"><span class="qd-topic-dot" style="--tc:#c084fc"></span>OWS &amp; Synonyms (160Q)<span class="qd-topic-arrow">→</span></a>
-        <a href="#imp-questions" class="qd-topic"><span class="qd-topic-dot" style="--tc:#c084fc"></span>Idioms &amp; Phrasal Verbs (200Q)<span class="qd-topic-arrow">→</span></a>
-        <a href="#imp-questions" class="qd-topic"><span class="qd-topic-dot" style="--tc:#60a5fa"></span>Tenses &amp; SVA (130Q)<span class="qd-topic-arrow">→</span></a>
-        <a href="#imp-questions" class="qd-topic"><span class="qd-topic-dot" style="--tc:#60a5fa"></span>Prepositions &amp; Conditionals (130Q)<span class="qd-topic-arrow">→</span></a>
-        <a href="#imp-questions" class="qd-topic"><span class="qd-topic-dot" style="--tc:#34d399"></span>RC, Cloze &amp; Para Jumbles (95Q)<span class="qd-topic-arrow">→</span></a>
-      </div></div>
-    </div>
-
-    <div class="qd-card" onclick="toggleCard(this)">
-      <div class="qd-header">
-        <div class="qd-icon" style="background:rgba(20,184,166,.12)">📘</div>
-        <div class="qd-info">
-          <div class="qd-title">All Topics</div>
-          <div class="qd-desc">Browse full syllabus — Vocab, Grammar, Reading</div>
-        </div>
-        <div class="qd-chevron">▾</div>
-      </div>
-      <div class="qd-body"><div class="qd-body-inner">
-        <a href="#all-topics" class="qd-topic"><span class="qd-topic-dot" style="--tc:#c084fc"></span>Vocabulary (8 topics, 120Q)<span class="qd-topic-arrow">→</span></a>
-        <a href="#all-topics" class="qd-topic"><span class="qd-topic-dot" style="--tc:#60a5fa"></span>Grammar (14 topics, 220Q)<span class="qd-topic-arrow">→</span></a>
-        <a href="#all-topics" class="qd-topic"><span class="qd-topic-dot" style="--tc:#34d399"></span>Reading Ability (4 topics, 80Q)<span class="qd-topic-arrow">→</span></a>
-      </div></div>
-    </div>
-
-  </div>
-
-  <!-- CBT MOCK TESTS -->
-  <div class="sec-sub-head" id="mock-tests">
-    <div class="sec-sub-label">CBT Mock Tests</div>
-    <div class="sec-sub-title">Simulate the Real Exam</div>
-    <div class="sec-sub-desc">Click ▾ to see topics covered — then start the test.</div>
-  </div>
-  <div class="drop-grid">
-
-    <div class="drop-card" data-mock-id="mock1" style="--dc1:#6366f1;--dc2:#8b5cf6">
-      <div class="drop-header" onclick="toggleCard(this.parentElement)">
-        <div style="flex:1">
-          <div class="drop-badge" style="background:rgba(99,102,241,.14);color:#a5b4fc">Full Mock · Set 1</div>
-          <div class="drop-title">Complete English Mock Test — Paper 1</div>
-          <div class="drop-meta"><span>⏱ 90 Min</span><span>❓ 100 Qs</span><span>📗 All Topics</span></div>
-        </div>
-        <div class="drop-chevron">▾</div>
-      </div>
-      <div class="drop-body"><div class="drop-body-inner"><div class="drop-topic-list">
-        <a href="vocabulary/antonyms-synonyms.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#c084fc"></span>Antonyms &amp; Synonyms<span class="drop-topic-tag" style="background:rgba(245,200,66,.1);color:var(--gold)">15 Qs</span></a>
-        <a href="vocabulary/one-word-substitution.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#c084fc"></span>One Word Substitution<span class="drop-topic-tag" style="background:rgba(245,200,66,.1);color:var(--gold)">10 Qs</span></a>
-        <a href="grammar/tenses.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#60a5fa"></span>Tenses<span class="drop-topic-tag" style="background:rgba(59,130,246,.1);color:#60a5fa">15 Qs</span></a>
-        <a href="grammar/prepositions.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#60a5fa"></span>Prepositions<span class="drop-topic-tag" style="background:rgba(59,130,246,.1);color:#60a5fa">10 Qs</span></a>
-        <a href="grammar/subject-verb-agreement.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#60a5fa"></span>Subject-Verb Agreement<span class="drop-topic-tag" style="background:rgba(59,130,246,.1);color:#60a5fa">10 Qs</span></a>
-        <a href="reading/reading-comprehension.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#34d399"></span>Reading Comprehension<span class="drop-topic-tag" style="background:rgba(20,184,166,.1);color:#34d399">20 Qs</span></a>
-        <a href="reading/cloze-test.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#34d399"></span>Cloze Test<span class="drop-topic-tag" style="background:rgba(20,184,166,.1);color:#34d399">10 Qs</span></a>
-        <a href="reading/para-jumbles.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#34d399"></span>Para Jumbles<span class="drop-topic-tag" style="background:rgba(20,184,166,.1);color:#34d399">10 Qs</span></a>
-      </div></div></div>
-      <div class="drop-footer">
-        <span><span class="diff-dot" style="background:#22c55e"></span><span style="font-size:.74rem;color:var(--gray)">Easy–Medium</span></span>
-        <button class="start-btn" onclick="startMock('mock1',this)">Start Test</button>
-      </div>
-    </div>
-
-    <div class="drop-card" data-mock-id="mock2" style="--dc1:#f59e0b;--dc2:#f43f5e">
-      <div class="drop-header" onclick="toggleCard(this.parentElement)">
-        <div style="flex:1">
-          <div class="drop-badge" style="background:rgba(245,158,11,.14);color:#fcd34d">Full Mock · Set 2</div>
-          <div class="drop-title">Complete English Mock Test — Paper 2</div>
-          <div class="drop-meta"><span>⏱ 90 Min</span><span>❓ 100 Qs</span><span>📗 All Topics</span></div>
-        </div>
-        <div class="drop-chevron">▾</div>
-      </div>
-      <div class="drop-body"><div class="drop-body-inner"><div class="drop-topic-list">
-        <a href="vocabulary/idioms.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#c084fc"></span>Idioms<span class="drop-topic-tag" style="background:rgba(245,200,66,.1);color:var(--gold)">15 Qs</span></a>
-        <a href="vocabulary/phrasal-verbs.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#c084fc"></span>Phrasal Verbs<span class="drop-topic-tag" style="background:rgba(245,200,66,.1);color:var(--gold)">10 Qs</span></a>
-        <a href="grammar/conditional-sentences.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#60a5fa"></span>Conditional Sentences<span class="drop-topic-tag" style="background:rgba(59,130,246,.1);color:#60a5fa">15 Qs</span></a>
-        <a href="grammar/modals.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#60a5fa"></span>Modals<span class="drop-topic-tag" style="background:rgba(59,130,246,.1);color:#60a5fa">10 Qs</span></a>
-        <a href="grammar/sentence-completion.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#60a5fa"></span>Sentence Completion<span class="drop-topic-tag" style="background:rgba(59,130,246,.1);color:#60a5fa">15 Qs</span></a>
-        <a href="reading/reading-comprehension.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#34d399"></span>Reading Comprehension<span class="drop-topic-tag" style="background:rgba(20,184,166,.1);color:#34d399">20 Qs</span></a>
-        <a href="vocabulary/verbal-analogy.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#c084fc"></span>Verbal Analogy<span class="drop-topic-tag" style="background:rgba(245,200,66,.1);color:var(--gold)">15 Qs</span></a>
-      </div></div></div>
-      <div class="drop-footer">
-        <span><span class="diff-dot" style="background:#f59e0b"></span><span style="font-size:.74rem;color:var(--gray)">Medium</span></span>
-        <button class="start-btn" onclick="startMock('mock2',this)">Start Test</button>
-      </div>
-    </div>
-
-    <div class="drop-card" data-mock-id="mock3" style="--dc1:#f43f5e;--dc2:#fb923c">
-      <div class="drop-header" onclick="toggleCard(this.parentElement)">
-        <div style="flex:1">
-          <div class="drop-badge" style="background:rgba(244,63,94,.14);color:#fca5a5">Full Mock · Set 3</div>
-          <div class="drop-title">Complete English Mock Test — Paper 3</div>
-          <div class="drop-meta"><span>⏱ 90 Min</span><span>❓ 100 Qs</span><span>📗 All Topics</span></div>
-        </div>
-        <div class="drop-chevron">▾</div>
-      </div>
-      <div class="drop-body"><div class="drop-body-inner"><div class="drop-topic-list">
-        <a href="vocabulary/figures-of-speech.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#c084fc"></span>Figures of Speech<span class="drop-topic-tag" style="background:rgba(245,200,66,.1);color:var(--gold)">10 Qs</span></a>
-        <a href="vocabulary/foreign-words.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#c084fc"></span>Foreign Words in English<span class="drop-topic-tag" style="background:rgba(245,200,66,.1);color:var(--gold)">10 Qs</span></a>
-        <a href="grammar/clauses.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#60a5fa"></span>Clauses<span class="drop-topic-tag" style="background:rgba(59,130,246,.1);color:#60a5fa">15 Qs</span></a>
-        <a href="grammar/verbs.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#60a5fa"></span>Verbs<span class="drop-topic-tag" style="background:rgba(59,130,246,.1);color:#60a5fa">15 Qs</span></a>
-        <a href="grammar/nouns.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#60a5fa"></span>Nouns<span class="drop-topic-tag" style="background:rgba(59,130,246,.1);color:#60a5fa">10 Qs</span></a>
-        <a href="reading/para-jumbles.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#34d399"></span>Para Jumbles<span class="drop-topic-tag" style="background:rgba(20,184,166,.1);color:#34d399">20 Qs</span></a>
-        <a href="reading/cloze-test.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#34d399"></span>Cloze Test<span class="drop-topic-tag" style="background:rgba(20,184,166,.1);color:#34d399">10 Qs</span></a>
-        <a href="grammar/adjectives.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#60a5fa"></span>Adjectives<span class="drop-topic-tag" style="background:rgba(59,130,246,.1);color:#60a5fa">10 Qs</span></a>
-      </div></div></div>
-      <div class="drop-footer">
-        <span><span class="diff-dot" style="background:#f43f5e"></span><span style="font-size:.74rem;color:var(--gray)">Hard</span></span>
-        <button class="start-btn" onclick="startMock('mock3',this)">Start Test</button>
-      </div>
-    </div>
-
-    <div class="drop-card" data-mock-id="vocab1" style="--dc1:#a855f7;--dc2:#ec4899">
-      <div class="drop-header" onclick="toggleCard(this.parentElement)">
-        <div style="flex:1">
-          <div class="drop-badge" style="background:rgba(168,85,247,.14);color:#d8b4fe">Vocabulary · Set 1</div>
-          <div class="drop-title">Vocabulary Only — Antonyms, Synonyms, Idioms, OWS</div>
-          <div class="drop-meta"><span>⏱ 30 Min</span><span>❓ 40 Qs</span><span>📂 Vocab</span></div>
-        </div>
-        <div class="drop-chevron">▾</div>
-      </div>
-      <div class="drop-body"><div class="drop-body-inner"><div class="drop-topic-list">
-        <a href="vocabulary/antonyms-synonyms.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#c084fc"></span>Antonyms &amp; Synonyms<span class="drop-topic-tag" style="background:rgba(168,85,247,.1);color:#d8b4fe">12 Qs</span></a>
-        <a href="vocabulary/one-word-substitution.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#c084fc"></span>One Word Substitution<span class="drop-topic-tag" style="background:rgba(168,85,247,.1);color:#d8b4fe">10 Qs</span></a>
-        <a href="vocabulary/idioms.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#c084fc"></span>Idioms<span class="drop-topic-tag" style="background:rgba(168,85,247,.1);color:#d8b4fe">10 Qs</span></a>
-        <a href="vocabulary/commonly-misspelled-words.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#c084fc"></span>Commonly Misspelled Words<span class="drop-topic-tag" style="background:rgba(168,85,247,.1);color:#d8b4fe">8 Qs</span></a>
-      </div></div></div>
-      <div class="drop-footer">
-        <span><span class="diff-dot" style="background:#22c55e"></span><span style="font-size:.74rem;color:var(--gray)">Easy</span></span>
-        <button class="start-btn" onclick="startMock('vocab1',this)">Start Test</button>
-      </div>
-    </div>
-
-    <div class="drop-card" data-mock-id="grammar1" style="--dc1:#3b82f6;--dc2:#14b8a6">
-      <div class="drop-header" onclick="toggleCard(this.parentElement)">
-        <div style="flex:1">
-          <div class="drop-badge" style="background:rgba(59,130,246,.14);color:#93c5fd">Grammar · Set 1</div>
-          <div class="drop-title">Grammar Only — Tenses, Prepositions, Verbs, Clauses</div>
-          <div class="drop-meta"><span>⏱ 40 Min</span><span>❓ 50 Qs</span><span>📂 Grammar</span></div>
-        </div>
-        <div class="drop-chevron">▾</div>
-      </div>
-      <div class="drop-body"><div class="drop-body-inner"><div class="drop-topic-list">
-        <a href="grammar/tenses.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#60a5fa"></span>Tenses<span class="drop-topic-tag" style="background:rgba(59,130,246,.1);color:#60a5fa">15 Qs</span></a>
-        <a href="grammar/prepositions.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#60a5fa"></span>Prepositions<span class="drop-topic-tag" style="background:rgba(59,130,246,.1);color:#60a5fa">12 Qs</span></a>
-        <a href="grammar/verbs.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#60a5fa"></span>Verbs<span class="drop-topic-tag" style="background:rgba(59,130,246,.1);color:#60a5fa">12 Qs</span></a>
-        <a href="grammar/clauses.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#60a5fa"></span>Clauses<span class="drop-topic-tag" style="background:rgba(59,130,246,.1);color:#60a5fa">11 Qs</span></a>
-      </div></div></div>
-      <div class="drop-footer">
-        <span><span class="diff-dot" style="background:#f59e0b"></span><span style="font-size:.74rem;color:var(--gray)">Medium</span></span>
-        <button class="start-btn" onclick="startMock('grammar1',this)">Start Test</button>
-      </div>
-    </div>
-
-    <div class="drop-card" data-mock-id="reading1" style="--dc1:#14b8a6;--dc2:#22c55e">
-      <div class="drop-header" onclick="toggleCard(this.parentElement)">
-        <div style="flex:1">
-          <div class="drop-badge" style="background:rgba(20,184,166,.14);color:#6ee7b7">Reading · Set 1</div>
-          <div class="drop-title">Reading Comprehension + Cloze + Para Jumbles</div>
-          <div class="drop-meta"><span>⏱ 35 Min</span><span>❓ 35 Qs</span><span>📂 Reading</span></div>
-        </div>
-        <div class="drop-chevron">▾</div>
-      </div>
-      <div class="drop-body"><div class="drop-body-inner"><div class="drop-topic-list">
-        <a href="reading/reading-comprehension.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#34d399"></span>Reading Comprehension<span class="drop-topic-tag" style="background:rgba(20,184,166,.1);color:#34d399">15 Qs</span></a>
-        <a href="reading/cloze-test.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#34d399"></span>Cloze Test<span class="drop-topic-tag" style="background:rgba(20,184,166,.1);color:#34d399">10 Qs</span></a>
-        <a href="reading/para-jumbles.html" class="drop-topic"><span class="drop-topic-dot" style="--dt-c:#34d399"></span>Para Jumbles<span class="drop-topic-tag" style="background:rgba(20,184,166,.1);color:#34d399">10 Qs</span></a>
-      </div></div></div>
-      <div class="drop-footer">
-        <span><span class="diff-dot" style="background:#f43f5e"></span><span style="font-size:.74rem;color:var(--gray)">Hard</span></span>
-        <button class="start-btn" onclick="startMock('reading1',this)">Start Test</button>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- SAMPLE PAPERS PDF -->
-  <div class="sec-sub-head" id="pdfs">
-    <div class="sec-sub-label">PDF Downloads</div>
-    <div class="sec-sub-title">Sample Papers &amp; Notes</div>
-    <div class="sec-sub-desc">Click ▾ to preview topics covered, then download.</div>
-  </div>
-  <div class="pdf-grid-wrap">
-
-    <div class="pdf-drop-card">
-      <div class="pdf-drop-header" onclick="toggleCard(this.parentElement)">
-        <div class="pdf-icon-wrap">📄</div>
-        <div class="pdf-info"><div class="pdf-title">Sample Paper 2024 — Full Set</div><div class="pdf-meta-txt">100 Qs · All Topics · With Answers</div></div>
-        <span class="pdf-chevron">▾</span>
-        <a href="pdfs/sample-paper-2024.pdf" class="pdf-dl-btn" onclick="event.stopPropagation()">⬇</a>
-      </div>
-      <div class="pdf-drop-body"><div class="pdf-drop-body-inner"><span class="pdf-topic-pill">Vocabulary (25Q)</span><span class="pdf-topic-pill">Grammar (45Q)</span><span class="pdf-topic-pill">Reading (30Q)</span><span class="pdf-topic-pill">OWS · Idioms · Tenses · RC</span></div></div>
-    </div>
-
-    <div class="pdf-drop-card">
-      <div class="pdf-drop-header" onclick="toggleCard(this.parentElement)">
-        <div class="pdf-icon-wrap">📄</div>
-        <div class="pdf-info"><div class="pdf-title">Sample Paper 2023 — Full Set</div><div class="pdf-meta-txt">100 Qs · All Topics · With Answers</div></div>
-        <span class="pdf-chevron">▾</span>
-        <a href="pdfs/sample-paper-2023.pdf" class="pdf-dl-btn" onclick="event.stopPropagation()">⬇</a>
-      </div>
-      <div class="pdf-drop-body"><div class="pdf-drop-body-inner"><span class="pdf-topic-pill">Vocabulary (30Q)</span><span class="pdf-topic-pill">Grammar (40Q)</span><span class="pdf-topic-pill">Reading (30Q)</span><span class="pdf-topic-pill">Synonyms · SVA · Para Jumbles</span></div></div>
-    </div>
-
-    <div class="pdf-drop-card">
-      <div class="pdf-drop-header" onclick="toggleCard(this.parentElement)">
-        <div class="pdf-icon-wrap">📄</div>
-        <div class="pdf-info"><div class="pdf-title">Vocabulary Master Notes</div><div class="pdf-meta-txt">OWS · Idioms · Synonyms · 40 Pages</div></div>
-        <span class="pdf-chevron">▾</span>
-        <a href="pdfs/vocabulary-notes.pdf" class="pdf-dl-btn" onclick="event.stopPropagation()">⬇</a>
-      </div>
-      <div class="pdf-drop-body"><div class="pdf-drop-body-inner"><span class="pdf-topic-pill">One Word Substitution</span><span class="pdf-topic-pill">Idioms</span><span class="pdf-topic-pill">Antonyms &amp; Synonyms</span><span class="pdf-topic-pill">Phrasal Verbs</span><span class="pdf-topic-pill">Foreign Words</span></div></div>
-    </div>
-
-    <div class="pdf-drop-card">
-      <div class="pdf-drop-header" onclick="toggleCard(this.parentElement)">
-        <div class="pdf-icon-wrap">📄</div>
-        <div class="pdf-info"><div class="pdf-title">Grammar Quick Revision Notes</div><div class="pdf-meta-txt">Tenses · Prepositions · Verbs · 55 Pages</div></div>
-        <span class="pdf-chevron">▾</span>
-        <a href="pdfs/grammar-notes.pdf" class="pdf-dl-btn" onclick="event.stopPropagation()">⬇</a>
-      </div>
-      <div class="pdf-drop-body"><div class="pdf-drop-body-inner"><span class="pdf-topic-pill">All 12 Tenses</span><span class="pdf-topic-pill">Prepositions</span><span class="pdf-topic-pill">Modals</span><span class="pdf-topic-pill">Conditional Sentences</span><span class="pdf-topic-pill">SVA</span></div></div>
-    </div>
-
-    <div class="pdf-drop-card">
-      <div class="pdf-drop-header" onclick="toggleCard(this.parentElement)">
-        <div class="pdf-icon-wrap">📄</div>
-        <div class="pdf-info"><div class="pdf-title">Reading Comprehension Passages</div><div class="pdf-meta-txt">20 Passages · Graded · With Q&amp;A</div></div>
-        <span class="pdf-chevron">▾</span>
-        <a href="pdfs/reading-passages.pdf" class="pdf-dl-btn" onclick="event.stopPropagation()">⬇</a>
-      </div>
-      <div class="pdf-drop-body"><div class="pdf-drop-body-inner"><span class="pdf-topic-pill">RC (10)</span><span class="pdf-topic-pill">Cloze Test (5)</span><span class="pdf-topic-pill">Para Jumbles (5)</span><span class="pdf-topic-pill">Social · Scientific · Env</span></div></div>
-    </div>
-
-    <div class="pdf-drop-card">
-      <div class="pdf-drop-header" onclick="toggleCard(this.parentElement)">
-        <div class="pdf-icon-wrap">📄</div>
-        <div class="pdf-info"><div class="pdf-title">Important Questions Bank 2024</div><div class="pdf-meta-txt">200 High-Weightage Qs · All Modules</div></div>
-        <span class="pdf-chevron">▾</span>
-        <a href="pdfs/imp-questions-bank.pdf" class="pdf-dl-btn" onclick="event.stopPropagation()">⬇</a>
-      </div>
-      <div class="pdf-drop-body"><div class="pdf-drop-body-inner"><span class="pdf-topic-pill">Vocab (60Q)</span><span class="pdf-topic-pill">Grammar (90Q)</span><span class="pdf-topic-pill">Reading (50Q)</span><span class="pdf-topic-pill">With Answer Key</span></div></div>
-    </div>
-
-    <div class="pdf-drop-card">
-      <div class="pdf-drop-header" onclick="toggleCard(this.parentElement)">
-        <div class="pdf-icon-wrap">📄</div>
-        <div class="pdf-info"><div class="pdf-title">Mock Test Set 1 — Solutions</div><div class="pdf-meta-txt">Detailed explanations for all 100 Qs</div></div>
-        <span class="pdf-chevron">▾</span>
-        <a href="pdfs/mock-test-1-solutions.pdf" class="pdf-dl-btn" onclick="event.stopPropagation()">⬇</a>
-      </div>
-      <div class="pdf-drop-body"><div class="pdf-drop-body-inner"><span class="pdf-topic-pill">Answer Key</span><span class="pdf-topic-pill">Rule-based Explanations</span><span class="pdf-topic-pill">Common Errors</span><span class="pdf-topic-pill">Topic Score Breakup</span></div></div>
-    </div>
-
-    <div class="pdf-drop-card">
-      <div class="pdf-drop-header" onclick="toggleCard(this.parentElement)">
-        <div class="pdf-icon-wrap">📄</div>
-        <div class="pdf-info"><div class="pdf-title">300 Phrasal Verbs with Examples</div><div class="pdf-meta-txt">High-frequency · Exam-focused</div></div>
-        <span class="pdf-chevron">▾</span>
-        <a href="pdfs/phrasal-verbs-list.pdf" class="pdf-dl-btn" onclick="event.stopPropagation()">⬇</a>
-      </div>
-      <div class="pdf-drop-body"><div class="pdf-drop-body-inner"><span class="pdf-topic-pill">300 Phrasal Verbs</span><span class="pdf-topic-pill">Example Sentences</span><span class="pdf-topic-pill">Practice Exercises (30Q)</span></div></div>
-    </div>
-
-  </div>
-
-  <!-- IMP QUESTIONS -->
-  <div class="sec-sub-head" id="imp-questions">
-    <div class="sec-sub-label">Must-Know Questions</div>
-    <div class="sec-sub-title">Important Questions</div>
-    <div class="sec-sub-desc">Click ▾ to expand topics in each question set.</div>
-  </div>
-  <div class="drop-grid" style="margin-bottom:70px">
-
-    <div class="impq-drop-card">
-      <div class="impq-drop-header" onclick="toggleCard(this.parentElement)">
-        <span class="impq-num-badge">#V-01</span>
-        <div style="flex:1"><div class="impq-title-txt">Vocabulary — OWS &amp; Synonyms</div><div style="font-size:.7rem;color:var(--gray);margin-top:2px">160 curated questions</div></div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><div class="impq-star-row">★★★</div><span class="impq-chevron">▾</span></div>
-      </div>
-      <div class="impq-drop-body"><div class="impq-drop-body-inner">
-        <a href="imp-questions/one-word-substitution.html" class="impq-topic-row"><span class="impq-topic-icon">📌</span>One Word Substitution<span class="impq-topic-count">60 Qs</span></a>
-        <a href="imp-questions/antonyms-synonyms.html" class="impq-topic-row"><span class="impq-topic-icon">📌</span>Antonyms &amp; Synonyms<span class="impq-topic-count">100 Pairs</span></a>
-      </div></div>
-    </div>
-
-    <div class="impq-drop-card">
-      <div class="impq-drop-header" onclick="toggleCard(this.parentElement)">
-        <span class="impq-num-badge">#V-02</span>
-        <div style="flex:1"><div class="impq-title-txt">Vocabulary — Idioms &amp; Phrasal Verbs</div><div style="font-size:.7rem;color:var(--gray);margin-top:2px">200 exam-focused items</div></div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><div class="impq-star-row">★★★</div><span class="impq-chevron">▾</span></div>
-      </div>
-      <div class="impq-drop-body"><div class="impq-drop-body-inner">
-        <a href="imp-questions/idioms.html" class="impq-topic-row"><span class="impq-topic-icon">📌</span>100 Most Repeated Idioms<span class="impq-topic-count">100 Qs</span></a>
-        <a href="imp-questions/phrasal-verbs.html" class="impq-topic-row"><span class="impq-topic-icon">📌</span>Phrasal Verbs Practice<span class="impq-topic-count">100 Qs</span></a>
-      </div></div>
-    </div>
-
-    <div class="impq-drop-card">
-      <div class="impq-drop-header" onclick="toggleCard(this.parentElement)">
-        <span class="impq-num-badge">#G-01</span>
-        <div style="flex:1"><div class="impq-title-txt">Grammar — Tenses &amp; SVA</div><div style="font-size:.7rem;color:var(--gray);margin-top:2px">130 fill-in-the-blank questions</div></div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><div class="impq-star-row">★★★</div><span class="impq-chevron">▾</span></div>
-      </div>
-      <div class="impq-drop-body"><div class="impq-drop-body-inner">
-        <a href="imp-questions/tenses.html" class="impq-topic-row"><span class="impq-topic-icon">📌</span>All 12 Tenses (FIB Pattern)<span class="impq-topic-count">80 Qs</span></a>
-        <a href="imp-questions/subject-verb-agreement.html" class="impq-topic-row"><span class="impq-topic-icon">📌</span>SVA Tricky Sentences<span class="impq-topic-count">50 Qs</span></a>
-      </div></div>
-    </div>
-
-    <div class="impq-drop-card">
-      <div class="impq-drop-header" onclick="toggleCard(this.parentElement)">
-        <span class="impq-num-badge">#G-02</span>
-        <div style="flex:1"><div class="impq-title-txt">Grammar — Prepositions &amp; Conditionals</div><div style="font-size:.7rem;color:var(--gray);margin-top:2px">130 exam-pattern questions</div></div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><div class="impq-star-row">★★★</div><span class="impq-chevron">▾</span></div>
-      </div>
-      <div class="impq-drop-body"><div class="impq-drop-body-inner">
-        <a href="imp-questions/prepositions.html" class="impq-topic-row"><span class="impq-topic-icon">📌</span>Prepositions (in/on/at/by)<span class="impq-topic-count">70 Qs</span></a>
-        <a href="imp-questions/conditional-sentences.html" class="impq-topic-row"><span class="impq-topic-icon">📌</span>All 4 Conditional Types<span class="impq-topic-count">60 Qs</span></a>
-      </div></div>
-    </div>
-
-    <div class="impq-drop-card">
-      <div class="impq-drop-header" onclick="toggleCard(this.parentElement)">
-        <span class="impq-num-badge">#G-03</span>
-        <div style="flex:1"><div class="impq-title-txt">Grammar — Sentence Completion &amp; Modals</div><div style="font-size:.7rem;color:var(--gray);margin-top:2px">105 questions with explanations</div></div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><div class="impq-star-row">★★</div><span class="impq-chevron">▾</span></div>
-      </div>
-      <div class="impq-drop-body"><div class="impq-drop-body-inner">
-        <a href="imp-questions/sentence-completion.html" class="impq-topic-row"><span class="impq-topic-icon">📌</span>Sentence Completion<span class="impq-topic-count">65 Qs</span></a>
-        <a href="imp-questions/modals.html" class="impq-topic-row"><span class="impq-topic-icon">📌</span>Modals (can/may/must/should)<span class="impq-topic-count">40 Qs</span></a>
-      </div></div>
-    </div>
-
-    <div class="impq-drop-card">
-      <div class="impq-drop-header" onclick="toggleCard(this.parentElement)">
-        <span class="impq-num-badge">#R-01</span>
-        <div style="flex:1"><div class="impq-title-txt">Reading — Comprehension, Cloze &amp; Para Jumbles</div><div style="font-size:.7rem;color:var(--gray);margin-top:2px">95 questions across reading topics</div></div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px"><div class="impq-star-row">★★★</div><span class="impq-chevron">▾</span></div>
-      </div>
-      <div class="impq-drop-body"><div class="impq-drop-body-inner">
-        <a href="imp-questions/reading-comprehension.html" class="impq-topic-row"><span class="impq-topic-icon">📌</span>10 Key RC Passages<span class="impq-topic-count">40 Qs</span></a>
-        <a href="imp-questions/cloze-test.html" class="impq-topic-row"><span class="impq-topic-icon">📌</span>Cloze Test Sets<span class="impq-topic-count">30 Qs</span></a>
-        <a href="imp-questions/para-jumbles.html" class="impq-topic-row"><span class="impq-topic-icon">📌</span>Para Jumbles + Shortcut Methods<span class="impq-topic-count">25 Qs</span></a>
-      </div></div>
-    </div>
-
-  </div>
-</div><!-- /section-one -->
-
-<!-- INLINE SECTION SWITCHER (hidden when tabs are used) -->
-<div id="section-switcher" style="display:none"></div>
-
-<!-- ══════════════════════════════════════════
-     SECTION 2 — BROWSE ALL TOPICS
-══════════════════════════════════════════ -->
-<div class="section-band section-two" id="section-two" data-section="topics" style="display:none">
-
-  <div class="band-header">
-    <div>
-      <div class="band-label">Section 2</div>
-      <div class="band-title">Browse All Topics</div>
-      <div class="band-desc" style="margin-top:6px">Complete syllabus with every topic, chapter link and quick-access pills.</div>
-    </div>
-    <div class="band-num">02</div>
-  </div>
-
-  <div class="syllabus-wrapper">
-
-    <!-- VOCABULARY -->
-    <div class="syl-block">
-      <div class="syl-header" style="background:rgba(168,85,247,.06)">
-        <div class="syl-icon">🟣</div>
-        <div><div class="syl-htitle" style="color:#c084fc">Vocabulary</div><div style="font-size:.67rem;color:var(--gray);margin-top:2px">8 Topics · 120 Questions</div></div>
-        <span class="syl-htag" style="background:rgba(168,85,247,.14);color:#c084fc">VOCAB</span>
-      </div>
-      <div class="syl-list">
-        <a href="vocabulary/one-word-substitution.html" class="syl-item" style="--ac:#c084fc"><span class="bullet"></span>One Word Substitution<span class="stag" style="background:rgba(245,200,66,.1);color:var(--gold)">High WT</span></a>
-        <a href="vocabulary/commonly-misspelled-words.html" class="syl-item" style="--ac:#c084fc"><span class="bullet"></span>Commonly Misspelled Words</a>
-        <a href="vocabulary/idioms.html" class="syl-item" style="--ac:#c084fc"><span class="bullet"></span>Idioms <span class="hot-badge">HOT</span></a>
-        <a href="vocabulary/antonyms-synonyms.html" class="syl-item" style="--ac:#c084fc"><span class="bullet"></span>Antonyms &amp; Synonyms<span class="stag" style="background:rgba(245,200,66,.1);color:var(--gold)">High WT</span></a>
-        <a href="vocabulary/phrasal-verbs.html" class="syl-item" style="--ac:#c084fc"><span class="bullet"></span>Phrasal Verbs</a>
-        <a href="vocabulary/figures-of-speech.html" class="syl-item" style="--ac:#c084fc"><span class="bullet"></span>Figures of Speech</a>
-        <a href="vocabulary/verbal-analogy.html" class="syl-item" style="--ac:#c084fc"><span class="bullet"></span>Verbal Analogy</a>
-        <a href="vocabulary/foreign-words.html" class="syl-item" style="--ac:#c084fc"><span class="bullet"></span>Foreign Words in English <span class="new-badge">NEW</span></a>
-      </div>
-      <div class="syl-pills">
-        <a href="vocabulary/one-word-substitution.html" class="syl-pill" style="--pc:#c084fc">OWS<span class="cnt">60Q</span></a>
-        <a href="vocabulary/idioms.html" class="syl-pill" style="--pc:#c084fc">Idioms<span class="cnt">100Q</span></a>
-        <a href="vocabulary/antonyms-synonyms.html" class="syl-pill" style="--pc:#c084fc">Ant/Syn<span class="cnt">100Q</span></a>
-        <a href="vocabulary/phrasal-verbs.html" class="syl-pill" style="--pc:#c084fc">Phrasal<span class="cnt">75Q</span></a>
-        <a href="vocabulary/figures-of-speech.html" class="syl-pill" style="--pc:#c084fc">FoS<span class="cnt">40Q</span></a>
-        <a href="vocabulary/verbal-analogy.html" class="syl-pill" style="--pc:#c084fc">Analogy<span class="cnt">50Q</span></a>
-        <a href="vocabulary/commonly-misspelled-words.html" class="syl-pill" style="--pc:#c084fc">Spelling<span class="cnt">30Q</span></a>
-        <a href="vocabulary/foreign-words.html" class="syl-pill" style="--pc:#c084fc">Foreign<span class="cnt">25Q</span></a>
-      </div>
-    </div>
-
-    <!-- GRAMMAR -->
-    <div class="syl-block">
-      <div class="syl-header" style="background:rgba(59,130,246,.06)">
-        <div class="syl-icon">🔵</div>
-        <div><div class="syl-htitle" style="color:#60a5fa">Grammar</div><div style="font-size:.67rem;color:var(--gray);margin-top:2px">14 Topics · 220 Questions</div></div>
-        <span class="syl-htag" style="background:rgba(59,130,246,.14);color:#60a5fa">GRAMMAR</span>
-      </div>
-      <div class="syl-list">
-        <a href="grammar/basics.html" class="syl-item" style="--ac:#60a5fa"><span class="bullet"></span>Grammar Basics</a>
-        <a href="grammar/sentence-completion.html" class="syl-item" style="--ac:#60a5fa"><span class="bullet"></span>Sentence Completion<span class="stag" style="background:rgba(245,200,66,.1);color:var(--gold)">High WT</span></a>
-        <a href="grammar/clauses.html" class="syl-item" style="--ac:#60a5fa"><span class="bullet"></span>Clauses</a>
-        <a href="grammar/conditional-sentences.html" class="syl-item" style="--ac:#60a5fa"><span class="bullet"></span>Conditional Sentences <span class="hot-badge">HOT</span></a>
-        <a href="grammar/nouns.html" class="syl-item" style="--ac:#60a5fa"><span class="bullet"></span>Nouns</a>
-        <a href="grammar/pronouns.html" class="syl-item" style="--ac:#60a5fa"><span class="bullet"></span>Pronouns</a>
-        <a href="grammar/adjectives.html" class="syl-item" style="--ac:#60a5fa"><span class="bullet"></span>Adjectives</a>
-        <a href="grammar/verbs.html" class="syl-item" style="--ac:#60a5fa"><span class="bullet"></span>Verbs<span class="stag" style="background:rgba(245,200,66,.1);color:var(--gold)">High WT</span></a>
-        <a href="grammar/subject-verb-agreement.html" class="syl-item" style="--ac:#60a5fa"><span class="bullet"></span>Subject-Verb Agreement</a>
-        <a href="grammar/modals.html" class="syl-item" style="--ac:#60a5fa"><span class="bullet"></span>Modals</a>
-        <a href="grammar/adverbs.html" class="syl-item" style="--ac:#60a5fa"><span class="bullet"></span>Adverbs</a>
-        <a href="grammar/prepositions.html" class="syl-item" style="--ac:#60a5fa"><span class="bullet"></span>Prepositions <span class="hot-badge">HOT</span></a>
-        <a href="grammar/conjunctions.html" class="syl-item" style="--ac:#60a5fa"><span class="bullet"></span>Conjunctions</a>
-        <a href="grammar/tenses.html" class="syl-item" style="--ac:#60a5fa"><span class="bullet"></span>Tenses<span class="stag" style="background:rgba(245,200,66,.1);color:var(--gold)">High WT</span></a>
-      </div>
-      <div class="syl-pills">
-        <a href="grammar/tenses.html" class="syl-pill" style="--pc:#60a5fa">Tenses<span class="cnt">80Q</span></a>
-        <a href="grammar/prepositions.html" class="syl-pill" style="--pc:#60a5fa">Prepositions<span class="cnt">70Q</span></a>
-        <a href="grammar/verbs.html" class="syl-pill" style="--pc:#60a5fa">Verbs<span class="cnt">60Q</span></a>
-        <a href="grammar/subject-verb-agreement.html" class="syl-pill" style="--pc:#60a5fa">SVA<span class="cnt">50Q</span></a>
-        <a href="grammar/sentence-completion.html" class="syl-pill" style="--pc:#60a5fa">Sentence<span class="cnt">65Q</span></a>
-        <a href="grammar/modals.html" class="syl-pill" style="--pc:#60a5fa">Modals<span class="cnt">40Q</span></a>
-        <a href="grammar/conditional-sentences.html" class="syl-pill" style="--pc:#60a5fa">Conditionals<span class="cnt">60Q</span></a>
-        <a href="grammar/clauses.html" class="syl-pill" style="--pc:#60a5fa">Clauses<span class="cnt">45Q</span></a>
-        <a href="grammar/nouns.html" class="syl-pill" style="--pc:#60a5fa">Nouns<span class="cnt">35Q</span></a>
-        <a href="grammar/pronouns.html" class="syl-pill" style="--pc:#60a5fa">Pronouns<span class="cnt">30Q</span></a>
-        <a href="grammar/adjectives.html" class="syl-pill" style="--pc:#60a5fa">Adjectives<span class="cnt">30Q</span></a>
-        <a href="grammar/adverbs.html" class="syl-pill" style="--pc:#60a5fa">Adverbs<span class="cnt">25Q</span></a>
-        <a href="grammar/conjunctions.html" class="syl-pill" style="--pc:#60a5fa">Conjunctions<span class="cnt">20Q</span></a>
-        <a href="grammar/basics.html" class="syl-pill" style="--pc:#60a5fa">Basics<span class="cnt">20Q</span></a>
-      </div>
-    </div>
-
-    <!-- READING -->
-    <div class="syl-block">
-      <div class="syl-header" style="background:rgba(20,184,166,.06)">
-        <div class="syl-icon">🟢</div>
-        <div><div class="syl-htitle" style="color:#34d399">Reading Ability</div><div style="font-size:.67rem;color:var(--gray);margin-top:2px">4 Topics · 80 Questions</div></div>
-        <span class="syl-htag" style="background:rgba(20,184,166,.14);color:#34d399">READING</span>
-      </div>
-      <div class="syl-list">
-        <a href="reading/reading-comprehension.html" class="syl-item" style="--ac:#34d399"><span class="bullet"></span>Reading Comprehension<span class="stag" style="background:rgba(245,200,66,.1);color:var(--gold)">High WT</span></a>
-        <a href="reading/cloze-test.html" class="syl-item" style="--ac:#34d399"><span class="bullet"></span>Cloze Test <span class="hot-badge">HOT</span></a>
-        <a href="reading/para-jumbles.html" class="syl-item" style="--ac:#34d399"><span class="bullet"></span>Para Jumbles<span class="stag" style="background:rgba(245,200,66,.1);color:var(--gold)">High WT</span></a>
-        <a href="reading/letter-writing.html" class="syl-item" style="--ac:#34d399"><span class="bullet"></span>Letter Writing <span class="new-badge">NEW</span></a>
-      </div>
-      <div class="syl-pills">
-        <a href="reading/reading-comprehension.html" class="syl-pill" style="--pc:#34d399">RC<span class="cnt">40Q</span></a>
-        <a href="reading/cloze-test.html" class="syl-pill" style="--pc:#34d399">Cloze<span class="cnt">30Q</span></a>
-        <a href="reading/para-jumbles.html" class="syl-pill" style="--pc:#34d399">Para Jumbles<span class="cnt">50Q</span></a>
-        <a href="reading/letter-writing.html" class="syl-pill" style="--pc:#34d399">Letter Writing<span class="cnt">10Q</span></a>
-      </div>
-    </div>
-
-  </div>
-</div><!-- /section-two -->
-
-<!-- FOOTER -->
-<footer>
+<!-- ── LOADING SCREEN ── -->
+<div id="loader">
+  <div class="loader-logo">📖</div>
   <div>
-    <div class="footer-logo">⚡ Thunder<span>Study English</span></div>
-    <div class="footer-note">CBT Mock Test Portal for English Entrance Exam · 2024–25</div>
+    <div class="loader-title">English<span style="color:#00bcd4">Study</span></div>
+    <div class="loader-sub">by Thunderstudy</div>
   </div>
-  <div class="footer-links">
-    <a href="#" onclick="switchSection('cbt');return false">Mock Tests</a>
-    <a href="#" onclick="switchSection('cbt');return false">PDFs</a>
-    <a href="#" onclick="switchSection('cbt');return false">Important Qs</a>
-    <a href="#" onclick="switchSection('topics');return false">All Topics</a>
-    <a href="#" onclick="switchSection('cbt');return false">Progress</a>
-    <a href="https://t.me/" target="_blank">Telegram ↗</a>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+  <div class="loader-dots">
+    <div class="loader-dot"></div>
+    <div class="loader-dot"></div>
+    <div class="loader-dot"></div>
   </div>
-</footer>
+</div>
+
+<!-- ── FLOATING PARTICLES ── -->
+<div class="particle" style="width:6px;height:6px;background:rgba(33,150,243,.5);top:15%;left:8%;--dur:9s;--dl:0s;--ty:-40px;--tx:20px;"></div>
+<div class="particle" style="width:4px;height:4px;background:rgba(0,188,212,.6);top:70%;left:92%;--dur:7s;--dl:2s;--ty:-30px;--tx:-15px;"></div>
+<div class="particle" style="width:8px;height:8px;background:rgba(33,150,243,.3);top:40%;left:95%;--dur:11s;--dl:1s;--ty:-50px;--tx:-10px;"></div>
+<div class="particle" style="width:5px;height:5px;background:rgba(0,188,212,.4);top:85%;left:5%;--dur:8s;--dl:3s;--ty:-25px;--tx:30px;"></div>
+
+<!-- ── SIDEBAR ── -->
+<nav class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-icon">📖</div>
+    <div class="sb-logo-text">English<span>Study</span></div>
+  </div>
+  <div class="sb-nav">
+    <div class="nav-sec">Main</div>
+    <div class="nav-item active" onclick="goPage('home')"><span class="nav-icon">🏠</span> Home</div>
+    <div class="nav-item" onclick="goPage('cuet')"><span class="nav-icon">📝</span> CUET Mocks<span class="nav-badge">ALL</span></div>
+    <div class="nav-item" onclick="goPage('blackbook')"><span class="nav-icon">📓</span> Black Book<span class="nav-badge teal">50</span></div>
+    <div class="nav-item" onclick="goPage('special')"><span class="nav-icon">⭐</span> Special Mocks<span class="nav-badge lock">PAID</span></div>
+    <div class="nav-sec" style="margin-top:8px;">Resources</div>
+    <div class="nav-item" onclick="goPage('books')"><span class="nav-icon">📚</span> Books & Material</div>
+    <div class="nav-item" onclick="goPage('leaderboard')"><span class="nav-icon">🏆</span> Leaderboard<span class="nav-badge teal">LIVE</span></div>
+  </div>
+  <div class="sb-profile">
+    <div class="sb-profile-inner">
+      <div class="sb-av" id="sb-av">S</div>
+      <div>
+        <div class="sb-pname" id="sb-name">Student</div>
+        <div class="sb-prole" id="sb-sid-disp">—</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<div class="main">
+
+  <!-- HOME PAGE -->
+  <div class="page active" id="page-home">
+    <div class="topbar">
+      <div>
+        <div class="page-title" id="home-greeting">👋 Hello, Student!</div>
+        <div class="page-sub">English · CUET Preparation Dashboard</div>
+      </div>
+      <div class="topbar-right">
+        <div id="sid-chip" style="background:rgba(33,150,243,.1);border:1px solid rgba(33,150,243,.25);border-radius:30px;padding:6px 14px;font-size:11px;font-weight:700;color:var(--blue2);font-family:var(--mono);">—</div>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero glass-card" style="margin-bottom:20px;">
+      <div style="position:relative;z-index:1;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);margin-bottom:8px;">Your English Progress</div>
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+          <div>
+            <div style="font-family:var(--mono);font-size:36px;font-weight:700;color:var(--blue2);" id="home-pct">0%</div>
+            <div style="font-size:11px;color:var(--text3);">Overall Accuracy</div>
+          </div>
+          <div style="flex:1;max-width:300px;">
+            <div class="prog-track"><div class="prog-fill" id="home-prog" style="width:0%"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:4px;font-family:var(--mono);">
+              <span id="home-done">0 done</span>
+              <span id="home-total">0 total</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;">
+            <div style="text-align:center;"><div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--blue2);" id="home-correct">0</div><div style="font-size:9px;color:var(--text3);">Correct</div></div>
+            <div style="text-align:center;"><div style="font-family:var(--mono);font-size:20px;font-weight:700;color:#e11d48;" id="home-wrong">0</div><div style="font-size:9px;color:var(--text3);">Wrong</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROMO BANNERS -->
+    <div class="sec-hdr"><div class="sec-title">🎯 Featured Resources</div></div>
+    <div class="promo-grid">
+      <a href="https://commercesehoga.github.io/english/pro1" target="_blank" class="promo-banner">
+        <svg width="100%" viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="pg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1565c0"/><stop offset="100%" stop-color="#0097a7"/></linearGradient>
+          </defs>
+          <rect width="360" height="180" fill="url(#pg1)" rx="20"/>
+          <circle cx="310" cy="-10" r="100" fill="rgba(255,255,255,0.06)"/>
+          <circle cx="-10" cy="160" r="80" fill="rgba(255,255,255,0.05)"/>
+          <text x="24" y="55" font-family="Syne,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)" letter-spacing="2">SPECIAL RESOURCE</text>
+          <text x="24" y="92" font-family="Syne,sans-serif" font-size="28" font-weight="800" fill="#fff">English Pro Pack 1</text>
+          <text x="24" y="118" font-family="DM Sans,sans-serif" font-size="13" fill="rgba(255,255,255,0.75)">Grammar · Vocabulary · Reading</text>
+          <rect x="24" y="140" width="120" height="28" rx="14" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+          <text x="84" y="159" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="700" fill="#fff">Explore Now →</text>
+          <text x="340" y="168" text-anchor="end" font-family="DM Mono,monospace" font-size="24" fill="rgba(255,255,255,0.15)">📖</text>
+        </svg>
+      </a>
+      <a href="https://commercesehoga.github.io/english/pro2" target="_blank" class="promo-banner">
+        <svg width="100%" viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="pg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#006064"/><stop offset="100%" stop-color="#1565c0"/></linearGradient>
+          </defs>
+          <rect width="360" height="180" fill="url(#pg2)" rx="20"/>
+          <circle cx="330" cy="170" r="110" fill="rgba(255,255,255,0.05)"/>
+          <circle cx="30" cy="10" r="70" fill="rgba(255,255,255,0.06)"/>
+          <text x="24" y="55" font-family="Syne,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)" letter-spacing="2">CUET ENGLISH</text>
+          <text x="24" y="92" font-family="Syne,sans-serif" font-size="28" font-weight="800" fill="#fff">English Pro Pack 2</text>
+          <text x="24" y="118" font-family="DM Sans,sans-serif" font-size="13" fill="rgba(255,255,255,0.75)">PYQs · Full Mocks · Comprehension</text>
+          <rect x="24" y="140" width="120" height="28" rx="14" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+          <text x="84" y="159" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="700" fill="#fff">Explore Now →</text>
+        </svg>
+      </a>
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div class="sec-hdr"><div class="sec-title">⚡ Quick Actions</div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:20px;" class="stagger">
+      <div class="glass-card card-p" style="cursor:pointer;transition:all .2s;" onclick="goPage('cuet')" onmouseenter="this.style.boxShadow='var(--shadow2)'" onmouseleave="this.style.boxShadow=''">
+        <div style="font-size:24px;margin-bottom:8px;">📝</div>
+        <div style="font-size:13px;font-weight:700;">CUET Mocks</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px;">All mock tests</div>
+      </div>
+      <div class="glass-card card-p" style="cursor:pointer;transition:all .2s;" onclick="goPage('blackbook')" onmouseenter="this.style.boxShadow='var(--shadow2)'" onmouseleave="this.style.boxShadow=''">
+        <div style="font-size:24px;margin-bottom:8px;">📓</div>
+        <div style="font-size:13px;font-weight:700;">Black Book</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px;">50 focused mocks</div>
+      </div>
+      <div class="glass-card card-p" style="cursor:pointer;transition:all .2s;" onclick="goPage('special')" onmouseenter="this.style.boxShadow='var(--shadow2)'" onmouseleave="this.style.boxShadow=''">
+        <div style="font-size:24px;margin-bottom:8px;">⭐</div>
+        <div style="font-size:13px;font-weight:700;">Special × 30</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px;">Premium access</div>
+      </div>
+      <div class="glass-card card-p" style="cursor:pointer;transition:all .2s;" onclick="goPage('books')" onmouseenter="this.style.boxShadow='var(--shadow2)'" onmouseleave="this.style.boxShadow=''">
+        <div style="font-size:24px;margin-bottom:8px;">📚</div>
+        <div style="font-size:13px;font-weight:700;">Books & Notes</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px;">Free material</div>
+      </div>
+      <div class="glass-card card-p" style="cursor:pointer;transition:all .2s;" onclick="goPage('leaderboard')" onmouseenter="this.style.boxShadow='var(--shadow2)'" onmouseleave="this.style.boxShadow=''">
+        <div style="font-size:24px;margin-bottom:8px;">🏆</div>
+        <div style="font-size:13px;font-weight:700;">Leaderboard</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px;">Class rank</div>
+      </div>
+      <div class="glass-card card-p" style="cursor:pointer;transition:all .2s;" onclick="promptStudentID()" onmouseenter="this.style.boxShadow='var(--shadow2)'" onmouseleave="this.style.boxShadow=''">
+        <div style="font-size:24px;margin-bottom:8px;">🪪</div>
+        <div style="font-size:13px;font-weight:700;">Set Student ID</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:2px;">For access</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUET PAGE -->
+  <div class="page" id="page-cuet">
+    <div class="topbar">
+      <div>
+        <div class="page-title">📝 CUET Mock Tests</div>
+        <div class="page-sub">All English mocks from the CUET dashboard</div>
+      </div>
+      <div class="topbar-right">
+        <a href="https://commercesehoga.github.io/english/all" target="_blank" class="btn btn-prim" style="font-size:11px;">🌐 Open Full Site</a>
+      </div>
+    </div>
+
+    <div class="type-tabs" id="cuet-tabs"></div>
+    <div class="mock-grid stagger" id="cuet-grid"></div>
+  </div>
+
+  <!-- BLACK BOOK PAGE -->
+  <div class="page" id="page-blackbook">
+    <div class="topbar">
+      <div>
+        <div class="page-title">📓 English Black Book</div>
+        <div class="page-sub">50 focused mock tests · Chapter-wise mastery</div>
+      </div>
+      <div class="topbar-right">
+        <input class="search-inp" id="bb-search" placeholder="🔍 Search mock…" oninput="filterBB()">
+      </div>
+    </div>
+    <div class="glass-card card-p" style="margin-bottom:18px;background:linear-gradient(135deg,rgba(33,150,243,.08),rgba(0,188,212,.05));border-color:rgba(33,150,243,.25);">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <div style="font-size:32px;">📓</div>
+        <div style="flex:1;">
+          <div style="font-family:var(--fnd);font-size:15px;font-weight:700;margin-bottom:3px;">English Black Book Collection</div>
+          <div style="font-size:12px;color:var(--text3);">50 carefully crafted mock tests covering all CUET English topics</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-family:var(--mono);font-size:26px;font-weight:700;color:var(--blue2);" id="bb-done-count">0/50</div>
+          <div style="font-size:10px;color:var(--text3);">Attempted</div>
+        </div>
+      </div>
+      <div class="prog-track" style="margin-top:12px;height:7px;"><div class="prog-fill" id="bb-prog" style="width:0%"></div></div>
+    </div>
+    <div class="mock-grid stagger" id="bb-grid"></div>
+  </div>
+
+  <!-- SPECIAL PAGE -->
+  <div class="page" id="page-special">
+    <div class="topbar">
+      <div>
+        <div class="page-title">⭐ Special Mocks × 30</div>
+        <div class="page-sub">Premium exclusive mock tests · Requires purchase</div>
+      </div>
+    </div>
+
+    <div id="special-lock-msg" style="display:none;">
+      <div class="glass-card card-p" style="text-align:center;padding:40px 24px;background:linear-gradient(135deg,rgba(244,63,94,.06),rgba(255,152,0,.04));border-color:rgba(244,63,94,.2);margin-bottom:18px;">
+        <div style="font-size:48px;margin-bottom:12px;">🔒</div>
+        <div style="font-family:var(--fnd);font-size:20px;font-weight:800;margin-bottom:8px;color:var(--text);">Premium Access Required</div>
+        <div style="font-size:13px;color:var(--text3);line-height:1.8;margin-bottom:20px;">Get access to all 30 Special Mock Tests<br><strong style="color:var(--blue2)">Only ₹30</strong> — Lifetime Access</div>
+        <div style="background:rgba(33,150,243,.08);border:1.5px solid rgba(33,150,243,.2);border-radius:16px;padding:16px 20px;margin-bottom:18px;">
+          <div style="font-size:12px;color:var(--text3);margin-bottom:8px;">To purchase, message on Telegram:</div>
+          <div style="font-family:var(--mono);font-size:14px;font-weight:700;color:var(--blue2);margin-bottom:6px;">@thunder_study_robot</div>
+          <div style="font-size:12px;color:var(--text2);">Send: <span style="font-family:var(--mono);background:rgba(33,150,243,.1);padding:2px 8px;border-radius:6px;">add student id - <span id="sps-sid-show">YOUR_ID</span></span></div>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <a href="https://t.me/thunder_study_robot" target="_blank" class="btn btn-prim">📱 Message on Telegram</a>
+          <button class="btn btn-ghost" onclick="promptStudentID()">🪪 Set My Student ID</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="special-grid-wrap" style="display:none;">
+      <div class="glass-card card-p" style="margin-bottom:18px;background:linear-gradient(135deg,rgba(33,150,243,.08),rgba(0,188,212,.05));border-color:rgba(33,150,243,.25);">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <div style="font-size:32px;">⭐</div>
+          <div style="flex:1;">
+            <div style="font-family:var(--fnd);font-size:15px;font-weight:700;">Special Mock Series</div>
+            <div style="font-size:12px;color:var(--text3);margin-top:2px;">30 premium mocks · Highest difficulty · CUET level</div>
+          </div>
+          <div style="font-size:11px;color:var(--text3);text-align:right;">Student ID: <strong style="color:var(--blue2);font-family:var(--mono);" id="sps-sid-unlocked">—</strong></div>
+        </div>
+      </div>
+      <div class="mock-grid stagger" id="special-grid"></div>
+    </div>
+  </div>
+
+  <!-- BOOKS PAGE -->
+  <div class="page" id="page-books">
+    <div class="topbar">
+      <div>
+        <div class="page-title">📚 Books & Study Material</div>
+        <div class="page-sub">CUET English resources · Free & premium</div>
+      </div>
+    </div>
+    <div class="book-grid stagger" id="books-grid"></div>
+  </div>
+
+  <!-- LEADERBOARD PAGE -->
+  <div class="page" id="page-leaderboard">
+    <div class="topbar">
+      <div>
+        <div class="page-title">🏆 English Leaderboard</div>
+        <div class="page-sub">Live class rank · English subject only</div>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-ghost" onclick="loadLeaderboard()" id="lb-refresh-btn" style="font-size:12px;">↺ Refresh</button>
+      </div>
+    </div>
+    <div class="glass-card" style="overflow:hidden;" id="lb-container">
+      <div style="text-align:center;padding:40px;color:var(--text3);">
+        <div class="spin-anim" style="display:inline-block;font-size:24px;">⟳</div>
+        <div style="margin-top:12px;font-size:13px;">Loading leaderboard…</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- ── MOBILE DOCK ── -->
+<nav class="mobile-dock">
+  <div class="dock-item active" id="dock-home" onclick="goPage('home')">
+    <div class="dock-icon">🏠</div>
+    <div class="dock-label">Home</div>
+    <div class="dock-active-dot"></div>
+  </div>
+  <div class="dock-item" id="dock-cuet" onclick="goPage('cuet')">
+    <div class="dock-icon">📝</div>
+    <div class="dock-label">CUET</div>
+    <div class="dock-active-dot"></div>
+  </div>
+  <div class="dock-item" id="dock-blackbook" onclick="goPage('blackbook')">
+    <div class="dock-icon">📓</div>
+    <div class="dock-label">Black Book</div>
+    <div class="dock-active-dot"></div>
+  </div>
+  <div class="dock-item" id="dock-special" onclick="goPage('special')">
+    <div class="dock-icon">⭐</div>
+    <div class="dock-label">Special</div>
+    <div class="dock-active-dot"></div>
+  </div>
+  <div class="dock-item" id="dock-leaderboard" onclick="goPage('leaderboard')">
+    <div class="dock-icon">🏆</div>
+    <div class="dock-label">Rank</div>
+    <div class="dock-active-dot"></div>
+  </div>
+</nav>
+
+<!-- ── TOAST ── -->
+<div class="toast-wrap"><div class="toast" id="toast"></div></div>
 
 <script>
-/* ══ STAR FIELD ══ */
-(function(){
-  const canvas = document.getElementById('stars-canvas');
-  const ctx    = canvas.getContext('2d');
-  let W, H, stars = [], shooting = [];
+/* ════════════════════════════════
+   CONFIG
+════════════════════════════════ */
+const BASE = 'https://commercesehoga.github.io/english/';
+const GS_URL = 'https://script.google.com/macros/s/AKfycbyEsrvdSuRh06TIKPK0ozP-jQNjqHO8PaIeBcW5r45aGdr4H3ZVFHpKMm3xaDHrYmqX/exec';
 
-  function resize(){
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
+// PAID Student IDs with access to special mocks
+const PAID_IDS = ['TS67933'];
 
-  // generate stars
-  for(let i=0;i<220;i++){
-    stars.push({
-      x: Math.random()*2,  // will be set in draw
-      y: Math.random()*2,
-      r: Math.random()*1.3+.2,
-      o: Math.random()*.7+.15,
-      twinkle: Math.random()*2+1,
-      phase: Math.random()*Math.PI*2,
-      px: Math.random(),
-      py: Math.random()
-    });
-  }
-
-  function spawnShooter(){
-    if(Math.random()<0.003){
-      shooting.push({
-        x: Math.random()*W*.8,
-        y: Math.random()*H*.3,
-        len: Math.random()*120+60,
-        speed: Math.random()*8+6,
-        angle: Math.PI/6,
-        life: 1,
-        decay: Math.random()*.025+.02
-      });
-    }
-  }
-
-  function draw(t){
-    ctx.clearRect(0,0,W,H);
-    t /= 1000;
-
-    // regular stars
-    stars.forEach(s=>{
-      const tw = .5+.5*Math.sin(t*s.twinkle+s.phase);
-      ctx.beginPath();
-      ctx.arc(s.px*W, s.py*H, s.r, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(255,255,255,${s.o*tw})`;
-      ctx.fill();
-
-      // tiny shimmer cross on bigger stars
-      if(s.r>1){
-        ctx.strokeStyle = `rgba(255,255,255,${s.o*.3*tw})`;
-        ctx.lineWidth = .5;
-        ctx.beginPath();
-        ctx.moveTo(s.px*W-s.r*3,s.py*H);
-        ctx.lineTo(s.px*W+s.r*3,s.py*H);
-        ctx.moveTo(s.px*W,s.py*H-s.r*3);
-        ctx.lineTo(s.px*W,s.py*H+s.r*3);
-        ctx.stroke();
-      }
-    });
-
-    // shooting stars
-    spawnShooter();
-    shooting = shooting.filter(s=>s.life>0);
-    shooting.forEach(s=>{
-      const tx = s.x + Math.cos(s.angle)*s.len;
-      const ty = s.y + Math.sin(s.angle)*s.len;
-      const grad = ctx.createLinearGradient(s.x,s.y,tx,ty);
-      grad.addColorStop(0,`rgba(255,255,255,0)`);
-      grad.addColorStop(.6,`rgba(200,210,255,${s.life*.7})`);
-      grad.addColorStop(1,`rgba(255,255,255,${s.life})`);
-      ctx.beginPath();
-      ctx.moveTo(s.x,s.y);
-      ctx.lineTo(tx,ty);
-      ctx.strokeStyle = grad;
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-      s.x += Math.cos(s.angle)*s.speed;
-      s.y += Math.sin(s.angle)*s.speed;
-      s.life -= s.decay;
-    });
-
-    requestAnimationFrame(draw);
-  }
-  requestAnimationFrame(draw);
-})();
-
-/* ══ MOCK CONFIG ══ */
-const MOCKS = [
-  { id:'mock1',    label:'Full Mock — Set 1',  color:'linear-gradient(90deg,#6366f1,#818cf8)' },
-  { id:'mock2',    label:'Full Mock — Set 2',  color:'linear-gradient(90deg,#f59e0b,#f43f5e)' },
-  { id:'mock3',    label:'Full Mock — Set 3',  color:'linear-gradient(90deg,#f43f5e,#fb923c)' },
-  { id:'vocab1',   label:'Vocabulary — Set 1', color:'linear-gradient(90deg,#a855f7,#ec4899)' },
-  { id:'grammar1', label:'Grammar — Set 1',    color:'linear-gradient(90deg,#3b82f6,#14b8a6)' },
-  { id:'reading1', label:'Reading — Set 1',    color:'linear-gradient(90deg,#14b8a6,#22c55e)' },
-];
-const state = {};
-MOCKS.forEach(m => state[m.id] = false);
-
-function buildTracks(){ /* single bar — no individual tracks needed */ }
-buildTracks();
-
-function updateBar(){
-  const done  = Object.values(state).filter(Boolean).length;
-  const total = MOCKS.length;
-  const pct   = Math.round((done / total) * 100);
-  const fill  = document.getElementById('prog-fill-single');
-  const pctEl = document.getElementById('prog-pct');
-  const fracEl= document.getElementById('prog-fraction');
-  if(fill)  fill.style.width = pct + '%';
-  if(pctEl) pctEl.textContent = pct + '%';
-  if(fracEl)fracEl.textContent = done + ' / ' + total + ' tests';
-}
-updateBar();
-
-function startMock(id, btn){
-  if(state[id]) return;
-  state[id] = true;
-  btn.textContent='✓ Started';
-  btn.classList.add('done');
-  btn.disabled=true;
-  updateBar();
-}
-
-function switchSection(which){
-  const s1 = document.getElementById('section-one');
-  const s2 = document.getElementById('section-two');
-  const tC = document.getElementById('tab-cbt');
-  const tT = document.getElementById('tab-topics');
-  if(which==='cbt'){
-    s1.style.display='';
-    s2.style.display='none';
-    tC.className='sec-tab active-cbt';
-    tT.className='sec-tab';
-    setTimeout(()=>{ s1.scrollIntoView({behavior:'smooth',block:'start'}); },60);
-  } else {
-    s1.style.display='none';
-    s2.style.display='';
-    tC.className='sec-tab';
-    tT.className='sec-tab active-topics';
-    setTimeout(()=>{ s2.scrollIntoView({behavior:'smooth',block:'start'}); },60);
-  }
-}
-
-function toggleCard(card){
-  card.classList.toggle('open');
-}
-
-/* ══ SLIDESHOW SEAMLESS LOOP ══ */
-(function(){
-  const track = document.getElementById('ss-track');
-  if(!track) return;
-  const clone = track.innerHTML;
-  track.innerHTML = clone + clone; // duplicate for seamless
-})();
-
-
-const SEARCH_DATA = [
-  // Mock Tests
-  {icon:'⚡',name:'Full Mock Test — Set 1',tag:'Mock',tagC:'#a5b4fc',tagBg:'rgba(99,102,241,.15)',section:'cbt',anchor:'#mock-tests'},
-  {icon:'⚡',name:'Full Mock Test — Set 2',tag:'Mock',tagC:'#fcd34d',tagBg:'rgba(245,158,11,.15)',section:'cbt',anchor:'#mock-tests'},
-  {icon:'⚡',name:'Full Mock Test — Set 3',tag:'Mock',tagC:'#fca5a5',tagBg:'rgba(244,63,94,.15)',section:'cbt',anchor:'#mock-tests'},
-  {icon:'⚡',name:'Vocabulary Mock Test — Set 1',tag:'Mock',tagC:'#d8b4fe',tagBg:'rgba(168,85,247,.15)',section:'cbt',anchor:'#mock-tests'},
-  {icon:'⚡',name:'Grammar Mock Test — Set 1',tag:'Mock',tagC:'#93c5fd',tagBg:'rgba(59,130,246,.15)',section:'cbt',anchor:'#mock-tests'},
-  {icon:'⚡',name:'Reading Mock Test — Set 1',tag:'Mock',tagC:'#6ee7b7',tagBg:'rgba(20,184,166,.15)',section:'cbt',anchor:'#mock-tests'},
-  // PDFs
-  {icon:'📄',name:'Sample Paper 2024 — Full Set',tag:'PDF',tagC:'#fca5a5',tagBg:'rgba(244,63,94,.12)',section:'cbt',anchor:'#pdfs'},
-  {icon:'📄',name:'Sample Paper 2023 — Full Set',tag:'PDF',tagC:'#fca5a5',tagBg:'rgba(244,63,94,.12)',section:'cbt',anchor:'#pdfs'},
-  {icon:'📄',name:'Vocabulary Master Notes',tag:'PDF',tagC:'#fca5a5',tagBg:'rgba(244,63,94,.12)',section:'cbt',anchor:'#pdfs'},
-  {icon:'📄',name:'Grammar Quick Revision Notes',tag:'PDF',tagC:'#fca5a5',tagBg:'rgba(244,63,94,.12)',section:'cbt',anchor:'#pdfs'},
-  {icon:'📄',name:'Reading Comprehension Passages',tag:'PDF',tagC:'#fca5a5',tagBg:'rgba(244,63,94,.12)',section:'cbt',anchor:'#pdfs'},
-  {icon:'📄',name:'Important Questions Bank 2024',tag:'PDF',tagC:'#fca5a5',tagBg:'rgba(244,63,94,.12)',section:'cbt',anchor:'#pdfs'},
-  {icon:'📄',name:'300 Phrasal Verbs with Examples',tag:'PDF',tagC:'#fca5a5',tagBg:'rgba(244,63,94,.12)',section:'cbt',anchor:'#pdfs'},
-  {icon:'📄',name:'Mock Test Set 1 — Solutions',tag:'PDF',tagC:'#fca5a5',tagBg:'rgba(244,63,94,.12)',section:'cbt',anchor:'#pdfs'},
-  // Important Questions
-  {icon:'⭐',name:'One Word Substitution — 60 Questions',tag:'Imp Q',tagC:'var(--gold)',tagBg:'rgba(245,200,66,.1)',section:'cbt',anchor:'#imp-questions'},
-  {icon:'⭐',name:'Antonyms & Synonyms — 100 Pairs',tag:'Imp Q',tagC:'var(--gold)',tagBg:'rgba(245,200,66,.1)',section:'cbt',anchor:'#imp-questions'},
-  {icon:'⭐',name:'Top 100 Idioms',tag:'Imp Q',tagC:'var(--gold)',tagBg:'rgba(245,200,66,.1)',section:'cbt',anchor:'#imp-questions'},
-  {icon:'⭐',name:'Phrasal Verbs Practice',tag:'Imp Q',tagC:'var(--gold)',tagBg:'rgba(245,200,66,.1)',section:'cbt',anchor:'#imp-questions'},
-  {icon:'⭐',name:'Tenses — 80 Fill-in-Blank Questions',tag:'Imp Q',tagC:'var(--gold)',tagBg:'rgba(245,200,66,.1)',section:'cbt',anchor:'#imp-questions'},
-  {icon:'⭐',name:'Subject-Verb Agreement Tricky Questions',tag:'Imp Q',tagC:'var(--gold)',tagBg:'rgba(245,200,66,.1)',section:'cbt',anchor:'#imp-questions'},
-  {icon:'⭐',name:'Prepositions — 70 Exam Questions',tag:'Imp Q',tagC:'var(--gold)',tagBg:'rgba(245,200,66,.1)',section:'cbt',anchor:'#imp-questions'},
-  {icon:'⭐',name:'Conditional Sentences — All 4 Types',tag:'Imp Q',tagC:'var(--gold)',tagBg:'rgba(245,200,66,.1)',section:'cbt',anchor:'#imp-questions'},
-  {icon:'⭐',name:'Reading Comprehension — 10 Passages',tag:'Imp Q',tagC:'var(--gold)',tagBg:'rgba(245,200,66,.1)',section:'cbt',anchor:'#imp-questions'},
-  // Vocabulary Topics
-  {icon:'🟣',name:'One Word Substitution',tag:'Vocab',tagC:'#c084fc',tagBg:'rgba(168,85,247,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🟣',name:'Commonly Misspelled Words',tag:'Vocab',tagC:'#c084fc',tagBg:'rgba(168,85,247,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🟣',name:'Idioms',tag:'Vocab',tagC:'#c084fc',tagBg:'rgba(168,85,247,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🟣',name:'Antonyms & Synonyms',tag:'Vocab',tagC:'#c084fc',tagBg:'rgba(168,85,247,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🟣',name:'Phrasal Verbs',tag:'Vocab',tagC:'#c084fc',tagBg:'rgba(168,85,247,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🟣',name:'Figures of Speech',tag:'Vocab',tagC:'#c084fc',tagBg:'rgba(168,85,247,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🟣',name:'Verbal Analogy',tag:'Vocab',tagC:'#c084fc',tagBg:'rgba(168,85,247,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🟣',name:'Foreign Words in English',tag:'Vocab',tagC:'#c084fc',tagBg:'rgba(168,85,247,.12)',section:'topics',anchor:'#all-topics'},
-  // Grammar Topics
-  {icon:'🔵',name:'Grammar Basics',tag:'Grammar',tagC:'#60a5fa',tagBg:'rgba(59,130,246,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🔵',name:'Sentence Completion',tag:'Grammar',tagC:'#60a5fa',tagBg:'rgba(59,130,246,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🔵',name:'Clauses',tag:'Grammar',tagC:'#60a5fa',tagBg:'rgba(59,130,246,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🔵',name:'Conditional Sentences',tag:'Grammar',tagC:'#60a5fa',tagBg:'rgba(59,130,246,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🔵',name:'Nouns',tag:'Grammar',tagC:'#60a5fa',tagBg:'rgba(59,130,246,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🔵',name:'Pronouns',tag:'Grammar',tagC:'#60a5fa',tagBg:'rgba(59,130,246,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🔵',name:'Adjectives',tag:'Grammar',tagC:'#60a5fa',tagBg:'rgba(59,130,246,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🔵',name:'Verbs',tag:'Grammar',tagC:'#60a5fa',tagBg:'rgba(59,130,246,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🔵',name:'Subject-Verb Agreement',tag:'Grammar',tagC:'#60a5fa',tagBg:'rgba(59,130,246,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🔵',name:'Modals',tag:'Grammar',tagC:'#60a5fa',tagBg:'rgba(59,130,246,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🔵',name:'Adverbs',tag:'Grammar',tagC:'#60a5fa',tagBg:'rgba(59,130,246,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🔵',name:'Prepositions',tag:'Grammar',tagC:'#60a5fa',tagBg:'rgba(59,130,246,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🔵',name:'Conjunctions',tag:'Grammar',tagC:'#60a5fa',tagBg:'rgba(59,130,246,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🔵',name:'Tenses',tag:'Grammar',tagC:'#60a5fa',tagBg:'rgba(59,130,246,.12)',section:'topics',anchor:'#all-topics'},
-  // Reading Topics
-  {icon:'🟢',name:'Reading Comprehension',tag:'Reading',tagC:'#34d399',tagBg:'rgba(20,184,166,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🟢',name:'Cloze Test',tag:'Reading',tagC:'#34d399',tagBg:'rgba(20,184,166,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🟢',name:'Para Jumbles',tag:'Reading',tagC:'#34d399',tagBg:'rgba(20,184,166,.12)',section:'topics',anchor:'#all-topics'},
-  {icon:'🟢',name:'Letter Writing',tag:'Reading',tagC:'#34d399',tagBg:'rgba(20,184,166,.12)',section:'topics',anchor:'#all-topics'},
+/* ════════════════════════════════
+   CUET MOCK DATA
+════════════════════════════════ */
+const CUET_MOCKS = [
+  // Vocabulary
+  {id:'eng-voc-ows',name:'One Word Substitution',type:'vocabulary',icon:'📖'},
+  {id:'eng-voc-spell',name:'Commonly Mis-Spelt Words',type:'vocabulary',icon:'📖'},
+  {id:'eng-voc-idiom',name:'Idioms & Phrases',type:'vocabulary',icon:'📖'},
+  {id:'eng-voc-synant',name:'Antonyms & Synonyms',type:'vocabulary',icon:'📖'},
+  {id:'eng-voc-phv',name:'Phrasal Verbs',type:'vocabulary',icon:'📖'},
+  {id:'eng-voc-fos',name:'Figure of Speech',type:'vocabulary',icon:'📖'},
+  {id:'eng-voc-va',name:'Verbal Analogy',type:'vocabulary',icon:'📖'},
+  {id:'eng-voc-fw',name:'Foreign Words',type:'vocabulary',icon:'📖'},
+  // Grammar
+  {id:'eng-grm-basic',name:'Grammar Basics',type:'grammar',icon:'✍️'},
+  {id:'eng-grm-sc',name:'Sentence Completion',type:'grammar',icon:'✍️'},
+  {id:'eng-grm-cl',name:'Clauses',type:'grammar',icon:'✍️'},
+  {id:'eng-grm-cond',name:'Conditional Sentences',type:'grammar',icon:'✍️'},
+  {id:'eng-grm-noun',name:'Nouns',type:'grammar',icon:'✍️'},
+  {id:'eng-grm-pron',name:'Pronouns',type:'grammar',icon:'✍️'},
+  {id:'eng-grm-adj',name:'Adjectives',type:'grammar',icon:'✍️'},
+  {id:'eng-grm-verb',name:'Verbs',type:'grammar',icon:'✍️'},
+  {id:'eng-grm-sva',name:'Subject Verb Agreement',type:'grammar',icon:'✍️'},
+  {id:'eng-grm-mod',name:'Modals',type:'grammar',icon:'✍️'},
+  {id:'eng-grm-adv',name:'Adverb',type:'grammar',icon:'✍️'},
+  {id:'eng-grm-prep',name:'Preposition',type:'grammar',icon:'✍️'},
+  {id:'eng-grm-conj',name:'Conjunction',type:'grammar',icon:'✍️'},
+  {id:'eng-grm-tense',name:'Tenses',type:'grammar',icon:'✍️'},
+  // Reading
+  {id:'eng-ra-cloze',name:'Cloze Test',type:'reading',icon:'📰'},
+  {id:'eng-ra-para',name:'Parajumbles',type:'reading',icon:'📰'},
+  {id:'eng-ra-letter',name:'Letter Writing',type:'reading',icon:'📰'},
+  // Reading Comprehension
+  {id:'eng-rc1',name:'Reading Comprehension 1',type:'rc',icon:'🔍'},
+  {id:'eng-rc2',name:'Reading Comprehension 2',type:'rc',icon:'🔍'},
+  {id:'eng-rc3',name:'Reading Comprehension 3',type:'rc',icon:'🔍'},
+  {id:'eng-rc4',name:'Reading Comprehension 4',type:'rc',icon:'🔍'},
+  {id:'eng-rc5',name:'Reading Comprehension 5',type:'rc',icon:'🔍'},
+  {id:'eng-rc6',name:'Reading Comprehension 6',type:'rc',icon:'🔍'},
+  // Full Mocks
+  {id:'eng-full1',name:'Full Mock 1',type:'fullmock',icon:'🗂️'},
+  {id:'eng-full2',name:'Full Mock 2',type:'fullmock',icon:'🗂️'},
+  // PYQ
+  {id:'eng-pyq23',name:'PYQ 2023',type:'pyq',icon:'📜'},
+  {id:'eng-pyq24',name:'PYQ 2024',type:'pyq',icon:'📜'},
+  {id:'eng-pyq25',name:'PYQ 2025',type:'pyq',icon:'📜'},
+  // Special
+  {id:'eng-sp1',name:'Special Mock 1',type:'special',icon:'⭐'},
 ];
 
-let searchFocused = -1;
+const TYPE_INFO = {
+  vocabulary: {label:'Vocabulary',color:'#2196f3',bg:'rgba(33,150,243,.1)'},
+  grammar:    {label:'Grammar',color:'#7c3aed',bg:'rgba(124,58,237,.1)'},
+  reading:    {label:'Reading',color:'#0097a7',bg:'rgba(0,151,167,.1)'},
+  rc:         {label:'Comprehension',color:'#f59e0b',bg:'rgba(245,158,11,.1)'},
+  fullmock:   {label:'Full Mock',color:'#10b981',bg:'rgba(16,185,129,.1)'},
+  pyq:        {label:'PYQ',color:'#f97316',bg:'rgba(249,115,22,.1)'},
+  special:    {label:'Special',color:'#ec4899',bg:'rgba(236,72,153,.1)'},
+};
 
-function onSearch(inp){
-  const q = inp.value.trim().toLowerCase();
-  const dd = document.getElementById('search-dropdown');
-  const cl = document.getElementById('search-clear');
-  cl.classList.toggle('visible', q.length > 0);
-  if(!q){ dd.classList.remove('open'); dd.innerHTML=''; searchFocused=-1; return; }
+const BOOKS = [
+  {
+    title:'CUET English One Book',
+    desc:'Complete CUET English preparation — Grammar, Vocab, RC, and PYQs all in one.',
+    icon:'📗',
+    cover:'linear-gradient(135deg,#1565c0,#0097a7)',
+    price:'₹99',
+    free:true,
+    link:'https://commercesehoga.github.io/studyhub/',
+  },
+  {
+    title:'English All in One — Class 12',
+    desc:'Comprehensive Class 12 English textbook companion with notes and practice sets.',
+    icon:'📘',
+    cover:'linear-gradient(135deg,#006064,#1565c0)',
+    price:'₹99',
+    free:true,
+    link:'https://commercesehoga.github.io/studyhub/',
+  },
+  {
+    title:'English Study Material Pack',
+    desc:'Condensed study notes, quick revision sheets, word lists, and grammar tables.',
+    icon:'📋',
+    cover:'linear-gradient(135deg,#0d47a1,#00838f)',
+    price:'₹99',
+    free:true,
+    link:'https://commercesehoga.github.io/studyhub/',
+  },
+];
 
-  const hits = SEARCH_DATA.filter(d => d.name.toLowerCase().includes(q)).slice(0,10);
-  if(!hits.length){ dd.innerHTML='<div class="search-empty">No results found for "'+inp.value+'"</div>'; dd.classList.add('open'); return; }
+/* ════════════════════════════════
+   STORAGE HELPERS
+════════════════════════════════ */
+function lR(cId){
+  try{return JSON.parse(localStorage.getItem('thunderstudy_result_eng_'+cId)||'null');}catch(e){return null;}
+}
+function getStudentID(){return localStorage.getItem('ts_student_id')||'';}
+function getProfile(){try{return JSON.parse(localStorage.getItem('ts_profile')||'{}');}catch(e){return{};}}
+function rClr(p){return p>=75?'#10b981':p>=50?'#2196f3':p>=35?'#f59e0b':'#e11d48';}
+function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-  // group by tag
-  const groups = {};
-  hits.forEach(h=>{ (groups[h.tag] = groups[h.tag]||[]).push(h); });
-  let html = '';
-  Object.entries(groups).forEach(([grp,items])=>{
-    html += `<div class="search-group-label">${grp}</div>`;
-    items.forEach((item,i)=>{
-      html += `<a class="search-result" href="${item.anchor}" onclick="searchGo('${item.section}','${item.anchor}')">
-        <span class="sr-icon">${item.icon}</span>
-        <span class="sr-name">${item.name.replace(new RegExp(q,'gi'),m=>'<mark style="background:rgba(245,200,66,.25);color:var(--gold);border-radius:2px">'+m+'</mark>')}</span>
-        <span class="sr-tag" style="background:${item.tagBg};color:${item.tagC}">${item.tag}</span>
-      </a>`;
-    });
+/* ════════════════════════════════
+   TOAST
+════════════════════════════════ */
+function toast(msg,dur=2400){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._tid);t._tid=setTimeout(()=>t.classList.remove('show'),dur);
+}
+
+/* ════════════════════════════════
+   PAGE NAV
+════════════════════════════════ */
+function goPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.dock-item').forEach(d=>d.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    if(n.getAttribute('onclick')==="goPage('"+id+"')")n.classList.add('active');
   });
-  dd.innerHTML = html; dd.classList.add('open'); searchFocused = -1;
+  const dockEl=document.getElementById('dock-'+id);
+  if(dockEl)dockEl.classList.add('active');
+  // Page-specific init
+  if(id==='cuet')renderCUET();
+  else if(id==='blackbook')renderBlackBook();
+  else if(id==='special')renderSpecial();
+  else if(id==='books')renderBooks();
+  else if(id==='leaderboard')loadLeaderboard();
+  else if(id==='home')renderHome();
 }
 
-function searchGo(section, anchor){
-  switchSection(section);
-  document.getElementById('search-input').value='';
-  document.getElementById('search-dropdown').classList.remove('open');
-  document.getElementById('search-clear').classList.remove('visible');
+/* ════════════════════════════════
+   HOME
+════════════════════════════════ */
+function renderHome(){
+  const prof=getProfile();
+  const sid=getStudentID();
+  const uname=prof.name||localStorage.getItem('cbtUserName')||'Student';
+  document.getElementById('sb-av').textContent=(uname[0]||'S').toUpperCase();
+  document.getElementById('sb-name').textContent=uname;
+  document.getElementById('sb-sid-disp').textContent=sid||'No ID';
+  document.getElementById('home-greeting').textContent='👋 Hello, '+uname+'!';
+  document.getElementById('sid-chip').textContent=sid||'No Student ID';
+
+  // Stats from CUET mocks
+  const done=CUET_MOCKS.filter(m=>lR(m.id));
+  const total=CUET_MOCKS.length;
+  const tC=done.reduce((s,m)=>{const r=lR(m.id);return s+(r?r.correct||0:0);},0);
+  const tW=done.reduce((s,m)=>{const r=lR(m.id);return s+(r?r.incorrect||r.wrong||0:0);},0);
+  const tS=done.reduce((s,m)=>{const r=lR(m.id);return s+(r?r.score||0:0);},0);
+  const tM=done.reduce((s,m)=>{const r=lR(m.id);return s+(r?r.maxScore||50:0);},0);
+  const pct=tM>0?(tS/tM*100).toFixed(1):0;
+
+  document.getElementById('home-pct').textContent=pct+'%';
+  document.getElementById('home-done').textContent=done.length+' done';
+  document.getElementById('home-total').textContent=total+' total';
+  document.getElementById('home-correct').textContent=tC;
+  document.getElementById('home-wrong').textContent=tW;
   setTimeout(()=>{
-    const el = document.querySelector(anchor);
-    if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
-  },180);
+    const prog=document.getElementById('home-prog');
+    if(prog)prog.style.width=Math.min(100,done.length/total*100)+'%';
+  },200);
 }
 
-function clearSearch(){
-  const inp = document.getElementById('search-input');
-  inp.value=''; inp.focus();
-  document.getElementById('search-dropdown').classList.remove('open');
-  document.getElementById('search-clear').classList.remove('visible');
+/* ════════════════════════════════
+   CUET MOCKS
+════════════════════════════════ */
+let activeCuetTab='all';
+function renderCUET(){
+  const types=['all','vocabulary','grammar','reading','rc','fullmock','pyq','special'];
+  const tabs=document.getElementById('cuet-tabs');
+  tabs.innerHTML=types.map(t=>`
+    <div class="type-tab ${t===activeCuetTab?'active':''}" onclick="setCuetTab('${t}')">
+      ${t==='all'?'🗂️ All':TYPE_INFO[t]?TYPE_INFO[t].label:t}
+    </div>`).join('');
+  renderCUETGrid();
+}
+function setCuetTab(t){activeCuetTab=t;renderCUET();}
+function renderCUETGrid(){
+  const grid=document.getElementById('cuet-grid');
+  const mocks=activeCuetTab==='all'?CUET_MOCKS:CUET_MOCKS.filter(m=>m.type===activeCuetTab);
+  grid.innerHTML=mocks.map((m,i)=>{
+    const r=lR(m.id);
+    const ti=TYPE_INFO[m.type]||{color:'#2196f3',bg:'rgba(33,150,243,.1)',label:m.type};
+    return`<a href="${BASE}${m.id}.html" target="_blank" class="mock-card ${r?'done':''}" style="animation-delay:${i*.04}s">
+      <div class="mock-num">${(i+1).toString().padStart(2,'0')}</div>
+      <div class="mock-icon" style="background:${ti.bg};width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;">${m.icon}</div>
+      <div class="mock-title" style="margin-top:8px;">${m.name}</div>
+      <div class="mock-tag" style="color:${ti.color};font-weight:600;margin-top:2px;">${ti.label}</div>
+      ${r?`<div class="mock-score" style="color:${rClr(r.percentage||0)};margin-top:6px;">${(r.percentage||0).toFixed(1)}%</div>
+           <div style="font-size:10px;color:var(--text3);">${r.score||0}/${r.maxScore||50} · ${(r.correct||0)}✓</div>`
+        :`<div style="font-size:11px;color:var(--text3);margin-top:6px;">Not attempted</div>`}
+    </a>`;
+  }).join('');
 }
 
-function searchKey(e){
-  const dd   = document.getElementById('search-dropdown');
-  const rows = dd.querySelectorAll('.search-result');
-  if(!rows.length) return;
-  if(e.key==='ArrowDown'){ e.preventDefault(); searchFocused=Math.min(searchFocused+1,rows.length-1); rows.forEach((r,i)=>r.classList.toggle('focused',i===searchFocused)); rows[searchFocused].scrollIntoView({block:'nearest'}); }
-  else if(e.key==='ArrowUp'){ e.preventDefault(); searchFocused=Math.max(searchFocused-1,0); rows.forEach((r,i)=>r.classList.toggle('focused',i===searchFocused)); }
-  else if(e.key==='Enter' && searchFocused>=0){ rows[searchFocused].click(); }
-  else if(e.key==='Escape'){ clearSearch(); }
+/* ════════════════════════════════
+   BLACK BOOK
+════════════════════════════════ */
+function renderBlackBook(){
+  const mocks=Array.from({length:50},(_,i)=>({id:'bb'+(i+1),name:'Black Book Mock '+(i+1),num:i+1}));
+  const done=mocks.filter(m=>lR(m.id)).length;
+  document.getElementById('bb-done-count').textContent=done+'/50';
+  setTimeout(()=>{const p=document.getElementById('bb-prog');if(p)p.style.width=(done/50*100)+'%';},200);
+  const grid=document.getElementById('bb-grid');
+  window._bbMocks=mocks;
+  renderBBGrid(mocks);
+}
+function renderBBGrid(mocks){
+  const grid=document.getElementById('bb-grid');
+  grid.innerHTML=mocks.map((m,i)=>{
+    const r=lR(m.id);
+    return`<a href="${BASE}${m.id}.html" target="_blank" class="mock-card ${r?'done':''}" style="animation-delay:${i*.03}s">
+      <div class="mock-num">${m.num}</div>
+      <div style="font-size:22px;margin-bottom:6px;">📓</div>
+      <div class="mock-title">${m.name}</div>
+      <div style="font-size:10px;color:var(--blue2);font-weight:600;margin-top:2px;">Black Book Series</div>
+      ${r?`<div class="mock-score" style="color:${rClr(r.percentage||0)}">${(r.percentage||0).toFixed(1)}%</div>
+           <div style="font-size:10px;color:var(--text3);">${r.score||0}/${r.maxScore||50}</div>`
+        :`<div style="font-size:11px;color:var(--text3);margin-top:6px;">Attempt now →</div>`}
+    </a>`;
+  }).join('');
+}
+function filterBB(){
+  const q=(document.getElementById('bb-search')?.value||'').toLowerCase();
+  const filtered=(window._bbMocks||[]).filter(m=>m.name.toLowerCase().includes(q));
+  renderBBGrid(filtered);
 }
 
-// close dropdown on outside click
-document.addEventListener('click', e=>{
-  if(!e.target.closest('.search-wrap')){
-    document.getElementById('search-dropdown').classList.remove('open');
+/* ════════════════════════════════
+   SPECIAL MOCKS
+════════════════════════════════ */
+function renderSpecial(){
+  const sid=getStudentID();
+  const hasAccess=PAID_IDS.includes(sid);
+  document.getElementById('sps-sid-show').textContent=sid||'YOUR_ID';
+  document.getElementById('special-lock-msg').style.display=hasAccess?'none':'block';
+  document.getElementById('special-grid-wrap').style.display=hasAccess?'block':'none';
+  if(hasAccess){
+    document.getElementById('sps-sid-unlocked').textContent=sid;
+    const grid=document.getElementById('special-grid');
+    grid.innerHTML=Array.from({length:30},(_,i)=>{
+      const id='sps'+(i+1);
+      const r=lR(id);
+      return`<a href="${BASE}${id}.html" target="_blank" class="mock-card ${r?'done':''}">
+        <div class="mock-num">${i+1}</div>
+        <div style="font-size:22px;margin-bottom:6px;">⭐</div>
+        <div class="mock-title">Special Mock ${i+1}</div>
+        <div style="font-size:10px;color:#ec4899;font-weight:600;margin-top:2px;">Premium Series</div>
+        ${r?`<div class="mock-score" style="color:${rClr(r.percentage||0)}">${(r.percentage||0).toFixed(1)}%</div>`
+          :`<div style="font-size:11px;color:var(--text3);margin-top:6px;">Attempt now →</div>`}
+      </a>`;
+    }).join('');
   }
+}
+
+/* ════════════════════════════════
+   BOOKS
+════════════════════════════════ */
+function renderBooks(){
+  document.getElementById('books-grid').innerHTML=BOOKS.map(b=>`
+    <a href="${b.link}" target="_blank" class="book-card">
+      <div class="book-cover" style="background:${b.cover};">
+        <span style="font-size:44px;">${b.icon}</span>
+        <div style="position:absolute;top:10px;right:10px;background:rgba(255,255,255,.2);border-radius:8px;padding:3px 9px;font-size:10px;font-weight:700;color:#fff;backdrop-filter:blur(6px);">
+          ${b.free?'FREE':'₹'+b.price}
+        </div>
+      </div>
+      <div class="book-title">${b.title}</div>
+      <div class="book-desc">${b.desc}</div>
+      <div class="price-badge ${b.free?'price-free':'price-paid'}">
+        ${b.free?`<span>✅ Free Access</span><span style="text-decoration:line-through;opacity:.6;">${b.price}</span>`:`<span>💰 ${b.price}</span>`}
+      </div>
+    </a>`).join('');
+}
+
+/* ════════════════════════════════
+   LEADERBOARD
+════════════════════════════════ */
+async function loadLeaderboard(){
+  const container=document.getElementById('lb-container');
+  const btn=document.getElementById('lb-refresh-btn');
+  container.innerHTML=`<div style="text-align:center;padding:40px;color:var(--text3);"><div class="spin-anim" style="display:inline-block;font-size:28px;">⟳</div><div style="margin-top:12px;font-size:13px;">Loading leaderboard…</div></div>`;
+  if(btn){btn.style.pointerEvents='none';}
+  try{
+    const res=await fetch(GS_URL+'?action=getAll',{method:'GET',redirect:'follow'});
+    const text=await res.text();
+    const clean=text.replace(/^\)\]\}'\s*/,'').trim();
+    if(!clean||clean[0]!=='[')throw new Error('Invalid response');
+    const data=JSON.parse(clean);
+    // Filter English only
+    const engRows=data.filter(r=>String(r[3]||'').trim().toLowerCase()==='eng');
+    renderLB(engRows);
+  }catch(e){
+    container.innerHTML=`<div style="text-align:center;padding:40px;"><div style="font-size:36px;margin-bottom:12px;">⚠️</div><div style="font-size:14px;font-weight:700;color:var(--text);">Could not load leaderboard</div><div style="font-size:12px;color:var(--text3);margin-top:6px;">${escH(e.message)}</div><button class="btn btn-prim" style="margin-top:14px;" onclick="loadLeaderboard()">Retry</button></div>`;
+  }
+  if(btn){btn.style.pointerEvents='';}
+}
+
+function renderLB(rows){
+  const container=document.getElementById('lb-container');
+  if(!rows.length){
+    container.innerHTML=`<div style="text-align:center;padding:40px;color:var(--text3);"><div style="font-size:36px;margin-bottom:12px;">📊</div><div>No English results found yet.</div></div>`;
+    return;
+  }
+  // Aggregate by student
+  const byStu={};
+  rows.forEach(r=>{
+    const name=String(r[2]||'').trim();const sid=String(r[1]||'').trim();
+    if(!name||name==='Name')return;
+    const key=sid||name;
+    if(!byStu[key])byStu[key]={name,sid,score:0,max:0,count:0};
+    byStu[key].score+=parseFloat(r[5])||0;
+    byStu[key].max+=parseFloat(r[6])||0;
+    byStu[key].count++;
+  });
+  const arr=Object.values(byStu).map(s=>({...s,pct:s.max>0?s.score/s.max*100:0})).sort((a,b)=>b.pct-a.pct);
+  const mySID=getStudentID();
+  const myName=(getProfile().name||'').toLowerCase();
+  const colors=['linear-gradient(135deg,#f59e0b,#f97316)','linear-gradient(135deg,#94a3b8,#64748b)','linear-gradient(135deg,#d97706,#b45309)'];
+  let html=`<div style="padding:14px 18px;border-bottom:1px solid var(--border);font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);display:grid;grid-template-columns:44px 1fr 80px 70px;gap:8px;"><span>Rank</span><span>Student</span><span style="text-align:center;">Tests</span><span style="text-align:right;">Score%</span></div>`;
+  arr.forEach((s,i)=>{
+    const rank=i+1;
+    const medal=rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':'#'+rank;
+    const rankColor=rank===1?'#f59e0b':rank===2?'#94a3b8':rank===3?'#d97706':'var(--text3)';
+    const isMe=(mySID&&s.sid===mySID)||(myName&&s.name.toLowerCase()===myName);
+    html+=`<div class="lb-row" style="${isMe?'background:rgba(33,150,243,0.07);border-left:3px solid #2196f3;':''}">
+      <div class="lb-rank" style="color:${rankColor};font-size:${rank<=3?'15px':'12px'};">${medal}</div>
+      <div class="lb-info">
+        <div class="lb-av" style="background:${rank<=3?colors[rank-1]:'linear-gradient(135deg,#2196f3,#00bcd4)'}">${s.name[0].toUpperCase()}</div>
+        <div>
+          <div class="lb-name">${escH(s.name)}${isMe?` <span style="font-size:9px;background:var(--blue);color:#fff;padding:1px 5px;border-radius:10px;font-weight:800;">YOU</span>`:''}</div>
+          <div style="font-size:9px;font-family:var(--mono);color:var(--text3);">${s.sid||'—'}</div>
+          <div class="lb-bar" style="width:80px;"><div class="lb-bar-f" style="width:${s.pct.toFixed(1)}%"></div></div>
+        </div>
+      </div>
+      <div style="text-align:center;font-size:12px;font-weight:700;font-family:var(--mono);color:var(--text3);">${s.count}</div>
+      <div class="lb-pct" style="color:${rClr(s.pct)}">${s.pct.toFixed(1)}%</div>
+    </div>`;
+  });
+  container.innerHTML=html;
+}
+
+/* ════════════════════════════════
+   STUDENT ID PROMPT
+════════════════════════════════ */
+function promptStudentID(){
+  const current=getStudentID();
+  const id=prompt('Enter your Student ID (e.g. TS67933):', current||'');
+  if(id===null)return;
+  const trimmed=id.trim();
+  if(!trimmed){toast('❌ No ID entered');return;}
+  localStorage.setItem('ts_student_id',trimmed);
+  toast('✅ Student ID saved: '+trimmed);
+  renderHome();
+  // Re-render special if on that page
+  if(document.getElementById('page-special').classList.contains('active'))renderSpecial();
+}
+
+/* ════════════════════════════════
+   BOOT
+════════════════════════════════ */
+window.addEventListener('load',()=>{
+  // Auto-detect student ID from existing profile
+  renderHome();
+
+  // Remove loader after 2.4s
+  setTimeout(()=>{
+    const loader=document.getElementById('loader');
+    if(loader){
+      loader.classList.add('fade-out');
+      setTimeout(()=>loader.remove(),700);
+    }
+  },2400);
 });
 </script>
 </body>
