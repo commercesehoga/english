@@ -195,6 +195,10 @@ body{
 
 /* ── PROMO BANNERS ── */
 .promo-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px;}
+@media(max-width:768px){
+  .promo-grid{grid-template-columns:1fr;}
+  .promo-grid iframe{width:420px;height:420px;transform:scale(0.72);transform-origin:top left;}
+}
 .promo-banner{border-radius:var(--r2);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;text-decoration:none;display:block;}
 .promo-banner:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(33,150,243,0.22);}
 
@@ -270,7 +274,6 @@ body{
   body{flex-direction:column;}
   .main{height:100dvh;padding-bottom:80px;}
   .page{padding:16px 14px;}
-  .promo-grid{grid-template-columns:1fr;gap:10px;}
   .mobile-dock{
     display:flex;position:fixed;bottom:10px;left:50%;transform:translateX(-50%);
     width:calc(100% - 20px);max-width:420px;height:60px;
@@ -280,6 +283,7 @@ body{
     box-shadow:var(--shadow2);
     align-items:center;justify-content:space-around;
   }
+  
   .dock-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;position:relative;height:60px;-webkit-tap-highlight-color:transparent;}
   .dock-icon{font-size:18px;line-height:1;}
   .dock-label{font-size:8px;font-weight:700;color:var(--text3);}
@@ -444,39 +448,33 @@ body::before{
 
     <!-- PROMO BANNERS -->
     <div class="sec-hdr"><div class="sec-title">🎯 Featured Resources</div></div>
-    <div class="promo-grid">
-      <a href="https://commercesehoga.github.io/english/pro1" target="_blank" class="promo-banner">
-        <svg width="100%" viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="pg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1565c0"/><stop offset="100%" stop-color="#0097a7"/></linearGradient>
-          </defs>
-          <rect width="360" height="180" fill="url(#pg1)" rx="20"/>
-          <circle cx="310" cy="-10" r="100" fill="rgba(255,255,255,0.06)"/>
-          <circle cx="-10" cy="160" r="80" fill="rgba(255,255,255,0.05)"/>
-          <text x="24" y="55" font-family="Syne,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)" letter-spacing="2">SPECIAL RESOURCE</text>
-          <text x="24" y="92" font-family="Syne,sans-serif" font-size="28" font-weight="800" fill="#fff">English Pro Pack 1</text>
-          <text x="24" y="118" font-family="DM Sans,sans-serif" font-size="13" fill="rgba(255,255,255,0.75)">Grammar · Vocabulary · Reading</text>
-          <rect x="24" y="140" width="120" height="28" rx="14" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
-          <text x="84" y="159" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="700" fill="#fff">Explore Now →</text>
-          <text x="340" y="168" text-anchor="end" font-family="DM Mono,monospace" font-size="24" fill="rgba(255,255,255,0.15)">📖</text>
-        </svg>
-      </a>
-      <a href="https://commercesehoga.github.io/english/pro2" target="_blank" class="promo-banner">
-        <svg width="100%" viewBox="0 0 360 180" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="pg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#006064"/><stop offset="100%" stop-color="#1565c0"/></linearGradient>
-          </defs>
-          <rect width="360" height="180" fill="url(#pg2)" rx="20"/>
-          <circle cx="330" cy="170" r="110" fill="rgba(255,255,255,0.05)"/>
-          <circle cx="30" cy="10" r="70" fill="rgba(255,255,255,0.06)"/>
-          <text x="24" y="55" font-family="Syne,sans-serif" font-size="11" fill="rgba(255,255,255,0.6)" letter-spacing="2">CUET ENGLISH</text>
-          <text x="24" y="92" font-family="Syne,sans-serif" font-size="28" font-weight="800" fill="#fff">English Pro Pack 2</text>
-          <text x="24" y="118" font-family="DM Sans,sans-serif" font-size="13" fill="rgba(255,255,255,0.75)">PYQs · Full Mocks · Comprehension</text>
-          <rect x="24" y="140" width="120" height="28" rx="14" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
-          <text x="84" y="159" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="700" fill="#fff">Explore Now →</text>
-        </svg>
-      </a>
-    </div>
+   <div class="promo-grid">
+
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <div style="font-size:10px;font-weight:700;color:var(--blue2);letter-spacing:1.5px;text-transform:uppercase;">Pro Pack 1</div>
+    <a href="https://commercesehoga.github.io/english/pro1.html" target="_blank" class="promo-banner"
+       style="display:block;width:100%;aspect-ratio:1/1;border-radius:20px;overflow:hidden;border:1.5px solid var(--border2);box-shadow:var(--shadow);position:relative;background:#fff;">
+      <iframe
+        src="https://commercesehoga.github.io/english/pro1.html"
+        scrolling="no" loading="lazy"
+        style="width:600px;height:600px;border:none;transform:scale(0.467);transform-origin:top left;pointer-events:none;">
+      </iframe>
+    </a>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <div style="font-size:10px;font-weight:700;color:var(--blue2);letter-spacing:1.5px;text-transform:uppercase;">Pro Pack 2</div>
+    <a href="https://commercesehoga.github.io/english/pro2.html" target="_blank" class="promo-banner"
+       style="display:block;width:100%;aspect-ratio:1/1;border-radius:20px;overflow:hidden;border:1.5px solid var(--border2);box-shadow:var(--shadow);position:relative;background:#fff;">
+      <iframe
+        src="https://commercesehoga.github.io/english/pro2.html"
+        scrolling="no" loading="lazy"
+        style="width:600px;height:600px;border:none;transform:scale(0.467);transform-origin:top left;pointer-events:none;">
+      </iframe>
+    </a>
+  </div>
+
+</div>
 
     <!-- QUICK LINKS -->
     <div class="sec-hdr"><div class="sec-title">⚡ Quick Actions</div></div>
