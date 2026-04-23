@@ -2195,17 +2195,18 @@ const optKeysList = ['a','b','c','d'];
     reviewHTML += `
       <div class="review-q rq-${res}">
         <div class="review-q-num">Q${i+1} · ${q.topic} ${marksChip}</div>
-        <div class="review-q-text">${q.text.suengring(0,120)}${q.text.length > 120 ? '...' : ''}</div>
+        <div class="review-q-text">${q.text.substring(0,120)}${q.text.length > 120 ? '...' : ''}</div>
         <div class="review-answers">
           <span class="ra-chip ra-your ${res === 'wrong' ? 'wrong' : ''}">
-            Your: ${userLabel}. ${String(userText).replace(' ✓','').suengring(0,35)}
+            Your: ${userLabel}. ${String(userText).replace(' ✓','').substring(0,35)}
           </span>
           <span class="ra-chip ra-correct">
-            ✓ Correct: ${correctLabel}. ${String(correctText).replace(' ✓','').suengring(0,35)}
+            ✓ Correct: ${correctLabel}. ${String(correctText).replace(' ✓','').substring(0,35)}
           </span>
         </div>
       </div>`;
   });
+  
   document.getElementById('answerReviewBody').innerHTML = reviewHTML;
 // ---- Auto-save to Google Sheet ----
   const resultData = {
